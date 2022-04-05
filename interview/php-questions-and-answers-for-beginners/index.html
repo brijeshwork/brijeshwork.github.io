@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+<section>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+<div class="col-lg-12">
+    <h2>What is PHP?</h2>
+    <p>PHP stands for Hypertext Preprocessor. It is an open source server-side scripting language which is widely used for web development. It supports many databases like MySQL, Oracle, Sybase, Solid, PostgreSQL, generic ODBC etc.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is PEAR in PHP?</h2>
+    <p>PEAR is a framework and repository for reusable PHP components.</p>
+    <p>PEAR stands for PHP Extension and Application Repository.</p>
+    <p>It contains all types of PHP code snippets and libraries.</p>
+    <p>It also provides a command line interface to install "packages" automatically.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the name of scripting engine in PHP?</h2>
+    <p>The scripting engine that powers PHP is called Zend Engine 2</p>
+    <p>PHP4 doesn't support oops concept and uses Zend Engine 1</p>
+    <p>PHP5 supports oops concept and uses Zend Engine 2</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>Which programming language does PHP resemble to?</h2>
+    <p>PHP has borrowed its syntax from Perl and C</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>List some of the features of PHP7</h2>
+    <ul>
+        <li>Scalar type declarations</li>
+        <li>Return type declarations</li>
+        <li>Null coalescing operator (??)</li>
+        <li>Spaceship operator</li>
+        <li>Constant arrays using define()</li>
+        <li>Anonymous classes</li>
+        <li>Closure::call method</li>
+        <li>Group use declaration</li>
+        <li>Generator return expressions</li>
+        <li>Generator delegation</li>     
+        <li>Space ship operator</li>
+    </ul>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is "echo" in PHP?</h2>
+    <p>PHP echo output one or more string. It is a language construct not a function. So the use of parentheses is not required. But if you want to pass more than one parameter to echo, the use of parentheses is required.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is "print" in PHP?</h2>
+    <p>PHP print output a string. It is a language construct not a function. So the use of parentheses is not required with the argument list. Unlike echo, it always returns 1.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the difference between "echo" and "print" in PHP?</h2>
+    <p>Echo can output one or more string but print can only output one string and always returns 1.</p>
+    <p>Echo is faster than print because it does not return any value.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the difference between $message and $$message?</h2>
+    <p>$message stores variable data while $$message is used to store variable of variables.</p>
+    <p>$message stores fixed data whereas the data stored in $$message may be changed dynamically.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are the ways to define a constant in PHP?</h2>
+    <p>PHP constants are name or identifier that can't be changed during execution of the script. PHP constants are defined in two ways:</p>
+    <ul>
+        <li>Using define() function</li>
+        <li>Using const() function</li>
+    </ul>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are magic constants in PHP?</h2>
+    <p>PHP magic constants are predefined constants, which change based on their use. They start with a double underscore (__) and end with a double underscore (__).</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How many data types are there in PHP?</h2>
+    <p>PHP data types are used to hold different types of data or values. There are 8 primitive data types which are further categorized in 3 types:</p>
+    <ul>
+        <li>Scalar types</li>
+        <li>Compound types</li>
+        <li>Special types</li>
+    </ul>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the use of count() function in PHP?</h2>
+    <p>The PHP count() function is used to count total elements in the array, or something an object.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the use of header() function in PHP?</h2>
+    <p>The header() function is used to send a raw HTTP header to a client. It must be called before sending the actual output. For example, you can't print any HTML element before using this function.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What does isset() function?</h2>
+    <p>The isset() function checks if the variable is defined and not null.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>Explain PHP parameterized functions</h2>
+    <p>PHP parameterized functions are functions with parameters. You can pass any number of parameters inside a function. These given parameters act as variables inside your function. They are specified inside the parentheses, after the function name. Output depends upon dynamic values passed as parameters into the function.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the array in PHP</h2>
+    <p>An array is used to store multiple values in a single value. In PHP, it orders maps of pairs of keys and values. It saves the collection of the data type.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How many types of array are there in PHP?</h2>
+    <p>There are three types of array in PHP:</p>
+    <ul>
+        <li>Indexed array: an array with a numeric key.</li>
+        <li>Associative array: an array where each key has its specific value.</li>
+        <li>Multidimensional array: an array containing one or more arrays within itself.</li>
+    </ul>
+</div>
+<div class="col-lg-12 ">
+    <h2>Explain some of the PHP array functions?</h2>
+    <p>There are many array functions in PHP:</p>
+    <ul>
+        <li>array()</li>
+        <li>array_change_key_case()</li>
+        <li>array_chunk()</li>
+        <li>count()</li>
+        <li>sort()</li>
+        <li>array_reverse()</li>
+        <li>array_search()</li>
+        <li>array_intersect()</li>
+    </ul>
+</div>
+<div class="col-lg-12 ">
+    <h2>Explain some of the PHP string functions?</h2>
+    <p>There are many array functions in PHP:</p>
+    <ul>
+        <li>strtolower()</li>
+        <li>strtoupper()</li>
+        <li>ucfirst()</li>
+        <li>lcfirst()</li>
+        <li>ucwords()</li>
+        <li>strrev()</li>
+        <li>strlen()</li>
+    </ul>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is Diffrent between Explode and Split ? </h2>
+    <p>
+        Split function splits string into array by regular expression. Explode splits a string into array by string.
+        For Example:explode(" and", "India and Pakistan and Srilanka"); split(" :", "India : Pakistan : Srilanka");
+        Both of these functions will return an array that contains India, Pakistan, and Srilanka.
+    </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are the diffrent between Get and post methods?</h2>
+    <p>There are some defference between GET and POST method</p>
+    <p>GET Method have some limit like only 2Kb data able to send for requestBut in POST method unlimited data can we send</p>
+    <p>when we use GET method requested data show in url butNot in POST method so POST method is good for send sensetive request</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are the different between require and include?</h2>
+    <p>Both include and require used to include a file but when included file not foundInclude send Warning where as Require send Fatal Error</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are encrypt functions in PHP?</h2>
+    <p>CRYPT(), MD5()</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is a session?</h2>
+    <p>session is a logical object created by the PHP engine to allow you to preserve data across subsequent HTTP requests. Sessions are commonly used to store temporary data to allow multiple PHP pages to offer a complete functional transaction for the same visitor</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are the method available in form submitting ?</h2>
+    <p>GET and POST</p>
+</div>
+<div class="col-lg-12">
+    <h2>How to store the uploaded file to the final location?</h2>
+    <p>move_uploaded_file( string filename, string destination)</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How to delete a file from the system?</h2>
+    <p>Unlink() deletes the given file from the file system</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the use of isset() in PHP?</h2>
+    <p>This function is used to determine if a variable is set and is not NULL</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How to find the length of a string?</h2>
+    <p>strlen() function used to find the length of a string</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the difference between explode() and split() functions?</h2>
+    <p>Split function splits string into array by regular expression. Explode splits a string into array by string</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is cookie and why do we use it?</h2>
+    <p>Cookie is a small piece of information stored in client browser. It is a technique used to identify a user using the information stored in their browser (if already visited that website) . Using PHP we can both set and get COOKIE</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is session and why do we use it?</h2>
+    <p>Session is a super global variable that preserve data across subsequent pages. Session uniquely defines each user with a session ID, so it helps making customized web application where user tracking is needed.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are the different errors in PHP?</h2>
+    <p>There are 4 basically types of error.</p>
+    <p>Parse Error:- Commonly caused due to syntax mistakes in codes e.g. missing semicolon, mismatch brackets.</p>
+    <p>Fatal Error:- These are basically run time errors which are caused when you try to access what can't be done. E.g. accessing a dead object, or trying to use a function that hasn’t been declared.</p>
+    <p>Warning Error:- These occurs when u try to include a file that is not present, or delete a file that is not on the server. This will not halt the script; it will give the notice and continue with the next line of the script.</p>
+    <p>Notice Error:- These errors occurs when u try to use a variable that hasn't been declared, this will not halt the script, It will give the notice and continue with the next line of the script.</p>
+    <p>E_ERROR: A fatal error that causesscript termination</p>
+    <p>E_WARNING: Run-time warning thatdoes not cause script termination</p>
+    <p>E_ALL: Catches all errors andwarnings</p>
+    <p>E_PARSE: Compile time parse error</p>
+    <p>E_NOTICE: Run time notice caused dueto error in code</p>
+    <p>E_USER_WARNING: User-generatedwarning message</p>
+    <p>E_USER_ERROR: User-generated errormessage</p>
+    <p>E_USER_NOTICE: User-generated noticemessage</p>
+    <p>E_STRICT: Run-time notices</p>
+    <p>E_RECOVERABLE_ERROR: Catchable fatalerror indicating a dangerous error</p>
+    <p>Three are three types of errors:1. Notices: These are trivial, non-critical errors that PHP encounters while executing a script – for example, accessing a variable that has not yet been defined. By default, such errors are not displayed to the user at all – although, as you will see, you can change this default behavior.2. Warnings: These are more serious errors – for example, attempting to include() a file which does not exist. By default, these errors are displayed to the user, but  they do not result in script termination.3. Fatal errors: These are critical errors – for example,
+        instantiating an object of a non-existent class, or calling a non-existent function. These errors cause the immediate termination of the script, and PHP’s default behavior is to display them to the user when they take place
+        </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the functionality of the function strstr and stristr?</h2>
+    <p>strstr() returns part of a given string from the first occurrence of a given substring to the end of the string.</p>
+    <p>For example:strstr("user@example.com","@") will return "@example.com".stristr() is idential to strstr() except that it is case insensitive.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How to create Database using php</h2>
+    <p>mysql_create_db();</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How can we know total number of enements of Array?</h2>
+    <p>
+        sizeof($array_var)
+        count($array_var)
+    </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How can we register the variables into a sessions?</h2>
+    <p>session_register($ur_session_var);</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How many ways we can pass the variable through the navigation between pages?</h2>
+    <p>Register the variable into the session</p>
+    <p>Pass the variable as a cookie</p>
+    <p>Pass the variable as part of the URL</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are the various methods to pass data from one web page to another webpage?</h2>
+    <p>Session</p>
+    <p>Cookie</p>
+    <p>Database</p>
+    <p>URL parameters</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is different between erg_replace() and eregi_replace() ?</h2>
+    <p>eregi_replace() function is identical to ereg_replace() except that it ignores case distinction when matching alphabetic characters.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the functionality of the function strstr and stristr?</h2>
+    <p>
+        strstr() returns part of a given string from the first occurrence of a given substring to the end of the string. For example: strstr(“user@example.com”,”@”) will return “@example.com”.
+        stristr() is idential to strstr() except that it is case insensitive
+    </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are super global variables?</h2>
+    <p>$_COOKIE- Stored information in Cookie.</p>
+    <p>$_GET- Send data in URL as paramter.</p>
+    <p>$_POST- Send data to server OR Page as POST Method.</p>
+    <p>$_REQUEST- Its combined array containing values from the $_GET, $_POSTand $_COOKIES.</p>
+    <p>$_ENV- Get/Set varaible in environment.</p>
+    <p>$_FILES- Used to upload the file, image and videos etc.</p>
+    <p>$_SERVER- It have all server information.</p>
+    <p>$GLOBALS- Contains all the global variables associated with the current script</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is different between the functions unlink and unset?</h2>
+    <p>unlink: delete the files from Server.</p>
+    <p>unset: delete the variable name and data from memory.</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What is the different between echo and print?</h2>
+    <p>echoconstructor which is used to display the value in browser.
+        printis function which is used to display and return the value.
+        </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How to create unique random password?</h2>
+    <p>echo md5(uniqid(rand(), true));</p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are different between require and include, include_once?</h2>
+    <p>require_once() and include_once() are both the functions to include and evaluate the specified file only once. If the specified file is included previous to the present call occurrence, it will not be done again.But require() and include() will do it as many times they are asked to do.
+        The include_once() statement includes and evaluates the specified file during the execution of the script. This is a behavior similar to the include() statement, with the only difference being that if the code from a file has already been included, it will not be included again. The major difference between include() and require() is that infailure include() produces a warning message whereas require() produces a fatal errors.
+        </p>
+        <p>The include() statement includes and evaluates the specified file.The documentation below also applies to require(). The two constructs are identical inevery way except how they handle
+            failure. include() produces a Warning while require() results in a Fatal Error. In other words, use
+            require() if you want a missing file to halt processing of the page. include() does not behave this way, the script will continue regardless. The include_once()statement includes and evaluates the
+            specified file during the execution of the script. This is a behavior similar to the include() statement, with the only difference being that if the code from a file has already been included, it will not be
+            included again. As the name suggests, it will be included just once.include_once()should be used in cases where the same file might be included and evaluated morethan once during a particular execution of a script, and you want to be sure that it is included exactly once to avoid problems with function redefinitions, variable value reassignments, etc. require_once() should be used in cases where the same file might be included and evaluated more than once during a particular execution of a script, and you want to be sure that it is included exactly once to avoid problems with function
+            redefinitions, variable value reassignments, etc
+            </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>What are the different between PHP3 and PHP4 and PHP5?</h2>
+    <p>The current stable version of PHP is PHP 5.4.5 as still waiting for PHP6with unicode handlig thing
+        There are lot of difference among PHP3 and PHP4 and PHP5 version of php so Difference mean oldest version have less functionality as compare to new one like
+        1>PHP3 is oldest stable version and it was pure procedural language constructive like C
+        2>Where as PHP4 have some OOPs concept added like class and object with new functionality
+        3>and in PHP5 approximately all major oops functionality has been added along with below thing
+        1. Implementation of exceptions and exception handling
+        2. Type hinting which allows you to force the type of a specific argument
+        3. Overloading of methods through the __call function
+        4. Full constructors and destructors etc through a __constuctor and __destructor function
+        5. __autoload function for dynamically including certain include files depending on the class you are trying to create.
+        6 Finality : can now use the final keyword to indicate that a method cannot be overridden by a child. You can also declare an entire class as final which prevents it from having any children at all.
+        7 Interfaces & Abstract Classes
+        8 Passed by Reference :
+        9 An __clone method if you really want to duplicate an object
+        10 Numbers of Functions Deprecated or removed in PHP 5.x like ereg,ereg_replace,magic_quotes, session_register,register_globals, split(), call_user_method() etc
+        </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How to convert string to lowercase in php?</h2>
+    <p>
+        $string="CAKEPHP AND ZEND";
+        echo strtolower($string);
+    </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How to convert string to uppercase in php?</h2>
+    <p>
+        $string="cakephp and zend";
+        echo strtoupper($string);
+    </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>How to delete a php file from server?</h2>
+    <p>
+        $file="full_path/filename.php"
+        unlink($file); //make sure you have enough permission to do delete the file
+    </p>
+</div>
+<div class="col-lg-12 ">
+    <h2>is variable name case sensitive?</h2>
+    <p>Yes variable name case sensitive and we cannot start a variable with number like $6name as a valid variable name starts with a letter or underscore, followed by any number of letters, numbers, or underscores.</p>
+</div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
