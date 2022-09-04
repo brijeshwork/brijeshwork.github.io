@@ -34,6 +34,6 @@
 <br />
 
 [Brijesh Patel]: https://brijesh.work/
-[twitter]: https://twitter.com/brijeshdevops
-[instagram]: https://instagram.com/brijeshdevops
-[linkedin]: https://linkedin.com/in/brijeshdevops
+[twitter]: https://twitter.com/brijeshwork
+[instagram]: https://instagram.com/brijeshwork/
+[linkedin]: https://linkedin.com/in/brijeshwork/
