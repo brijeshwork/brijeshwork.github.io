@@ -1,6 +1,6 @@
 ### Hi there, I'm [Brijesh Patel]
 [![Website](https://img.shields.io/website?label=Brijesh.Work&style=for-the-badge&url=https://brijesh.work/)](https://brijesh.work/)
-[![Twitter Follow](https://img.shields.io/twitter/follow/BrijeshDEVOPS?color=1DA1F2&logo=twitter&style=for-the-badge)](https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fbrijeshdevops&screen_name=brijeshdevops)
+[![Twitter Follow](https://img.shields.io/twitter/follow/Brijeshwork?color=1DA1F2&logo=twitter&style=for-the-badge)](https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fbrijeshwork&screen_name=brijeshwork)
 
 ## I'm a PHP Developer !!
 - 🌱 I’m currently learning everything 🤣
