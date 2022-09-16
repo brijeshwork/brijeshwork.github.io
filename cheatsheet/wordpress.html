@@ -1,9 +1,306 @@
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Brijesh Patel PHP Developer | Magento | Laravel">
+    <meta name="author" content="Brijesh">
 
-<h2>Wordpress (WP) CLI Cheat Sheet</h2>
-<p>WP-CLI (WordPress Command Line Interface) is a tool that gives the ability to administrate
-    WordPress through a command-line interface. You can execute standard functions like plugin
-    installations and commands that are not supported through the standard WordPress back-end.
+    <title>Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel</title>
+  </head>
+  <body>
+<h2>Wordxmpss (WP) CLI Cheat Sheet</h2>
+<p>WP-CLI (Wordxmpss Command Line Interface) is a tool that gives the ability to administrate
+    Wordxmpss through a command-line interface. You can execute standard functions like plugin
+    installations and commands that are not supported through the standard Wordxmpss back-end.
     Below you can find useful WP CLI commands:</p>
 
-    
+
+<h3>Download Wordxmpss</h3>
+<p>Download Wordxmpss</p>
+
+<h3>Generate wp-config.php File</h3>
+<xmp>wp config create --dbname=<dbname>
+    --dbuser=<dbuser> --dbpass=<dbpass>
+    --dbxmpfix=<dbxmpfix>
+</xmp>
+
+<h3>Install Wordxmpss</h3>
+<xmp>wp core install --url=<your_domain_name>
+    --title=<Your Blog Title>
+    --admin_user=<admin>
+    --admin_password=<your_password>
+    --admin_email=<your_email></xmp>
+
+<h3>Search Plugin</h3>
+<p>wp plugin search <search keyword></p>
+
+<h3>Install Plugin</h3>
+<xmp>
+    wp plugin install <plugin name>
+</xmp>
+
+<h3>wp plugin install <plugin name></h3>
+<xmp>wp plugin list</xmp>
+
+<h3>List Installed Themes</h3>
+<xmp>wp theme list</xmp>
+
+
+<h3>Search for New Themes</h3>
+<xmp>wp theme <search keyword></xmp>
+
+<h3>Install a Theme</h3>
+<xmp>wp theme install <theme name></xmp>
+
+<h3>Activate a Theme</h3>
+<xmp>wp theme activate <theme name></xmp>
+
+<h3>List Posts</h3>
+<xmp>wp post list</xmp>
+
+<h3>Edit Post</h3>
+<xmp>wp post edit <post ID></xmp>
+
+<h3>Post Update</h3>
+<xmp>wp post update <id>
+    --post_title=<Your post title>
+</xmp>
+
+<h3>Create a Post</h3>
+<xmp>wp post create
+    --post_status=<publish or
+    draft> --post_title=<Your
+    post title> --edit
+</xmp>
+
+<h3>Login Wordxmpss Database Console</h3>
+<xmp>wp db cli</xmp>
+
+<h3>List Wordxmpss users</h3>
+<xmp>wp db query "SELECT user_login,ID FROM wp_users;"</xmp>
+
+<h3>Change Wordxmpss Post Author</h3>
+<xmp>wp post update <post ID>
+    --post_author=<author ID></xmp>
+
+<h3>Optimize Database</h3>
+<xmp>wp db optimize</xmp>
+
+<h3>Update Wordxmpss</h3>
+<xmp>wp core update</xmp>
+
+<h3>Update Wordxmpss Database</h3>
+<xmp>wp core update-db</xmp>
+
+<h3>wp core update-db</h3>
+<xmp>wp plugin update --all</xmp>
+
+<h2>Wordxmpss Themes Development Cheat Sheet</h2>
+<h3>Defining New Theme</h3>
+<p>Details about Wordxmpss theme are stored in the stylesheet.css file. You can see these
+    details in the Appearance > Theme Editor section. Below you can find an example from the
+    Twenty Twenty-One theme. Feel free to copy and adapt it to your needs.</p>
+
+<xmp>
+
+/*
+    Theme Name: Twenty Twenty-One
+    Theme URI: https://wordxmpss.org/themes/twentytwentyone/
+    Author: the Wordxmpss team
+    Author URI: https://wordxmpss.org/
+    Description: Twenty Twenty-One is a blank canvas for your ideas
+    and it makes the block editor your best brush. With new block
+    patterns, which allow you to create a beautiful layout in a matter
+    of seconds, this theme’s soft colors and eye-catching — yet
+    timeless — design will let your work shine. Take it for a spin!
+    See how Twenty Twenty-One elevates your portfolio, business
+    website, or personal blog.
+    Requires at least: 5.3
+    Tested up to: 5.8
+    Requires PHP: 5.6
+    Version: 1.4
+    License: GNU General Public License v2 or later
+    License URI: http://www.gnu.org/licenses/gpl-2.0.html
+    Text Domain: twentytwentyone
+    Tags: one-column, accessibility-ready, custom-colors, custom-menu,
+    custom-logo, editor-style, featured-images, footer-widgets,
+    block-patterns, rtl-language-support, sticky-post,
+    threaded-comments, translation-ready
+
+    Twenty Twenty-One Wordxmpss Theme, (C) 2020 Wordxmpss.org
+    Twenty Twenty-One is distributed under the terms of the GNU GPL.
+*/
+
+</xmp>
+
+
+<h2>Wordxmpss Template Files</h2>
+<p>Wordxmpss Template Files</p>
+<p><strong>style.css</strong><span>Theme’s main stylesheet file</span></p>
+<p><strong>index.php</strong><span>Main template file</span></p>
+<p><strong>single.php</strong><span>Single post file. Used for displaying a single post</span></p>
+<p><strong>archive.php</strong><span>Archive or Category template file. Will be overridden if other template files like category.php, author.php, and date.php exist.</span></p>
+<p><strong>searchform.php</strong><span>searchform.php</span></p>
+<p><strong>search.php</strong><span>Search results file</span></p>
+<p><strong>404.php</strong><span>404 error page file. Will be displayed if Wordxmpss can’t find the page that visitor requested.</span></p>
+<p><strong>comments.php</strong><span>Comments template file</span></p>
+<p><strong>footer.php</strong><span>Footer content file</span></p>
+<p><strong>header.php</strong><span>Header content file</span></p>
+<p><strong>sidebar.php</strong><span>Sidebar content file</span></p>
+<p><strong>page.php</strong><span>Single-page file. Used for pages only</span></p>
+
+<h2>Wordxmpss Template Tags</h2>
+Wordxmpss template tags are used in Wordxmpss to display return information dynamically. In
+other words, you can use them to customize your Wordxmpss site. For example, the_title() tag
+would display the title of the specific post.
+
+<p> <strong> the_content(); </strong> <span> Get post content </span> </p>
+<p> <strong> the_excerpt(); </strong> <span> Get the post excerpt </span> </p>
+<p> <strong> the_title(); </strong> <span> Get the title of the post </span> </p>
+<p> <strong> the_permalink() </strong> <span> Display post link </span> </p>
+<p> <strong> the_category(', ') </strong> <span> Display category of a post </span> </p>
+<p> <strong> the_author(); </strong> <span> Show post author </span> </p>
+<p> <strong> the_ID(); </strong> <span> Display post ID </span> </p>
+<p> <strong> edit_post_link(); </strong> <span> Show Edit link for a post </span> </p>
+<p> <strong> next_post_link(' %link ') </strong> <span> Display next page URL </span> </p>
+<p> <strong> xmpvious_post_link('%link') </strong> <span> xmpvious_post_link('%link') </span> </p>
+<p> <strong> get_links_list(); </strong> <span> Retrieve blogroll links </span> </p>
+<p> <strong> wp_list_pages(); </strong> <span> Retrieve all pages </span> </p>
+<p> <strong> wp_get_archives() </strong> <span> Retrieve archive for the site </span> </p>
+<p> <strong> wp_list_cats(); </strong> <span> Retrieve all categories </span> </p>
+<p> <strong> get_calendar(); </strong> <span> Show the built-in Wordxmpss calendar </span> </p>
+<p> <strong> wp_register(); </strong> <span> Show register link </span> </p>
+<p> <strong> wp_loginout(); </strong> <span> Displays login or logout links (for registered users) </span> </p>
+
+
+<h2>Include Tags</h2>
+<p>Use these tags to include templates to your theme.</p>
+<p><xmp><?php get_header(); ?></xmp><span>Includes header.php and displays its content.</span></p>
+<p><xmp><?php get_sidebar(); ?></xmp><span>Includes sidebar.php.</span></p>
+<p><xmp><?php get_footer(); ?></xmp><span>Includes the footer.php.</span></p>
+<p><xmp><?php comments_template(); ?></xmp><span>Load specific template for comments.</span></p>
+
+<h2>Useful Header Functions</h2>
+<p><xmp>site_url();</xmp><span>Get Wordxmpss site url</span></p>
+<p><xmp>wp_title();</xmp><span>Get page title</span></p>
+<p><xmp>bloginfo('name');</xmp><span>Get blog name</span></p>
+<p><xmp>bloginfo('description');</xmp><span>bloginfo('description');</span></p>
+<p><xmp>get_stylesheet_directory_uri();</xmp><span>Get stylesheet directory URI</span></p>
+<p><xmp>bloginfo('template_url');</xmp><span>Get pat template folder</span></p>
+<p><xmp>bloginfo('atom_url');</xmp><span>Get Atom feed URL</span></p>
+<p><xmp>bloginfo('rss2_url');</xmp><span>Get RSS 2.0 URL</span></p>
+
+<h2>The Loop</h2>
+<p>The Loop is PHP code used by Wordxmpss to return posts. The Loop processes an individual
+    post and displays it on the current page. It also formats the post according to how it matches
+    specified parameters. Any HTML or PHP code in the Loop will be processed on each post.</p>
+
+<xmp>
+<?php
+    if ( have_posts() ) :
+    while ( have_posts() ) : the_post();
+    // Display post content
+    endwhile;
+    endif;
+?>
+</xmp>
+
+<h2>Wordxmpss Menus</h2>
+<h3>Default Navigation Menu</h3>
+<xmp><?php wp_nav_menu(); ?></xmp>
+
+<h3>Specific Navigation Menu</h3>
+<xmp>
+    <?php wp_nav_menu( array('menu'
+=> My Navigation' )); ?>
+</xmp>
+
+<h3>Category Based Navigation</h3>
+<xmp>
+    <ul id="menu">
+        <li <?php if(is_home()) { ?> class="current-cat" <?php } ?>>
+        <a href="<?php bloginfo('home'); ?>">Home</a>
+        </li>
+        <?php wp_list_categories('title_li=&orderby=id');?>
+    </ul> 
+</xmp>
+
+<h3>Page Based Navigation</h3>
+<xmp>
+    <ul id="menu">
+        <li <?php if(is_home()) { ?> class="current-page-item" <?php } ?>>
+        <a href="<?php bloginfo('home'); ?>">Home</a>
+        </li>
+        <?php wp_list_pages('sort_column=menu_order&depth=1&title_li=');?>
+        </ul>
+</xmp>
+
+<h3>Registering New Sidebar</h3>
+<p>Add the following code to your functions.php file to register a new sidebar.</p>
+<xmp>
+    add_action( 'widgets_init', 'theme_slug_widgets_init' );
+    function theme_slug_widgets_init() {
+    register_sidebar( array(
+    'name' => __( 'My Sidebar', 'theme-slug' ),
+    'id' => 'sidebar-1',
+    'description' => __( 'Description', 'theme-slug' ),
+    'before_widget' => '<li id="%1$s" class="widget %2$s">',
+    'after_widget' => '</li>',
+    'before_title' => '<h2 class="widgettitle">',
+    'after_title' => '</h2>',
+    ) );
+    }
+</xmp>
+
+<h2>WordPress Keyboard Shortcuts Cheat Sheet</h2>
+<h2>Alt + Shitf + Key</h2>
+<h3>The following shortcuts use a different key combination:
+    Windows and Linux: Alt + Shift + Letter
+    Mac: Ctrl + Option (alt) + Letter (Macs running any WordPress
+    version below 4.2 use Alt + Shift + Letter)</h3>
+
+<p> <span> n</span> <span> Check spelling (requires a plugin)</span> </p>
+<p> <span> i</span> <span>Align left </span> </p>
+<p> <span> j</span> <span> Align left</span> </p>
+<p> <span> c</span> <span> Align center</span> </p>
+<p> <span> d</span> <span> Strikethrough</span> </p>
+<p> <span> r</span> <span> Align right</span> </p>
+<p> <span> u</span> <span> • List</span> </p>
+<p> <span> x</span> <span> Add/remove code tag</span> </p>
+<p> <span> a</span> <span> Insert link</span> </p>
+<p> <span> o</span> <span> 1. Link</span> </p>
+<p> <span> s</span> <span> Remove link</span> </p>
+<p> <span> q</span> <span> Remove link</span> </p>
+<p> <span> m</span> <span> Insert image</span> </p>
+<p> <span> w</span> <span> Distraction-free writing mode</span> </p>
+<p> <span> t</span> <span> Distraction-free writing mode</span> </p>
+<p> <span> p</span> <span> Insert page break tag</span> </p>
+<p> <span> h</span> <span> Help</span> </p>
+<p> <span> 1</span> <span> Heading 1</span> </p>
+<p> <span> 2</span> <span> Heading 2</span> </p>
+<p> <span> 3</span> <span> Heading 3</span> </p>
+<p> <span> 4</span> <span> Heading 4</span> </p>
+<p> <span> 5</span> <span> Heading 5</span> </p>
+<p> <span> 6</span> <span> Heading 6</span> </p>
+<p> <span> 9</span> <span> Address</span> </p>
+
+<h2>Formatting Shortcuts</h2>
+<p>Formatting Shortcuts while using a visual editor.</p>
+<p> <span>* </span> <span> Start an unordered list</span> </p>
+<p> <span> - </span> <span> Start an unordered list</span> </p>
+<p> <span> 1.</span> <span> Start an ordered list</span> </p>
+<p> <span> 1)</span> <span> Start an ordered list</span> </p>
+<p> <span> ##</span> <span> H2</span> </p>
+<p> <span> ###</span> <span> H3</span> </p>
+<p> <span> ####</span> <span> H4</span> </p>
+<p> <span> #####</span> <span> H5</span> </p>
+<p> <span> ######</span> <span> H6</span> </p>
+<p> <span> ></span> <span> Transform text into blockquote</span> </p>
+<p> <span> ---</span> <span> Horizontal line</span> </p>
+<p> <span> `..`</span> <span> Transform text into code block</span> </p>
+
+</body>
+</html>
