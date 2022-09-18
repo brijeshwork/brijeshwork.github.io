@@ -255,6 +255,62 @@ would display the title of the specific post.
     }
 </xmp>
 
+
+<h3>Where we can add Home page design</h3>
+<p>index.php</p>
+
+<h3>Where we can design for page </h3>
+<p>Create a file page.php</p>
+
+<h3>How to Create a custom Template</h3>
+<p>//Template Name: Your template name  (Use Same as Template name )</p>
+
+<h3>How to get Template directry url</h3>
+<xmp>
+    <?php echo get_template_directry_uri(); ?>
+</xmp>
+
+
+<h3>Site Url in wordpress  </h3>
+<xmp>
+    Site_url(); // S in Captail 
+</xmp>
+<h3>Wordpress Header</h3>
+<p>How to add custom header Image (LOGO )in wordpress </p>
+<p>options enabled in Apperance >> Header >> Header Image</p>
+<xmp>
+    add_theme_support('custom-header');
+</xmp>
+<p>How to display logo from custom header</p>
+<xmp>
+    get_header_image();// get the header image path 
+</xmp>
+
+<h3>Wordpress Post</h3>
+<p>Enable Post Thumbnails admin </p>
+<xmp>
+
+    add_theme_support('post-thumbnails');
+</xmp>
+<p>Display Post Thumbnails</p>
+<xmp>
+
+the_post_thumbnail();//without parameter ->; Thumbnail
+the_post_thumbnail('thumbnail');// thumbnails (default 150px x 150px max) 
+the_post_thumbnail('medium'); // medium resolucation default 300px X 300px max
+the_post_thumbnail('large'); // Large resolution (default 1024px x 1024px max)
+the_post_thumbnail('full');// orginal image resolution (unmodificed)
+the_post_thumbnail(array(100,100));// other resolutions (height, width)
+
+print_r(wp_get_Attachment_image_src(get_post_thumbnail_id(),'large'));
+
+    </xmp>
+
+
+
+
+
+
 <h2>WordPress Keyboard Shortcuts Cheat Sheet</h2>
 <h2>Alt + Shitf + Key</h2>
 <h3>The following shortcuts use a different key combination:
