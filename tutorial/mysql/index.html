@@ -494,30 +494,10 @@ CREATE TABLE Persons (
 <div>
 <table>
 <tbody>
-<tr>
-<th>PersonID</th>
-<th>LastName</th>
-<th>FirstName</th>
-<th>Age</th>
-</tr>
-<tr>
-<td>1</td>
-<td>Hansen</td>
-<td>Ola</td>
-<td>30</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Svendson</td>
-<td>Tove</td>
-<td>23</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Pettersen</td>
-<td>Kari</td>
-<td>20</td>
-</tr>
+<tr><th>PersonID</th><th>LastName</th><th>FirstName</th><th>Age</th></tr>
+<tr><td>1</td><td>Hansen</td><td>Ola</td><td>30</td></tr>
+<tr><td>2</td><td>Svendson</td><td>Tove</td><td>23</td></tr>
+<tr><td>3</td><td>Pettersen</td><td>Kari</td><td>20</td></tr>
 </tbody>
 </table>
 </div>
@@ -3212,4 +3192,2429 @@ CREATE TABLE Persons (
 </div>
 </div>
 </div>
+
+<h2>MySQL Wildcard Characters</h2>
+<p>A wildcard character is used to substitute one or more characters in a string.</p>
+<p>Wildcard characters are used with the <code><a href="https://www.w3schools.com/mysql/mysql_like.asp">LIKE</a></code> operator. The <code>LIKE</code> operator is used in a <code>WHERE</code> clause to search for a specified pattern in a column.</p>
+<h3>Wildcard Characters in MySQL</h3>
+<table>
+<tbody>
+<tr>
+<th>Symbol</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>%</td>
+<td>Represents zero or more characters</td>
+<td>bl% finds bl, black, blue, and blob</td>
+</tr>
+<tr>
+<td>_</td>
+<td>Represents a single character</td>
+<td>h_t finds hot, hat, and hit</td>
+</tr>
+</tbody>
+</table>
+<p>The wildcards can also be used in combinations!</p>
+<p>Here are some examples showing different <code>LIKE</code> operators with '%' and '_' wildcards:</p>
+<table>
+<tbody>
+<tr>
+<th>LIKE Operator</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>WHERE CustomerName LIKE 'a%'</td>
+<td>Finds any values that starts with "a"</td>
+</tr>
+<tr>
+<td>WHERE CustomerName LIKE '%a'</td>
+<td>Finds any values that ends with "a"</td>
+</tr>
+<tr>
+<td>WHERE CustomerName LIKE '%or%'</td>
+<td>Finds any values that have "or" in any position</td>
+</tr>
+<tr>
+<td>WHERE CustomerName LIKE '_r%'</td>
+<td>Finds any values that have "r" in the second position</td>
+</tr>
+<tr>
+<td>WHERE CustomerName LIKE 'a_%_%'</td>
+<td>Finds any values that starts with "a" and are at least 3 characters in length</td>
+</tr>
+<tr>
+<td>WHERE ContactName LIKE 'a%o'</td>
+<td>Finds any values that starts with "a" and ends with "o"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Demo Database</h2>
+<p>The table below shows the complete "Customers" table from the Northwind sample database:</p>
+<table>
+    <tbody>
+    <tr>
+    <th>CustomerID</th>
+    <th>CustomerName</th>
+    <th>ContactName</th>
+    <th>Address</th>
+    <th>City</th>
+    <th>PostalCode</th>
+    <th>Country</th>
+    </tr>
+    <tr>
+    <td>1</td>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Obere Str. 57</td>
+    <td>Berlin</td>
+    <td>12209</td>
+    <td>Germany</td>
+    </tr>
+    <tr>
+    <td>2</td>
+    <td>Ana Trujillo Emparedados y helados</td>
+    <td>Ana Trujillo</td>
+    <td>Avda. de la Constituci&oacute;n 2222</td>
+    <td>M&eacute;xico D.F.</td>
+    <td>05021</td>
+    <td>Mexico</td>
+    </tr>
+    <tr>
+    <td>3</td>
+    <td>Antonio Moreno Taquer&iacute;a</td>
+    <td>Antonio Moreno</td>
+    <td>Mataderos 2312</td>
+    <td>M&eacute;xico D.F.</td>
+    <td>05023</td>
+    <td>Mexico</td>
+    </tr>
+    <tr>
+    <td>4</td>
+    <td>Around the Horn</td>
+    <td>Thomas Hardy</td>
+    <td>120 Hanover Sq.</td>
+    <td>London</td>
+    <td>WA1 1DP</td>
+    <td>UK</td>
+    </tr>
+    <tr>
+    <td>5</td>
+    <td>Berglunds snabbk&ouml;p</td>
+    <td>Christina Berglund</td>
+    <td>Berguvsv&auml;gen 8</td>
+    <td>Lule&aring;</td>
+    <td>S-958 22</td>
+    <td>Sweden</td>
+    </tr>
+    <tr>
+    <td>6</td>
+    <td>Blauer See Delikatessen</td>
+    <td>Hanna Moos</td>
+    <td>Forsterstr. 57</td>
+    <td>Mannheim</td>
+    <td>68306</td>
+    <td>Germany</td>
+    </tr>
+    </tbody>
+    </table>
+
+    <h2>Using the % Wildcard</h2>
+<p>The following SQL statement selects all customers with a City starting with "ber":</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers<br />WHERE City LIKE 'ber%';</div>
+<div>
+<p>The following SQL statement selects all customers with a City containing the pattern "es": </p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers<br />WHERE City LIKE '%es%';
+<h2>Using the _ Wildcard</h2>
+<p>The following SQL statement selects all customers with a City starting with any character, followed by "ondon":</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers<br />WHERE City LIKE '_ondon';
+<p>The following SQL statement selects all customers with a City starting with "L", followed by any character, followed by "n", followed by any character, followed by "on":</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers<br />WHERE City LIKE 'L_n_on';</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<h2>The MySQL IN Operator</h2>
+<p>The <code>IN</code> operator allows you to specify multiple values in a <code>WHERE</code> clause.</p>
+<p>The <code>IN</code> operator is a shorthand for multiple <code>OR</code> conditions.</p>
+<h3>IN Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE <em>column_name</em> IN (<em>value1</em>,<em> value2</em>, ...);</div>
+</div>
+<p>or:</p>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE <em>column_name</em> IN (<em>SELECT STATEMENT</em>);</div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>The table below shows the complete "Customers" table from the Northwind sample database:</p>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Around the Horn</td>
+<td>Thomas Hardy</td>
+<td>120 Hanover Sq.</td>
+<td>London</td>
+<td>WA1 1DP</td>
+<td>UK</td>
+</tr>
+</tbody>
+</table>
+
+<h2>IN Operator Examples</h2>
+<p>The following SQL statement selects all customers that are located in "Germany", "France" or "UK":</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers<br />WHERE Country IN ('Germany', 'France', 'UK');</div>
+<div>
+<p>The following SQL statement selects all customers that are NOT located in "Germany", "France" or "UK":</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers<br />WHERE Country NOT IN ('Germany', 'France', 'UK');
+<p>The following SQL statement selects all customers that are from the same countries as the suppliers:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers<br />WHERE Country IN (SELECT Country FROM Suppliers);</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<h2> MySQL BETWEEN Operator</h2>
+<p>The <code>BETWEEN</code> operator selects values within a given range. The values can be numbers, text, or dates.</p>
+<p>The <code>BETWEEN</code> operator is inclusive: begin and end values are included.</p>
+<h3>BETWEEN Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE <em>column_name </em>BETWEEN <em>value1</em> AND <em>value2;</em></div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>Below is a selection from the "Products" table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>ProductID</th>
+<th>ProductName</th>
+<th>SupplierID</th>
+<th>CategoryID</th>
+<th>Unit</th>
+<th>Price</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Chais</td>
+<td>1</td>
+<td>1</td>
+<td>10 boxes x 20 bags</td>
+<td>18</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Chang</td>
+<td>1</td>
+<td>1</td>
+<td>24 - 12 oz bottles</td>
+<td>19</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Aniseed Syrup</td>
+<td>1</td>
+<td>2</td>
+<td>12 - 550 ml bottles</td>
+<td>10</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Chef Anton's Cajun Seasoning</td>
+<td>1</td>
+<td>2</td>
+<td>48 - 6 oz jars</td>
+<td>22</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Chef Anton's Gumbo Mix</td>
+<td>1</td>
+<td>2</td>
+<td>36 boxes</td>
+<td>21.35</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2>BETWEEN Example</h2>
+<p>The following SQL statement selects all products with a price between 10 and 20:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Products<br />WHERE Price BETWEEN 10 AND 20;</div>
+<div>
+<h2>NOT BETWEEN Example</h2>
+<p>To display the products outside the range of the previous example, use <code>NOT BETWEEN</code>:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Products<br />WHERE Price NOT BETWEEN 10 AND 20;</div>
+<div>
+<h2>BETWEEN with IN Example</h2>
+<p>The following SQL statement selects all products with a price between 10 and 20. In addition; do not show products with a CategoryID of 1,2, or 3:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Products<br />WHERE Price BETWEEN 10 AND 20<br />AND CategoryID NOT IN (1,2,3);</div>
+<div>
+<h2>BETWEEN Text Values Example</h2>
+<p>The following SQL statement selects all products with a ProductName between "Carnarvon Tigers" and "Mozzarella di Giovanni":</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Products<br />WHERE ProductName BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'<br />ORDER BY ProductName;</div>
+<div>
+<p>The following SQL statement selects all products with a ProductName between "Carnarvon Tigers" and "Chef Anton's Cajun Seasoning":</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Products<br />WHERE ProductName BETWEEN "Carnarvon Tigers" AND "Chef Anton's Cajun Seasoning"<br />ORDER BY ProductName;</div>
+<div>
+<h2>NOT BETWEEN Text Values Example</h2>
+<p>The following SQL statement selects all products with a ProductName not between "Carnarvon Tigers" and "Mozzarella di Giovanni":</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Products<br />WHERE ProductName NOT BETWEEN 'Carnarvon Tigers' AND 'Mozzarella di Giovanni'<br />ORDER BY ProductName;</div>
+<div>
+<h2>Sample Table</h2>
+<p>Below is a selection from the "Orders" table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>EmployeeID</th>
+<th>OrderDate</th>
+<th>ShipperID</th>
+</tr>
+<tr>
+<td>10248</td>
+<td>90</td>
+<td>5</td>
+<td>7/4/1996</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10249</td>
+<td>81</td>
+<td>6</td>
+<td>7/5/1996</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10250</td>
+<td>34</td>
+<td>4</td>
+<td>7/8/1996</td>
+<td>2</td>
+</tr>
+<tr>
+<td>10251</td>
+<td>84</td>
+<td>3</td>
+<td>7/9/1996</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10252</td>
+<td>76</td>
+<td>4</td>
+<td>7/10/1996</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2>BETWEEN Dates Example</h2>
+<p>The following SQL statement selects all orders with an OrderDate between '01-July-1996' and '31-July-1996':</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Orders<br />WHERE OrderDate BETWEEN '1996-07-01' AND '1996-07-31';</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<h2>MySQL Aliases</h2>
+<p>Aliases are used to give a table, or a column in a table, a temporary name.</p>
+<p>Aliases are often used to make column names more readable.</p>
+<p>An alias only exists for the duration of that query.</p>
+<p>An alias is created with the <code>AS</code> keyword.</p>
+<h3>Alias Column Syntax</h3>
+<div>
+<div>SELECT <em>column_name</em> AS <em>alias_name</em><br />FROM <em>table_name;</em></div>
+</div>
+<h3>Alias Table Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name </em>AS <em>alias_name;</em></div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>In this tutorial we will use the well-known Northwind sample database.</p>
+<p>Below is a selection from the "Customers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Around the Horn</td>
+<td>Thomas Hardy</td>
+<td>120 Hanover Sq.</td>
+<td>London</td>
+<td>WA1 1DP</td>
+<td>UK</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Orders" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>EmployeeID</th>
+<th>OrderDate</th>
+<th>ShipperID</th>
+</tr>
+<tr>
+<td>10354</td>
+<td>58</td>
+<td>8</td>
+<td>1996-11-14</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10355</td>
+<td>4</td>
+<td>6</td>
+<td>1996-11-15</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10356</td>
+<td>86</td>
+<td>6</td>
+<td>1996-11-18</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>Alias for Columns Examples</h2>
+<p>The following SQL statement creates two aliases, one for the CustomerID column and one for the CustomerName column:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT CustomerID AS ID, CustomerName AS Customer<br />FROM Customers;</div>
+<div>
+<p>The following SQL statement creates two aliases, one for the CustomerName column and one for the ContactName column. <strong>Note:</strong> Single or double quotation marks are required if the alias name contains spaces:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT CustomerName AS Customer, ContactName AS "Contact Person"<br />FROM Customers;</div>
+<div>
+<p>The following SQL statement creates an alias named "Address" that combine four columns (Address, PostalCode, City and Country):</p>
+<div>
+<h3>Example</h3>
+<div>SELECT CustomerName, CONCAT_WS(', ', Address, PostalCode, City, Country) AS Address<br />FROM Customers;</div>
+<div>
+<h2>Alias for Tables Example</h2>
+<p>The following SQL statement selects all the orders from the customer with CustomerID=4 (Around the Horn). We use the "Customers" and "Orders" tables, and give them the table aliases of "c" and "o" respectively (Here we use aliases to make the SQL shorter):</p>
+<div>
+<h3>Example</h3>
+<div>SELECT o.OrderID, o.OrderDate, c.CustomerName<br />FROM Customers AS c, Orders AS o<br />WHERE c.CustomerName='Around the Horn' AND c.CustomerID=o.CustomerID;</div>
+<div>
+<p>The following SQL statement is the same as above, but without aliases:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT Orders.OrderID, Orders.OrderDate, Customers.CustomerName<br />FROM Customers, Orders<br />WHERE Customers.CustomerName='Around the Horn' AND Customers.CustomerID=Orders.CustomerID;</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<h2>MySQL Joining Tables</h2>
+<p>A <code>JOIN</code> clause is used to combine rows from two or more tables, based on a related column between them.</p>
+<p>Let's look at a selection from the "Orders" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>OrderDate</th>
+</tr>
+<tr>
+<td>10308</td>
+<td>2</td>
+<td>1996-09-18</td>
+</tr>
+<tr>
+<td>10309</td>
+<td>37</td>
+<td>1996-09-19</td>
+</tr>
+<tr>
+<td>10310</td>
+<td>77</td>
+<td>1996-09-20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Then, look at a selection from the "Customers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mexico</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notice that the "CustomerID" column in the "Orders" table refers to the "CustomerID" in the "Customers" table. The relationship between the two tables above is the "CustomerID" column.</p>
+<p>Then, we can create the following SQL statement (that contains an <code>INNER JOIN</code>), that selects records that have matching values in both tables:</p>
+
+<h3>Example</h3>
+<div>SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate<br />FROM Orders<br />INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;</div>
+
+<p>and it will produce something like this:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerName</th>
+<th>OrderDate</th>
+</tr>
+<tr>
+<td>10308</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>9/18/1996</td>
+</tr>
+<tr>
+<td>10365</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>11/27/1996</td>
+</tr>
+<tr>
+<td>10383</td>
+<td>Around the Horn</td>
+<td>12/16/1996</td>
+</tr>
+<tr>
+<td>10355</td>
+<td>Around the Horn</td>
+<td>11/15/1996</td>
+</tr>
+<tr>
+<td>10278</td>
+<td>Berglunds snabbk&ouml;p</td>
+<td>8/12/1996</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2>Supported Types of Joins in MySQL</h2>
+<ul>
+<li><code>INNER JOIN</code>: Returns records that have matching values in both tables</li>
+<li><code>LEFT JOIN</code>: Returns all records from the left table, and the matched records from the right table</li>
+<li><code>RIGHT JOIN</code>: Returns all records from the right table, and the matched records from the left table</li>
+<li><code>CROSS JOIN</code>: Returns all records from both tables</li>
+</ul>
+<p><img src="https://www.w3schools.com/mysql/img_innerjoin.gif" alt="MySQL INNER JOIN" width="200" height="145" /> <img src="https://www.w3schools.com/mysql/img_leftjoin.gif" alt="MySQL LEFT JOIN" width="200" height="145" /> <img src="https://www.w3schools.com/mysql/img_rightjoin.gif" alt="MySQL RIGHT JOIN" width="200" height="145" /> <img src="https://www.w3schools.com/mysql/img_crossjoin.png" alt="MySQL CROSS JOIN" width="200" height="145" /></p>
+<h2>MySQL INNER JOIN Keyword</h2>
+<p>The <code>INNER JOIN</code> keyword selects records that have matching values in both tables.</p>
+<p><img src="https://www.w3schools.com/mysql/img_innerjoin.gif" alt="MySQL INNER JOIN" width="200" height="145" /></p>
+<h3>INNER JOIN Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table1</em><br />INNER JOIN <em>table2<br /></em>ON <em>table1.column_name </em>=<em> table2.column_name</em>;</div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>In this tutorial we will use the well-known Northwind sample database.</p>
+<p>Below is a selection from the "Orders" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>EmployeeID</th>
+<th>OrderDate</th>
+<th>ShipperID</th>
+</tr>
+<tr>
+<td>10308</td>
+<td>2</td>
+<td>7</td>
+<td>1996-09-18</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10309</td>
+<td>37</td>
+<td>3</td>
+<td>1996-09-19</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10310</td>
+<td>77</td>
+<td>8</td>
+<td>1996-09-20</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Customers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1<br /><br /></td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>MySQL INNER JOIN Example</h2>
+<p>The following SQL statement selects all orders with customer information:</p>
+
+<h3>Example</h3>
+<div>SELECT Orders.OrderID, Customers.CustomerName<br />FROM Orders<br />INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;</div>
+
+<p><strong>Note:</strong> The <code>INNER JOIN</code> keyword selects all rows from both tables as long as there is a match between the columns. If there are records in the "Orders" table that do not have matches in "Customers", these orders will not be shown!</p>
+<hr />
+<h2>JOIN Three Tables</h2>
+<p>The following SQL statement selects all orders with customer and shipper information:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName<br />FROM ((Orders<br />INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)<br />INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);</div>
+</div>
+
+<h2>MySQL LEFT JOIN Keyword</h2>
+<p>The <code>LEFT JOIN</code> keyword returns all records from the left table (table1), and the matching records (if any) from the right table (table2).</p>
+<p><img src="https://www.w3schools.com/mysql/img_leftjoin.gif" alt="MySQL LEFT JOIN" width="200" height="145" /></p>
+<h3>LEFT JOIN Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table1</em><br />LEFT JOIN <em>table2<br /></em>ON <em>table1.column_name </em>=<em> table2.column_name</em>;</div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>In this tutorial we will use the well-known Northwind sample database.</p>
+<p>Below is a selection from the "Customers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1<br /><br /></td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Orders" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>EmployeeID</th>
+<th>OrderDate</th>
+<th>ShipperID</th>
+</tr>
+<tr>
+<td>10308</td>
+<td>2</td>
+<td>7</td>
+<td>1996-09-18</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10309</td>
+<td>37</td>
+<td>3</td>
+<td>1996-09-19</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10310</td>
+<td>77</td>
+<td>8</td>
+<td>1996-09-20</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2>MySQL LEFT JOIN Example</h2>
+<p>The following SQL statement will select all customers, and any orders they might have:</p>
+<h3>Example</h3>
+<div>SELECT Customers.CustomerName, Orders.OrderID<br />FROM Customers<br />LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID<br />ORDER BY Customers.CustomerName;</div>
+
+
+<h2>MySQL RIGHT JOIN Keyword</h2>
+<p>The&nbsp;<code>RIGHT JOIN</code>&nbsp;keyword returns all records from the right table (table2), and the matching records (if any) from the left table (table1).</p>
+<p><img src="https://www.w3schools.com/mysql/img_rightjoin.gif" alt="MySQL RIGHT JOIN" width="200" height="145" /></p>
+<h3>RIGHT JOIN Syntax</h3>
+<div>
+<div>SELECT&nbsp;<em>column_name(s)</em><br />FROM&nbsp;<em>table1</em><br />RIGHT&nbsp;JOIN&nbsp;<em>table2<br /></em>ON&nbsp;<em>table1.column_name&nbsp;</em>=<em>&nbsp;table2.column_name</em>;</div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>In this tutorial we will use the well-known Northwind sample database.</p>
+<p>Below is a selection from the "Orders" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>EmployeeID</th>
+<th>OrderDate</th>
+<th>ShipperID</th>
+</tr>
+<tr>
+<td>10308</td>
+<td>2</td>
+<td>7</td>
+<td>1996-09-18</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10309</td>
+<td>37</td>
+<td>3</td>
+<td>1996-09-19</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10310</td>
+<td>77</td>
+<td>8</td>
+<td>1996-09-20</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Employees" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>EmployeeID</th>
+<th>LastName</th>
+<th>FirstName</th>
+<th>BirthDate</th>
+<th>Photo</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Davolio</td>
+<td>Nancy</td>
+<td>12/8/1968</td>
+<td>EmpID1.pic</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Fuller</td>
+<td>Andrew</td>
+<td>2/19/1952</td>
+<td>EmpID2.pic</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Leverling</td>
+<td>Janet</td>
+<td>8/30/1963</td>
+<td>EmpID3.pic</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2>MySQL RIGHT JOIN Example</h2>
+<p>The following SQL statement will return all employees, and any orders they might have placed:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT&nbsp;Orders.OrderID, Employees.LastName, Employees.FirstName<br />FROM&nbsp;Orders<br />RIGHT&nbsp;JOIN&nbsp;Employees&nbsp;ON&nbsp;Orders.EmployeeID = Employees.EmployeeID<br />ORDER&nbsp;BY&nbsp;Orders.OrderID;</div>
+<div><strong>Note:</strong>&nbsp;The&nbsp;<code>RIGHT JOIN</code>&nbsp;keyword returns all records from the right table (Employees), even if there are no matches in the left table (Orders).</div>
+</div>
+
+<h2>SQL CROSS JOIN Keyword</h2>
+<p>The <code>CROSS JOIN</code> keyword returns all records from both tables (table1 and table2).</p>
+<p><img src="https://www.w3schools.com/mysql/img_crossjoin.png" alt="MySQL CROSS JOIN" width="200" height="145" /></p>
+<h3>CROSS JOIN Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table1</em><br />CROSS JOIN <em>table2</em>;</div>
+</div>
+<div>
+<p><strong>Note:</strong> <code>CROSS JOIN</code> can potentially return very large result-sets!</p>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>In this tutorial we will use the well-known Northwind sample database.</p>
+<p>Below is a selection from the "Customers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1<br /><br /></td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Orders" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>EmployeeID</th>
+<th>OrderDate</th>
+<th>ShipperID</th>
+</tr>
+<tr>
+<td>10308</td>
+<td>2</td>
+<td>7</td>
+<td>1996-09-18</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10309</td>
+<td>37</td>
+<td>3</td>
+<td>1996-09-19</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10310</td>
+<td>77</td>
+<td>8</td>
+<td>1996-09-20</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>MySQL CROSS JOIN Example</h2>
+<p>The following SQL statement selects all customers, and all orders:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT Customers.CustomerName, Orders.OrderID<br />FROM Customers<br />CROSS JOIN Orders;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_join_cross" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p><strong>Note:</strong> The <code>CROSS JOIN</code> keyword returns all matching records from both tables whether the other table matches or not. So, if there are rows in "Customers" that do not have matches in "Orders", or if there are rows in "Orders" that do not have matches in "Customers", those rows will be listed as well.</p>
+<p>If you add a <code>WHERE</code> clause (if table1 and table2 has a relationship), the <code>CROSS JOIN</code> will produce the same result as the <code>INNER JOIN</code> clause:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT Customers.CustomerName, Orders.OrderID<br />FROM Customers<br />CROSS JOIN Orders<br />WHERE Customers.CustomerID=Orders.CustomerID;</div>
+</div>
+
+<h2>MySQL Self Join</h2>
+<p>A self join is a regular join, but the table is joined with itself.</p>
+<h3>Self Join Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table1 T1, table1 T2</em><br />WHERE <em>condition</em>;</div>
+</div>
+<p><em>T1</em> and <em>T2</em> are different table aliases for the same table.</p>
+<hr />
+<h2>Demo Database</h2>
+<p>In this tutorial we will use the well-known Northwind sample database.</p>
+<p>Below is a selection from the "Customers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1<br /><br /></td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2>MySQL Self Join Example</h2>
+<p>The following SQL statement matches customers that are from the same city:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City<br />FROM Customers A, Customers B<br />WHERE A.CustomerID &lt;&gt; B.CustomerID<br />AND A.City = B.City<br />ORDER BY A.City;</div>
+</div>
+
+<h2>MySQL UNION Operator</h2>
+<p>The <code>UNION</code> operator is used to combine the result-set of two or more <code>SELECT</code> statements.</p>
+<ul>
+<li>Every <code>SELECT</code> statement within <code>UNION</code> must have the same number of columns</li>
+<li>The columns must also have similar data types</li>
+<li>The columns in every <code>SELECT</code> statement must also be in the same order</li>
+</ul>
+<h3>UNION Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em> FROM <em>table1</em><br />UNION<br />SELECT <em>column_name(s)</em> FROM <em>table2</em>;</div>
+</div>
+<h3>UNION ALL Syntax</h3>
+<p>The <code>UNION</code> operator selects only distinct values by default. To allow duplicate values, use <code>UNION ALL</code>:</p>
+<div>
+<div>SELECT <em>column_name(s)</em> FROM <em>table1</em><br />UNION ALL<br />SELECT <em>column_name(s)</em> FROM <em>table2</em>;</div>
+</div>
+<p><strong>Note:</strong> The column names in the result-set are usually equal to the column names in the first <code>SELECT</code> statement.</p>
+<hr />
+<h2>Demo Database</h2>
+<p>In this tutorial we will use the well-known Northwind sample database.</p>
+<p>Below is a selection from the "Customers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1<br /><br /></td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Suppliers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>SupplierID</th>
+<th>SupplierName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Exotic Liquid</td>
+<td>Charlotte Cooper</td>
+<td>49 Gilbert St.</td>
+<td>London</td>
+<td>EC1 4SD</td>
+<td>UK</td>
+</tr>
+<tr>
+<td>2</td>
+<td>New Orleans Cajun Delights</td>
+<td>Shelley Burke</td>
+<td>P.O. Box 78934</td>
+<td>New Orleans</td>
+<td>70117</td>
+<td>USA</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Grandma Kelly's Homestead</td>
+<td>Regina Murphy</td>
+<td>707 Oxford Rd.</td>
+<td>Ann Arbor</td>
+<td>48104</td>
+<td>USA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>SQL UNION Example</h2>
+<p>The following SQL statement returns the cities (only distinct values) from both the "Customers" and the "Suppliers" table:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT City FROM Customers<br />UNION<br />SELECT City FROM Suppliers<br />ORDER BY City;</div>
+<div>
+<p><strong>Note:</strong> If some customers or suppliers have the same city, each city will only be listed once, because <code>UNION</code> selects only distinct values. Use <code>UNION ALL</code> to also select duplicate values!</p>
+<hr />
+<h2>SQL UNION ALL Example</h2>
+<p>The following SQL statement returns the cities (duplicate values also) from both the "Customers" and the "Suppliers" table:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT City FROM Customers<br />UNION ALL<br />SELECT City FROM Suppliers<br />ORDER BY City;</div>
+<div>
+<h2>SQL UNION With WHERE</h2>
+<p>The following SQL statement returns the German cities (only distinct values) from both the "Customers" and the "Suppliers" table:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT City, Country FROM Customers<br />WHERE Country='Germany'<br />UNION<br />SELECT City, Country FROM Suppliers<br />WHERE Country='Germany'<br />ORDER BY City;</div>
+<div>
+<h2>SQL UNION ALL With WHERE</h2>
+<p>The following SQL statement returns the German cities (duplicate values also) from both the "Customers" and the "Suppliers" table:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT City, Country FROM Customers<br />WHERE Country='Germany'<br />UNION ALL<br />SELECT City, Country FROM Suppliers<br />WHERE Country='Germany'<br />ORDER BY City;</div>
+<div>
+<h2>Another UNION Example</h2>
+<p>The following SQL statement lists all customers and suppliers:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT 'Customer' AS Type, ContactName, City, Country<br />FROM Customers<br />UNION<br />SELECT 'Supplier', ContactName, City, Country<br />FROM Suppliers;</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<h2>MySQL GROUP BY Statement</h2>
+<p>The <code>GROUP BY</code> statement groups rows that have the same values into summary rows, like "find the number of customers in each country".</p>
+<p>The <code>GROUP BY</code> statement is often used with aggregate functions (<code>COUNT()</code>, <code>MAX()</code>, <code>MIN()</code>, <code>SUM()</code>, <code>AVG()</code>) to group the result-set by one or more columns.</p>
+<h3>GROUP BY Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE <em>condition</em><br />GROUP BY <em>column_name(s)<br /></em>ORDER BY <em>column_name(s);</em></div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>Below is a selection from the "Customers" table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1<br /><br /></td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>4<br /><br /></td>
+<td>Around the Horn</td>
+<td>Thomas Hardy</td>
+<td>120 Hanover Sq.</td>
+<td>London</td>
+<td>WA1 1DP</td>
+<td>UK</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Berglunds snabbk&ouml;p</td>
+<td>Christina Berglund</td>
+<td>Berguvsv&auml;gen 8</td>
+<td>Lule&aring;</td>
+<td>S-958 22</td>
+<td>Sweden</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>MySQL GROUP BY Examples</h2>
+<p>The following SQL statement lists the number of customers in each country:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT COUNT(CustomerID), Country<br />FROM Customers<br />GROUP BY Country;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_groupby" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following SQL statement lists the number of customers in each country, sorted high to low:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT COUNT(CustomerID), Country<br />FROM Customers<br />GROUP BY Country<br />ORDER BY COUNT(CustomerID) DESC;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_groupby_orderby" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<hr />
+<h2>Demo Database</h2>
+<p>Below is a selection from the "Orders" table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>EmployeeID</th>
+<th>OrderDate</th>
+<th>ShipperID</th>
+</tr>
+<tr>
+<td>10248</td>
+<td>90</td>
+<td>5</td>
+<td>1996-07-04</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10249</td>
+<td>81</td>
+<td>6</td>
+<td>1996-07-05</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10250</td>
+<td>34</td>
+<td>4</td>
+<td>1996-07-08</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Shippers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>ShipperID</th>
+<th>ShipperName</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Speedy Express</td>
+</tr>
+<tr>
+<td>2</td>
+<td>United Package</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Federal Shipping</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2>GROUP BY With JOIN Example</h2>
+<p>The following SQL statement lists the number of orders sent by each shipper:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT Shippers.ShipperName, COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders<br />LEFT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID<br />GROUP BY ShipperName;</div>
+</div>
+
+<h2>MySQL HAVING Clause</h2>
+<p>The <code>HAVING</code> clause was added to SQL because the <code>WHERE</code> keyword cannot be used with aggregate functions.</p>
+<h3>HAVING Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE <em>condition</em><br />GROUP BY <em>column_name(s)<br /></em>HAVING <em>condition<br /></em>ORDER BY <em>column_name(s);</em></div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>Below is a selection from the "Customers" table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1<br /><br /></td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>4<br /><br /></td>
+<td>Around the Horn</td>
+<td>Thomas Hardy</td>
+<td>120 Hanover Sq.</td>
+<td>London</td>
+<td>WA1 1DP</td>
+<td>UK</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Berglunds snabbk&ouml;p</td>
+<td>Christina Berglund</td>
+<td>Berguvsv&auml;gen 8</td>
+<td>Lule&aring;</td>
+<td>S-958 22</td>
+<td>Sweden</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2>MySQL HAVING Examples</h2>
+<p>The following SQL statement lists the number of customers in each country. Only include countries with more than 5 customers:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT COUNT(CustomerID), Country<br />FROM Customers<br />GROUP BY Country<br />HAVING COUNT(CustomerID) &gt; 5;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_having" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following SQL statement lists the number of customers in each country, sorted high to low (Only include countries with more than 5 customers):</p>
+<div>
+<h3>Example</h3>
+<div>SELECT COUNT(CustomerID), Country<br />FROM Customers<br />GROUP BY Country<br />HAVING COUNT(CustomerID) &gt; 5<br />ORDER BY COUNT(CustomerID) DESC;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_having_orderby" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<hr /><hr />
+<h2>Demo Database</h2>
+<p>Below is a selection from the "Orders" table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderID</th>
+<th>CustomerID</th>
+<th>EmployeeID</th>
+<th>OrderDate</th>
+<th>ShipperID</th>
+</tr>
+<tr>
+<td>10248</td>
+<td>90</td>
+<td>5</td>
+<td>1996-07-04</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10249</td>
+<td>81</td>
+<td>6</td>
+<td>1996-07-05</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10250</td>
+<td>34</td>
+<td>4</td>
+<td>1996-07-08</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Employees" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>EmployeeID</th>
+<th>LastName</th>
+<th>FirstName</th>
+<th>BirthDate</th>
+<th>Photo</th>
+<th>Notes</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Davolio</td>
+<td>Nancy</td>
+<td>1968-12-08</td>
+<td>EmpID1.pic</td>
+<td>Education includes a BA....</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Fuller</td>
+<td>Andrew</td>
+<td>1952-02-19</td>
+<td>EmpID2.pic</td>
+<td>Andrew received his BTS....</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Leverling</td>
+<td>Janet</td>
+<td>1963-08-30</td>
+<td>EmpID3.pic</td>
+<td>Janet has a BS degree....</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2>More HAVING Examples</h2>
+<p>The following SQL statement lists the employees that have registered more than 10 orders:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders<br />FROM (Orders<br />INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID)<br />GROUP BY LastName<br />HAVING COUNT(Orders.OrderID) &gt; 10;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_having2" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following SQL statement lists if the employees "Davolio" or "Fuller" have registered more than 25 orders:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders<br />FROM Orders<br />INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID<br />WHERE LastName = 'Davolio' OR LastName = 'Fuller'<br />GROUP BY LastName<br />HAVING COUNT(Orders.OrderID) &gt; 25;</div>
+</div>
+
+<h2>MySQL EXISTS Operator</h2>
+<p>The <code>EXISTS</code> operator is used to test for the existence of any record in a subquery.</p>
+<p>The <code>EXISTS</code> operator returns TRUE if the subquery returns one or more records.</p>
+<h3>EXISTS Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE EXISTS<br />(SELECT <em>column_name </em>FROM <em>table_name</em> WHERE <em>condition</em>);</div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>Below is a selection from the "Products" table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>ProductID</th>
+<th>ProductName</th>
+<th>SupplierID</th>
+<th>CategoryID</th>
+<th>Unit</th>
+<th>Price</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Chais</td>
+<td>1</td>
+<td>1</td>
+<td>10 boxes x 20 bags</td>
+<td>18</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Chang</td>
+<td>1</td>
+<td>1</td>
+<td>24 - 12 oz bottles</td>
+<td>19</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Aniseed Syrup</td>
+<td>1</td>
+<td>2</td>
+<td>12 - 550 ml bottles</td>
+<td>10</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Chef Anton's Cajun Seasoning</td>
+<td>2</td>
+<td>2</td>
+<td>48 - 6 oz jars</td>
+<td>22</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Chef Anton's Gumbo Mix</td>
+<td>2</td>
+<td>2</td>
+<td>36 boxes</td>
+<td>21.35</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Suppliers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>SupplierID</th>
+<th>SupplierName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Exotic Liquid</td>
+<td>Charlotte Cooper</td>
+<td>49 Gilbert St.</td>
+<td>London</td>
+<td>EC1 4SD</td>
+<td>UK</td>
+</tr>
+<tr>
+<td>2</td>
+<td>New Orleans Cajun Delights</td>
+<td>Shelley Burke</td>
+<td>P.O. Box 78934</td>
+<td>New Orleans</td>
+<td>70117</td>
+<td>USA</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Grandma Kelly's Homestead</td>
+<td>Regina Murphy</td>
+<td>707 Oxford Rd.</td>
+<td>Ann Arbor</td>
+<td>48104</td>
+<td>USA</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Tokyo Traders</td>
+<td>Yoshi Nagase</td>
+<td>9-8 Sekimai Musashino-shi</td>
+<td>Tokyo</td>
+<td>100</td>
+<td>Japan</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>MySQL EXISTS Examples</h2>
+<p>The following SQL statement returns TRUE and lists the suppliers with a product price less than 20:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT SupplierName<br />FROM Suppliers<br />WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price &lt; 20);</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_exists" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following SQL statement returns TRUE and lists the suppliers with a product price equal to 22:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT SupplierName<br />FROM Suppliers<br />WHERE EXISTS (SELECT ProductName FROM Products WHERE Products.SupplierID = Suppliers.supplierID AND Price = 22);</div>
+</div>
+
+<h2>The MySQL ANY and ALL Operators</h2>
+<p>The <code>ANY</code> and <code>ALL</code> operators allow you to perform a comparison between a single column value and a range of other values.</p>
+<hr />
+<h2>The ANY Operator</h2>
+<p>The <code>ANY</code> operator:</p>
+<ul>
+<li>returns a boolean value as a result</li>
+<li>returns TRUE if ANY of the subquery values meet the condition</li>
+</ul>
+<p><code>ANY</code> means that the condition will be true if the operation is true for any of the values in the range.</p>
+<h3>ANY Syntax</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE <em>column_name operator</em> ANY<br />(SELECT <em>column_name<br /></em>FROM <em>table_name<br /></em>WHERE <em>condition</em>);</div>
+</div>
+<div>
+<p><strong>Note:</strong> The <em>operator</em> must be a standard comparison operator (=, &lt;&gt;, !=, &gt;, &gt;=, &lt;, or &lt;=).</p>
+</div>
+<hr />
+<h2>The ALL Operator</h2>
+<p>The <code>ALL</code> operator:</p>
+<ul>
+<li>returns a boolean value as a result</li>
+<li>returns TRUE if ALL of the subquery values meet the condition</li>
+<li>is used with <code>SELECT</code>, <code>WHERE</code> and <code>HAVING</code> statements</li>
+</ul>
+<p><code>ALL</code> means that the condition will be true only if the operation is true for all values in the range.</p>
+<h3>ALL Syntax With SELECT</h3>
+<div>
+<div>SELECT ALL <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE <em>condition</em>;</div>
+</div>
+<h3>ALL Syntax With WHERE or HAVING</h3>
+<div>
+<div>SELECT <em>column_name(s)</em><br />FROM <em>table_name</em><br />WHERE <em>column_name operator</em> ALL<br />(SELECT <em>column_name<br /></em>FROM <em>table_name<br /></em>WHERE <em>condition</em>);</div>
+</div>
+<div>
+<p><strong>Note:</strong> The <em>operator</em> must be a standard comparison operator (=, &lt;&gt;, !=, &gt;, &gt;=, &lt;, or &lt;=).</p>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>Below is a selection from the <strong>"Products"</strong> table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>ProductID</th>
+<th>ProductName</th>
+<th>SupplierID</th>
+<th>CategoryID</th>
+<th>Unit</th>
+<th>Price</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Chais</td>
+<td>1</td>
+<td>1</td>
+<td>10 boxes x 20 bags</td>
+<td>18</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Chang</td>
+<td>1</td>
+<td>1</td>
+<td>24 - 12 oz bottles</td>
+<td>19</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Aniseed Syrup</td>
+<td>1</td>
+<td>2</td>
+<td>12 - 550 ml bottles</td>
+<td>10</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Chef Anton's Cajun Seasoning</td>
+<td>2</td>
+<td>2</td>
+<td>48 - 6 oz jars</td>
+<td>22</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Chef Anton's Gumbo Mix</td>
+<td>2</td>
+<td>2</td>
+<td>36 boxes</td>
+<td>21.35</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Grandma's Boysenberry Spread</td>
+<td>3</td>
+<td>2</td>
+<td>12 - 8 oz jars</td>
+<td>25</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Uncle Bob's Organic Dried Pears</td>
+<td>3</td>
+<td>7</td>
+<td>12 - 1 lb pkgs.</td>
+<td>30</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Northwoods Cranberry Sauce</td>
+<td>3</td>
+<td>2</td>
+<td>12 - 12 oz jars</td>
+<td>40</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Mishi Kobe Niku</td>
+<td>4</td>
+<td>6</td>
+<td>18 - 500 g pkgs.</td>
+<td>97</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the <strong>"OrderDetails"</strong> table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderDetailID</th>
+<th>OrderID</th>
+<th>ProductID</th>
+<th>Quantity</th>
+</tr>
+<tr>
+<td>1</td>
+<td>10248</td>
+<td>11</td>
+<td>12</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10248</td>
+<td>42</td>
+<td>10</td>
+</tr>
+<tr>
+<td>3</td>
+<td>10248</td>
+<td>72</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>10249</td>
+<td>14</td>
+<td>9</td>
+</tr>
+<tr>
+<td>5</td>
+<td>10249</td>
+<td>51</td>
+<td>40</td>
+</tr>
+<tr>
+<td>6</td>
+<td>10250</td>
+<td>41</td>
+<td>10</td>
+</tr>
+<tr>
+<td>7</td>
+<td>10250</td>
+<td>51</td>
+<td>35</td>
+</tr>
+<tr>
+<td>8</td>
+<td>10250</td>
+<td>65</td>
+<td>15</td>
+</tr>
+<tr>
+<td>9</td>
+<td>10251</td>
+<td>22</td>
+<td>6</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10251</td>
+<td>57</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>SQL ANY Examples</h2>
+<p>The following SQL statement lists the ProductName if it finds ANY records in the OrderDetails table has Quantity equal to 10 (this will return TRUE because the Quantity column has some values of 10):</p>
+<div>
+<h3>Example</h3>
+<div>SELECT ProductName<br />FROM Products<br />WHERE ProductID = ANY<br />(SELECT ProductID<br />FROM OrderDetails<br />WHERE Quantity = 10);</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_any" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following SQL statement lists the ProductName if it finds ANY records in the OrderDetails table has Quantity larger than 99 (this will return TRUE because the Quantity column has some values larger than 99):</p>
+<div>
+<h3>Example</h3>
+<div>SELECT ProductName<br />FROM Products<br />WHERE ProductID = ANY<br />(SELECT ProductID<br />FROM OrderDetails<br />WHERE Quantity &gt; 99);</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_any2" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following SQL statement lists the ProductName if it finds ANY records in the OrderDetails table has Quantity larger than 1000 (this will return FALSE because the Quantity column has no values larger than 1000):</p>
+<div>
+<h3>Example</h3>
+<div>SELECT ProductName<br />FROM Products<br />WHERE ProductID = ANY<br />(SELECT ProductID<br />FROM OrderDetails<br />WHERE Quantity &gt; 1000);</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_any3" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<hr />
+<h2>SQL ALL Examples</h2>
+<p>The following SQL statement lists ALL the product names:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT ALL ProductName<br />FROM Products<br />WHERE TRUE;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_select_all2" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following SQL statement lists the ProductName if ALL the records in the OrderDetails table has Quantity equal to 10. This will of course return FALSE because the Quantity column has many different values (not only the value of 10):</p>
+<div>
+<h3>Example</h3>
+<div>SELECT ProductName<br />FROM Products<br />WHERE ProductID = ALL<br />(SELECT ProductID<br />FROM OrderDetails<br />WHERE Quantity = 10);</div>
+</div>
+
+<h2>MySQL INSERT INTO SELECT Statement</h2>
+<p>The <code>INSERT INTO SELECT</code> statement copies data from one table and inserts it into another table.</p>
+<p>The <code>INSERT INTO SELECT</code> statement requires that the data types in source and target tables matches.</p>
+<p><strong>Note:</strong> The existing records in the target table are unaffected.</p>
+<h3>INSERT INTO SELECT Syntax</h3>
+<p>Copy all columns from one table to another table:</p>
+<div>
+<div>INSERT INTO <em>table2</em><br />SELECT * FROM <em>table1<br /></em>WHERE <em>condition</em>;</div>
+</div>
+<p>Copy only some columns from one table into another table:</p>
+<div>
+<div>INSERT INTO <em>table2 </em>(<em>column1</em>, <em>column2</em>, <em>column3</em>, ...)<br />SELECT <em>column1</em>, <em>column2</em>, <em>column3</em>, ...<br />FROM <em>table1</em><br />WHERE <em>condition</em>;</div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>In this tutorial we will use the well-known Northwind sample database.</p>
+<p>Below is a selection from the "Customers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>CustomerID</th>
+<th>CustomerName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>PostalCode</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1<br /><br /></td>
+<td>Alfreds Futterkiste</td>
+<td>Maria Anders</td>
+<td>Obere Str. 57</td>
+<td>Berlin</td>
+<td>12209</td>
+<td>Germany</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ana Trujillo Emparedados y helados</td>
+<td>Ana Trujillo</td>
+<td>Avda. de la Constituci&oacute;n 2222</td>
+<td>M&eacute;xico D.F.</td>
+<td>05021</td>
+<td>Mexico</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Antonio Moreno Taquer&iacute;a</td>
+<td>Antonio Moreno</td>
+<td>Mataderos 2312</td>
+<td>M&eacute;xico D.F.</td>
+<td>05023</td>
+<td>Mexico</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And a selection from the "Suppliers" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>SupplierID</th>
+<th>SupplierName</th>
+<th>ContactName</th>
+<th>Address</th>
+<th>City</th>
+<th>Postal Code</th>
+<th>Country</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Exotic Liquid</td>
+<td>Charlotte Cooper</td>
+<td>49 Gilbert St.</td>
+<td>Londona</td>
+<td>EC1 4SD</td>
+<td>UK</td>
+</tr>
+<tr>
+<td>2</td>
+<td>New Orleans Cajun Delights</td>
+<td>Shelley Burke</td>
+<td>P.O. Box 78934</td>
+<td>New Orleans</td>
+<td>70117</td>
+<td>USA</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Grandma Kelly's Homestead</td>
+<td>Regina Murphy</td>
+<td>707 Oxford Rd.</td>
+<td>Ann Arbor</td>
+<td>48104</td>
+<td>USA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>MySQL INSERT INTO SELECT Examples</h2>
+<p>The following SQL statement copies "Suppliers" into "Customers" (the columns that are not filled with data, will contain NULL):</p>
+<div>
+<h3>Example</h3>
+<div>INSERT INTO Customers (CustomerName, City, Country)<br />SELECT SupplierName, City, Country FROM Suppliers;</div>
+</div>
+<p>The following SQL statement copies "Suppliers" into "Customers" (fill all columns):</p>
+<div>
+<h3>Example</h3>
+<div>INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)<br />SELECT SupplierName, ContactName, Address, City, PostalCode, Country FROM Suppliers;</div>
+</div>
+<p>The following SQL statement copies only the German suppliers into "Customers":</p>
+<div>
+<h3>Example</h3>
+<div>INSERT INTO Customers (CustomerName, City, Country)<br />SELECT SupplierName, City, Country FROM Suppliers<br />WHERE Country='Germany';</div>
+</div>
+
+<h2>MySQL CASE Statement</h2>
+<p>The <code>CASE</code> statement goes through conditions and returns a value when the first condition is met (like an if-then-else statement). So, once a condition is true, it will stop reading and return the result. If no conditions are true, it returns the value in the <code>ELSE</code> clause.</p>
+<p>If there is no <code>ELSE</code> part and no conditions are true, it returns NULL.</p>
+<h2>CASE Syntax</h2>
+<div>
+<div>CASE<br />WHEN <em>condition1</em> THEN <em>result1</em><br />WHEN <em>condition2</em> THEN <em>result2</em><br />WHEN <em>conditionN</em> THEN <em>resultN</em><br />ELSE <em>result</em><br />END;</div>
+</div>
+<hr />
+<h2>Demo Database</h2>
+<p>Below is a selection from the "OrderDetails" table in the Northwind sample database:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>OrderDetailID</th>
+<th>OrderID</th>
+<th>ProductID</th>
+<th>Quantity</th>
+</tr>
+<tr>
+<td>1</td>
+<td>10248</td>
+<td>11</td>
+<td>12</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10248</td>
+<td>42</td>
+<td>10</td>
+</tr>
+<tr>
+<td>3</td>
+<td>10248</td>
+<td>72</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>10249</td>
+<td>14</td>
+<td>9</td>
+</tr>
+<tr>
+<td>5</td>
+<td>10249</td>
+<td>51</td>
+<td>40</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr /><hr />
+<h2>MySQL CASE Examples</h2>
+<p>The following SQL goes through conditions and returns a value when the first condition is met:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT OrderID, Quantity,<br />CASE<br />WHEN Quantity &gt; 30 THEN 'The quantity is greater than 30'<br />WHEN Quantity = 30 THEN 'The quantity is 30'<br />ELSE 'The quantity is under 30'<br />END AS QuantityText<br />FROM OrderDetails;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_case" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following SQL will order the customers by City. However, if City is NULL, then order by Country:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT CustomerName, City, Country<br />FROM Customers<br />ORDER BY<br />(CASE<br />WHEN City IS NULL THEN Country<br />ELSE City<br />END);</div>
+</div>
+
+<h2>MySQL IFNULL() and COALESCE() Functions</h2>
+<p>Look at the following "Products" table:</p>
+<div>
+<table>
+<tbody>
+<tr>
+<th>P_Id</th>
+<th>ProductName</th>
+<th>UnitPrice</th>
+<th>UnitsInStock</th>
+<th>UnitsOnOrder</th>
+</tr>
+<tr>
+<td>1</td>
+<td>Jarlsberg</td>
+<td>10.45</td>
+<td>16</td>
+<td>15</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Mascarpone</td>
+<td>32.56</td>
+<td>23</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Gorgonzola</td>
+<td>15.67</td>
+<td>9</td>
+<td>20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Suppose that the "UnitsOnOrder" column is optional, and may contain NULL values.</p>
+<p>Look at the following SELECT statement:</p>
+<div>
+<div>SELECT ProductName, UnitPrice * (UnitsInStock + UnitsOnOrder)<br />FROM Products;</div>
+</div>
+<p>In the example above, if any of the "UnitsOnOrder" values are NULL, the result will be NULL.</p>
+<hr />
+<h2>MySQL IFNULL() Function</h2>
+<p>The MySQL <code><a href="https://www.w3schools.com/mysql/func_mysql_ifnull.asp">IFNULL()</a></code> function lets you return an alternative value if an expression is NULL.</p>
+<p>The example below returns 0 if the value is NULL:</p>
+<div>
+<div>SELECT ProductName, UnitPrice * (UnitsInStock + IFNULL(UnitsOnOrder, 0))<br />FROM Products;</div>
+</div>
+<hr />
+<h2>MySQL COALESCE() Function</h2>
+<p>Or we can use the <code><a href="https://www.w3schools.com/mysql/func_mysql_coalesce.asp">COALESCE()</a></code> function, like this:</p>
+<div>
+<div>SELECT ProductName, UnitPrice * (UnitsInStock + COALESCE(UnitsOnOrder, 0))<br />FROM Products;</div>
+</div>
+
+<h2>MySQL Comments</h2>
+<p>Comments are used to explain sections of SQL statements, or to prevent execution of SQL statements.</p>
+<hr />
+<h2>Single Line Comments</h2>
+<p>Single line comments start with <code>--</code>.</p>
+<p>Any text between -- and the end of the line will be ignored (will not be executed).</p>
+<p>The following example uses a single-line comment as an explanation:</p>
+<div>
+<h3>Example</h3>
+<div>-- Select all:<br />SELECT * FROM Customers;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_comment_single_1" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following example uses a single-line comment to ignore the end of a line:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers -- WHERE City='Berlin';</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_comment_single_2" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following example uses a single-line comment to ignore a statement:</p>
+<div>
+<h3>Example</h3>
+<div>-- SELECT * FROM Customers;<br />SELECT * FROM Products;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_comment_single_3" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<hr /><hr />
+<h2>Multi-line Comments</h2>
+<p>Multi-line comments start with <code>/*</code> and end with <code>*/</code>.</p>
+<p>Any text between /* and */ will be ignored.</p>
+<p>The following example uses a multi-line comment as an explanation:</p>
+<div>
+<h3>Example</h3>
+<div>/*Select all the columns<br />of all the records<br />in the Customers table:*/<br />SELECT * FROM Customers;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_comment_multi_1" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following example uses a multi-line comment to ignore many statements:</p>
+<div>
+<h3>Example</h3>
+<div>/*SELECT * FROM Customers;<br />SELECT * FROM Products;<br />SELECT * FROM Orders;<br />SELECT * FROM Categories;*/<br />SELECT * FROM Suppliers;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_comment_multi_2" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>To ignore just a part of a statement, also use the /* */ comment.</p>
+<p>The following example uses a comment to ignore part of a line:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT CustomerName, /*City,*/ Country FROM Customers;</div>
+<a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_comment_part_1" target="_blank" rel="noopener">Try it Yourself &raquo;</a></div>
+<p>The following example uses a comment to ignore part of a statement:</p>
+<div>
+<h3>Example</h3>
+<div>SELECT * FROM Customers WHERE (CustomerName LIKE 'L%'<br />OR CustomerName LIKE 'R%' /*OR CustomerName LIKE 'S%'<br />OR CustomerName LIKE 'T%'*/ OR CustomerName LIKE 'W%')<br />AND Country='USA'<br />ORDER BY CustomerName;</div>
+</div>
+
+
+<h2>MySQL Arithmetic Operators</h2>
+<table>
+<tbody>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>+</td>
+<td>Add</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_add" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>-</td>
+<td>Subtract</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_subtract" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>*</td>
+<td>Multiply</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_multiply" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>/</td>
+<td>Divide</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_divide" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>%</td>
+<td>Modulo</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_modulo" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>MySQL Bitwise Operators</h2>
+<table>
+<tbody>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>Bitwise AND</td>
+</tr>
+<tr>
+<td>|</td>
+<td>Bitwise OR</td>
+</tr>
+<tr>
+<td>^</td>
+<td>Bitwise exclusive OR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>MySQL Comparison Operators</h2>
+<table>
+<tbody>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>=</td>
+<td>Equal to</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_equal_to" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>Greater than</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_greater_than" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>Less than</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_less_than" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>Greater than or equal to</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_greater_than2" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>Less than or equal to</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_less_than2" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>&lt;&gt;</td>
+<td>Not equal to</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_not_equal_to" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+</tbody>
+</table>
+<hr /><hr />
+<h2>MySQL Compound Operators</h2>
+<table>
+<tbody>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>+=</td>
+<td>Add equals</td>
+</tr>
+<tr>
+<td>-=</td>
+<td>Subtract equals</td>
+</tr>
+<tr>
+<td>*=</td>
+<td>Multiply equals</td>
+</tr>
+<tr>
+<td>/=</td>
+<td>Divide equals</td>
+</tr>
+<tr>
+<td>%=</td>
+<td>Modulo equals</td>
+</tr>
+<tr>
+<td>&amp;=</td>
+<td>Bitwise AND equals</td>
+</tr>
+<tr>
+<td>^-=</td>
+<td>Bitwise exclusive equals</td>
+</tr>
+<tr>
+<td>|*=</td>
+<td>Bitwise OR equals</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>MySQL Logical Operators</h2>
+<table>
+<tbody>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>ALL</td>
+<td>TRUE if all of the subquery values meet the condition</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_all" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>AND</td>
+<td>TRUE if all the conditions separated by AND is TRUE</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_and" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>ANY</td>
+<td>TRUE if any of the subquery values meet the condition</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_any" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>BETWEEN</td>
+<td>TRUE if the operand is within the range of comparisons</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_between" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>EXISTS</td>
+<td>TRUE if the subquery returns one or more records</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_exists" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>IN</td>
+<td>TRUE if the operand is equal to one of a list of expressions</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_in" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>LIKE</td>
+<td>TRUE if the operand matches a pattern</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_like" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>NOT</td>
+<td>Displays a record if the condition(s) is NOT TRUE</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_not" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>OR</td>
+<td>TRUE if any of the conditions separated by OR is TRUE</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_or" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+<tr>
+<td>SOME</td>
+<td>TRUE if any of the subquery values meet the condition</td>
+<td><a href="https://www.w3schools.com/mysql/trymysql.asp?filename=trysql_op_some" target="_blank" rel="noopener">Try it</a></td>
+</tr>
+</tbody>
+</table>
+
 
