@@ -1,0 +1,239 @@
+:root {
+    --font-family-primary: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-secondary: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-mono: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+    --color-primary: #212121;
+    --color-secondary: #212121;
+    --color-white:#ffffff;
+    --root-size: 16;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-semibold: 500;
+    --font-weight-bold: 700;
+
+
+    --colors-button-primary: var(--color-primary);
+    --colors-button-secondary: var(--color-secondary);
+    --colors-button-success: var(--color-success);
+    --colors-button-warning: var(--color-warning);
+    --colors-button-danger: var(--color-danger);
+    --colors-button-muted: var(--color-muted);
+    --colors-button-primary-hover: var(--color-primary-60);
+    --colors-button-secondary-hover: var(--color-secondary-60);
+    --colors-button-success-hover: var(--color-success-60);
+    --colors-button-warning-hover: var(--color-warning-60);
+    --colors-button-danger-hover: var(--color-danger-60);
+    --colors-button-muted-hover: var(--color-muted-60);
+
+    --button-font-size: var(--sizes-button-medium-text);
+    --button-font-typeface: var(--font-family-secondary);
+    --button-font-weight: 700;
+    --button-font-spacing: normal;
+    --button-font-transform: initial;
+    --button-border-width: 2px;
+    --button-border-color: inherit;
+    --button-border-radius: var(--radius);
+    --button-height: var(--sizes-button-medium-height);
+    --button-display: inline-flex;
+    --button-align-text: center;
+    --button-margin: 0;
+    --button-padding: 0 var(--sizes-button-medium-padding);
+    --sizes-button-height: 40px;
+    --sizes-button-padding: 10px;
+    --sizes-button-text: var(--sizes-text-small-size);
+    --sizes-button-small-height: 32px;
+    --sizes-button-small-padding: 8px;
+    --sizes-button-small-text: 1rem;
+    --sizes-button-medium-height: 48px;
+    --sizes-button-medium-padding: 16px;
+    --sizes-button-medium-text: 1.15rem;
+    --sizes-button-large-height: 56px;
+    --sizes-button-large-padding: 24px;
+    --sizes-button-large-text: 1.25rem;
+    --sizes-button-xsmall-height: 30px;
+    --sizes-button-xsmall-padding: 10px;
+    --sizes-button-xsmall-text: var(--sizes-text-xsmall-size);
+}
+
+
+
+
+header {
+    padding-top: 30px;
+}
+
+header,
+section {
+    width: 100%;
+    display: inline-block;
+}
+.container {
+    width: 1280px;
+    margin: auto;
+}
+.logo {
+    color:var(--color-primary);
+    font-size: 28px;
+    font-weight: 900;
+    padding: 0;
+    margin: 0;
+}
+
+.pullLeft {
+    float: left;
+}
+
+.pullRight {
+    float: right;
+}
+
+.col-lg-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%
+}
+
+.col-lg-6 {
+    flex: 0 0 auto;
+    width: 50%
+}
+
+.col-lg-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%
+}
+
+
+.hireme-btn {
+    color: #ffffff;
+    background-color: var(--colors-button-primary);
+}
+
+.fontColor {
+    color: #121212;
+}
+
+
+.main {
+    transform: rotate(8deg);
+    /* position: relative; */
+    position: absolute;
+    top: 120px;
+    right: 10%;
+    /* right: 90px; */
+    width: 360px;
+    height: 480px;
+    background-repeat: no-repeat;
+    z-index: 2;
+    border-radius: 15px;
+    background-color: #000000;
+}
+
+.shape {
+    background-color: #becbf1;
+    transform: rotate(-8deg);
+    /* position: relative; */
+    position: absolute;
+    top: 120px;
+    right: 14%;
+    /* right: 210px; */
+    width: 360px;
+    height: 480px;
+    z-index: 1;
+    border-radius: 15px;
+}
+
+
+.image-container {
+    width: 100%;
+    display: inline-block;
+}
+
+.yearsofexperience {
+    border-radius: 20%;
+    background-color: #e9e8ff;
+    color:var(--color-primary);
+    font-size: 120px;
+    font-weight: 900;
+}
+
+.clearfix::after {
+    display: block;
+    clear: both;
+    content: ""
+}
+
+.hidden {
+    display: none;
+}
+
+.servicebox {
+    background-color: #ffffff;
+    box-shadow: 1px 1px 3px #ddd;
+    width: 100%;
+    height: 100%;
+    margin: 5px 5px 5px 5px;
+    padding: 20px;
+    box-shadow: 2px 2px 2px #ddd;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    color:var(--color-primary);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* nav ul li a:hover:not(.active) {background-color: #111;} */
+.active {
+    background-color: #04AA6D;
+}
+
+
+
+.button {
+    box-sizing: border-box;
+    position: relative;
+    display: var(--button-display);
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--button-font-typeface, sans-serif);
+    font-weight: var(--button-font-weight, 700);
+    text-transform: var(--button-font-transform, initial);
+    font-size: var(--button-font-size);
+    height: var(--button-height);
+    padding: var(--button-padding);
+    margin: var(--button-margin);
+    color: var(--color-white);
+    text-align: var(--button-align-text);
+    text-decoration: none;
+    line-height: 1;
+    letter-spacing: var(--button-font-spacing, normal);
+    vertical-align: top;
+    border-radius: var(--button-border-radius, 5px);
+    outline: 0;
+    cursor: pointer;
+    transition: 250ms cubic-bezier(.53, .21, 0, 1)
+}
+
+.button:focus,
+.button:hover {
+    color: inherit
+}
