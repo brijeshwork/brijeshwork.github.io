@@ -805,7 +805,7 @@
         <tr><td><a href="https://www.w3schools.com/tags/tag_data.asp">&lt;data&gt;</a></td><td>Adds a machine-readable translation of a given content</td></tr>
         </tbody>
     </table>
-<div class="container-fix">
+<div class="hidden container-fix">
     <div class="container">
         <div class="row">
             <h2>Meta Info</h2>
@@ -842,114 +842,103 @@
         <p>Metadata typically define the document title, character set, styles, scripts, and other meta information.</p>
         <p>The following elements can go inside the <code>&lt;head&gt;</code> element:</p>
         <ul>
-        <li><a href="https://www.w3schools.com/tags/tag_title.asp">&lt;title&gt;</a> (required in every HTML document)</li>
-        <li><a href="https://www.w3schools.com/tags/tag_style.asp">&lt;style&gt;</a></li>
-        <li><a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a></li>
-        <li><a href="https://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a></li>
-        <li><a href="https://www.w3schools.com/tags/tag_meta.asp">&lt;meta&gt;</a></li>
-        <li><a href="https://www.w3schools.com/tags/tag_script.asp">&lt;script&gt;</a></li>
-        <li><a href="https://www.w3schools.com/tags/tag_noscript.asp">&lt;noscript&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_title.asp">&lt;title&gt;</a> (required in every HTML document)</li>
+            <li><a href="https://www.w3schools.com/tags/tag_style.asp">&lt;style&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_meta.asp">&lt;meta&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_script.asp">&lt;script&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_noscript.asp">&lt;noscript&gt;</a></li>
         </ul>
         <p>Example</p>
         <p>The <a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a> tag (specifies a default URL and target for all links on a page) goes inside &lt;head&gt;:</p>
-        </div>
+    
+        <xmp>
+            <html>
+                <head>
+                    <base href="https://www.w3schools.com/" target="_blank">
+                </head>
+                <body>
+                    <img src="images/stickman.gif" width="24" height="39" alt="Stickman">
+                    <a href="tags/tag_base.asp">HTML base Tag</a>
+                </body>
+            </html>
+        </xmp>
     </div>
-    <xmp>
-        <html>
+
+    <div class="container">
+        <h2>HTML &lt;meta&gt; Tag</h2>
+        <p>Example <br />Describe metadata within an HTML document:</p>
+        <xmp>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="description" content="Free Web tutorials">
+                <meta name="keywords" content="HTML, CSS, JavaScript">
+                <meta name="author" content="John Doe">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            </head>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;meta&gt;</code> tag defines metadata about an HTML document. Metadata is data (information) about data.</p>
+        <p><code>&lt;meta&gt;</code> tags always go inside the &lt;head&gt; element, and are typically used to specify character set, page description, keywords, author of the document, and viewport settings.</p>
+        <p>Metadata will not be displayed on the page, but is machine parsable.</p>
+        <p>Metadata is used by browsers (how to display content or reload page), search engines (keywords), and other web services.</p>
+        <p>There is a method to let web designers take control over the viewport (the user's visible area of a web page), through the <code>&lt;meta&gt;</code> tag (See "Setting The Viewport" example below).</p>
+
+        <table class="table table-bordered">
+            <tbody>
+            <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_meta_charset.asp">charset</a></td><td><em>character_set</em></td><td>Specifies the character encoding for the HTML document</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_meta_content.asp">content</a></td><td><em>text</em></td><td>Specifies the value associated with the http-equiv or name attribute</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_meta_http_equiv.asp">http-equiv</a></td><td>content-security-policy<br/>content-type<br/>default-style<br/>refresh</td><td>Provides an HTTP header for the information/value of the content attribute</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_meta_name.asp">name</a></td><td>application-name<br/>author<br/>description<br/>generator<em><br/></em>keywords<br/>viewport</td><td>Specifies a name for the metadata</td></tr>
+            </tbody>
+        </table>
+        <p>Examples</p>
+        <p>Define keywords for search engines:</p>
+        <xmp><meta name="keywords" content="HTML, CSS, JavaScript"></xmp>
+        <p>Define a description of your web page:</p>
+        <xmp><meta name="description" content="Free Web tutorials for HTML and CSS"></xmp>
+        <p>Define the author of a page:</p>
+        <xmp><meta name="author" content="John Doe"></xmp>
+        <p>Refresh document every 30 seconds:</p>
+        <xmp><meta http-equiv="refresh" content="30"></xmp>
+        <p>Setting the viewport to make your website look good on all devices:</p>
+        <xmp><meta name="viewport" content="width=device-width, initial-scale=1.0"></xmp>
+        <h3>Setting the Viewport</h3>
+        <p>The viewport is the user's visible area of a web page. It varies with the device - it will be smaller on a mobile phone than on a computer screen.</p>
+        <p>You should include the following <code>&lt;meta&gt;</code> element in all your web pages:</p>
+        <xmp><meta name="viewport" content="width=device-width, initial-scale=1.0"></xmp>
+        <p>This gives the browser instructions on how to control the page's dimensions and scaling.</p>
+        <p>The&nbsp;<code>width=device-width</code>&nbsp;part sets the width of the page to follow the screen-width of the device (which will vary depending on the device).</p>
+        <p>The&nbsp;<code>initial-scale=1.0</code>&nbsp;part sets the initial zoom level when the page is first loaded by the browser.</p>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;base&gt; Tag</h2>
+        <p>Example <br />Specify a default URL and a default target for all links on a page:</p>
+        <xmp>
             <head>
                 <base href="https://www.w3schools.com/" target="_blank">
             </head>
+            
             <body>
-                <img src="images/stickman.gif" width="24" height="39" alt="Stickman">
-                <a href="tags/tag_base.asp">HTML base Tag</a>
+            <img src="images/stickman.gif" width="24" height="39" alt="Stickman">
+            <a href="tags/tag_base.asp">HTML base Tag</a>
             </body>
-        </html>
-    </xmp>
-<div class="container">
-    <h2>HTML &lt;meta&gt; Tag</h2>
-    <p>Example <br />Describe metadata within an HTML document:</p>
-    <xmp>
-        <head>
-            <meta charset="UTF-8">
-            <meta name="description" content="Free Web tutorials">
-            <meta name="keywords" content="HTML, CSS, JavaScript">
-            <meta name="author" content="John Doe">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          </head>
-    </xmp>
-    <p>Definition and Usage</p>
-<p>The <code>&lt;meta&gt;</code> tag defines metadata about an HTML document. Metadata is data (information) about data.</p>
-<p><code>&lt;meta&gt;</code> tags always go inside the &lt;head&gt; element, and are typically used to specify character set, page description, keywords, author of the document, and viewport settings.</p>
-<p>Metadata will not be displayed on the page, but is machine parsable.</p>
-<p>Metadata is used by browsers (how to display content or reload page), search engines (keywords), and other web services.</p>
-<p>There is a method to let web designers take control over the viewport (the user's visible area of a web page), through the <code>&lt;meta&gt;</code> tag (See "Setting The Viewport" example below).</p>
+        </xmp>
+        <h3>Definition and Usage</h3>
+        <p>The <code>&lt;base&gt;</code> tag specifies the base URL and/or target for all relative URLs in a document.</p>
+        <p>The <code>&lt;base&gt;</code> tag must have either an href or a target attribute present, or both.</p>
+        <p>There can only be one single <code>&lt;base&gt;</code> element in a document, and it must be inside the &lt;head&gt; element.</p>
 
-<table class="table table-bordered">
-    <tbody>
-    <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
-    <tr><td><a href="https://www.w3schools.com/tags/att_meta_charset.asp">charset</a></td><td><em>character_set</em></td><td>Specifies the character encoding for the HTML document</td></tr>
-    <tr><td><a href="https://www.w3schools.com/tags/att_meta_content.asp">content</a></td><td><em>text</em></td><td>Specifies the value associated with the http-equiv or name attribute</td></tr>
-    <tr><td><a href="https://www.w3schools.com/tags/att_meta_http_equiv.asp">http-equiv</a></td><td>content-security-policy<br/>content-type<br/>default-style<br/>refresh</td><td>Provides an HTTP header for the information/value of the content attribute</td></tr>
-    <tr><td><a href="https://www.w3schools.com/tags/att_meta_name.asp">name</a></td><td>application-name<br/>author<br/>description<br/>generator<em><br/></em>keywords<br/>viewport</td><td>Specifies a name for the metadata</td></tr>
-    </tbody>
-</table>
-<p>Examples</p>
-<p>Define keywords for search engines:</p>
-<xmp><meta name="keywords" content="HTML, CSS, JavaScript"></xmp>
-<p>Define a description of your web page:</p>
-<xmp><meta name="description" content="Free Web tutorials for HTML and CSS"></xmp>
-<p>Define the author of a page:</p>
-<xmp><meta name="author" content="John Doe"></xmp>
-<p>Refresh document every 30 seconds:</p>
-<xmp><meta http-equiv="refresh" content="30"></xmp>
-<p>Setting the viewport to make your website look good on all devices:</p>
-<xmp><meta name="viewport" content="width=device-width, initial-scale=1.0"></xmp>
-<h3>Setting the Viewport</h3>
-<p>The viewport is the user's visible area of a web page. It varies with the device - it will be smaller on a mobile phone than on a computer screen.</p>
-<p>You should include the following <code>&lt;meta&gt;</code> element in all your web pages:</p>
-<xmp><meta name="viewport" content="width=device-width, initial-scale=1.0"></xmp>
-<p>This gives the browser instructions on how to control the page's dimensions and scaling.</p>
-<p>The&nbsp;<code>width=device-width</code>&nbsp;part sets the width of the page to follow the screen-width of the device (which will vary depending on the device).</p>
-<p>The&nbsp;<code>initial-scale=1.0</code>&nbsp;part sets the initial zoom level when the page is first loaded by the browser.</p>
-</div>
-<div class="container">
-    <h2>HTML &lt;base&gt; Tag</h2>
-    <p>Example <br />Specify a default URL and a default target for all links on a page:</p>
-    <xmp>
-        <head>
-            <base href="https://www.w3schools.com/" target="_blank">
-          </head>
-          
-          <body>
-          <img src="images/stickman.gif" width="24" height="39" alt="Stickman">
-          <a href="tags/tag_base.asp">HTML base Tag</a>
-          </body>
-    </xmp>
-    <h3>Definition and Usage</h3>
-<p>The <code>&lt;base&gt;</code> tag specifies the base URL and/or target for all relative URLs in a document.</p>
-<p>The <code>&lt;base&gt;</code> tag must have either an href or a target attribute present, or both.</p>
-<p>There can only be one single <code>&lt;base&gt;</code> element in a document, and it must be inside the &lt;head&gt; element.</p>
-
-<table class="table table-bordered">
-    <tbody>
-    <tr>
-    <th>Attribute</th>
-    <th>Value</th>
-    <th>Description</th>
-    </tr>
-    <tr>
-    <td><a href="https://www.w3schools.com/tags/att_base_href.asp">href</a></td>
-    <td><em>URL</em></td>
-    <td>Specifies the base URL for all relative URLs in the page</td>
-    </tr>
-    <tr>
-    <td><a href="https://www.w3schools.com/tags/att_base_target.asp">target</a></td>
-    <td>_blank<br/>_parent<br/>_self<br/>_top</td>
-    <td>Specifies the default target for all hyperlinks and forms in the page</td>
-    </tr>
-    </tbody>
-</table>
-
+        <table class="table table-bordered">
+            <tbody>
+                <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_base_href.asp">href</a></td><td><em>URL</em></td><td>Specifies the base URL for all relative URLs in the page</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_base_target.asp">target</a></td><td>_blank<br/>_parent<br/>_self<br/>_top</td><td>Specifies the default target for all hyperlinks and forms in the page</td></tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="hidden container-fix">
