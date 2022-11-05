@@ -1,12 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">    
-
-
-
 <title>HTML5 Tutorial | Brijesh</title>
 <meta name="description" content="HTML5 Tutorial | Brijesh">
 <meta name="author" content="Brijesh">
@@ -29,8 +25,6 @@
 <meta name="twitter:data1" content="Brijesh Patel" />
 <meta name="twitter:label2" content="Est. reading time" />
 <meta name="twitter:data2" content="9 minutes" />
-
-
 <script type="text/javascript">
   (function(c,l,a,r,i,t,y){
       c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -43,9 +37,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-
-
     <header class="header">
         <div class="container">
           <nav>
@@ -70,10 +61,12 @@
           </nav>
         </div>
       </header>
-
-    <h2>Basic HTML</h2>
-    <table>
-        <tbody>
+<div class="container-fix">
+<div class="container">
+<div class="row">
+<h2>Basic HTML</h2>
+<table class="table table-bordered">
+    <tbody>
         <tr><th>Tag</th><th>Description</th></tr>
         <tr><td><a href="https://www.w3schools.com/tags/tag_doctype.asp">&lt;!DOCTYPE&gt;</a>&nbsp;</td><td>Defines the document type</td></tr>
         <tr><td><a href="https://www.w3schools.com/tags/tag_html.asp">&lt;html&gt;</a></td><td>Defines an HTML document</td></tr>
@@ -85,9 +78,322 @@
         <tr><td><a href="https://www.w3schools.com/tags/tag_br.asp">&lt;br&gt;</a></td><td>Inserts a single line break</td></tr>
         <tr><td><a href="https://www.w3schools.com/tags/tag_hr.asp">&lt;hr&gt;</a></td><td>Defines a thematic change in the content</td></tr>
         <tr><td><a href="https://www.w3schools.com/tags/tag_comment.asp">&lt;!--...--&gt;</a></td><td>Defines a comment</td></tr>
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
+
+</div>
+
+</div>
+<div class="container">
+    <h2>HTML &lt;!DOCTYPE&gt; Declaration</h2>
+<xmp>
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Title of the document</title>
+    </head>
+    <body>
+        The content of the document......
+    </body>
+    </html>
+</xmp>
+
+<h2>Definition and Usage</h2>
+<p>All HTML documents must start with a <code>&lt;!DOCTYPE&gt;</code> declaration.</p>
+<p>The declaration is not an HTML tag. It is an "information" to the browser about what document type to expect.</p>
+<p>In HTML 5, the declaration is simple:</p>
+<div>
+<div>&lt;!DOCTYPE html&gt;</div>
+<div>
+<h2>Older HTML Documents</h2>
+<p>In older documents (HTML 4 or XHTML), the declaration is more complicated because the declaration must refer to a DTD (Document Type Definition).</p>
+<p>HTML 4.01:</p>
+<div>
+<div>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</div>
+</div>
+<p>XHTML 1.1:</p>
+<div>
+<div>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;</div>
+<div>
+<h2>Tips and Notes</h2>
+<p><strong>Tip:</strong> The <code>&lt;!DOCTYPE&gt;</code> declaration is NOT case sensitive.</p>
+<div>
+<h3>Examples</h3>
+<div>&lt;!DOCTYPE html&gt;</div>
+<div>&lt;!DocType html&gt;</div>
+<div>&lt;!Doctype html&gt;</div>
+<div>&lt;!doctype html&gt;</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="container">
+    <h2>HTML&nbsp;&lt;html&gt;&nbsp;Tag</h2>
+<h3>Example</h3>
+
+
+<p>A simple HTML document:</p>
+<div>&lt;!DOCTYPE&nbsp;html&gt;<br />&lt;html&nbsp;lang="en"&gt;<br />&lt;head&gt;<br />&lt;title&gt;Title of the document&lt;/title&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;This is a heading&lt;/h1&gt;<br />&lt;p&gt;This is a paragraph.&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+
+<div>
+<h2>Definition and Usage</h2>
+<p>The&nbsp;<code>&lt;html&gt;</code>&nbsp;tag represents the root of an HTML document.</p>
+<p>The&nbsp;<code>&lt;html&gt;</code>&nbsp;tag is the container for all other HTML elements (except for the&nbsp;<a href="https://www.w3schools.com/tags/tag_doctype.asp">&lt;!DOCTYPE&gt;</a>&nbsp;tag).</p>
+<p><strong>Note:</strong>&nbsp;You should always include the&nbsp;<a href="https://www.w3schools.com/tags/att_global_lang.asp">lang</a>&nbsp;attribute inside the&nbsp;<code>&lt;html&gt;</code>&nbsp;tag, to declare the language of the Web page. This is meant to assist search engines and browsers.</p>
+<h2>Attributes</h2>
+<table class="table table-bordered">
+<tbody>
+<tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+<tr><td><a href="https://www.w3schools.com/tags/att_html_xmlns.asp">xmlns</a></td><td>http://www.w3.org/1999/xhtml</td><td>Specifies the XML namespace attribute (If you need your content to conform to XHTML)</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="container">
+    <h2>HTML &lt;head&gt; Tag</h2>
+<h3>Example</h3>
+<p>&lt;!DOCTYPE html&gt;<br />&lt;html lang="en"&gt;<br />&lt;head&gt;<br />&lt;title&gt;Title of the document&lt;/title&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;This is a heading&lt;/h1&gt;<br />&lt;p&gt;This is a paragraph.&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+<h2>Definition and Usage</h2>
+<p>The <code>&lt;head&gt;</code> element is a container for metadata (data about data) and is placed between the &lt;html&gt; tag and the &lt;body&gt; tag.</p>
+<p>Metadata is data about the HTML document. Metadata is not displayed.</p>
+<p>Metadata typically define the document title, character set, styles, scripts, and other meta information.</p>
+<p>The following elements can go inside the <code>&lt;head&gt;</code> element:</p>
+<ul>
+<li><a href="https://www.w3schools.com/tags/tag_title.asp">&lt;title&gt;</a> (required in every HTML document)</li>
+<li><a href="https://www.w3schools.com/tags/tag_style.asp">&lt;style&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_meta.asp">&lt;meta&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_script.asp">&lt;script&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_noscript.asp">&lt;noscript&gt;</a></li>
+</ul>
+<h2>More Examples</h2>
+<p>The <a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a> tag (specifies a default URL and target for all links on a page) goes inside &lt;head&gt;:</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;base href="https://www.w3schools.com/" target="_blank"&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;img src="images/stickman.gif" width="24" height="39" alt="Stickman"&gt;<br />&lt;a href="tags/tag_base.asp"&gt;HTML base Tag&lt;/a&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+<p>The <a href="https://www.w3schools.com/tags/tag_style.asp">&lt;style&gt;</a> tag (adds style information to a page) goes inside &lt;head&gt;:</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;style&gt;<br />h1 {color:red;}<br />p {color:blue;}<br />&lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;A heading&lt;/h1&gt;<br />&lt;p&gt;A paragraph.&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+<p>The <a href="https://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a> tag (links to an external style sheet) goes inside &lt;head&gt;:</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;link rel="stylesheet" type="text/css" href="styles.css"&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;I am formatted with a linked style sheet&lt;/h1&gt;<br />&lt;p&gt;Me too!&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+<p>Most browsers will display the <code>&lt;head&gt;</code> element with the following default values:</p>
+<p>head {<br />display: none;<br />}</p>
+</div>
+<div class="container">
+    <h2>HTML &lt;title&gt; Tag</h2>
+<h3>Example</h3>
+<p>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;head&gt;<br />&lt;title&gt;HTML Elements Reference&lt;/title&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;This is a heading&lt;/h1&gt;<br />&lt;p&gt;This is a paragraph.&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+<h2>Definition and Usage</h2>
+<p>The <code>&lt;title&gt;</code> tag defines the title of the document. The title must be text-only, and it is shown in the browser's title bar or in the page's tab.</p>
+<p>The <code>&lt;title&gt;</code> tag is required in HTML documents!</p>
+<p>The contents of a page title is very important for search engine optimization (SEO)! The page title is used by search engine algorithms to decide the order when listing pages in search results.</p>
+<p>The <code>&lt;title&gt;</code> element:</p>
+<ul>
+<li>defines a title in the browser toolbar</li>
+<li>provides a title for the page when it is added to favorites</li>
+<li>displays a title for the page in search-engine results</li>
+</ul>
+<p>Here are some tips for creating good titles:</p>
+<ul>
+<li>Go for a longer, descriptive title (avoid one- or two-word titles)</li>
+<li>Search engines will display about 50-60 characters of the title, so try not to have titles longer than that</li>
+<li>Do not use just a list of words as the title (this may reduce the page's position in search results)</li>
+</ul>
+<p>So, try to make the title as accurate and meaningful as possible!</p>
+<p><strong>Note:</strong> You can NOT have more than one <code>&lt;title&gt;</code> element in an HTML document.</p>
+</div>
+<div class="container">
+    <h2>HTML &lt;body&gt; Tag</h2>
+<h3>Example</h3>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;title&gt;Title of the document&lt;/title&gt;<br />&lt;/head&gt;<br /><br />&lt;body&gt;<br />&lt;h1&gt;This is a heading&lt;/h1&gt;<br />&lt;p&gt;This is a paragraph.&lt;/p&gt;<br />&lt;/body&gt;<br /><br />&lt;/html&gt;</p>
+<h2>Definition and Usage</h2>
+<p>The <code>&lt;body&gt;</code> tag defines the document's body.</p>
+<p>The <code>&lt;body&gt;</code> element contains all the contents of an HTML document, such as headings, paragraphs, images, hyperlinks, tables, lists, etc.</p>
+<p><strong>Note:</strong> There can only be one <code>&lt;body&gt;</code> element in an HTML document.</p>
+<h2>More Examples</h2>
+<p>Add a background image to a document (with CSS):</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;style&gt;<br />body {<br />background-image: url(w3s.png);<br />}<br />&lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;Hello world!&lt;/h1&gt;<br />&lt;p&gt;&lt;a href="https://www.w3schools.com"&gt;Visit W3Schools.com!&lt;/a&gt;&lt;/p&gt;<br /><br />&lt;/body&gt;</p>
+<p>Set the background color of a document (with CSS):</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;style&gt;<br />body {<br />background-color: #E6E6FA;<br />}<br />&lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;Hello world!&lt;/h1&gt;<br />&lt;p&gt;&lt;a href="https://www.w3schools.com"&gt;Visit W3Schools.com!&lt;/a&gt;&lt;/p&gt;<br /><br />&lt;/body&gt;</p>
+<p>Set the color of text in a document (with CSS):</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;style&gt;<br />body {<br />color: green;<br />}<br />&lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;Hello world!&lt;/h1&gt;<br />&lt;p&gt;This is some text.&lt;/p&gt;<br />&lt;p&gt;&lt;a href="https://www.w3schools.com"&gt;Visit W3Schools.com!&lt;/a&gt;&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+<p>Set the color of unvisited links in a document (with CSS):</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;style&gt;<br />a:link {<br />color:#0000FF;<br />}<br />&lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;p&gt;&lt;a href="https://www.w3schools.com"&gt;W3Schools.com&lt;/a&gt;&lt;/p&gt;<br />&lt;p&gt;&lt;a href="https://www.w3schools.com/html/"&gt;HTML Tutorial&lt;/a&gt;&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+<p>Set the color of active links in a document (with CSS):</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;style&gt;<br />a:active {<br />color:#00FF00;<br />}<br />&lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;p&gt;&lt;a href="https://www.w3schools.com"&gt;W3Schools.com&lt;/a&gt;&lt;/p&gt;<br />&lt;p&gt;&lt;a href="https://www.w3schools.com/html/"&gt;HTML Tutorial&lt;/a&gt;&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+<p>Set the color of visited links in a document (with CSS):</p>
+<p>&lt;html&gt;<br />&lt;head&gt;<br />&lt;style&gt;<br />a:visited {<br />color:#FF0000;<br />}<br />&lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;p&gt;&lt;a href="https://www.w3schools.com"&gt;W3Schools.com&lt;/a&gt;&lt;/p&gt;<br />&lt;p&gt;&lt;a href="https://www.w3schools.com/html/"&gt;HTML Tutorial&lt;/a&gt;&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</p>
+</div>
+<div class="container">
+    <h2>HTML &lt;h1&gt; to &lt;h6&gt; Tags</h2>
+<h3>Example</h3>
+<p>The six different HTML headings:</p>
+<p>&lt;h1&gt;This is heading 1&lt;/h1&gt;<br />&lt;h2&gt;This is heading 2&lt;/h2&gt;<br />&lt;h3&gt;This is heading 3&lt;/h3&gt;<br />&lt;h4&gt;This is heading 4&lt;/h4&gt;<br />&lt;h5&gt;This is heading 5&lt;/h5&gt;<br />&lt;h6&gt;This is heading 6&lt;/h6&gt;</p>
+<h2>Definition and Usage</h2>
+<p>The <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> tags are used to define HTML headings.</p>
+<p><code>&lt;h1&gt;</code> defines the most important heading. <code>&lt;h6&gt;</code> defines the least important heading.</p>
+<p><strong>Note:</strong> Only use one <code>&lt;h1&gt;</code> per page - this should represent the main heading/subject for the whole page. Also, do not skip heading levels - start with <code>&lt;h1&gt;</code>, then use <code>&lt;h2&gt;</code>, and so on.</p>
+<h2>More Examples</h2>
+<div>
+<h3>Example</h3>
+<p>Set the background color and text color of headings (with CSS):</p>
+<div>&lt;h1 style="background-color:DodgerBlue;"&gt;Hello World&lt;/h1&gt;<br />&lt;h2 style="color:Tomato;"&gt;Hello World&lt;/h2&gt;</div>
+<div>
+<p>Set the alignment of headings (with CSS):</p>
+<div>&lt;h1 style="text-align:center"&gt;This is heading 1&lt;/h1&gt;<br />&lt;h2 style="text-align:left"&gt;This is heading 2&lt;/h2&gt;<br />&lt;h3 style="text-align:right"&gt;This is heading 3&lt;/h3&gt;<br />&lt;h4 style="text-align:justify"&gt;This is heading 4&lt;/h4&gt;</div>
+<div>
+<h2>Default CSS Settings</h2>
+<p>Most browsers will display the <code>&lt;h1&gt;</code> element with the following default values:</p>
+<div>
+<h3>Example</h3>
+<div>h1 {<br />display: block;<br />font-size: 2em;<br />margin-top: 0.67em;<br />margin-bottom: 0.67em;<br />margin-left: 0;<br />margin-right: 0;<br />font-weight: bold;<br />}</div>
+<div>
+<p>Most browsers will display the <code>&lt;h2&gt;</code> element with the following default values:</p>
+<div>
+<h3>Example</h3>
+<div>h2 {<br />display: block;<br />font-size: 1.5em;<br />margin-top: 0.83em;<br />margin-bottom: 0.83em;<br />margin-left: 0;<br />margin-right: 0;<br />font-weight: bold;<br />}</div>
+<div>
+<p>Most browsers will display the <code>&lt;h3&gt;</code> element with the following default values:</p>
+<div>
+<h3>Example</h3>
+<div>h3 {<br />display: block;<br />font-size: 1.17em;<br />margin-top: 1em;<br />margin-bottom: 1em;<br />margin-left: 0;<br />margin-right: 0;<br />font-weight: bold;<br />}</div>
+<div>
+<p>Most browsers will display the <code>&lt;h4&gt;</code> element with the following default values:</p>
+<div>
+<h3>Example</h3>
+<div>h4 {<br />display: block;<br />font-size: 1em;<br />margin-top: 1.33em;<br />margin-bottom: 1.33em;<br />margin-left: 0;<br />margin-right: 0;<br />font-weight: bold;<br />}</div>
+<div>
+<p>Most browsers will display the <code>&lt;h5&gt;</code> element with the following default values:</p>
+<div>
+<h3>Example</h3>
+<div>h5 {<br />display: block;<br />font-size: .83em;<br />margin-top: 1.67em;<br />margin-bottom: 1.67em;<br />margin-left: 0;<br />margin-right: 0;<br />font-weight: bold;<br />}</div>
+<div>
+<p>Most browsers will display the <code>&lt;h6&gt;</code> element with the following default values:</p>
+<div>
+<h3>Example</h3>
+<div>h6 {<br />display: block;<br />font-size: .67em;<br />margin-top: 2.33em;<br />margin-bottom: 2.33em;<br />margin-left: 0;<br />margin-right: 0;<br />font-weight: bold;<br />}</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+    <h2>HTML &lt;p&gt; Tag</h2>
+<h3>Example</h3>
+<p>A paragraph is marked up as follows:</p>
+<div>&lt;p&gt;This is some text in a paragraph.&lt;/p&gt;</div>
+<div>
+<h2>Definition and Usage</h2>
+<p>The <code>&lt;p&gt;</code> tag defines a paragraph.</p>
+<p>Browsers automatically add a single blank line before and after each <code>&lt;p&gt;</code> element.</p>
+<h3>Example</h3>
+<p>Align text in a paragraph (with CSS):</p>
+<div>&lt;p style="text-align:right"&gt;This is some text in a paragraph.&lt;/p&gt;</div>
+<div>
+<p>Style paragraphs with CSS:</p>
+<div>&lt;html&gt;<br />&lt;head&gt;<br />&lt;style&gt;<br />p {<br />color: navy;<br />text-indent: 30px;<br />text-transform: uppercase;<br />}<br />&lt;/style&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+<div>
+<p>More on paragraphs:</p>
+<div>&lt;p&gt;<br />This paragraph<br />contains a lot of lines<br />in the source code,<br />but the browser<br />ignores it.<br />&lt;/p&gt;</div>
+<div>
+<p>Poem problems in HTML:</p>
+<div>&lt;p&gt;<br />My Bonnie lies over the ocean.<br />My Bonnie lies over the sea.<br />My Bonnie lies over the ocean.<br />Oh, bring back my Bonnie to me.<br />&lt;/p&gt;</div>
+<div>
+<h2>Default CSS Settings</h2>
+<p>Most browsers will display the <code>&lt;p&gt;</code> element with the following default values:</p>
+<div>
+<h3>Example</h3>
+<div>p {<br />display: block;<br />margin-top: 1em;<br />margin-bottom: 1em;<br />margin-left: 0;<br />margin-right: 0;<br />}</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+    <h2>HTML &lt;br&gt; Tag</h2>
+<h3>Example</h3>
+<p>Insert single line breaks in a text:</p>
+<div>&lt;p&gt;To force&lt;br&gt; line breaks&lt;br&gt; in a text,&lt;br&gt; use the br&lt;br&gt; element.&lt;/p&gt;</div>
+<div>
+<h2>Definition and Usage</h2>
+<p>The <code>&lt;br&gt;</code> tag inserts a single line break.</p>
+<p>The <code>&lt;br&gt;</code> tag is useful for writing addresses or poems.</p>
+<p>The <code>&lt;br&gt;</code> tag is an empty tag which means that it has no end tag.</p>
+<h2>Tips and Notes</h2>
+<p><strong>Note:</strong> Use the <code>&lt;br&gt;</code> tag to enter line breaks, not to add space between paragraphs.</p>
+<h3>Example</h3>
+<p>Use &lt;br&gt; in a poem:</p>
+<div>&lt;p&gt;Be not afraid of greatness.&lt;br&gt;<br />Some are born great,&lt;br&gt;<br />some achieve greatness,&lt;br&gt;<br />and others have greatness thrust upon them.&lt;/p&gt;<br /><br />&lt;p&gt;&lt;em&gt;-William Shakespeare&lt;/em&gt;&lt;/p&gt;</div>
+</div>
+</div>
+<div class="container">
+    <h2>HTML &lt;hr&gt; Tag</h2>
+<h3>Example</h3>
+<p>Use the &lt;hr&gt; tag to define thematic changes in the content:</p>
+<div>&lt;h1&gt;The Main Languages of the Web&lt;/h1&gt;<br /><br />&lt;p&gt;HTML is the standard markup language for creating Web pages. HTML describes the structure of a Web page, and consists of a series of elements. HTML elements tell the browser how to display the content.&lt;/p&gt;<br /><br />&lt;hr&gt;<br /><br />&lt;p&gt;CSS is a language that describes how HTML elements are to be displayed on screen, paper, or in other media. CSS saves a lot of work, because it can control the layout of multiple web pages all at once.&lt;/p&gt;<br /><br />&lt;hr&gt;<br /><br />&lt;p&gt;JavaScript is the programming language of HTML and the Web. JavaScript can change HTML content and attribute values. JavaScript can change CSS. JavaScript can hide and show HTML elements, and more.&lt;/p&gt;</div>
+<div>
+<h2>Definition and Usage</h2>
+<p>The <code>&lt;hr&gt;</code> tag defines a thematic break in an HTML page (e.g. a shift of topic).</p>
+<p>The <code>&lt;hr&gt;</code> element is most often displayed as a horizontal rule that is used to separate content (or define a change) in an HTML page.</p>
+<h3>Example</h3>
+<p>Align a &lt;hr&gt; element (with CSS):</p>
+<div>&lt;hr style="width:50%;text-align:left;margin-left:0"&gt;</div>
+<div>
+<p>A noshaded &lt;hr&gt; (with CSS):</p>
+<div>&lt;hr style="height:2px;border-width:0;color:gray;background-color:gray"&gt;</div>
+<div>
+<p>Set the height of a &lt;hr&gt; element (with CSS):</p>
+<div>&lt;hr style="height:30px"&gt;</div>
+<div>
+<p>Set the width of a &lt;hr&gt; element (with CSS):</p>
+<div>&lt;hr style="width:50%"&gt;</div>
+<div>
+<h2>Default CSS Settings</h2>
+<p>Most browsers will display the <code>&lt;hr&gt;</code> element with the following default values:</p>
+<div>
+<h3>Example</h3>
+<div>hr {<br />display: block;<br />margin-top: 0.5em;<br />margin-bottom: 0.5em;<br />margin-left: auto;<br />margin-right: auto;<br />border-style: inset;<br />border-width: 1px;<br />}</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+    <h2>HTML &lt;!--...--&gt; Tag</h2>
+<p>An HTML comment:</p>
+<div>&lt;!--This is a comment. Comments are not displayed in the browser--&gt;<br /><br />&lt;p&gt;This is a paragraph.&lt;/p&gt;</div>
+<div>
+<h2>Definition and Usage</h2>
+<p>The comment tag is used to insert comments in the source code. Comments are not displayed in the browsers.</p>
+<p>You can use comments to explain your code, which can help you when you edit the source code at a later date. This is especially useful if you have a lot of code.</p>
+<h2>Tips and Notes</h2>
+<p>You can use the comment tag to "hide" scripts from browsers without support for scripts (so they don't show them as plain text):</p>
+<div>
+<div>&lt;script type="text/javascript"&gt;<br />&lt;!--<br />function displayMsg() {<br />alert("Hello World!")<br />}<br />//--&gt;<br />&lt;/script&gt; </div>
+</div>
+<p><strong>Note:</strong> The two forward slashes at the end of comment line (//) is the JavaScript comment symbol. This prevents JavaScript from executing the --&gt; tag.</p>
+</div>
+</div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
     <h2>Formatting</h2>
     <table>
         <tbody>
@@ -133,6 +439,10 @@
         <tr><td><a href="https://www.w3schools.com/tags/tag_wbr.asp">&lt;wbr&gt;</a></td><td>Defines a possible line-break</td></tr>
         </tbody>
     </table>
+        </div>
+        </div>
+        </div>
+
     <h2>Forms and Input</h2>
     <table>
         <tbody>
@@ -495,29 +805,256 @@
         <tr><td><a href="https://www.w3schools.com/tags/tag_data.asp">&lt;data&gt;</a></td><td>Adds a machine-readable translation of a given content</td></tr>
         </tbody>
     </table>
-    <h2>Meta Info</h2>
-    <table>
-        <tbody>
-        <tr><th>Tag</th><th>Description</th></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_head.asp">&lt;head&gt;</a></td><td>Defines information about the document</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_meta.asp">&lt;meta&gt;</a></td><td>Defines metadata about an HTML document</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a></td><td>Specifies the base URL/target for all relative URLs in a document</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_basefont.asp">&lt;basefont&gt;</a></td><td>Not supported in HTML5. Use CSS instead.<br />Specifies a default color, size, and font for all text in a document</td></tr>
-        </tbody>
-    </table>
-    <h2>Programming</h2>
-    <table>
-        <tbody>
-        <tr><th>Tag</th><th>Description</th></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_script.asp">&lt;script&gt;</a></td><td>Defines a client-side script</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_noscript.asp">&lt;noscript&gt;</a></td><td>Defines an alternate content for users that do not support client-side scripts</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_applet.asp">&lt;applet&gt;</a></td><td>Not supported in HTML5. Use &lt;embed&gt; or &lt;object&gt; instead.<br />Defines an embedded applet</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_embed.asp">&lt;embed&gt;</a></td><td>Defines a container for an external (non-HTML) application</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_object.asp">&lt;object&gt;</a></td><td>Defines an embedded object</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_param.asp">&lt;param&gt;</a></td><td>Defines a parameter for an object</td></tr>
-        </tbody>
-    </table>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <h2>Meta Info</h2>
+            <table>
+                <tbody>
+                <tr><th>Tag</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_head.asp">&lt;head&gt;</a></td><td>Defines information about the document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_meta.asp">&lt;meta&gt;</a></td><td>Defines metadata about an HTML document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a></td><td>Specifies the base URL/target for all relative URLs in a document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_basefont.asp">&lt;basefont&gt;</a></td><td>Not supported in HTML5. Use CSS instead.<br />Specifies a default color, size, and font for all text in a document</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;head&gt; Tag</h2>
+        <p>Example :-</p>
+        <p>A simple HTML document, with a &lt;title&gt; tag inside the head section:</p>
+        <xmp>
+            <!DOCTYPE html>
+            <html lang="en">
+                <head>
+                    <title>Title of the document</title>
+                </head>
+                <body>
+                    <h1>This is a heading</h1>
+                    <p>This is a paragraph.</p>
+                </body>
+            </html>
+        </xmp>
+        <p><strong>Definition and Usage</strong></p>
+        <p>The <code>&lt;head&gt;</code> element is a container for metadata (data about data) and is placed between the &lt;html&gt; tag and the &lt;body&gt; tag.</p>
+        <p>Metadata is data about the HTML document. Metadata is not displayed.</p>
+        <p>Metadata typically define the document title, character set, styles, scripts, and other meta information.</p>
+        <p>The following elements can go inside the <code>&lt;head&gt;</code> element:</p>
+        <ul>
+        <li><a href="https://www.w3schools.com/tags/tag_title.asp">&lt;title&gt;</a> (required in every HTML document)</li>
+        <li><a href="https://www.w3schools.com/tags/tag_style.asp">&lt;style&gt;</a></li>
+        <li><a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a></li>
+        <li><a href="https://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a></li>
+        <li><a href="https://www.w3schools.com/tags/tag_meta.asp">&lt;meta&gt;</a></li>
+        <li><a href="https://www.w3schools.com/tags/tag_script.asp">&lt;script&gt;</a></li>
+        <li><a href="https://www.w3schools.com/tags/tag_noscript.asp">&lt;noscript&gt;</a></li>
+        </ul>
+        <p>Example</p>
+        <p>The <a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a> tag (specifies a default URL and target for all links on a page) goes inside &lt;head&gt;:</p>
+        </div>
+    </div>
+    <xmp>
+        <html>
+            <head>
+                <base href="https://www.w3schools.com/" target="_blank">
+            </head>
+            <body>
+                <img src="images/stickman.gif" width="24" height="39" alt="Stickman">
+                <a href="tags/tag_base.asp">HTML base Tag</a>
+            </body>
+        </html>
+    </xmp>
+<div class="container">
+    <h2>HTML &lt;meta&gt; Tag</h2>
+    <p>Example <br />Describe metadata within an HTML document:</p>
+    <xmp>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="description" content="Free Web tutorials">
+            <meta name="keywords" content="HTML, CSS, JavaScript">
+            <meta name="author" content="John Doe">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          </head>
+    </xmp>
+    <p>Definition and Usage</p>
+<p>The <code>&lt;meta&gt;</code> tag defines metadata about an HTML document. Metadata is data (information) about data.</p>
+<p><code>&lt;meta&gt;</code> tags always go inside the &lt;head&gt; element, and are typically used to specify character set, page description, keywords, author of the document, and viewport settings.</p>
+<p>Metadata will not be displayed on the page, but is machine parsable.</p>
+<p>Metadata is used by browsers (how to display content or reload page), search engines (keywords), and other web services.</p>
+<p>There is a method to let web designers take control over the viewport (the user's visible area of a web page), through the <code>&lt;meta&gt;</code> tag (See "Setting The Viewport" example below).</p>
 
+<table class="table table-bordered">
+    <tbody>
+    <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_meta_charset.asp">charset</a></td><td><em>character_set</em></td><td>Specifies the character encoding for the HTML document</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_meta_content.asp">content</a></td><td><em>text</em></td><td>Specifies the value associated with the http-equiv or name attribute</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_meta_http_equiv.asp">http-equiv</a></td><td>content-security-policy<br/>content-type<br/>default-style<br/>refresh</td><td>Provides an HTTP header for the information/value of the content attribute</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_meta_name.asp">name</a></td><td>application-name<br/>author<br/>description<br/>generator<em><br/></em>keywords<br/>viewport</td><td>Specifies a name for the metadata</td></tr>
+    </tbody>
+</table>
+<p>Examples</p>
+<p>Define keywords for search engines:</p>
+<xmp><meta name="keywords" content="HTML, CSS, JavaScript"></xmp>
+<p>Define a description of your web page:</p>
+<xmp><meta name="description" content="Free Web tutorials for HTML and CSS"></xmp>
+<p>Define the author of a page:</p>
+<xmp><meta name="author" content="John Doe"></xmp>
+<p>Refresh document every 30 seconds:</p>
+<xmp><meta http-equiv="refresh" content="30"></xmp>
+<p>Setting the viewport to make your website look good on all devices:</p>
+<xmp><meta name="viewport" content="width=device-width, initial-scale=1.0"></xmp>
+<h3>Setting the Viewport</h3>
+<p>The viewport is the user's visible area of a web page. It varies with the device - it will be smaller on a mobile phone than on a computer screen.</p>
+<p>You should include the following <code>&lt;meta&gt;</code> element in all your web pages:</p>
+<xmp><meta name="viewport" content="width=device-width, initial-scale=1.0"></xmp>
+<p>This gives the browser instructions on how to control the page's dimensions and scaling.</p>
+<p>The&nbsp;<code>width=device-width</code>&nbsp;part sets the width of the page to follow the screen-width of the device (which will vary depending on the device).</p>
+<p>The&nbsp;<code>initial-scale=1.0</code>&nbsp;part sets the initial zoom level when the page is first loaded by the browser.</p>
+</div>
+<div class="container">
+    <h2>HTML &lt;base&gt; Tag</h2>
+    <p>Example <br />Specify a default URL and a default target for all links on a page:</p>
+    <xmp>
+        <head>
+            <base href="https://www.w3schools.com/" target="_blank">
+          </head>
+          
+          <body>
+          <img src="images/stickman.gif" width="24" height="39" alt="Stickman">
+          <a href="tags/tag_base.asp">HTML base Tag</a>
+          </body>
+    </xmp>
+    <h3>Definition and Usage</h3>
+<p>The <code>&lt;base&gt;</code> tag specifies the base URL and/or target for all relative URLs in a document.</p>
+<p>The <code>&lt;base&gt;</code> tag must have either an href or a target attribute present, or both.</p>
+<p>There can only be one single <code>&lt;base&gt;</code> element in a document, and it must be inside the &lt;head&gt; element.</p>
+
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+    <th>Attribute</th>
+    <th>Value</th>
+    <th>Description</th>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_base_href.asp">href</a></td>
+    <td><em>URL</em></td>
+    <td>Specifies the base URL for all relative URLs in the page</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_base_target.asp">target</a></td>
+    <td>_blank<br/>_parent<br/>_self<br/>_top</td>
+    <td>Specifies the default target for all hyperlinks and forms in the page</td>
+    </tr>
+    </tbody>
+</table>
+
+</div>
+
+<div class="hidden container-fix">
+    <div class="container">
+        <div class="row">
+            <h2>Programming</h2>
+            <table>
+                <tbody>
+                <tr><th>Tag</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_script.asp">&lt;script&gt;</a></td><td>Defines a client-side script</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_noscript.asp">&lt;noscript&gt;</a></td><td>Defines an alternate content for users that do not support client-side scripts</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_applet.asp">&lt;applet&gt;</a></td><td>Not supported in HTML5. Use &lt;embed&gt; or &lt;object&gt; instead.<br />Defines an embedded applet</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_embed.asp">&lt;embed&gt;</a></td><td>Defines a container for an external (non-HTML) application</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_object.asp">&lt;object&gt;</a></td><td>Defines an embedded object</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_param.asp">&lt;param&gt;</a></td><td>Defines a parameter for an object</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;script&gt; Tag</h2>
+        <p>Example <br />Write "Hello JavaScript!" with JavaScript:</p>
+        <code style="background: #000000 !important">
+        <xmp>
+        <script>
+            document.getElementById("demo").innerHTML = "Hello JavaScript!";
+        </script>
+        </xmp>
+        </code>
+        <h3>Definition and Usage</h3>
+        <p>The <code>&lt;script&gt;</code> tag is used to embed a client-side script (JavaScript).</p>
+        <p>The <code>&lt;script&gt;</code> element either contains scripting statements, or it points to an external script file through the src attribute.</p>
+        <p>Common uses for JavaScript are image manipulation, form validation, and dynamic changes of content.</p>
+
+        <table class="table table-bordered">
+            <tbody>
+                <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_script_async.asp">async</a></td><td>async</td><td>Specifies that the script is downloaded in parallel to parsing the page, and executed as soon as it is available (before parsing completes) (only for external scripts)</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_script_crossorigin.asp">crossorigin</a></td><td>anonymous<br/>use-credentials</td><td>Sets the mode of the request to an HTTP CORS Request</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_script_defer.asp">defer</a></td><td>defer</td><td>Specifies that the script is downloaded in parallel to parsing the page, and executed after the page has finished parsing (only for external scripts)</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_script_integrity.asp">integrity</a></td><td><em>filehash</em></td><td>Allows a browser to check the fetched script to ensure that the code is never loaded if the source has been manipulated</td></tr>
+                <tr><td>nomodule</td><td>True<br/>False</td><td>Specifies that the script should not be executed in browsers supporting&nbsp;<a href="https://www.w3schools.com/js/js_es6.asp">ES2015</a>&nbsp;modules</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_script_referrepolicy.asp">referrerpolicy</a></td><td>no-referrer<br/>no-referrer-when-downgrade<br/>origin<br/>origin-when-cross-origin<br/>same-origin<br/>strict-origin<br/>strict-origin-when-cross-origin<br/>unsafe-url</td><td>Specifies which referrer information to send when fetching a script</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_script_src.asp">src</a></td><td><em>URL</em></td><td>Specifies the URL of an external script file</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_script_type.asp">type</a></td><td><em>scripttype</em></td><td>Specifies the media type of the script</td></tr>
+            </tbody>
+        </table>
+        <h2>Differences Between HTML and XHTML</h2>
+        <p>In XHTML, the content inside scripts is declared as #PCDATA (instead of CDATA), which means that entities will be parsed.</p>
+        <p>This means that in XHTML, all special characters should be encoded, or all content should be wrapped inside a CDATA section:</p>
+        <code>
+            <xmp>
+                <script type="text/javascript">
+                    //<![CDATA[
+                    var i = 10;
+                    if (i < 5) {
+                    // some code
+                    }
+                    //]]>
+                    </script>
+            </xmp>
+        </code>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;noscript&gt; Tag</h2>
+        <p>Example <br/>Use of the <noscript> tag:</p>
+            <xmp>
+                <script>
+                    document.write("Hello World!")
+                </script>
+                <noscript>Your browser does not support JavaScript!</noscript>
+            </xmp>
+        
+        <h2>Definition and Usage</h2>
+        <p>The <code>&lt;noscript&gt;</code> tag defines an alternate content to be displayed to users that have disabled scripts in their browser or have a browser that doesn't support script.</p>
+        <p>The <code>&lt;noscript&gt;</code> element can be used in both &lt;head&gt; and &lt;body&gt;. When used inside &lt;head&gt;, the <code>&lt;noscript&gt;</code> element could only contain &lt;link&gt;, &lt;style&gt;, and &lt;meta&gt; elements.</p>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;embed&gt; Tag</h2>
+        <p>Example <br />An embedded image:</p>
+        <xmp>
+            <embed type="image/jpg" src="pic_trulli.jpg" width="300" height="200">
+            <embed type="text/html" src="snippet.html" width="500" height="200">
+            <embed type="video/webm" src="video.mp4" width="400" height="300">
+        </xmp>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;object&gt; Tag</h2>
+        <p>Example <br />An embedded image:</p>
+        <xmp>
+            <object data="pic_trulli.jpg" width="300" height="200"></object>
+            <object data="snippet.html" width="500" height="200"></object>
+            <object data="video.mp4" width="400" height="300"></object>
+        </xmp>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;param&gt; Tag</h2>
+        <p>Example <br />Set the "autoplay" parameter to "true", so the sound will start playing as soon as the page loads:</p>
+        <xmp>
+            <object data="horse.wav">
+                <param name="autoplay" value="true">
+            </object>
+        </xmp>
+    </div>
+</div>
 
     </body>
     </html>
