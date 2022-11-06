@@ -366,28 +366,651 @@
         </div>
     </div>
 </div>
+<div class="hidden container-fix">
+    <div class="container">
+        <div class="row">
+            <h2>Forms and Input</h2>
+            <table>
+                <tbody>
+                <tr><th>Tag</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_form.asp">&lt;form&gt;</a></td><td>Defines an HTML form for user input</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_input.asp">&lt;input&gt;</a></td><td>Defines an input control</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_textarea.asp">&lt;textarea&gt;</a></td><td>Defines a multiline input control (text area)</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_button.asp">&lt;button&gt;</a></td><td>Defines a clickable button</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_select.asp">&lt;select&gt;</a></td><td>Defines a drop-down list</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_optgroup.asp">&lt;optgroup&gt;</a></td><td>Defines a group of related options in a drop-down list</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_option.asp">&lt;option&gt;</a></td><td>Defines an option in a drop-down list</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_label.asp">&lt;label&gt;</a></td><td>Defines a label&nbsp;for an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_fieldset.asp">&lt;fieldset&gt;</a></td><td>Groups related elements in a form</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_legend.asp">&lt;legend&gt;</a></td><td>Defines a caption for a &lt;fieldset&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_datalist.asp">&lt;datalist&gt;</a></td><td>Specifies a list of pre-defined options for input controls</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_output.asp">&lt;output&gt;</a></td><td>Defines the result of a calculation</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;form&gt; Tag</h2>
+        <p>Example</p>
+        <p>An HTML form with two input fields and one submit button:</p>
+        <xmp>
+            <form action="/action_page.php" method="get">
+                <label for="fname">First name:</label>
+                <input type="text" id="fname" name="fname"><br><br>
+                <label for="lname">Last name:</label>
+                <input type="text" id="lname" name="lname"><br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;form&gt;</code> tag is used to create an HTML form for user input.</p>
+        <p>The <code>&lt;form&gt;</code> element can contain one or more of the following form elements:</p>
+        <ul>
+            <li><a href="https://www.w3schools.com/tags/tag_input.asp">&lt;input&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_textarea.asp">&lt;textarea&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_button.asp">&lt;button&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_select.asp">&lt;select&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_option.asp">&lt;option&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_optgroup.asp">&lt;optgroup&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_fieldset.asp">&lt;fieldset&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_label.asp">&lt;label&gt;</a></li>
+            <li><a href="https://www.w3schools.com/tags/tag_output.asp">&lt;output&gt;</a></li>
+        </ul>
+        <table>
+            <tbody>
+            <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_accept_charset.asp">accept-charset</a></td><td><em>character_set</em></td><td>Specifies the character encodings that are to be used for the form submission</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_action.asp">action</a></td><td><em>URL</em></td><td>Specifies where to send the form-data when a form is submitted</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_autocomplete.asp">autocomplete</a></td><td>on<br/>off</td><td>Specifies whether a form should have autocomplete on or off</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_enctype.asp">enctype</a></td><td>application/x-www-form-urlencoded<br/>multipart/form-data<br/>text/plain</td><td>Specifies how the form-data should be encoded when submitting it to the server (only for method="post")</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_method.asp">method</a></td><td>get<br/>post</td><td>Specifies the HTTP method to use when sending form-data</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_name.asp">name</a></td><td><em>text</em></td><td>Specifies the name of a form</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_novalidate.asp">novalidate</a></td><td>novalidate</td><td>Specifies that the form should not be validated when submitted</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_rel.asp">rel</a></td><td>external<br/>help<br/>license<br/>next<br/>nofollow<br/>noopener<br/>noreferrer<br/>opener<br/>prev<br/>search</td><td>Specifies the relationship between a linked resource and the current document</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_form_target.asp">target</a></td><td>_blank<br/>_self<br/>_parent<br/>_top</td><td>Specifies where to display the response that is received after submitting the form</td></tr>
+            </tbody>
+            </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;input&gt; Tag</h2>
+        <p>Example</p>
+        <p>An HTML form with three input fields; two text fields and one submit button:</p>
+        <xmp>
+            <form action="/action_page.php">
+                <label for="fname">First name:</label>
+                <input type="text" id="fname" name="fname"><br><br>
+                <label for="lname">Last name:</label>
+                <input type="text" id="lname" name="lname"><br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;input&gt;</code> tag specifies an input field where the user can enter data.</p>
+        <p>The <code>&lt;input&gt;</code> element is the most important form element.</p>
+        <p>The <code>&lt;input&gt;</code> element can be displayed in several ways, depending on the type attribute.</p>
+        <p>The different input types are as follows:</p>
+        <ul>
+            <li><code>&lt;input type="button"&gt;</code></li>
+            <li><code>&lt;input type="checkbox"&gt;</code></li>
+            <li><code>&lt;input type="color"&gt;</code></li>
+            <li><code>&lt;input type="date"&gt;</code></li>
+            <li><code>&lt;input type="datetime-local"&gt;</code></li>
+            <li><code>&lt;input type="email"&gt;</code></li>
+            <li><code>&lt;input type="file"&gt;</code></li>
+            <li><code>&lt;input type="hidden"&gt;</code></li>
+            <li><code>&lt;input type="image"&gt;</code></li>
+            <li><code>&lt;input type="month"&gt;</code></li>
+            <li><code>&lt;input type="number"&gt;</code></li>
+            <li><code>&lt;input type="password"&gt;</code></li>
+            <li><code>&lt;input type="radio"&gt;</code></li>
+            <li><code>&lt;input type="range"&gt;</code></li>
+            <li><code>&lt;input type="reset"&gt;</code></li>
+            <li><code>&lt;input type="search"&gt;</code></li>
+            <li><code>&lt;input type="submit"&gt;</code></li>
+            <li><code>&lt;input type="tel"&gt;</code></li>
+            <li><code>&lt;input type="text"&gt;</code> (default value)</li>
+            <li><code>&lt;input type="time"&gt;</code></li>
+            <li><code>&lt;input type="url"&gt;</code></li>
+            <li><code>&lt;input type="week"&gt;</code></li>
+        </ul>
+        <p>Tips and Notes</p>
+        <p><strong>Tip:</strong>&nbsp;Always use the&nbsp;<a href="https://www.w3schools.com/tags/tag_label.asp">&lt;label&gt;</a>&nbsp;tag to define labels for&nbsp;<code>&lt;input type="text"&gt;</code>,&nbsp;<code>&lt;input type="checkbox"&gt;</code>,&nbsp;<code>&lt;input type="radio"&gt;</code>,&nbsp;<code>&lt;input type="file"&gt;</code>, and&nbsp;<code>&lt;input type="password"&gt;</code>.</p>
+        <table class="table table-bordered">
+            <tbody>
+                <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_accept.asp">accept</a></td><td><em>file_extension</em><br />audio/*<br />video/*<br />image/*<br /><em>media_type</em></td><td>Specifies a filter for what file types the user can pick from the file input dialog box (only for type="file")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_alt.asp">alt</a></td><td><em>text</em></td><td>Specifies an alternate text for images (only for type="image")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_autocomplete.asp">autocomplete</a></td><td>on<br />off</td><td>Specifies whether an &lt;input&gt; element should have autocomplete enabled</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_autofocus.asp">autofocus</a></td><td>autofocus</td><td>Specifies that an &lt;input&gt; element should automatically get focus when the page loads</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_checked.asp">checked</a></td><td>checked</td><td>Specifies that an &lt;input&gt; element should be pre-selected when the page loads (for type="checkbox" or type="radio")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_dirname.asp">dirname</a></td><td><em>inputname</em>.dir</td><td>Specifies that the text direction will be submitted</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_disabled.asp">disabled</a></td><td>disabled</td><td>Specifies that an &lt;input&gt; element should be disabled</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_form.asp">form</a></td><td><em>form_id</em></td><td>Specifies the form the &lt;input&gt; element belongs to</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_formaction.asp">formaction</a></td><td><em>URL</em></td><td>Specifies the URL of the file that will process the input control when the form is submitted (for type="submit" and type="image")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_formenctype.asp">formenctype</a></td><td>application/x-www-form-urlencoded<br />multipart/form-data<br />text/plain</td><td>Specifies how the form-data should be encoded when submitting it to the server (for type="submit" and type="image")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_formmethod.asp">formmethod</a></td><td>get<br />post</td><td>Defines the HTTP method for sending data to the action URL (for type="submit" and type="image")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_formnovalidate.asp">formnovalidate</a></td><td>formnovalidate</td><td>Defines that form elements should not be validated when submitted</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_formtarget.asp">formtarget</a></td><td>_blank<br />_self<br />_parent<br />_top<br /><em>framename</em></td><td>Specifies where to display the response that is received after submitting the form (for type="submit" and type="image")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_height.asp">height</a></td><td><em>pixels</em></td><td>Specifies the height of an &lt;input&gt; element (only for type="image")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_list.asp">list</a></td><td><em>datalist_id</em></td><td>Refers to a &lt;datalist&gt; element that contains pre-defined options for an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_max.asp">max</a></td><td><em>number<br />date</em></td><td>Specifies the maximum value for an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_maxlength.asp">maxlength</a></td><td><em>number</em></td><td>Specifies the maximum number of characters allowed in an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_min.asp">min</a></td><td><em>number<br />date</em></td><td>Specifies a minimum value for an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_minlength.asp">minlength</a></td><td><em>number</em></td><td>Specifies the minimum number of characters required in an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_multiple.asp">multiple</a></td><td>multiple</td><td>Specifies that a user can enter more than one value in an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_name.asp">name</a></td><td><em>text</em></td><td>Specifies the name of an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_pattern.asp">pattern</a></td><td><em>regexp</em></td><td>Specifies a regular expression that an &lt;input&gt; element's value is checked against</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_placeholder.asp">placeholder</a></td><td><em>text</em></td><td>Specifies a short hint that describes the expected value of an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_readonly.asp">readonly</a></td><td>readonly</td><td>Specifies that an input field is read-only</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_required.asp">required</a></td><td>required</td><td>Specifies that an input field must be filled out before submitting the form</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_size.asp">size</a></td><td><em>number</em></td><td>Specifies the width, in characters, of an &lt;input&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_src.asp">src</a></td><td><em>URL</em></td><td>Specifies the URL of the image to use as a submit button (only for type="image")</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_step.asp">step</a></td><td><em>number<br /></em>any</td><td>Specifies the interval between legal numbers in an input field</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_type.asp">type</a></td><td>button<br />checkbox<br />color<br />date<br />datetime-local<br />email<br />file<br />hidden<br />image<br />month<br />number<br />password<br />radio<br />range<br />reset<br />search<br />submit<br />tel<br />text<br />time<br />url<br />week</td><td>Specifies the type &lt;input&gt; element to display</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_value.asp">value</a></td><td><em>text</em></td><td>Specifies the value of an &lt;input&gt; element<strong><br /> </strong></td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_input_width.asp">width</a></td><td><em>pixels</em></td><td>Specifies the width of an &lt;input&gt; element (only for type="image")</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;textarea&gt; Tag</h2>
+        <p>Example</p>
+<p>A multi-line text input control (text area):</p>
+<xmp>
+    <label for="w3review">Review of W3Schools:</label>
 
-    <h2>Forms and Input</h2>
-    <table>
-        <tbody>
-        <tr><th>Tag</th><th>Description</th></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_form.asp">&lt;form&gt;</a></td><td>Defines an HTML form for user input</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_input.asp">&lt;input&gt;</a></td><td>Defines an input control</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_textarea.asp">&lt;textarea&gt;</a></td><td>Defines a multiline input control (text area)</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_button.asp">&lt;button&gt;</a></td><td>Defines a clickable button</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_select.asp">&lt;select&gt;</a></td><td>Defines a drop-down list</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_optgroup.asp">&lt;optgroup&gt;</a></td><td>Defines a group of related options in a drop-down list</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_option.asp">&lt;option&gt;</a></td><td>Defines an option in a drop-down list</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_label.asp">&lt;label&gt;</a></td><td>Defines a label&nbsp;for an &lt;input&gt; element</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_fieldset.asp">&lt;fieldset&gt;</a></td><td>Groups related elements in a form</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_legend.asp">&lt;legend&gt;</a></td><td>Defines a caption for a &lt;fieldset&gt; element</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_datalist.asp">&lt;datalist&gt;</a></td><td>Specifies a list of pre-defined options for input controls</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_output.asp">&lt;output&gt;</a></td><td>Defines the result of a calculation</td></tr>
-        </tbody>
+<textarea id="w3review" name="w3review" rows="4" cols="50">
+At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+</textarea>
+</xmp>
+<p>Definition and Usage</p>
+<p>The <code>&lt;textarea&gt;</code> tag defines a multi-line text input control.</p>
+<p>The <code>&lt;textarea&gt;</code> element is often used in a form, to collect user inputs like comments or reviews.</p>
+<p>A text area can hold an unlimited number of characters, and the text renders in a fixed-width font (usually Courier).</p>
+<p>The size of a text area is specified by the <code>cols</code> and <code>rows</code> attributes (or with CSS).</p>
+<p>The <code>name</code> attribute is needed to reference the form data after the form is submitted (if you omit the <code>name</code> attribute, no data from the text area will be submitted).</p>
+<p>The <code>id</code> attribute is needed to associate the text area with a label. </p>
+<p><strong>Tip:</strong> Always add the <a href="https://www.w3schools.com/tags/tag_label.asp">&lt;label&gt;</a> tag for best accessibility practices!</p>
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+    <th>Attribute</th>
+    <th>Value</th>
+    <th>Description</th>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_autofocus.asp">autofocus</a></td>
+    <td>autofocus</td>
+    <td>Specifies that a text area should automatically get focus when the page loads</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_cols.asp">cols</a></td>
+    <td><em>number</em></td>
+    <td>Specifies the visible width of a text area</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_dirname.asp">dirname</a></td>
+    <td><em>textareaname</em>.dir</td>
+    <td>Specifies that the text direction of the textarea will be submitted</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_disabled.asp">disabled</a></td>
+    <td>disabled</td>
+    <td>Specifies that a text area should be disabled</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_form.asp">form</a></td>
+    <td><em>form_id</em></td>
+    <td>Specifies which form the text area belongs to</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_maxlength.asp">maxlength</a></td>
+    <td><em>number</em></td>
+    <td>Specifies the maximum number of characters allowed in the text area</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_name.asp">name</a></td>
+    <td><em>text</em></td>
+    <td>Specifies a name for a text area</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_placeholder.asp">placeholder</a></td>
+    <td><em>text</em></td>
+    <td>Specifies a short hint that describes the expected value of a text area</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_readonly.asp">readonly</a></td>
+    <td>readonly</td>
+    <td>Specifies that a text area should be read-only</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_required.asp">required</a></td>
+    <td>required</td>
+    <td>Specifies that a text area is required/must be filled out</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_rows.asp">rows</a></td>
+    <td><em>number</em></td>
+    <td>Specifies the visible number of lines in a text area</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_textarea_wrap.asp">wrap</a></td>
+    <td>hard<br />soft</td>
+    <td>Specifies how the text in a text area is to be wrapped when submitted in a form</td>
+    </tr>
+    </tbody>
     </table>
-    
-    
-<div class="container-fix">
+    </div>
+    <div class="container">
+        <h2>HTML &lt;button&gt; Tag</h2>
+        <p>Example</p>
+        <p>A clickable button is marked up as follows:</p>
+        <xmp><button type="button">Click Me!</button></xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;button&gt;</code> tag defines a clickable button.</p>
+        <p>Inside a <code>&lt;button&gt;</code> element you can put text (and tags like <code>&lt;i&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;img&gt;</code>, etc.). That is not possible with a button created with the <code><a href="https://www.w3schools.com/tags/tag_input.asp">&lt;input&gt;</a></code> element!</p>
+        <p><strong>Tip:</strong> Always specify the <code>type</code> attribute for a <code>&lt;button&gt;</code> element, to tell browsers what type of button it is.</p>
+        <p><strong>Tip:</strong> You can easily style buttons with CSS! Look at the examples below or visit our <a href="https://www.w3schools.com/css/css3_buttons.asp">CSS Buttons</a> tutorial.</p>
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+            <th>Attribute</th>
+            <th>Value</th>
+            <th>Description</th>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_autofocus.asp">autofocus</a></td>
+            <td>autofocus</td>
+            <td>Specifies that a button should automatically get focus when the page loads</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_disabled.asp">disabled</a></td>
+            <td>disabled</td>
+            <td>Specifies that a button should be disabled</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_form.asp">form</a></td>
+            <td><em>form_id</em></td>
+            <td>Specifies which form the button belongs to</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_formaction.asp">formaction</a></td>
+            <td><em>URL</em></td>
+            <td>Specifies where to send the form-data when a form is submitted. Only for type="submit"</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_formenctype.asp">formenctype</a></td>
+            <td>application/x-www-form-urlencoded<br/>multipart/form-data<br/>text/plain</td>
+            <td>Specifies how form-data should be encoded before sending it to a server. Only for type="submit"</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_formmethod.asp">formmethod</a></td>
+            <td>get<br/>post</td>
+            <td>Specifies how to send the form-data (which HTTP method to use). Only for type="submit"</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_formnovalidate.asp">formnovalidate</a></td>
+            <td>formnovalidate</td>
+            <td>Specifies that the form-data should not be validated on submission. Only for type="submit"</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_formtarget.asp">formtarget</a></td>
+            <td>_blank<br/>_self<br/>_parent<br/>_top<br/><em>framename</em></td>
+            <td>Specifies where to display the response after submitting the form. Only for type="submit"</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_name.asp">name</a></td>
+            <td><em>name</em></td>
+            <td>Specifies a name for the button</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_type.asp">type</a></td>
+            <td>button<br/>reset<br/>submit</td>
+            <td>Specifies the type of button</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_button_value.asp">value</a></td>
+            <td><em>text</em></td>
+            <td>Specifies an initial value for the button</td>
+            </tr>
+            </tbody>
+            </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;select&gt; Tag</h2>
+        <p>Example</p>
+        <p>Create a drop-down list with four options:</p>
+        <xmp>
+            <label for="cars">Choose a car:</label>
+        <select name="cars" id="cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+        </select>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;select&gt;</code> element is used to create a drop-down list.</p>
+        <p>The <code>&lt;select&gt;</code> element is most often used in a form, to collect user input.</p>
+        <p>The <code>name</code> attribute is needed to reference the form data after the form is submitted (if you omit the <code>name</code> attribute, no data from the drop-down list will be submitted).</p>
+        <p>The <code>id</code> attribute is needed to associate the drop-down list with a label.</p>
+        <p>The <a href="https://www.w3schools.com/tags/tag_option.asp">&lt;option&gt;</a> tags inside the <code>&lt;select&gt;</code> element define the available options in the drop-down list.</p>
+        <p><strong>Tip:</strong> Always add the <a href="https://www.w3schools.com/tags/tag_label.asp">&lt;label&gt;</a> tag for best accessibility practices!</p>
+        <table>
+            <tbody>
+            <tr>
+            <th>Attribute</th>
+            <th>Value</th>
+            <th>Description</th>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_select_autofocus.asp">autofocus</a></td>
+            <td>autofocus</td>
+            <td>Specifies that the drop-down list should automatically get focus when the page loads</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_select_disabled.asp">disabled</a></td>
+            <td>disabled</td>
+            <td>Specifies that a drop-down list should be disabled</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_select_form.asp">form</a></td>
+            <td><em>form_id</em></td>
+            <td>Defines which form the drop-down list belongs to</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_select_multiple.asp">multiple</a></td>
+            <td>multiple</td>
+            <td>Specifies that multiple options can be selected at once</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_select_name.asp">name</a></td>
+            <td><em>name</em></td>
+            <td>Defines a name for the drop-down list</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_select_required.asp">required</a></td>
+            <td>required</td>
+            <td>Specifies that the user is required to select a value before submitting the form</td>
+            </tr>
+            <tr>
+            <td><a href="https://www.w3schools.com/tags/att_select_size.asp">size</a></td>
+            <td><em>number</em></td>
+            <td>Defines the number of visible options in a drop-down list</td>
+            </tr>
+            </tbody>
+            </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;optgroup&gt; Tag</h2>
+        <p>Example</p>
+<p>Group related options with &lt;optgroup&gt; tags:</p>
+<xmp>
+    <label for="cars">Choose a car:</label>
+<select  name="cars" id="cars">
+  <optgroup label="Swedish Cars">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+  </optgroup>
+  <optgroup label="German Cars">
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </optgroup>
+</select>
+</xmp>
+<table>
+    <tbody>
+    <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_optgroup_disabled.asp">disabled</a></td><td>disabled</td><td>Specifies that an option-group should be disabled</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_optgroup_label.asp">label</a></td><td><em>text</em></td><td>Specifies a label for an option-group</td></tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;option&gt; Tag</h2>
+        <p>Example</p>
+<p>A drop-down list with four options:</p>
+<xmp>
+    <label for="cars">Choose a car:</label>
+
+<select id="cars">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+</xmp>
+<p>Definition and Usage</p>
+<p>The <code>&lt;option&gt;</code> tag defines an option in a select list.</p>
+<p><code>&lt;option&gt;</code> elements go inside a <a href="https://www.w3schools.com/tags/tag_select.asp">&lt;select&gt;</a>, <a href="https://www.w3schools.com/tags/tag_optgroup.asp">&lt;optgroup&gt;</a>, or <a href="https://www.w3schools.com/tags/tag_datalist.asp">&lt;datalist&gt;</a> element.</p>
+<p><strong>Note:</strong> The <code>&lt;option&gt;</code> tag can be used without any attributes, but you usually need the <strong>value</strong> attribute, which indicates what is sent to the server on form submission.</p>
+<p><strong>Tip:</strong> If you have a long list of options, you can group related options within the <a href="https://www.w3schools.com/tags/tag_optgroup.asp">&lt;optgroup&gt;</a> tag.</p>
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+    <th>Attribute</th>
+    <th>Value</th>
+    <th>Description</th>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_option_disabled.asp">disabled</a></td>
+    <td>disabled</td>
+    <td>Specifies that an option should be disabled</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_option_label.asp">label</a></td>
+    <td><em>text</em></td>
+    <td>Specifies a shorter label for an option</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_option_selected.asp">selected</a></td>
+    <td>selected</td>
+    <td>Specifies that an option should be pre-selected when the page loads</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_option_value.asp">value</a></td>
+    <td><em>text</em></td>
+    <td>Specifies the value to be sent to a server</td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;label&gt; Tag</h2>
+        <p>Example</p>
+<p>Three radio buttons with labels:</p>
+<xmp>
+    <form action="/action_page.php">
+        <input type="radio" id="html" name="fav_language" value="HTML">
+        <label for="html">HTML</label><br>
+        <input type="radio" id="css" name="fav_language" value="CSS">
+        <label for="css">CSS</label><br>
+        <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+        <label for="javascript">JavaScript</label><br><br>
+        <input type="submit" value="Submit">
+      </form>
+</xmp>
+<p>Definition and Usage</p>
+<p>The <code>&lt;label&gt;</code> tag defines a label for several elements:</p>
+<ul>
+<li><a href="https://www.w3schools.com/tags/att_input_type_checkbox.asp">&lt;input type="checkbox"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_color.asp">&lt;input type="color"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_date.asp">&lt;input type="date"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_datetime-local.asp">&lt;input type="datetime-local"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_email.asp">&lt;input type="email"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_file.asp">&lt;input type="file"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_month.asp">&lt;input type="month"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_number.asp">&lt;input type="number"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_password.asp">&lt;input type="password"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_radio.asp">&lt;input type="radio"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_range.asp">&lt;input type="range"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_search.asp">&lt;input type="search"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_tel.asp">&lt;input type="tel"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_text.asp">&lt;input type="text"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_time.asp">&lt;input type="time"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_url.asp">&lt;input type="url"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/att_input_type_week.asp">&lt;input type="week"&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_meter.asp">&lt;meter&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_progress.asp">&lt;progress&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_select.asp">&lt;select&gt;</a></li>
+<li><a href="https://www.w3schools.com/tags/tag_textarea.asp">&lt;textarea&gt;</a></li>
+</ul>
+<p>Proper use of labels with the elements above will benefit:</p>
+<ul>
+<li>Screen reader users (will read out loud the label, when the user is focused on the element)</li>
+<li>Users who have difficulty clicking on very small regions (such as checkboxes) - because when a user clicks the text within the <code>&lt;label&gt;</code> element, it toggles the input (this increases the hit area). </li>
+</ul>
+<table>
+    <tbody>
+    <tr>
+    <th>Attribute</th>
+    <th>Value</th>
+    <th>Description</th>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_label_for.asp">for</a></td>
+    <td><em>element_id</em></td>
+    <td>Specifies the id of the form element the label should be bound to</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_label_form.asp">form</a></td>
+    <td><em>form_id</em></td>
+    <td>Specifies which form the label belongs to</td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;fieldset&gt; Tag</h2>
+        <p>Example</p>
+<p>Group related elements in a form:</p>
+<xmp>
+    <form action="/action_page.php">
+        <fieldset>
+          <legend>Personalia:</legend>
+          <label for="fname">First name:</label>
+          <input type="text" id="fname" name="fname"><br><br>
+          <label for="lname">Last name:</label>
+          <input type="text" id="lname" name="lname"><br><br>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email"><br><br>
+          <label for="birthday">Birthday:</label>
+          <input type="date" id="birthday" name="birthday"><br><br>
+          <input type="submit" value="Submit">
+        </fieldset>
+      </form>
+</xmp>
+<p>Definition and Usage</p>
+<p>The <code>&lt;fieldset&gt;</code> tag is used to group related elements in a form.</p>
+<p>The <code>&lt;fieldset&gt;</code> tag draws a box around the related elements.</p>
+<p>Tips and Notes</p>
+<p><strong>Tip:</strong> The <a href="https://www.w3schools.com/tags/tag_legend.asp">&lt;legend&gt;</a> tag is used to define a caption for the <code>&lt;fieldset&gt;</code> element.</p>
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+    <th>Attribute</th>
+    <th>Value</th>
+    <th>Description</th>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_fieldset_disabled.asp">disabled</a></td>
+    <td>disabled</td>
+    <td>Specifies that a group of related form elements should be disabled</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_fieldset_form.asp">form</a></td>
+    <td><em>form_id</em></td>
+    <td>Specifies which form the fieldset belongs to</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_fieldset_name.asp">name</a></td>
+    <td><em>text</em></td>
+    <td>Specifies a name for the fieldset</td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;legend&gt; Tag</h2>
+        <p>Example</p>
+<p>Group related elements in a form:</p>
+<xmp>
+    <form action="/action_page.php">
+        <fieldset>
+          <legend>Personalia:</legend>
+          <label for="fname">First name:</label>
+          <input type="text" id="fname" name="fname"><br><br>
+          <label for="lname">Last name:</label>
+          <input type="text" id="lname" name="lname"><br><br>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email"><br><br>
+          <label for="birthday">Birthday:</label>
+          <input type="date" id="birthday" name="birthday"><br><br>
+          <input type="submit" value="Submit">
+        </fieldset>
+      </form>
+</xmp>
+
+    </div>
+    <div class="container">
+        <h2>HTML &lt;datalist&gt; Tag</h2>
+        <p>Example</p>
+<p>A datalist with pre-defined options (connected to an &lt;input&gt; element):</p>
+<xmp>
+    <label for="browser">Choose your browser from the list:</label>
+<input list="browsers" name="browser" id="browser">
+
+<datalist id="browsers">
+  <option value="Edge">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+</datalist>
+</xmp>
+<p>Definition and Usage</p>
+<p>The <code>&lt;datalist&gt;</code> tag specifies a list of pre-defined options for an &lt;input&gt; element.</p>
+<p>The <code>&lt;datalist&gt;</code> tag is used to provide an "autocomplete" feature for &lt;input&gt; elements. Users will see a drop-down list of pre-defined options as they input data.</p>
+<p>The <code>&lt;datalist&gt;</code> element's id attribute must be equal to the &lt;input&gt; element's list attribute (this binds them together).</p>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;output&gt; Tag</h2>
+        <p>Example</p>
+<p>Perform a calculation and show the result in an &lt;output&gt; element:</p>
+<xmp>
+    <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">
+        <input type="range" id="a" value="50">
+        +<input type="number" id="b" value="25">
+        =<output name="x" for="a b"></output>
+      </form>
+</xmp>
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+    <th>Attribute</th>
+    <th>Value</th>
+    <th>Description</th>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_output_for.asp">for</a></td>
+    <td><em>element_id</em></td>
+    <td>Specifies the relationship between the result of the calculation, and the elements used in the calculation</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_output_form.asp">form</a></td>
+    <td><em>form_id</em></td>
+    <td>Specifies which form the output element belongs to</td>
+    </tr>
+    <tr>
+    <td><a href="https://www.w3schools.com/tags/att_output_name.asp">name</a></td>
+    <td><em>name</em></td>
+    <td>Specifies a name for the output element</td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+</div>
+<div class="hidden container-fix">
     <div class="container">
         <h2>Frames</h2>
         <table class="table table-bordered">
@@ -424,8 +1047,6 @@
         </table>
     </div>
 </div>
-    
-
 <div class="hidden container-fix">
     <div class="container">
         <div class="col-lg-12">
@@ -585,67 +1206,409 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-    <h2>Audio / Video</h2>
-    <table>
-        <tbody>
-        <tr><th>Tag</th><th>Description</th></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_audio.asp">&lt;audio&gt;</a></td><td>Defines sound content</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_source.asp">&lt;source&gt;</a></td><td>Defines multiple media resources for media elements (&lt;video&gt;, &lt;audio&gt; and &lt;picture&gt;)</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_track.asp">&lt;track&gt;</a></td><td>Defines text tracks for media elements (&lt;video&gt; and &lt;audio&gt;)</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_video.asp">&lt;video&gt;</a></td><td>Defines a video or movie</td></tr>
-        </tbody>
-    </table>
-    <h2>Links</h2>
-    <table>
-        <tbody>
-        <tr><th>Tag</th><th>Description</th></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_a.asp">&lt;a&gt;</a></td><td>Defines a hyperlink</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a></td><td>Defines the relationship between a document and an external resource (most used to link to style sheets)</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_nav.asp">&lt;nav&gt;</a></td><td>Defines navigation links</td></tr>
-        </tbody>
-    </table>
-    <h2>Lists</h2>
-    <table>
-        <tbody>
-        <tr><th>Tag</th><th>Description</th></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_ul.asp">&lt;ul&gt;</a></td><td>Defines an unordered list</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_ol.asp">&lt;ol&gt;</a></td><td>Defines an ordered list</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_li.asp">&lt;li&gt;</a></td><td>Defines a list item</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_dir.asp">&lt;dir&gt;</a></td><td>Not supported in HTML5. Use &lt;ul&gt; instead.<br />Defines a directory list</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_dl.asp">&lt;dl&gt;</a></td><td>Defines a description list</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_dt.asp">&lt;dt&gt;</a></td><td>Defines a term/name in a description list</td></tr>
-        <tr><td><a href="https://www.w3schools.com/tags/tag_dd.asp">&lt;dd&gt;</a></td><td>Defines a description of a term/name in a description list</td></tr>
-        </tbody>
-    </table>
-
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <h2>Tables</h2>
-                <table>
-                    <tbody>
-                    <tr><th>Tag</th><th>Description</th></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_table.asp">&lt;table&gt;</a></td><td>Defines a table</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_caption.asp">&lt;caption&gt;</a></td><td>Defines a table caption</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_th.asp">&lt;th&gt;</a></td><td>Defines a header cell in a table</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_tr.asp">&lt;tr&gt;</a></td><td>Defines a row in a table</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_td.asp">&lt;td&gt;</a></td><td>Defines a cell in a table</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_thead.asp">&lt;thead&gt;</a></td><td>Groups the header content in a table</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_tbody.asp">&lt;tbody&gt;</a></td><td>Groups the body content in a table</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_tfoot.asp">&lt;tfoot&gt;</a></td><td>Groups the footer content in a table</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_col.asp">&lt;col&gt;</a></td><td>Specifies column properties for each column within a &lt;colgroup&gt; element</td></tr>
-                    <tr><td><a href="https://www.w3schools.com/tags/tag_colgroup.asp">&lt;colgroup&gt;</a></td><td>Specifies a group of one or more columns in a table for formatting</td></tr>
-                    </tbody>
-                </table>
-            </div>
+<div class="hidden container-fix">
+    <div class="container">
+        <div class="row">
+            <h2>Audio / Video</h2>
+            <table>
+                <tbody>
+                <tr><th>Tag</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_audio.asp">&lt;audio&gt;</a></td><td>Defines sound content</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_source.asp">&lt;source&gt;</a></td><td>Defines multiple media resources for media elements (&lt;video&gt;, &lt;audio&gt; and &lt;picture&gt;)</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_track.asp">&lt;track&gt;</a></td><td>Defines text tracks for media elements (&lt;video&gt; and &lt;audio&gt;)</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_video.asp">&lt;video&gt;</a></td><td>Defines a video or movie</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
+    <div class="container">
+        <h2>HTML &lt;audio&gt; Tag</h2>
+        <p>Example</p>
+        <p>Play a sound file:</p>
+        <xmp>
+            <audio controls>
+                <source src="horse.ogg" type="audio/ogg">
+                <source src="horse.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;audio&gt;</code> tag is used to embed sound content in a document, such as music or other audio streams.</p>
+        <p>The <code>&lt;audio&gt;</code> tag contains one or more <code><a href="https://www.w3schools.com/tags/tag_source.asp">&lt;source&gt;</a></code> tags with different audio sources. The browser will choose the first source it supports.</p>
+        <p>The text between the <code>&lt;audio&gt;</code> and <code>&lt;/audio&gt;</code> tags will only be displayed in browsers that do not support the <code>&lt;audio&gt;</code> element.</p>
+        <p>There are three supported audio formats in HTML: MP3, WAV, and OGG.</p>
+        <table class="table table-bordered">
+            <tbody>
+                <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_audio_autoplay.asp">autoplay</a></td><td>autoplay</td><td>Specifies that the audio will start playing as soon as it is ready</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_audio_controls.asp">controls</a></td><td>controls</td><td>Specifies that audio controls should be displayed (such as a play/pause button etc)</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_audio_loop.asp">loop</a></td><td>loop</td><td>Specifies that the audio will start over again, every time it is finished</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_audio_muted.asp">muted</a></td><td>muted</td><td>Specifies that the audio output should be muted</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_audio_preload.asp">preload</a></td><td>auto<br/>metadata<br/>none</td><td>Specifies if and how the author thinks the audio should be loaded when the page loads</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_audio_src.asp">src</a></td><td><em>URL</em></td><td>Specifies the URL of the audio file</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;source&gt; Tag</h2>
+        <p>Example</p>
+        <p>An audio player with two source files. The browser will choose the first &lt;source&gt; it supports:</p>
+        <xmp>
+            <audio controls>
+                <source src="horse.ogg" type="audio/ogg">
+                <source src="horse.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;source&gt;</code> tag is used to specify multiple media resources for media elements, such as <a href="https://www.w3schools.com/tags/tag_video.asp">&lt;video&gt;</a>, <a href="https://www.w3schools.com/tags/tag_audio.asp">&lt;audio&gt;</a>, and <a href="https://www.w3schools.com/tags/tag_picture.asp">&lt;picture&gt;</a>.</p>
+        <p>The <code>&lt;source&gt;</code> tag allows you to specify alternative video/audio/image files which the browser may choose from, based on browser support or viewport width. The browser will choose the first <code>&lt;source&gt;</code> it supports.</p>
+        <table class="table table-bordered">
+            <tbody>
+            <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_source_media.asp">media</a></td><td><em>media_query</em></td><td>Accepts any valid media query that would normally be defined in a CSS</td></tr>
+            <tr><td>sizes</td><td>Specifies image sizes for different page layouts</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_source_src.asp">src</a></td><td><em>URL</em></td><td>Required when &lt;source&gt; is used in &lt;audio&gt; and &lt;video&gt;. Specifies the URL of the media file</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_source_srcset.asp">srcset</a></td><td><em>URL</em></td><td>Required when &lt;source&gt; is used in &lt;picture&gt;. Specifies the URL of the image to use in different situations</td></tr>
+            <tr><td><a href="https://www.w3schools.com/tags/att_source_type.asp">type</a></td><td><em>MIME-type</em></td><td>Specifies the MIME-type of the resource</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;track&gt; Tag</h2>
+        <p>Example</p>
+<p>A video with subtitle tracks for two languages:</p>
+<xmp>
+    <video width="320" height="240" controls>
+        <source src="forrest_gump.mp4" type="video/mp4">
+        <source src="forrest_gump.ogg" type="video/ogg">
+        <track src="fgsubtitles_en.vtt" kind="subtitles" srclang="en" label="English">
+        <track src="fgsubtitles_no.vtt" kind="subtitles" srclang="no" label="Norwegian">
+      </video>
+</xmp>
+<p>Definition and Usage</p>
+<p>The&nbsp;<code>&lt;track&gt;</code>&nbsp;tag specifies text tracks for&nbsp;<a href="https://www.w3schools.com/tags/tag_audio.asp">&lt;audio&gt;</a>&nbsp;or&nbsp;<a href="https://www.w3schools.com/tags/tag_video.asp">&lt;video&gt;</a>&nbsp;elements.</p>
+<p>This element is used to specify subtitles, caption files or other files containing text, that should be visible when the media is playing.</p>
+<p>Tracks are formatted in WebVTT format (.vtt files).</p>
+<table class="table table-bordered">
+    <tbody>
+    <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_track_default.asp">default</a></td><td>default</td><td>Specifies that the track is to be enabled if the user's preferences do not indicate that another track would be more appropriate</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_track_kind.asp">kind</a></td><td>captions<br/>chapters<br/>descriptions<br/>metadata<br/>subtitles</td><td>Specifies the kind of text track</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_track_label.asp">label</a></td><td><em>text</em></td><td>Specifies the title of the text track</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_track_src.asp">src</a></td><td><em>URL</em></td><td>Required. Specifies the URL of the track file</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_track_srclang.asp">srclang</a></td><td><em>language_code</em></td><td>Specifies the language of the track text data (required if kind="subtitles")</td></tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;video&gt; Tag</h2>
+        <p>Example</p>
+<p>Play a video:</p>
+<xmp>
+    <video width="320" height="240" controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        Your browser does not support the video tag.
+      </video>
+</xmp>
+<p>Definition and Usage</p>
+<p>The <code>&lt;video&gt;</code> tag is used to embed video content in a document, such as a movie clip or other video streams.</p>
+<p>The <code>&lt;video&gt;</code> tag contains one or more <code><a href="https://www.w3schools.com/tags/tag_source.asp">&lt;source&gt;</a></code> tags with different video sources. The browser will choose the first source it supports.</p>
+<p>The text between the <code>&lt;video&gt;</code> and <code>&lt;/video&gt;</code> tags will only be displayed in browsers that do not support the &lt;video&gt; element.</p>
+<p>There are three supported video formats in HTML: MP4, WebM, and OGG.</p>
+<table class="table table-bordered">
+    <tbody>
+    <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_autoplay.asp">autoplay</a></td><td>autoplay</td><td>Specifies that the video will start playing as soon as it is ready</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_controls.asp">controls</a></td><td>controls</td><td>Specifies that video controls should be displayed (such as a play/pause button etc).</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_height.asp">height</a></td><td><em>pixels</em></td><td>Sets the height of the video player</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_loop.asp">loop</a></td><td>loop</td><td>Specifies that the video will start over again, every time it is finished</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_muted.asp">muted</a></td><td>muted</td><td>Specifies that the audio output of the video should be muted</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_poster.asp">poster</a></td><td><em>URL</em></td><td>Specifies an image to be shown while the video is downloading, or until the user hits the play button</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_preload.asp">preload</a></td><td>auto<br/>metadata<br/>none</td><td>Specifies if and how the author thinks the video should be loaded when the page loads</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_src.asp">src</a></td><td><em>URL</em></td><td>Specifies the URL of the video file</td></tr>
+    <tr><td><a href="https://www.w3schools.com/tags/att_video_width.asp">width</a></td><td><em>pixels</em></td><td>Sets the width of the video player</td></tr>
+    </tbody>
+    </table>
+    </div>
+</div>
+<div class="hidden container-fix">
+    <div class="container">
+        <div class="row">
+            <h2>Links</h2>
+            <table>
+                <tbody>
+                    <tr><th>Tag</th><th>Description</th></tr>
+                    <tr><td><a href="https://www.w3schools.com/tags/tag_a.asp">&lt;a&gt;</a></td><td>Defines a hyperlink</td></tr>
+                    <tr><td><a href="https://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a></td><td>Defines the relationship between a document and an external resource (most used to link to style sheets)</td></tr>
+                    <tr><td><a href="https://www.w3schools.com/tags/tag_nav.asp">&lt;nav&gt;</a></td><td>Defines navigation links</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;a&gt; Tag</h2>
+        <p>Example</p>
+        <p>Create a link to W3Schools.com:</p>
+        <xmp>
+            <a href="https://www.w3schools.com">Visit W3Schools.com!</a>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;a&gt;</code> tag defines a hyperlink, which is used to link from one page to another.</p>
+        <p>The most important attribute of the <code>&lt;a&gt;</code> element is the <code>href</code> attribute, which indicates the link's destination.</p>
+        <p>By default, links will appear as follows in all browsers:</p>
+        <ul>
+            <li>An unvisited link is underlined and blue</li>
+            <li>A visited link is underlined and purple</li>
+            <li>An active link is underlined and red</li>
+        </ul>
+        <table class="table table-bordered">
+            <tbody>
+                <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_download.asp">download</a></td><td><em>filename</em></td><td>Specifies that the target will be downloaded when a user clicks on the hyperlink</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_href.asp">href</a></td><td><em>URL</em></td><td>Specifies the URL of the page the link goes to</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_hreflang.asp">hreflang</a></td><td><em>language_code</em></td><td>Specifies the language of the linked document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_media.asp">media</a></td><td><em>media_query</em></td><td>Specifies what media/device the linked document is optimized for</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_ping.asp">ping</a></td><td><em>list_of_URLs</em></td><td>Specifies a space-separated list of URLs to which, when the link is followed, post requests with the body ping will be sent by the browser (in the background). Typically used for tracking.</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_referrepolicy.asp">referrerpolicy</a></td><td>no-referrer<br />no-referrer-when-downgrade<br />origin<br />origin-when-cross-origin<br />same-origin<br />strict-origin-when-cross-origin<br />unsafe-url</td><td>Specifies which referrer information to send with the link</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_rel.asp">rel</a></td><td>alternate<br />author<br />bookmark<br />external<br />help<br />license<br />next<br />nofollow<br />noreferrer<br />noopener<br />prev<br />search<br />tag</td><td>Specifies the relationship between the current document and the linked document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_target.asp">target</a></td><td>_blank<br />_parent<br />_self<br />_top</td><td>Specifies where to open the linked document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_a_type.asp">type</a></td><td><em>media_type</em></td><td>Specifies the media type of the linked document</td></tr>
+            </tbody>
+        </table>
+        <xmp>
+            <a href="https://www.w3schools.com">
+                <img border="0" alt="W3Schools" src="logo_w3s.gif" width="100" height="100">
+            </a>
+        </xmp>
+        <xmp>
+            <a href="https://www.w3schools.com" target="_blank">Visit W3Schools.com!</a>
+        </xmp>
+        <xmp>
+            <a href="mailto:someone@example.com">Send email</a>
+        </xmp>
+        <xmp>
+            <a href="tel:+4733378901">+47 333 78 901</a>
+        </xmp>
+        <xmp>
+            <a href="#section2">Go to Section 2</a>
+        </xmp>
+        <xmp>
+            <a href="javascript:alert('Hello World!');">Execute JavaScript</a>
+        </xmp>
+        <p>Default CSS Settings</p>
+        <p>Most browsers will display the <a> element with the following default values:</p>
+        <xmp>
+            a:link, a:visited {
+                color: (internal value);
+                text-decoration: underline;
+                cursor: auto;
+                }
+                
+                a:link:active, a:visited:active {
+                color: (internal value);
+                }
+        </xmp>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;link&gt; Tag</h2>
+        <p>Example</p>
+        <p>Link to an external style sheet:</p>
+        <xmp>
+            <head>
+                <link rel="stylesheet" href="styles.css">
+            </head>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;link&gt;</code> tag defines the relationship between the current document and an external resource.</p>
+        <p>The <code>&lt;link&gt;</code> tag is most often used to link to external style sheets or to add a <a href="https://www.w3schools.com/html/html_favicon.asp">favicon</a> to your website.</p>
+        <p>The <code>&lt;link&gt;</code> element is an empty element, it contains attributes only.</p>
+        <table class="table table-bordered">
+            <tbody>
+                <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+                <tr><td>crossorigin</td><td>anonymous<br/>use-credentials</td><td>Specifies how the element handles cross-origin requests</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_link_href.asp">href</a></td><td><em>URL</em></td><td>Specifies the location of the linked document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_link_hreflang.asp">hreflang</a></td><td><em>language_code</em></td><td>Specifies the language of the text in the linked document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_link_media.asp">media</a></td><td><em>media_query</em></td><td>Specifies on what device the linked document will be displayed</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_iframe_referrerpolicy.asp">referrerpolicy</a></td><td>no-referrer<br/>no-referrer-when-downgrade<br/>origin<br/>origin-when-cross-origin<br/>unsafe-url</td><td>Specifies which referrer to use when fetching the resource</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_link_rel.asp">rel</a></td><td>alternate<br/>author<br/>dns-prefetch<br/>help<br/>icon<br/>license<br/>next<br/>pingback<br/>preconnect<br/>prefetch<br/>preload<br/>prerender<br/>prev<br/>search<br/>stylesheet</td><td>Required. Specifies the relationship between the current document and the linked document</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_link_sizes.asp">sizes</a></td><td><em>Height</em>x<em>Width<br/></em>any</td><td>Specifies the size of the linked resource. Only for rel="icon"</td></tr>
+                <tr><td>title</td><td>Defines a preferred or an alternate stylesheet</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_link_type.asp">type</a></td><td><em>media_type</em></td><td>Specifies the media type of the linked document</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;nav&gt; Tag</h2>
+        <p>Example</p>
+        <p>A set of navigation links:</p>
+        <xmp>
+            <nav>
+                <a href="/html/">HTML</a> |
+                <a href="/css/">CSS</a> |
+                <a href="/js/">JavaScript</a> |
+                <a href="/python/">Python</a>
+            </nav>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;nav&gt;</code> tag defines a set of navigation links.</p>
+        <p>Notice that NOT all links of a document should be inside a <code>&lt;nav&gt;</code> element. The <code>&lt;nav&gt;</code> element is intended only for major blocks of navigation links.</p>
+        <p>Browsers, such as screen readers for disabled users, can use this element to determine whether to omit the initial rendering of this content.</p>
+    </div>
+</div>
+<div class="hidden container-fix">
+    <div class="container">
+        <div class="row">
+            <h2>Lists</h2>
+            <table>
+                <tbody>
+                <tr><th>Tag</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_ul.asp">&lt;ul&gt;</a></td><td>Defines an unordered list</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_ol.asp">&lt;ol&gt;</a></td><td>Defines an ordered list</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_li.asp">&lt;li&gt;</a></td><td>Defines a list item</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_dir.asp">&lt;dir&gt;</a></td><td>Not supported in HTML5. Use &lt;ul&gt; instead.<br />Defines a directory list</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_dl.asp">&lt;dl&gt;</a></td><td>Defines a description list</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_dt.asp">&lt;dt&gt;</a></td><td>Defines a term/name in a description list</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_dd.asp">&lt;dd&gt;</a></td><td>Defines a description of a term/name in a description list</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;ul&gt; Tag</h2>
+        <p>Example</p>
+        <p>An unordered HTML list:</p>
+        <xmp>
+            <ul>
+                <li>Coffee</li>
+                <li>Tea</li>
+                <li>Milk</li>
+            </ul>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;ul&gt;</code> tag defines an unordered (bulleted) list.</p>
+        <p>Use the <code>&lt;ul&gt;</code> tag together with the <a href="https://www.w3schools.com/tags/tag_li.asp">&lt;li&gt;</a> tag to create unordered lists.</p>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;ol&gt; Tag</h2>
+        <p>Example</p>
+        <p>Two different ordered lists (the first list starts at 1, and the second starts at 50):</p>
+        <xmp>
+            <ol>
+                <li>Coffee</li>
+                <li>Tea</li>
+                <li>Milk</li>
+            </ol>
+            
+            <ol start="50">
+                <li>Coffee</li>
+                <li>Tea</li>
+                <li>Milk</li>
+            </ol>
+        </xmp>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;li&gt; Tag</h2>
+        <p>Example</p>
+        <p>One ordered (&lt;ol&gt;) and one unordered (&lt;ul&gt;) HTML list:</p>
+        <xmp>
+            <ol>
+                <li>Coffee</li>
+                <li>Tea</li>
+                <li>Milk</li>
+            </ol>
+            
+            <ul>
+                <li>Coffee</li>
+                <li>Tea</li>
+                <li>Milk</li>
+            </ul>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;li&gt;</code> tag defines a list item.</p>
+        <p>The <code>&lt;li&gt;</code> tag is used inside ordered lists(<a href="https://www.w3schools.com/tags/tag_ol.asp">&lt;ol&gt;</a>), unordered lists (<a href="https://www.w3schools.com/tags/tag_ul.asp">&lt;ul&gt;</a>), and in menu lists (<a href="https://www.w3schools.com/tags/tag_menu.asp">&lt;menu&gt;</a>).</p>
+        <p>In &lt;ul&gt; and &lt;menu&gt;, the list items will usually be displayed with bullet points.</p>
+        <p>In &lt;ol&gt;, the list items will usually be displayed with numbers or letters.</p>
+        <table class="table table-bordered">
+            <tbody>
+                <tr><th>Attribute</th><th>Value</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/att_li_value.asp">value</a></td><td><em>number</em></td><td>Only for &lt;ol&gt; lists. Specifies the start value of a list item. The following list items will increment from that number</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;dl&gt; Tag</h2>
+        <p>Example</p>
+        <p>A description list, with terms and descriptions:</p>
+        <xmp>
+            <dl>
+                <dt>Coffee</dt>
+                <dd>Black hot drink</dd>
+                <dt>Milk</dt>
+                <dd>White cold drink</dd>
+            </dl>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;dl&gt;</code> tag defines a description list.</p>
+        <p>The <code>&lt;dl&gt;</code> tag is used in conjunction with <a href="https://www.w3schools.com/tags/tag_dt.asp">&lt;dt&gt;</a> (defines terms/names) and <a href="https://www.w3schools.com/tags/tag_dd.asp">&lt;dd&gt;</a> (describes each term/name).</p>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;dt&gt; Tag</h2>
+        <p>Example</p>
+        <p>A description list, with terms and descriptions:</p>
+        <xmp>
+            <dl>
+                <dt>Coffee</dt>
+                <dd>Black hot drink</dd>
+                <dt>Milk</dt>
+                <dd>White cold drink</dd>
+            </dl>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;dt&gt;</code> tag defines a term/name in a description list.</p>
+        <p>The <code>&lt;dt&gt;</code> tag is used in conjunction with <a href="https://www.w3schools.com/tags/tag_dl.asp">&lt;dl&gt;</a> (defines a description list) and <a href="https://www.w3schools.com/tags/tag_dd.asp">&lt;dd&gt;</a> (describes each term/name).</p>
+    </div>
+    <div class="container">
+        <h2>HTML &lt;dd&gt; Tag</h2>
+        <p>Example</p>
+        <p>A description list, with terms and descriptions:</p>
+        <xmp>
+            <dl>
+                <dt>Coffee</dt>
+                <dd>Black hot drink</dd>
+                <dt>Milk</dt>
+                <dd>White cold drink</dd>
+            </dl>
+        </xmp>
+        <p>Definition and Usage</p>
+        <p>The <code>&lt;dd&gt;</code> tag is used to describe a term/name in a description list.</p>
+        <p>The <code>&lt;dd&gt;</code> tag is used in conjunction with <a href="https://www.w3schools.com/tags/tag_dl.asp">&lt;dl&gt;</a> (defines a description list) and <a href="https://www.w3schools.com/tags/tag_dt.asp">&lt;dt&gt;</a> (defines terms/names).</p>
+        <p>Inside a <code>&lt;dd&gt;</code> tag you can put paragraphs, line breaks, images, links, lists, etc.</p>
+    </div>
+</div>
+<div class="hidden container-fix">
+    <div class="container">
+        <div class="row">
+            <h2>Tables</h2>
+            <table>
+                <tbody>
+                <tr><th>Tag</th><th>Description</th></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_table.asp">&lt;table&gt;</a></td><td>Defines a table</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_caption.asp">&lt;caption&gt;</a></td><td>Defines a table caption</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_th.asp">&lt;th&gt;</a></td><td>Defines a header cell in a table</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_tr.asp">&lt;tr&gt;</a></td><td>Defines a row in a table</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_td.asp">&lt;td&gt;</a></td><td>Defines a cell in a table</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_thead.asp">&lt;thead&gt;</a></td><td>Groups the header content in a table</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_tbody.asp">&lt;tbody&gt;</a></td><td>Groups the body content in a table</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_tfoot.asp">&lt;tfoot&gt;</a></td><td>Groups the footer content in a table</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_col.asp">&lt;col&gt;</a></td><td>Specifies column properties for each column within a &lt;colgroup&gt; element</td></tr>
+                <tr><td><a href="https://www.w3schools.com/tags/tag_colgroup.asp">&lt;colgroup&gt;</a></td><td>Specifies a group of one or more columns in a table for formatting</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <div class="hidden container-fix">
     <div class="container">
         <h2>HTML &lt;table&gt; Tag</h2>
