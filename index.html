@@ -29,48 +29,19 @@
 <meta name="twitter:data2" content="9 minutes" />
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   (function(c,l,a,r,i,t,y){
       c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
       t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
       y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
   })(window, document, "clarity", "script", "dplzzvc2xo");
-</script>
-<script>
-  function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    /* Loop through a collection of all HTML elements: */
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-      elmnt = z[i];
-      /*search for elements with a certain atrribute:*/
-      file = elmnt.getAttribute("w3-include-html");
-      if (file) {
-        /* Make an HTTP request using the attribute value as the file name: */
-        xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4) {
-            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-            /* Remove the attribute, and call this function once more: */
-            elmnt.removeAttribute("w3-include-html");
-            includeHTML();
-          }
-        }
-        xhttp.open("GET", file, true);
-        xhttp.send();
-        /* Exit the function: */
-        return;
-      }
-    }
-  }
-  </script>
-<link rel="stylesheet" href="pub/css/style-main.css">
+</script> -->
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
-    <header w3-include-html="https://brijesh.work/pub/inc/header.html" class="header">
-      
-    </header>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
     <section >
       <div class="container">
         <div class="col-lg-6" style="min-height:500px;padding-top:150px;">
@@ -358,3 +329,7 @@
     </footer>
   </body>
 </html>
+
+<script>
+includeHTML();
+</script>
