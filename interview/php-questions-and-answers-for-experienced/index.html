@@ -97,7 +97,7 @@ print("Please click the links below"."to submit comments about:");
 $comment = 'I want to say: "It\'s a good site! :->"';
 $comment = urlencode($comment);
 print(“”.””.”It's an excellent site!”);
-$comment = 'This visitor said: “It\'s an average site! “‘;
+$comment = 'This visitor said: “It\'s an average site! “';
 $comment = urlencode($comment);
 print(“”.''.”It's an average site.”);
 print(“”);
@@ -211,9 +211,9 @@ true,MYSQL_CLIENT_SSL|MYSQL_CLIENT_COMPRESS);
                     <h2>What is purpose of the following files having extensions: frm, myd, and myi ? what these files contain?</h2>
                     <p>In MySQL, the default table type is MyISAM.
                         Each MyISAM table is stored on disk in three files. The files have names that begin withthe table name and have an extension to indicate the file type.
-                        The ‘.frm’ file stores the table definition.
-                        The data file has a ‘.MYD’ (MYData) extension.
-                        The index file has a ‘.MYI’ (MYIndex) extension
+                        The '.frm’ file stores the table definition.
+                        The data file has a '.MYD’ (MYData) extension.
+                        The index file has a '.MYI’ (MYIndex) extension
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -294,8 +294,8 @@ $this->__header .= 'Disposition-Notification-To: ' . $this->__formatAddress($thi
                     <h2>What is difference between char and varchar data types?</h2>
                     <p>Set char to occupy n bytes and it will take n bytes even if u r storing a value of n-m bytes
                         Set varchar to occupy n bytes and it will take only the required space and will not use the n bytes
-                        eg. name char(15) will waste 10 bytes if we store ‘romharshan’, if each char takes a byte
-                        eg. name varchar(15) will just use 5 bytes if we store ‘romharshan’, if each chartakes a byte. rest 10 bytes will be free
+                        eg. name char(15) will waste 10 bytes if we store 'romharshan’, if each char takes a byte
+                        eg. name varchar(15) will just use 5 bytes if we store 'romharshan’, if each chartakes a byte. rest 10 bytes will be free
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -304,7 +304,7 @@ $this->__header .= 'Disposition-Notification-To: ' . $this->__formatAddress($thi
                 </div>
                 <div class="col-lg-12">
                     <h2>What type of inheritance PHP supposts?</h2>
-                    <p>In PHP an extended class is always dependent on a single base class, that is, multipleinheritance is not supported. Classes are extended using the keyword ‘extends’</p>
+                    <p>In PHP an extended class is always dependent on a single base class, that is, multipleinheritance is not supported. Classes are extended using the keyword 'extends’</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>List of the predefined classes in PHP?</h2>
@@ -323,7 +323,7 @@ $this->__header .= 'Disposition-Notification-To: ' . $this->__formatAddress($thi
                 </div>
                 <div class="col-lg-12">
                     <h2>How can we destroy the session, how can we unset the variable of a session?</h2>
-                    <p>session_unregister- Unregister a global variable from the current sessionsession_unset – Free all session variables</p>
+                    <p>session_unregister- Unregister a global variable from the current sessionsession_unset - Free all session variables</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>How many ways can we get the value of current session id?</h2>
@@ -350,7 +350,7 @@ $this->__header .= 'Disposition-Notification-To: ' . $this->__formatAddress($thi
                 <div class="col-lg-12">
                     <h2>What is mean by urlencode and urldecode?</h2>
                     <p>urlencode() returns the URL encoded version of the given string. URL coding converts special characters into % signs followed by two hex digits. For example: urlencode(“10.00%”) will return “10.00%′′. URL encoded strings are safe to be used as part of URLs.
-                        urldecode() returns the URL decoded version of the given string.String urlencode(str) – Returns the URL encoded version of the input string. String values to be used in URL query string need to be URL encoded. In the URL encodedversion:
+                        urldecode() returns the URL decoded version of the given string.String urlencode(str) - Returns the URL encoded version of the input string. String values to be used in URL query string need to be URL encoded. In the URL encodedversion:
                         Alphanumeric characters are maintained as is.Space characters are converted to “+” characters.
                         Other non-alphanumeric characters are converted “%” followed by two hex digits representing the converted character.
                         string urldecode(str) - Returns the original string of the input URL encoded string.
@@ -376,9 +376,9 @@ $stamp = mktime(8, 0, 0, 1, 1, 2000);
 date_default_timezone_set(’US/Eastern’);
 // Output the date in a standard format (RFC1123), this will print:
 // Fri, 31 Dec 1999 18:00:00 EST
-echo ‘
-‘, date(DATE_RFC1123, $stamp) ,’
-‘; ?>
+echo '
+', date(DATE_RFC1123, $stamp) ,’
+'; ?>
 
                     </pre>
                 </div>
@@ -536,7 +536,7 @@ echo ‘
                         </p>
                 </div>
                 <div class="col-lg-12">
-                    <h2>How can we extract string ‘hotmail.com’ from a email@hotmail.com using regular expression of php?</h2>
+                    <h2>How can we extract string 'hotmail.com’ from a email@hotmail.com using regular expression of php?</h2>
                     <p>preg_match(”/^http://.+@(.+)$/”,’email@hotmail.com’,$found);echo $found[1];</p>
                 </div>
                 <div class="col-lg-12">
@@ -551,20 +551,20 @@ echo ‘
                     <h2>What are the differences between Get and Post methods in form submitting</h2>
                     <p>When to use GET or POST
                         The HTML 2.0 specification says, in section Form Submission (and the HTML 4.0 specification repeats this with minor stylistic changes):
-                        –>If the processing of a form is idempotent (i.e. it has no lasting observable effecton the state of the
+                        ->If the processing of a form is idempotent (i.e. it has no lasting observable effecton the state of the
                         world), then the form method should be GET. Many database searches have no visible side-effects and make ideal applications of query forms.
-                        –
-                        –>If the service associated with the processing of a form has side effects (for example, modification of a database or subscription to a service), the method should be POST
+                        -
+                        ->If the service associated with the processing of a form has side effects (for example, modification of a database or subscription to a service), the method should be POST
                         </p>
                 </div>
                 <div class="col-lg-12">
                     <h2>What are different errors in PHP?</h2>
                     <p>When to use GET or POST
                         The HTML 2.0 specification says, in section Form Submission (and the HTML 4.0 specification repeats this with minor stylistic changes):
-                        –>If the processing of a form is idempotent (i.e. it has no lasting observable effecton the state of the
+                        ->If the processing of a form is idempotent (i.e. it has no lasting observable effecton the state of the
                         world), then the form method should be GET. Many database searches have no visible side-effects and make ideal applications of query forms.
-                        –
-                        –>If the service associated with the processing of a form has side effects (for example, modification of a database or subscription to a service), the method should be POST
+                        -
+                        ->If the service associated with the processing of a form has side effects (for example, modification of a database or subscription to a service), the method should be POST
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -782,7 +782,7 @@ print_r($result);
                     <p>For finding length of string we use strlen() function and for array we use count() function</p>
                 </div>
                 <div class="col-lg-12">
-                    <h2>What does the array operator ‘===’ means?</h2>
+                    <h2>What does the array operator '===’ means?</h2>
                     <p>$a === $b TRUE if $a and $b have the same key/value pairs in the same order and of the same types</p>
                 </div>
                 <div class="col-lg-12">
@@ -1077,9 +1077,9 @@ print_r($result);
                 <div class="col-lg-12">
                     <h2>How can we know the number of days between two given dates using PHP?</h2>
                     <p>Simple arithmetic:
-                        $date1 = date(‘Y-m-d’);
+                        $date1 = date('Y-m-d’);
                         $date2 = ’2006-07-01?;
-                        $days = (strtotime() – strtotime()) / (60 * 60 * 24);
+                        $days = (strtotime() - strtotime()) / (60 * 60 * 24);
                         echo “Number of days since ’2006-07-01?: $days”;
                         </p>
                 </div>
@@ -1202,10 +1202,10 @@ print_r($result);
                 </div>
                 <div class="col-lg-12">
                     <h2>What are the two main string operators?</h2>
-                    <p>The first is the concatenation operator (‘.’), which returns the concatenation of its right and left arguments. The second is (‘.=’), which appends the argument on the right to the argument on the left</p>
+                    <p>The first is the concatenation operator ('.’), which returns the concatenation of its right and left arguments. The second is ('.=’), which appends the argument on the right to the argument on the left</p>
                 </div>
                 <div class="col-lg-12">
-                    <h2>what the difference between the ‘BITWISE AND’ operator and the ‘LOGICAL AND’ operator?</h2>
+                    <h2>what the difference between the 'BITWISE AND’ operator and the 'LOGICAL AND’ operator?</h2>
                     <p>$a and $b: TRUE if both $a and $b are TRUE.
                         $a & $b: Bits that are set in both $a and $b are set
                         </p>
@@ -1220,12 +1220,12 @@ print_r($result);
                 </div>
                 <div class="col-lg-12">
                     <h2>How can we get the error when there is a problem to upload a file?</h2>
-                    <p>$_FILES[‘userfile’][‘error’] contains the error code associated with theuploaded file</p>
+                    <p>$_FILES['userfile’]['error’] contains the error code associated with theuploaded file</p>
                 </div>
                 <div class="col-lg-12">
-                    <h2>What the difference between $_FILES[‘filename’][‘name’] and $_FILES[‘filename’][‘tmp_name’]</h2>
-                    <p>$_FILES[‘userfile’][‘name’] represents the original name of the file on the client machine,
-                        $_FILES[‘userfile’][‘tmp_name’] represents the temporary filename of the file stored on the server
+                    <h2>What the difference between $_FILES['filename’]['name’] and $_FILES['filename’]['tmp_name’]</h2>
+                    <p>$_FILES['userfile’]['name’] represents the original name of the file on the client machine,
+                        $_FILES['userfile’]['tmp_name’] represents the temporary filename of the file stored on the server
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -1261,11 +1261,11 @@ print_r($result);
                 <div class="col-lg-12">
                     <h2>How is it possible to cast type in PHP?</h2>
                     <p>The name of the output type have to be specified in parentheses before the variable which is to be cast as follows:
-                        * (int), (integer) – cast to integer
-                        * (bool), (boolean) – cast to boolean
-                        * (float), (double), (real) – cast to float
-                        * (string) – cast to string* (array) – cast to array
-                        * (object) – cast to object
+                        * (int), (integer) - cast to integer
+                        * (bool), (boolean) - cast to boolean
+                        * (float), (double), (real) - cast to float
+                        * (string) - cast to string* (array) - cast to array
+                        * (object) - cast to object
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -1290,7 +1290,7 @@ print_r($result);
                 </div>
                 <div class="col-lg-12">
                     <h2>How is it possible to return a value from a function?</h2>
-                    <p>A function returns a value using the instruction ‘return $value;’</p>
+                    <p>A function returns a value using the instruction 'return $value;’</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>How can we define a variable accessible in functions of a PHP script?</h2>
@@ -1328,14 +1328,14 @@ print_r($result);
 date_default_timezone_set function on PHP 5.1.0
 // Discover what 8am in Tokyo relates to on the East Coast of the US
 // Set the default timezone to Tokyo time:
-date_default_timezone_set(‘Asia/Tokyo’);
+date_default_timezone_set('Asia/Tokyo’);
 // Now generate the timestamp for that particular timezone, on Jan 1st, 2000
 $stamp = mktime(8, 0, 0, 1, 1, 2000);
 // Now set the timezone back to US/Eastern
-date_default_timezone_set(‘US/Eastern’);
+date_default_timezone_set('US/Eastern’);
 // Output the date in a standard format (RFC1123), this will print:
 // Fri, 31 Dec 1999 18:00:00 EST
-echo ‘
+echo '
 ’, date(DATE_RFC1123, $stamp) ,’
 ’;?>
 
@@ -1356,8 +1356,8 @@ echo ‘
                 <div class="col-lg-12">
                     <h2>What is the functionality of the function strstr and stristr?</h2>
                     <p>strstr Returns part of string from the first occurrence of needle(sub string that we finding out ) to the end of string.
-                        $email= ‘sonialouder@gmail.com’;
-                        $domain = strstr($email, ‘@’);
+                        $email= 'sonialouder@gmail.com’;
+                        $domain = strstr($email, '@’);
                         echo $domain; // prints @gmail.com
                         here @ is the needle
                         stristr is case-insensitive means able not able to diffrenciate between a and A
@@ -1377,7 +1377,7 @@ echo ‘
                         3>IN OOP language we able to ree use code like Inheritance ,polymorphism etc but this type of thing not available in procedure language on that our Fonda use COPY and PASTE
                         </p>
                         <p>
-                            Traditional programming has the following characteristics:Functions arewritten sequentially, so that a change in programming can affect any code that follows it. If a function is used multiple times in a system (i.e., a piece of code that manages the date), it is often simply cut and pasted into each program (i.e., a change log, order function, fulfillment system, etc). If a date change is needed (i.e., Y2K when the code needed to be changed to handle four numerical digits instead of two), all these pieces of code must be found, modified, and tested. Code(sequences of computer instructions) and data (information on which the instructions operates on) are kept separate. Multiple sets of code can access and modify one set of data. One set of code may rely on data in multiple places. Multiple sets of code and data are required to work together. Changes made to anyof the code sets and data sets can cause problems through out the system.Object-Oriented programming takes a radically different approach:Code and data are merged into one indivisible item – an object (the term “component” has also been used to describe an object.) An object is an abstraction of a set of real-world things (for example, an object may be created around “date”) The object would contain all information and
+                            Traditional programming has the following characteristics:Functions arewritten sequentially, so that a change in programming can affect any code that follows it. If a function is used multiple times in a system (i.e., a piece of code that manages the date), it is often simply cut and pasted into each program (i.e., a change log, order function, fulfillment system, etc). If a date change is needed (i.e., Y2K when the code needed to be changed to handle four numerical digits instead of two), all these pieces of code must be found, modified, and tested. Code(sequences of computer instructions) and data (information on which the instructions operates on) are kept separate. Multiple sets of code can access and modify one set of data. One set of code may rely on data in multiple places. Multiple sets of code and data are required to work together. Changes made to anyof the code sets and data sets can cause problems through out the system.Object-Oriented programming takes a radically different approach:Code and data are merged into one indivisible item - an object (the term “component” has also been used to describe an object.) An object is an abstraction of a set of real-world things (for example, an object may be created around “date”) The object would contain all information and
 functionality for that thing (A date object it may contain labels like January, February, Tuesday, Wednesday.
 It may contain functionality that manages leap years, determines if it is a business day or a holiday, etc., See Fig. 1). Ideally, information about a particular thing should reside in only one place in a system.The information within an object is encapsulated (or hidden) from the rest of the system. A system is composed of multiple objects (i.e., date function, reports, order processing, etc., See Fig 2). When one object needs information from another object, a request is sent asking for specific information. (for example, a report object may need to know what today’s date is and will send a request to the date object) These requests are called   messages and each object has an interface that manages messages. OO programming languages include features such as “class”, “instance”, “inheritance”, and “polymorphism” that increase the power andflexibility of an object
 
@@ -1389,11 +1389,11 @@ It may contain functionality that manages leap years, determines if it is a busi
                 </div>
                 <div class="col-lg-12">
                     <h2>What is the difference between char and varchar data types?</h2>
-                    <p>Set char to occupy n bytes and it will take n bytes even if u r storing a value of n-m bytes Set varchar to occupy n bytes and it will take only the requiredspace and will not use the n bytes eg. name char(15) will waste 10 bytes if we store ‘mizan’, if each char takes a byte eg. name varchar(15) will just use 5 bytes if we store ‘mizan’, if each char takes a byte. rest 10 bytes will be free</p>
+                    <p>Set char to occupy n bytes and it will take n bytes even if u r storing a value of n-m bytes Set varchar to occupy n bytes and it will take only the requiredspace and will not use the n bytes eg. name char(15) will waste 10 bytes if we store 'mizan’, if each char takes a byte eg. name varchar(15) will just use 5 bytes if we store 'mizan’, if each char takes a byte. rest 10 bytes will be free</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>What type of inheritance that PHP supports?</h2>
-                    <p>In PHP an extended class is always dependent on a single base class,that is, multiple inheritance is supported by interfaces. Classes are extended using the keyword ‘extends’.</p>
+                    <p>In PHP an extended class is always dependent on a single base class,that is, multiple inheritance is supported by interfaces. Classes are extended using the keyword 'extends’.</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>Quote from CGI FAQ?</h2>
@@ -1411,8 +1411,8 @@ It may contain functionality that manages leap years, determines if it is a busi
                 <div class="col-lg-12">
                     <h2>How the form data is transmitted?</h2>
                     <p>quotation from the HTML 4.0 specification
-                        –> If the method is “get” – -, the user agent takes the value of action, appends a ? to it, then appends the form data set, encoded using the application/x-www-form-urlencoded content type. The user agent then traverses the link to this URI. In this scenario, form data are restricted to ASCII codes.
-                        –> If the method is “post” –, the user agent conducts an HTTP post transaction using the value of the action attribute and a message created according to the content type specified by the enctype  attribute
+                        -> If the method is “get” - -, the user agent takes the value of action, appends a ? to it, then appends the form data set, encoded using the application/x-www-form-urlencoded content type. The user agent then traverses the link to this URI. In this scenario, form data are restricted to ASCII codes.
+                        -> If the method is “post” -, the user agent conducts an HTTP post transaction using the value of the action attribute and a message created according to the content type specified by the enctype  attribute
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -1512,7 +1512,7 @@ It may contain functionality that manages leap years, determines if it is a busi
                 </div>
                 <div class="col-lg-12">
                     <h2>How can we access the data sent through the URL with the POST method?</h2>
-                    <p>To access the data sent this way, you use the $_POST array.Imagine you have a form field called ‘var’ on the form, when the user clicks submit to the post form, you can then access the value like this:
+                    <p>To access the data sent this way, you use the $_POST array.Imagine you have a form field called 'var’ on the form, when the user clicks submit to the post form, you can then access the value like this:
                         $_POST[“var”];
                         </p>
                 </div>
@@ -1520,7 +1520,7 @@ It may contain functionality that manages leap years, determines if it is a busi
                     <h2>How can we access the data sent through the URL with the GET method?</h2>
                     <p>In order to access the data sent via the GET method, we you use $_GET array like this:
                         www.url.com?var=value$variable = $_GET[“var”];
-                        this will now contain ‘value’
+                        this will now contain 'value’
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -1532,12 +1532,12 @@ It may contain functionality that manages leap years, determines if it is a busi
                     <p>The most common and used way is to get data into a format supported by Excel. For example, it is possible to write a .csv file, to choose for example comma as separator between fields and then to open the file with Excel.</p>
                 </div>
                 <div class="col-lg-12">
-                    <h2>What does the PHP error ‘Parse error in PHP - unexpected T_variable atline x’ means?</h2>
+                    <h2>What does the PHP error 'Parse error in PHP - unexpected T_variable atline x’ means?</h2>
                     <p>This is a PHP syntax error expressing that a mistake at the line x stops parsing and executing the program</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>How is it possible to set an infinite execution time for PHP script?</h2>
-                    <p>The set_time_limit(0) added at the beginning of a script sets to infinite the time of execution to not have the PHP error ‘maximum execution time exceeded’.It is also possible to specify this in the php.ini file</p>
+                    <p>The set_time_limit(0) added at the beginning of a script sets to infinite the time of execution to not have the PHP error 'maximum execution time exceeded’.It is also possible to specify this in the php.ini file</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>How can we display information of a variable and read by human with PHP?</h2>
@@ -1572,7 +1572,7 @@ It may contain functionality that manages leap years, determines if it is a busi
                     <p>exit() function which stops the current php script (Execution of the page).</p>
                 </div>
                 <div class="col-lg-12">
-                    <h2>Diffwerence between if (‘value’ == $var) and if($var==’value’)?</h2>
+                    <h2>Diffwerence between if ('value’ == $var) and if($var==’value’)?</h2>
                     <p>Here, if the value is non-zero, then if($var==’value’) is true and it will execute. If you put the value on the left, then it throws the PHP parse time error</p>
                 </div>
                 <div class="col-lg-12">
@@ -1586,7 +1586,7 @@ It may contain functionality that manages leap years, determines if it is a busi
                     <p>The functions are getimagesize() for size, imagesx() for width and imagesy() for height.</p>
                 </div>
                 <div class="col-lg-12">
-                    <h2>What is the use of the function ‘imagetypes()’?</h2>
+                    <h2>What is the use of the function 'imagetypes()’?</h2>
                     <p>imagetypes() gives the image format and types supported by the currentversion of GD-PHP.</p>
                 </div>
                 <div class="col-lg-12">
@@ -1595,7 +1595,7 @@ It may contain functionality that manages leap years, determines if it is a busi
                 </div>
                 <div class="col-lg-12">
                     <h2>How comparison of objects is done in PHP5?</h2>
-                    <p>We use the operator ‘==’ to test is two object are instanced from the same class and have same attributes and equal values. We can test if two object are refering to the same instance of the same class by the use of the identity operator ‘===’.</p>
+                    <p>We use the operator '==’ to test is two object are instanced from the same class and have same attributes and equal values. We can test if two object are refering to the same instance of the same class by the use of the identity operator '===’.</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>What type of operation is needed when passing values through a form or an URL?</h2>
@@ -1603,11 +1603,11 @@ It may contain functionality that manages leap years, determines if it is a busi
                 </div>
                 <div class="col-lg-12">
                     <h2>What is the meaning of a final class and a final method?</h2>
-                    <p>‘final’ is introduced in PHP5. Final class means that this class cannot beextended and a final method cannot be overrided</p>
+                    <p>'final’ is introduced in PHP5. Final class means that this class cannot beextended and a final method cannot be overrided</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>Is multiple inheritance supported in PHP?</h2>
-                    <p>PHP includes only single inheritance, it means that a class can be extended from only one single class using the keyword ‘extended’</p>
+                    <p>PHP includes only single inheritance, it means that a class can be extended from only one single class using the keyword 'extended’</p>
                 </div>
                 <div class="col-lg-12">
                     <h2>How can we display the output directory to the browser ?</h2>
@@ -1696,7 +1696,7 @@ It may contain functionality that manages leap years, determines if it is a busi
                     <h2>How can we know the number of days between two given dates using PHP?</h2>
                     <p>$date1 = date(“Y-m-d”);
                         $date2 = “2006-08-15??;
-                        $days = (strtotime($date1) – strtotime($date2)) / (60 * 60 * 24);
+                        $days = (strtotime($date1) - strtotime($date2)) / (60 * 60 * 24);
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -1755,7 +1755,7 @@ It may contain functionality that manages leap years, determines if it is a busi
                         </p>
                 </div>
                 <div class="col-lg-12">
-                    <h2>What is the use of ‘print’ in php?</h2>
+                    <h2>What is the use of 'print’ in php?</h2>
                     <p>This is not actually a real function, It is a language construct. So you can use with out parentheses with its argument list.
                         Example print('PHP Interview questions');
                         print 'Job Interview ');
@@ -1810,8 +1810,8 @@ It may contain functionality that manages leap years, determines if it is a busi
                 </div>
                 <div class="col-lg-12">
                     <h2>Determine the value of $pear after executing the code below. What will strlen($pear) return? Explain your answer.</h2>
-                    <pre><code class="language-sh">$pear = ‘PEAR ’;
-                    $pear[12] = ‘PHP Extension and Application Repository’;
+                    <pre><code class="language-sh">$pear = 'PEAR ’;
+                    $pear[12] = 'PHP Extension and Application Repository’;
                     </code></pre>
                     <p>This question reveals a few interesting things about the way PHP interprets code. The value of $pear in the code above will be the string &quot;PEAR P&quot; or the string &quot;PEAR &quot; followed by seven spaces, followed by &quot;P,&quot; which is the first character in the string &quot;PHP Extension and Application Repository.&quot; The value returned by strlen($pear) will thus be 13. Since an element of a string can only consist of one character, and the count of elements within a string starts with 0, $pear[12] sets the 13th character of the string to the letter &quot;P.&quot; Interestingly enough, we chose to set the 13th value of a string that only has five characters. While other language interpreters might have thrown an out-of-bounds index error, PHP is more forgiving and fills in the blanks with empty spaces.</p>
                     
@@ -1819,10 +1819,10 @@ It may contain functionality that manages leap years, determines if it is a busi
                 <div class="col-lg-12">
                     <h2>Determine the output of the code below. Explain your answer.</h2>
                     <pre><code class="language-sh">var_dump(42 == 042);
-                    var_dump(‘042’ == 42);
-                    var_dump(‘042’ === 42);
+                    var_dump('042’ == 42);
+                    var_dump('042’ === 42);
                     </code></pre>
-                    <p>This question quizzes the coder on how the PHP interpreter handles numbers and strings. i. var_dump(42 == 042); will output bool(false) because the PHP interpreter treats leading zeroes as octals. 042 is 32 in decimal, which does not equal 42. ii. var_dump(‘042’ == 42); will output bool(true) because PHP interpreter will coerce the string into an integer but ignore the leading zero. 42 is equal to 42. iii. var_dump(‘042’ === 42); will output bool(false) because the === operator performs a stricter comparison and will not coerce the integer into a string.</p>
+                    <p>This question quizzes the coder on how the PHP interpreter handles numbers and strings. i. var_dump(42 == 042); will output bool(false) because the PHP interpreter treats leading zeroes as octals. 042 is 32 in decimal, which does not equal 42. ii. var_dump('042’ == 42); will output bool(true) because PHP interpreter will coerce the string into an integer but ignore the leading zero. 42 is equal to 42. iii. var_dump('042’ === 42); will output bool(false) because the === operator performs a stricter comparison and will not coerce the integer into a string.</p>
                     
                 </div>
                 <div class="col-lg-12">
@@ -1932,7 +1932,7 @@ It may contain functionality that manages leap years, determines if it is a busi
 
                 <div class="col-lg-12">
                     <h2>Import database from sql file to mysql</h2>
-                    <p>mysql –u username –p databasename tablename < sqlfilename>
+                    <p>mysql -u username -p databasename tablename < sqlfilename>
 
                         (It will prompt for password)
                         </p>
@@ -1941,7 +1941,7 @@ It may contain functionality that manages leap years, determines if it is a busi
                     <h2>How to export database to sql file with use of command line?</h2>
                     <p>1) Login to Putty/Console
                         2) Execute following commands to export the sql dump into server.
-                        mysqldump –u username –p databasename tablename > sqlfilename.sql
+                        mysqldump -u username -p databasename tablename > sqlfilename.sql
                         
                         (It will prompt password)
                         </p>
@@ -2037,13 +2037,14 @@ mysql -u username -p databasename < sqlfilename>
                 <div class="col-lg-12">
                     <h2>How can i reteives value from one database server and store them in other database server using PHP?</h2>
                     <p>we can always fetch from one database and rewrite to another. here is a nice solutionof it.</p>
-                    <pre>
-                        $db1 = mysql_connect(“host”,”user”,”pwd”)
+<pre>
+$db1 = mysql_connect(“host”,”user”,”pwd”)
 mysql_select_db(“db1??, $db1);
 $res1 = mysql_query(“query”,$db1);$db2 = mysql_connect(“host”,”user”,”pwd”)
 mysql_select_db(“db2??, $db2);
 $res2 = mysql_query(“query”,$db2);At this point you can only fetch records from you previous ResultSet,
-i.e $res1 “ But you cannot execute new query in $db1, even if you supply the link as because the link was overwritten by the new db.so at this point the following script will fail
+i.e $res1 “ But you cannot execute new query in $db1, even if you supply the link as because the link was overwritten by the new db.
+so at this point the following script will fail
 $res3 = mysql_query(“query”,$db1); //this will failSo how to solve that? take a look below.
 $db1 = mysql_connect(“host”,”user”,”pwd”)
 mysql_select_db(“db1??, $db1);
@@ -2051,11 +2052,11 @@ $res1 = mysql_query(“query”,$db1);
 $db2 = mysql_connect(“host”,”user”,”pwd”, true)
 mysql_select_db(“db2??, $db2);
 $res2 = mysql_query(“query”,$db2);
-So mysql_connect has another optional boolean parameter which indicates whether alink will be created or not. as we connect to the $db2 with this optional parameter setto ‘true’, so both link will remain live.
+So mysql_connect has another optional boolean parameter which indicates whether alink will be created or not. 
+as we connect to the $db2 with this optional parameter setto 'true’, so both link will remain live.
 now the following query will execute successfully.
 $res3 = mysql_query(“query”,$db1);
-
-                    </pre>
+</pre>
                 </div>
                 <div class="col-lg-12">
                     <h2>How can we optimized or increased the speed of a MySQL select query?</h2>
@@ -2092,20 +2093,24 @@ $res3 = mysql_query(“query”,$db1);
                 </div>
                 <div class="col-lg-12">
                     <h2>What is PDO?</h2>
-                    <pre>
-                        The PDO ( PHP Data Objects ) extension defines a lightweight, consistent interface for accessing databases in PHP. if you are using the PDO API, you could switch the database server you used, from say PgSQL to MySQL, and only need to make minorchanges to your PHP code.
-While PDO has its advantages, such as a clean, simple, portable API but its maindisadvantage is that it doesn’t allow you to use all of the advanced features that are available in the latest versions of MySQL server. For example, PDO does not allow you to use MySQL’s support for Multiple Statements.
+<pre>
+The PDO ( PHP Data Objects ) extension defines a lightweight, consistent interface for accessing databases in PHP. 
+if you are using the PDO API, you could switch the database server you used, from say PgSQL to MySQL, 
+and only need to make minorchanges to your PHP code.
+While PDO has its advantages, such as a clean, simple, portable API but its maindisadvantage is that it doesn’t allow 
+you to use all of the advanced features that are available in the latest versions of MySQL server. 
+For example, PDO does not allow you to use MySQL’s support for Multiple Statements.
 Just need to use below code for connect mysql using PDO
 try {
 $dbh = new PDO(“mysql:host=$hostname;dbname=databasename”, $username, $password);
 $sql = “SELECT * FROM employee”;
 foreach ($dbh->query($sql) as $row)
-{ print $row['employee_name'] .’ – ‘. $row['employee_age'] ; }}
+{ print $row['employee_name'] .’ - '. $row['employee_age'] ; }}
 catch(PDOException $e){
 echo $e->getMessage();
 }
 
-                    </pre>
+</pre>
                 </div>
                 <div class="col-lg-12">
                     <h2>How to convert mysqli with php using PDO?</h2>
@@ -2191,7 +2196,7 @@ omysql_fetch_row() fetches one row of data from the result associated with the s
                 </div>
                 <div class="col-lg-12">
                     <h2>What is the difference between mysql_fetch_object and mysql_fetch_array?</h2>
-                    <p>mysql_fetch_object() is similar to mysql_fetch_array(), with one difference –
+                    <p>mysql_fetch_object() is similar to mysql_fetch_array(), with one difference -
                         an object is returned, instead of an array. Indirectly, that means that you can only access the data by the field names, and not by their offsets (numbers are illegal property names)
                     </p>
                 </div>
@@ -2263,9 +2268,9 @@ omysql_fetch_row() fetches one row of data from the result associated with the s
                 <div class="col-lg-12">
                     <h2>how can we take a backup of a MySQL table and how can we restore it ?</h2>
                     <p>To backup: BACKUP TABLE tbl_name[,tbl_name ¦] TO
-                        ‘/path/to/backup/directory’
+                        '/path/to/backup/directory’
                         RESTORE TABLE tbl_name[,tbl_name ¦] FROM
-                        ‘/path/to/backup/directory’mysqldump: Dumping Table Structure and DataUtility to
+                        '/path/to/backup/directory’mysqldump: Dumping Table Structure and DataUtility to
                         dump a database or a collection of database for backup or
                         for transferring the data to another SQL server (not necessarily a MySQL
                         server). The dump will contain SQL statements to create the table and/or
@@ -2328,9 +2333,9 @@ omysql_fetch_row() fetches one row of data from the result associated with the s
                 <div class="col-lg-12">
                     <h2>How do we use % when performing a search query ?</h2>
                     <p>Suppose take an example where you need to fetch all customer data where name stats with sa
-                        SELECT * FROM Customers WHERE name LIKE ‘sa%';
+                        SELECT * FROM Customers WHERE name LIKE 'sa%';
                         Another case is where you need to fetch all customer data where kumar is found irrespective of the position (middle name or last name).
-                        SELECT * FROM Customers WHERE name LIKE ‘%kumar%';
+                        SELECT * FROM Customers WHERE name LIKE '%kumar%';
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -2380,14 +2385,14 @@ omysql_fetch_row() fetches one row of data from the result associated with the s
                         $db2 = mysql_connect(”host”,”user”,”pwd”);
                         mysql_select_db(”db2?, $db2);
                         $res2 = mysql_query(”query”,$db2);
-                        At this point you can only fetch records from you previous ResultSet, i.e $res1 – But you cannot execute new query in $db1, even if yousupply the link as because the link was overwritten by the new db.so at this point the following script will fail
+                        At this point you can only fetch records from you previous ResultSet, i.e $res1 - But you cannot execute new query in $db1, even if yousupply the link as because the link was overwritten by the new db.so at this point the following script will fail
                         $res3 = mysql_query(”query”,$db1); //this will failSo how to solve that? take a look below.
                         $db1 = mysql_connect(”host”,”user”,”pwd”);
                         mysql_select_db(”db1?, $db1);
                         $res1 = mysql_query(”query”,$db1);
                         $db2 = mysql_connect(”host”,”user”,”pwd”, true);
                         mysql_select_db(”db2?, $db2);$res2 = mysql_query(”query”,$db2);
-                        So mysql_connect has another optional boolean parameter whichindicates whether a link will be created or not. As we connect to the $db2 with this optionalparameter set to ‘true’, so both link willremain live. Now the following query willexecute successfully.
+                        So mysql_connect has another optional boolean parameter whichindicates whether a link will be created or not. As we connect to the $db2 with this optionalparameter set to 'true’, so both link willremain live. Now the following query willexecute successfully.
                         $res3 = mysql_query(”query”,$db1);
                         </p>
                 </div>
@@ -2406,9 +2411,9 @@ omysql_fetch_row() fetches one row of data from the result associated with the s
                 </div>
                 <div class="col-lg-12">
                     <h2>How can we take a backup of a mysql table and how can we restore it?</h2>
-                    <p>To backup: BACKUP TABLE tbl_name[,tbl_name...] TO ‘/path/to/backup/directory’
+                    <p>To backup: BACKUP TABLE tbl_name[,tbl_name...] TO '/path/to/backup/directory’
                         RESTORE TABLE tbl_name[,tbl_name...] FROM
-                        ‘/path/to/backup/directory’mysqldump: Dumping Table Structure and DataUtility to dump a database or a collection of database for backup or for transferring the data to another SQL server (not necessarily a MySQL server). The dump will contain SQL statements to create the table and/or populate the table. -t, –no-create-info Don’t write table creation information (the CREATE TABLE statement). -d, –no-data Don’t write any row information for the table. This is very useful if you just want to get a dump of the structure for a table.
+                        '/path/to/backup/directory’mysqldump: Dumping Table Structure and DataUtility to dump a database or a collection of database for backup or for transferring the data to another SQL server (not necessarily a MySQL server). The dump will contain SQL statements to create the table and/or populate the table. -t, -no-create-info Don’t write table creation information (the CREATE TABLE statement). -d, -no-data Don’t write any row information for the table. This is very useful if you just want to get a dump of the structure for a table.
                         </p>
                 </div>
                 <div class="col-lg-12">
@@ -2419,9 +2424,9 @@ omysql_fetch_row() fetches one row of data from the result associated with the s
                     <h2>What is the purpose of the following files having extensions .frm, .myd, .myi ? What do these files contain?</h2>
                     <p>In MySql, the default table type is MyISAM.
                         Each MyISAM table is stored on disk in three files. The files have names that begin with the table name and have an extension to indicate the file type.
-                        The ‘.frm’ file stores the table definition.
-                        The data file has a ‘.MYD’ (MYData) extension.
-                        The index file has a ‘.MYI’ (MYIndex) extension
+                        The '.frm’ file stores the table definition.
+                        The data file has a '.MYD’ (MYData) extension.
+                        The index file has a '.MYI’ (MYIndex) extension
                         </p>
                 </div>
                 <div class="col-lg-12">
