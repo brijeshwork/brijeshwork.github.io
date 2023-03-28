@@ -251,8 +251,8 @@ nav ul li a {
 
 header {
     /* padding-top: 30px; */
-    border-top: 2px solid#000;
-    border-bottom: 2px solid#000;
+    /* border-top: 2px solid#000; */
+    border-bottom: 1px solid#dddddd;
 }
 
 header,
