@@ -302,59 +302,7 @@ section {
 }
 
 
-.hireme-btn {
-    color: blue;
-    font-size: 16px;
-    padding: 10px 20px;
-    border: 2px solid blue;
-    font-weight: 900;
-    text-decoration: none;
-}
 
-
-
-.main {
-    transform: rotate(8deg);
-    /* position: relative; */
-    position: absolute;
-    top: 120px;
-    right: 10%;
-    /* right: 90px; */
-    width: 360px;
-    height: 480px;
-    background-repeat: no-repeat;
-    z-index: 2;
-    border-radius: 15px;
-    background-color: #000000;
-}
-
-.shape {
-    background-color: #becbf1;
-    transform: rotate(-8deg);
-    /* position: relative; */
-    position: absolute;
-    top: 120px;
-    right: 14%;
-    /* right: 210px; */
-    width: 360px;
-    height: 480px;
-    z-index: 1;
-    border-radius: 15px;
-}
-
-
-.image-container {
-    width: 100%;
-    display: inline-block;
-}
-
-.yearsofexperience {
-    border-radius: 20%;
-    background-color: #e9e8ff;
-    color: #4030ff;
-    font-size: 120px;
-    font-weight: 900;
-}
 
 .clearfix::after {
     display: block;
@@ -362,19 +310,6 @@ section {
     content: ""
 }
 
-.hidden {
-    display: none;
-}
-
-.servicebox {
-    background-color: #ffffff;
-    box-shadow: 1px 1px 3px #ddd;
-    width: 100%;
-    height: 100%;
-    margin: 5px 5px 5px 5px;
-    padding: 20px;
-    box-shadow: 2px 2px 2px #ddd;
-}
 
 nav ul {
     list-style-type: none;
