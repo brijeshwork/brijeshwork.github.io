@@ -120,6 +120,11 @@ section {
     color: #ffffff;
     background-color: var(--colors-button-primary);
 }
+.hireme-btn:hover {
+    color:var(--color-primary);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary);
+}
 
 .fontColor {
     color: #121212;
