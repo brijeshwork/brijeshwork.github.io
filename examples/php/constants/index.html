@@ -59,12 +59,83 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4></h4>
+                    <h4>Case-sensitive constant name</h4>
                 </div>
                 <div class="col-lg-12">
                     <pre>
                 <xmp>
-
+                    <?php
+                    // case-sensitive constant name
+                    define("GREETING", "Welcome to W3Schools.com!");
+                    echo GREETING;
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Case-insensitive constant name</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    // case-insensitive constant name
+                    define("GREETING", "Welcome to W3Schools.com!", true);
+                    echo greeting;
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Create a Array constant with define()</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    define("cars", [
+                      "Alfa Romeo",
+                      "BMW",
+                      "Toyota"
+                    ]);
+                    echo cars[0];
+                    ?> 
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use a constant inside a function (when it is defined outside the function)</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    define("GREETING", "Welcome to W3Schools.com!");
+                    
+                    function myTest() {
+                      echo GREETING;
+                    }
+                     
+                    myTest();
+                    ?> 
                 </xmp>
                 </pre>
                 </div>

@@ -59,19 +59,105 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4></h4>
+                    <h4>Create and retrieve a cookie</h4>
                 </div>
                 <div class="col-lg-12">
                     <pre>
                 <xmp>
+                    <?php
+                    $cookie_name = "user";
+                    $cookie_value = "John Doe";
+                    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
 
+                    if(!isset($_COOKIE[$cookie_name])) {
+                        echo "Cookie named '" . $cookie_name . "' is not set!";
+                   } else {
+                        echo "Cookie '" . $cookie_name . "' is set!<br>";
+                        echo "Value is: " . $_COOKIE[$cookie_name];
+                   }
+                    ?>
                 </xmp>
                 </pre>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Modify a cookie value</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+<?php
+$cookie_name = "user";
+$cookie_value = "Alex Porter";
+setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
+
+if(!isset($_COOKIE[$cookie_name])) {
+     echo "Cookie named '" . $cookie_name . "' is not set!";
+} else {
+     echo "Cookie '" . $cookie_name . "' is set!<br>";
+     echo "Value is: " . $_COOKIE[$cookie_name];
+}
+?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Delete a cookie</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    // set the expiration date to one hour ago
+                    setcookie("user", "", time() - 3600);
+                    
+                    
+                    echo "Cookie 'user' is deleted.";
+                    ?>
+                    
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Check if cookies are enabled</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    setcookie("test_cookie", "test", time() + 3600, '/');
+                    
+                    
+                    if(count($_COOKIE) > 0) {
+                        echo "Cookies are enabled.";
+                    } else {
+                        echo "Cookies are disabled.";
+                    }
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>

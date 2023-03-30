@@ -59,12 +59,82 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4></h4>
+                    <h4>Use fopen(), fread(), and fclose() to open, read, and close a file</h4>
                 </div>
                 <div class="col-lg-12">
                     <pre>
                 <xmp>
-
+                    <?php
+                    $myfile = fopen("webdictionary.txt", "r") or die("Unable to open file!");
+                    echo fread($myfile,filesize("webdictionary.txt"));
+                    fclose($myfile);
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use fgets() to read a single line from a file</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $myfile = fopen("webdictionary.txt", "r") or die("Unable to open file!");
+                    echo fgets($myfile);
+                    fclose($myfile);
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use feof() to read through a file, line by line, until end-of-file is reached</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $myfile = fopen("webdictionary.txt", "r") or die("Unable to open file!");
+                    // Output one line until end-of-file
+                    while(!feof($myfile)) {
+                      echo fgets($myfile) . "<br>";
+                    }
+                    fclose($myfile);
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use fgetc() to read a single character from a file</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $myfile = fopen("webdictionary.txt", "r") or die("Unable to open file!");
+                    // Output one character until end-of-file
+                    while(!feof($myfile)) {
+                      echo fgetc($myfile);
+                    }
+                    fclose($myfile);
+                    ?>
                 </xmp>
                 </pre>
                 </div>

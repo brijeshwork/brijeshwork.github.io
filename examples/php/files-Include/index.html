@@ -59,12 +59,83 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4></h4>
+                    <h4>Use include to include "footer.php" in a page</h4>
                 </div>
                 <div class="col-lg-12">
                     <pre>
                 <xmp>
+                    <?php include 'footer.php';?>
 
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use include to include "menu.php" in a page</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php include 'menu.php';?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use include to include "vars.php" in a page</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php include 'vars.php';
+                    echo "I have a $color $car.";
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use include to include a non-existing file</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php include 'noFileExists.php';
+                    echo "I have a $color $car.";
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use require to include a non-existing file</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php require 'noFileExists.php';
+                    echo "I have a $color $car.";
+                    ?>
                 </xmp>
                 </pre>
                 </div>

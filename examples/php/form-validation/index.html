@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel</title>
+    <link rel="canonical" href="https://brijesh.work/" />
+    <meta name="description" content="Brijesh Patel PHP Developer | Magento | Laravel">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
+    <meta property="og:description" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
+    <meta property="og:url" content="https://brijesh.work/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/" />
+    <meta property="og:image:width" content="960" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Brijesh Patel" />
+    <meta name="twitter:label2" content="Est. reading time" />
+    <meta name="twitter:data2" content="9 minutes" />
+
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>PHP Form Validation</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <!DOCTYPE HTML>  
+                    <html>
+                    <head>
+                    <style>
+                    .error {color: #FF0000;}
+                    </style>
+                    </head>
+                    <body>  
+                    
+                    <?php
+                    // define variables and set to empty values
+                    $nameErr = $emailErr = $genderErr = $websiteErr = "";
+                    $name = $email = $gender = $comment = $website = "";
+                    
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                      if (empty($_POST["name"])) {
+                        $nameErr = "Name is required";
+                      } else {
+                        $name = test_input($_POST["name"]);
+                        // check if name only contains letters and whitespace
+                        if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+                          $nameErr = "Only letters and white space allowed";
+                        }
+                      }
+                      
+                      if (empty($_POST["email"])) {
+                        $emailErr = "Email is required";
+                      } else {
+                        $email = test_input($_POST["email"]);
+                        // check if e-mail address is well-formed
+                        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                          $emailErr = "Invalid email format";
+                        }
+                      }
+                        
+                      if (empty($_POST["website"])) {
+                        $website = "";
+                      } else {
+                        $website = test_input($_POST["website"]);
+                        // check if URL address syntax is valid (this regular expression also allows dashes in the URL)
+                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+                          $websiteErr = "Invalid URL";
+                        }
+                      }
+                    
+                      if (empty($_POST["comment"])) {
+                        $comment = "";
+                      } else {
+                        $comment = test_input($_POST["comment"]);
+                      }
+                    
+                      if (empty($_POST["gender"])) {
+                        $genderErr = "Gender is required";
+                      } else {
+                        $gender = test_input($_POST["gender"]);
+                      }
+                    }
+                    
+                    function test_input($data) {
+                      $data = trim($data);
+                      $data = stripslashes($data);
+                      $data = htmlspecialchars($data);
+                      return $data;
+                    }
+                    ?>
+                    
+                    <h2>PHP Form Validation Example</h2>
+                    <p><span class="error">* required field</span></p>
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+                      Name: <input type="text" name="name" value="<?php echo $name;?>">
+                      <span class="error">* <?php echo $nameErr;?></span>
+                      <br><br>
+                      E-mail: <input type="text" name="email" value="<?php echo $email;?>">
+                      <span class="error">* <?php echo $emailErr;?></span>
+                      <br><br>
+                      Website: <input type="text" name="website" value="<?php echo $website;?>">
+                      <span class="error"><?php echo $websiteErr;?></span>
+                      <br><br>
+                      Comment: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
+                      <br><br>
+                      Gender:
+                      <input type="radio" name="gender" <?php if (isset($gender) && $gender=="female") echo "checked";?> value="female">Female
+                      <input type="radio" name="gender" <?php if (isset($gender) && $gender=="male") echo "checked";?> value="male">Male
+                      <input type="radio" name="gender" <?php if (isset($gender) && $gender=="other") echo "checked";?> value="other">Other  
+                      <span class="error">* <?php echo $genderErr;?></span>
+                      <br><br>
+                      <input type="submit" name="submit" value="Submit">  
+                    </form>
+                    
+                    <?php
+                    echo "<h2>Your Input:</h2>";
+                    echo $name;
+                    echo "<br>";
+                    echo $email;
+                    echo "<br>";
+                    echo $website;
+                    echo "<br>";
+                    echo $comment;
+                    echo "<br>";
+                    echo $gender;
+                    ?>
+                    
+                    </body>
+                    </html>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script>includeHTML();</script>

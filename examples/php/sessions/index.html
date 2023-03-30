@@ -59,12 +59,119 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4></h4>
+                    <h4>Start a session</h4>
                 </div>
                 <div class="col-lg-12">
                     <pre>
                 <xmp>
-
+                    <?php
+                    // Start the session
+                    session_start();
+                    
+                    
+                    // Set session variables
+                    $_SESSION["favcolor"] = "green";
+                    $_SESSION["favanimal"] = "cat";
+                    echo "Session variables are set.";
+                    ?>
+                    
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Get session variable values</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    session_start();
+                    
+                    
+                    // Echo session variables that were set on previous page
+                    echo "Favorite color is " . $_SESSION["favcolor"] . ".<br>";
+                    echo "Favorite animal is " . $_SESSION["favanimal"] . ".";
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Get all session variable values</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    session_start();
+                    
+                    
+                    print_r($_SESSION);
+                    ?>
+                    
+                  
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Modify a session variable</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    session_start();
+                    
+                    
+                    // to change a session variable, just overwrite it
+                    $_SESSION["favcolor"] = "yellow";
+                    print_r($_SESSION);
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Destroy a session</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    session_start();
+                    
+                    
+                    // remove all session variables
+                    session_unset();
+                    
+                    // destroy the session
+                    session_destroy();
+                    
+                    echo "All session variables are now removed, and the session is destroyed."
+                    ?>
+                    
                 </xmp>
                 </pre>
                 </div>

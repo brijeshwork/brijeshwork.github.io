@@ -59,19 +59,62 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4></h4>
+                    <h4>Do a case-insensitive search for "w3schools" in a string</h4>
                 </div>
                 <div class="col-lg-12">
                     <pre>
                 <xmp>
-
+                    <?php
+                    $str = "Visit W3Schools";
+                    $pattern = "/w3schools/i";
+                    echo preg_match($pattern, $str); 
+                    ?>
                 </xmp>
                 </pre>
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Do a case-insensitive count of the number of occurrences of "ain" in a string</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $str = "The rain in SPAIN falls mainly on the plains.";
+                    $pattern = "/ain/i";
+                    echo preg_match_all($pattern, $str);
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Replace "Microsoft" with "W3Schools" in a string</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $str = "Visit Microsoft!";
+                    $pattern = "/microsoft/i";
+                    echo preg_replace($pattern, "W3Schools", $str);
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>

@@ -59,12 +59,84 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4></h4>
+                    <h4>Encode an associative array into a JSON object</h4>
                 </div>
                 <div class="col-lg-12">
                     <pre>
                 <xmp>
-
+                    <?php
+                    $age = array("Peter"=>35, "Ben"=>37, "Joe"=>43);
+                    
+                    echo json_encode($age);
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Decode JSON data into a PHP object</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $jsonobj = '{"Peter":35,"Ben":37,"Joe":43}';
+                     
+                    var_dump(json_decode($jsonobj));
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Access the values from a PHP object</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $jsonobj = '{"Peter":35,"Ben":37,"Joe":43}';
+                    
+                    $obj = json_decode($jsonobj);
+                    
+                    echo $obj->Peter;
+                    echo $obj->Ben;
+                    echo $obj->Joe;
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Loop through the values of a PHP object</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $jsonobj = '{"Peter":35,"Ben":37,"Joe":43}';
+                    
+                    $obj = json_decode($jsonobj);
+                    
+                    foreach($obj as $key => $value) {
+                      echo $key . " => " . $value . "<br>";
+                    }
+                    ?>
                 </xmp>
                 </pre>
                 </div>
