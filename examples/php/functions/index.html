@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel</title>
+<link rel="canonical" href="https://brijesh.work/" />
+<meta name="description" content="Brijesh Patel PHP Developer | Magento | Laravel">
+
+<link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
+<meta property="og:description" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
+<meta property="og:url" content="https://brijesh.work/" />
+<meta property="og:site_name" content="Brijesh Patel" />
+<meta property="og:image" content="https://brijesh.work/" />
+<meta property="og:image:width" content="960" />
+<meta property="og:image:height" content="640" />
+<meta property="og:image:type" content="image/jpeg" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@brijeshwork" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="Brijesh Patel" />
+<meta name="twitter:label2" content="Est. reading time" />
+<meta name="twitter:data2" content="9 minutes" />
+
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Create a function</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    function writeMsg() {
+                      echo "Hello world!";
+                    }
+                    
+                    writeMsg();
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Function with one argument</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    function familyName($fname) {
+                      echo "$fname Refsnes.<br>";
+                    }
+                    
+                    familyName("Jani");
+                    familyName("Hege");
+                    familyName("Stale");
+                    familyName("Kai Jim");
+                    familyName("Borge");
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Function with two arguments</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    function familyName($fname, $year) {
+                      echo "$fname Refsnes. Born in $year <br>";
+                    }
+                    
+                    familyName("Hege","1975");
+                    familyName("Stale","1978");
+                    familyName("Kai Jim","1983");
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Function with default argument value</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    function setHeight(int $minheight = 50) {
+                      echo "The height is : $minheight <br>";
+                    }
+                    
+                    setHeight(350);
+                    setHeight();
+                    setHeight(135);
+                    setHeight(80);
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Function that returns a value</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    function sum(int $x, int $y) {
+                      $z = $x + $y;
+                      return $z;
+                    }
+                    
+                    echo "5 + 10 = " . sum(5,10) . "<br>";
+                    echo "7 + 13 = " . sum(7,13) . "<br>";
+                    echo "2 + 4 = " . sum(2,4);
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Return type declarations</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php declare(strict_types=1); // strict requirement
+                    function addNumbers(float $a, float $b) : float {
+                      return $a + $b;
+                    }
+                    echo addNumbers(1.2, 5.2); 
+                    ?>
+                    
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Passing arguments by reference</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    function add_five(&$value) {
+                      $value += 5;
+                    }
+                    
+                    $num = 2;
+                    add_five($num);
+                    echo $num;
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+</body>
+</html>
+<script>includeHTML();</script>
