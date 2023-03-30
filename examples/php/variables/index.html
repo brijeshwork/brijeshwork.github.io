@@ -55,64 +55,159 @@
 <body>
     <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-
     <div class="container-fix">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4>Syntax for single-line comments</h4>
+                    <h4>Create different variables</h4>
                 </div>
                 <div class="col-lg-12">
                     <pre>
-                    <xmp>
+                <xmp>
 <?php
-    // This is a single-line comment
-    # This is also a single-line comment
-?>
-                    </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Syntax for multi-line comments</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                    <xmp>
-<?php
-    /*
-    This is a multiple-lines comment block
-    that spans over multiple
-    lines
-    */
-?>
-                    </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Using comments to leave out parts of the code</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                    <xmp>
-<?php
-    // You can also use comments to leave out parts of a code line
-    $x = 5 /* + 15 */ + 5;
+    $txt = "Hello world!";
+    $x = 5;
+    $y = 10.5;
+    
+    echo $txt;
+    echo "<br>";
     echo $x;
+    echo "<br>";
+    echo $y;
 ?>
-
-                    </xmp>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Test global scope (variable outside function)</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+<?php
+    $x = 5; // global scope
+        
+    function myTest() {
+        // using x inside this function will generate an error
+        echo "<p>Variable x inside function is: $x</p>";
+    } 
+    myTest();
+    
+    echo "<p>Variable x outside function is: $x</p>";
+?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Test local scope (variable inside function)</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+<xmp>
+    <?php
+    function myTest() {
+        $x = 5; // local scope
+        echo "<p>Variable x inside function is: $x</p>";
+    } 
+    myTest();
+    
+    // using x outside the function will generate an error
+    echo "<p>Variable x outside function is: $x</p>";
+?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use the global keyword to access a global variable from within a function</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+<?php
+    $x = 5;
+    $y = 10;
+    
+    function myTest() {
+        global $x, $y;
+        $y = $x + $y;
+    } 
+    
+    myTest();  // run function
+    echo $y; // output the new value for variable $y
+?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use the $GLOBALS[] array to access a global variable from within a function</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+<?php
+    $x = 5;
+    $y = 10;
+    
+    function myTest() {
+        $GLOBALS['y'] = $GLOBALS['x'] + $GLOBALS['y'];
+    } 
+    
+    myTest();
+    echo $y;
+?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Use the static keyword to let a local variable not be deleted after execution of function</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+<?php
+    function myTest() {
+        static $x = 0;
+        echo $x;
+        $x++;
+    }
+    
+    myTest();
+    echo "<br>";
+    myTest();
+    echo "<br>";
+    myTest();
+?> 
+                </xmp>
                 </pre>
                 </div>
             </div>
