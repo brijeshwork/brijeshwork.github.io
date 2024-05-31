@@ -12,18 +12,12 @@
     <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114"
-        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120"
-        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144"
-        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152"
-        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"
-        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
@@ -62,13 +56,14 @@
 
                     <h1 class="mt-4">JavaScript Introduction</h1>
                     <div>
-                        <h2>JavaScript Can Change HTML Content</h2>
+                        <h4>JavaScript Can Change HTML Content</h4>
                         <p>One of many JavaScript HTML methods is <code>getElementById()</code>.</p>
-                        <p>The example below "finds" an HTML element (with id="demo"), and changes the element content
-                            (innerHTML) to "Hello JavaScript":</p>
+                        <p>The example below "finds" an HTML element (with id="demo"), and changes the element content (innerHTML) to "Hello JavaScript":</p>
                         <div>
                             <h3>Example</h3>
-                            <div>document.getElementById("demo").innerHTML = "Hello JavaScript";</div>
+                            <div  class="example-code p-3 mb-4 bg-light border rounded">
+                                <code>document.getElementById("demo").innerHTML = "Hello JavaScript";</code>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -80,16 +75,16 @@
                     </div>
                     <div>
                         <h2>JavaScript Can Change HTML Attribute Values</h2>
-                        <p>In this example JavaScript changes the value of the <code>src</code> (source) attribute of an
-                            <code>&lt;img&gt;</code> tag:
-                        </p>
+                        <p>In this example JavaScript changes the value of the <code>src</code> (source) attribute of an <code>&lt;img&gt;</code> tag:</p>
                     </div>
                     <div>
                         <h2>JavaScript Can Change HTML Styles (CSS)</h2>
                         <p>Changing the style of an HTML element, is a variant of changing an HTML attribute:</p>
                         <div>
                             <h3>Example</h3>
-                            <div>document.getElementById("demo").style.fontSize = "35px";</div>
+                            <div  class="example-code p-3 mb-4 bg-light border rounded">
+                                document.getElementById("demo").style.fontSize = "35px";
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -117,7 +112,8 @@
                         </p>
                         <div>
                             <h3>Example</h3>
-                            <div>&lt;script&gt;<br>document.getElementById("demo").innerHTML = "My First
+                            <div class="syntax-code p-3 mb-4 bg-light border rounded">
+                                &lt;script&gt;<br>document.getElementById("demo").innerHTML = "My First
                                 JavaScript";<br>&lt;/script&gt;</div>
                             <div>
                                 <p>Old JavaScript examples may use a type attribute: &lt;script
@@ -140,9 +136,9 @@
                     <hr>
 
                     <div class="mt-4">
-                        <h2>JavaScript in &lt;head&gt; or &lt;body&gt;</h2>
+                        <h2>JavaScript in &lt;head&gt; or <body></h2>
                         <p>You can place any number of scripts in an HTML document.</p>
-                        <p>Scripts can be placed in the <code>&lt;body&gt;</code> or in the <code>&lt;head&gt;</code>
+                        <p>Scripts can be placed in the <code><body></code> or in the <code>&lt;head&gt;</code>
                             section of an HTML page, or in both.</p>
                     </div>
                     <hr>
@@ -155,26 +151,41 @@
                         <p>The function is invoked (called) when a button is clicked:</p>
                         <div>
                             <h3>Example</h3>
-                            <div>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;script&gt;<br>function
-                                myFunction() {<br>document.getElementById("demo").innerHTML = "Paragraph
-                                changed.";<br>}<br>&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>
-                                &lt;h2&gt;Demo JavaScript in Head&lt;/h2&gt;<br><br>&lt;p id="demo"&gt;A
-                                Paragraph&lt;/p&gt;<br>
-                                &lt;button type="button" onclick="myFunction()"&gt;Try it&lt;/button&gt;</div>
+                            <div class="syntax-code p-3 mb-4 bg-light border rounded">
+                                <code>
+<xmp>
+<!DOCTYPE html>
+    <html>
+        <head>
+            <script>
+                function myFunction() {
+                    document.getElementById("demo").innerHTML = "Paragraph changed.";
+                }
+            </script>
+        </head>
+        <body>
+            <h2>Demo JavaScript in Head</h2>
+            <p id="demo">A Paragraph</p>
+            <button type="button" onclick="myFunction()">Try it</button>
+        </body>
+    </html>
+</xmp>
+</code>
+                            </div>
                         </div>
                     </div>
                     <hr>
 
-                    <h2>JavaScript in &lt;body&gt;</h2>
+                    <h2>JavaScript in <body></h2>
                     <p>In this example, a JavaScript <code>function</code> is placed in the
-                        <code>&lt;body&gt;</code> section of an HTML page.
+                        <code><body></code> section of an HTML page.
                     </p>
                     <p>The function is invoked (called) when a button is clicked:</p>
                     <div class="code-snippet">
                         <h3>Example</h3>
-                        <pre><code>&lt;!DOCTYPE html&gt;
-        &lt;html&gt;
-        &lt;body&gt;
+                        <pre><code><!DOCTYPE html>
+        <html>
+        <body>
         
         &lt;h2&gt;Demo JavaScript in Body&lt;/h2&gt;
         
@@ -188,8 +199,8 @@
         }
         &lt;/script&gt;
         
-        &lt;/body&gt;
-        &lt;/html&gt;</code></pre>
+        </body>
+        </html></code></pre>
                     </div>
                 </div>
                 <hr>
@@ -211,7 +222,7 @@
                         <pre><code>&lt;script src="myScript.js"&gt;&lt;/script&gt;</code></pre>
                     </div>
                     <p>You can place an external script reference in <code>&lt;head&gt;</code> or
-                        <code>&lt;body&gt;</code> as you like.
+                        <code><body></code> as you like.
                     </p>
                     <p>The script will behave as if it was located exactly where the <code>&lt;script&gt;</code> tag
                         is located.</p>
@@ -279,10 +290,10 @@
                             defines the HTML content:</p>
                         <div>
                             <h3>Example</h3>
-                            <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;My First
+                            <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1&gt;My First
                                 Web Page&lt;/h1&gt;<br />&lt;p&gt;My First Paragraph&lt;/p&gt;<br /><br />&lt;p
                                 id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML
-                                = 5 + 6;<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                                = 5 + 6;<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                             <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_dom" target="_blank"
                                 rel="noopener">Try it Yourself &raquo;</a>
                         </div>
@@ -295,10 +306,10 @@
                         <p>For testing purposes, it is convenient to use <code>document.write()</code>:</p>
                         <div>
                             <h3>Example</h3>
-                            <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;My First
+                            <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1&gt;My First
                                 Web Page&lt;/h1&gt;<br />&lt;p&gt;My first
                                 paragraph.&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.write(5 +
-                                6);<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                                6);<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                             <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_write" target="_blank"
                                 rel="noopener">Try it Yourself &raquo;</a>
                         </div>
@@ -308,10 +319,10 @@
                         </div>
                         <div>
                             <h3>Example</h3>
-                            <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;My First
+                            <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1&gt;My First
                                 Web Page&lt;/h1&gt;<br />&lt;p&gt;My first paragraph.&lt;/p&gt;<br /><br />&lt;button
                                 type="button" onclick="document.write(5 + 6)"&gt;Try
-                                it&lt;/button&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                                it&lt;/button&gt;<br /><br /></body><br /></html></div>
                             <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_write_over"
                                 target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                         </div>
@@ -324,10 +335,10 @@
                         <p>You can use an alert box to display data:</p>
                         <div>
                             <h3>Example</h3>
-                            <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;My First
+                            <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1&gt;My First
                                 Web Page&lt;/h1&gt;<br />&lt;p&gt;My first
                                 paragraph.&lt;/p&gt;<br /><br />&lt;script&gt;<br />window.alert(5 +
-                                6);<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                                6);<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                             <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_alert" target="_blank"
                                 rel="noopener">Try it Yourself &raquo;</a>
                         </div>
@@ -337,10 +348,10 @@
                             specifying the <code>window</code> keyword is optional:</p>
                         <div>
                             <h3>Example</h3>
-                            <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;My First
+                            <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1&gt;My First
                                 Web Page&lt;/h1&gt;<br />&lt;p&gt;My first
                                 paragraph.&lt;/p&gt;<br /><br />&lt;script&gt;<br />alert(5 +
-                                6);<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                                6);<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                             <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_alert2"
                                 target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                         </div>
@@ -354,8 +365,8 @@
                         <div>
                             <h3>Example</h3>
                             <div>&lt;!DOCTYPE
-                                html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;script&gt;<br />console.log(5
-                                + 6);<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                                html&gt;<br /><html><br /><body><br /><br />&lt;script&gt;<br />console.log(5
+                                + 6);<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                             <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_console"
                                 target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                         </div>
@@ -367,9 +378,9 @@
                             to print the content of the current window.</p>
                         <div>
                             <h3>Example</h3>
-                            <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;button
+                            <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;button
                                 onclick="window.print()"&gt;Print this
-                                page&lt;/button&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                                page&lt;/button&gt;<br /><br /></body><br /></html></div>
                         </div>
                     </div>
 
@@ -13409,7 +13420,7 @@
                     <p>This example examines input. If the value is wrong, an exception (err) is thrown.</p>
                     <p>The exception (err) is caught by the catch statement and a custom error message is displayed:</p>
                     <div>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;p&gt;Please input
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;p&gt;Please input
                             a number between 5 and 10:&lt;/p&gt;<br /><br />&lt;input id="demo"
                             type="text"&gt;<br />&lt;button type="button" onclick="myFunction()"&gt;Test
                             Input&lt;/button&gt;<br />&lt;p
@@ -13419,7 +13430,7 @@
                             "empty";<br />if(isNaN(x)) throw "not a number";<br />x = Number(x);<br />if(x &lt; 5) throw
                             "too low";<br />if(x &gt; 10) throw "too high";<br />}<br />catch(err)
                             {<br />message.innerHTML = "Input is " +
-                            err;<br />}<br />}<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            err;<br />}<br />}<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_throw_error" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -14609,9 +14620,9 @@
                         values in the debugger window:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;My First Web
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1&gt;My First Web
                             Page&lt;/h1&gt;<br /><br />&lt;script&gt;<br />a = 5;<br />b = 6;<br />c = a +
-                            b;<br />console.log(c);<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                            b;<br />console.log(c);<br />&lt;/script&gt;<br /><br /></body><br /></html>
                         </div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_console" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -18349,9 +18360,9 @@
                     </p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;p
+                        <div><html><br /><body><br /><br />&lt;p
                             id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML
-                            = "Hello World!";<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            = "Hello World!";<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_method" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -18371,7 +18382,7 @@
                         elements.</p>
                     <div>
                         <p>The <code>innerHTML</code> property can be used to get or change any HTML element, including
-                            <code>&lt;html&gt;</code> and <code>&lt;body&gt;</code>.
+                            <code><html></code> and <code><body></code>.
                         </p>
                     </div>
 
@@ -18509,7 +18520,7 @@
                             </tr>
                             <tr>
                                 <td>document.body</td>
-                                <td>Returns the &lt;body&gt; element</td>
+                                <td>Returns the <body> element</td>
                                 <td>1</td>
                             </tr>
                             <tr>
@@ -18524,7 +18535,7 @@
                             </tr>
                             <tr>
                                 <td>document.documentElement</td>
-                                <td>Returns the &lt;html&gt; element</td>
+                                <td>Returns the <html> element</td>
                                 <td>3</td>
                             </tr>
                             <tr>
@@ -18740,9 +18751,9 @@
                     <p>This example changes the content of a <code>&lt;p&gt;</code> element:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;p id="p1"&gt;Hello
+                        <div><html><br /><body><br /><br />&lt;p id="p1"&gt;Hello
                             World!&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("p1").innerHTML =
-                            "New text!";<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            "New text!";<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_change_innerhtml" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -18757,10 +18768,10 @@
                     <p>This example changes the content of an <code>&lt;h1&gt;</code> element:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1
                             id="id01"&gt;Old Heading&lt;/h1&gt;<br /><br />&lt;script&gt;<br />const element =
                             document.getElementById("id01");<br />element.innerHTML = "New
-                            Heading";<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            Heading";<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_innerhtml" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -18783,9 +18794,9 @@
                     <p>This example changes the value of the src attribute of an <code>&lt;img&gt;</code> element:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;img id="myImage"
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;img id="myImage"
                             src="smiley.gif"&gt;<br /><br />&lt;script&gt;<br />document.getElementById("myImage").src =
-                            "landscape.jpg";<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            "landscape.jpg";<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_image" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -18805,8 +18816,8 @@
                     <div>
                         <h3>Example</h3>
                         <div>&lt;!DOCTYPE
-                            html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML
-                            = "Date : " + Date(); &lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            html&gt;<br /><html><br /><body><br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML
+                            = "Date : " + Date(); &lt;/script&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_date" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -18816,9 +18827,9 @@
                         stream:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;p&gt;Bla bla
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;p&gt;Bla bla
                             bla&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.write(Date());<br />&lt;/script&gt;<br /><br />&lt;p&gt;Bla
-                            bla bla&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            bla bla&lt;/p&gt;<br /><br /></body><br /></html></div>
                     </div>
 
                     <h1>JavaScript Forms</h1>
@@ -18968,9 +18979,9 @@
                     <p>The following example changes the style of a <code>&lt;p&gt;</code> element:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;p id="p2"&gt;Hello
+                        <div><html><br /><body><br /><br />&lt;p id="p2"&gt;Hello
                             World!&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("p2").style.color =
-                            "blue";<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            "blue";<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_change_style" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -18988,10 +18999,10 @@
                         clicks a button:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1 id="id1"&gt;My
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1 id="id1"&gt;My
                             Heading 1&lt;/h1&gt;<br /><br />&lt;button
                             type="button"<br />onclick="document.getElementById('id1').style.color =
-                            'red'"&gt;<br />Click Me!&lt;/button&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            'red'"&gt;<br />Click Me!&lt;/button&gt;<br /><br /></body><br /></html></div>
                     </div>
 
                     <h1>JavaScript HTML DOM Animation</h1>
@@ -19001,9 +19012,9 @@
                     <p>To demonstrate how to create HTML animations with JavaScript, we will use a simple web page:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;My First
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1&gt;My First
                             JavaScript Animation&lt;/h1&gt;<br /><br />&lt;div id="animation"&gt;My animation will go
-                            here&lt;/div&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            here&lt;/div&gt;<br /><br /></body><br /></html></div>
                     </div>
                     <hr />
                     <h2>Create an Animation Container</h2>
@@ -19073,19 +19084,19 @@
                         on it:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1
                             onclick="this.innerHTML = 'Ooops!'"&gt;Click on this
-                            text!&lt;/h1&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            text!&lt;/h1&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_event_onclick2" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <p>In this example, a function is called from the event handler:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;h1
                             onclick="changeText(this)"&gt;Click on this
                             text!&lt;/h1&gt;<br /><br />&lt;script&gt;<br />function changeText(id) {<br />id.innerHTML
-                            = "Ooops!";<br />}<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            = "Ooops!";<br />}<br />&lt;/script&gt;<br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_event_onclick3" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -19345,28 +19356,28 @@
                     </ul>
                     <div>
                         <div>
-                            <div>&lt;html&gt;<br /><br />&lt;head&gt;<br />&lt;title&gt;DOM
-                                Tutorial&lt;/title&gt;<br />&lt;/head&gt;<br /><br />&lt;body&gt;<br />&lt;h1&gt;DOM
+                            <div><html><br /><br />&lt;head&gt;<br />&lt;title&gt;DOM
+                                Tutorial&lt;/title&gt;<br />&lt;/head&gt;<br /><br /><body><br />&lt;h1&gt;DOM
                                 Lesson one&lt;/h1&gt;<br />&lt;p&gt;Hello
-                                world!&lt;/p&gt;<br />&lt;/body&gt;<br /><br />&lt;/html&gt;</div>
+                                world!&lt;/p&gt;<br /></body><br /><br /></html></div>
                         </div>
                         <div><img src="https://www.w3schools.com/js/pic_navigate.gif" alt="Node tree" /></div>
                     </div>
                     <p>From the HTML above you can read:</p>
                     <ul>
-                        <li><code>&lt;html&gt;</code> is the root node</li>
-                        <li><code>&lt;html&gt;</code> has no parents</li>
-                        <li><code>&lt;html&gt;</code> is the parent of <code>&lt;head&gt;</code> and
-                            <code>&lt;body&gt;</code>
+                        <li><code><html></code> is the root node</li>
+                        <li><code><html></code> has no parents</li>
+                        <li><code><html></code> is the parent of <code>&lt;head&gt;</code> and
+                            <code><body></code>
                         </li>
-                        <li><code>&lt;head&gt;</code> is the first child of <code>&lt;html&gt;</code></li>
-                        <li><code>&lt;body&gt;</code> is the last child of <code>&lt;html&gt;</code></li>
+                        <li><code>&lt;head&gt;</code> is the first child of <code><html></code></li>
+                        <li><code><body></code> is the last child of <code><html></code></li>
                     </ul>
                     <p>and:</p>
                     <ul>
                         <li><code>&lt;head&gt;</code> has one child: <code>&lt;title&gt;</code></li>
                         <li><code>&lt;title&gt;</code> has one child (a text node): "DOM Tutorial"</li>
-                        <li><code>&lt;body&gt;</code> has two children: <code>&lt;h1&gt;</code> and
+                        <li><code><body></code> has two children: <code>&lt;h1&gt;</code> and
                             <code>&lt;p&gt;</code>
                         </li>
                         <li><code>&lt;h1&gt;</code> has one child: "DOM Lesson one"</li>
@@ -19414,33 +19425,33 @@
                         copies it into a <code>&lt;p&gt;</code> element:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1 id="id01"&gt;My First
+                        <div><html><br /><body><br /><br />&lt;h1 id="id01"&gt;My First
                             Page&lt;/h1&gt;<br />&lt;p
                             id="id02"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("id02").innerHTML
                             =
-                            document.getElementById("id01").innerHTML;<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                            document.getElementById("id01").innerHTML;<br />&lt;/script&gt;<br /><br /></body><br /></html>
                         </div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_nav_innerhtml1"
                             target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1 id="id01"&gt;My First
+                        <div><html><br /><body><br /><br />&lt;h1 id="id01"&gt;My First
                             Page&lt;/h1&gt;<br />&lt;p
                             id="id02"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("id02").innerHTML
                             =
-                            document.getElementById("id01").firstChild.nodeValue;<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                            document.getElementById("id01").firstChild.nodeValue;<br />&lt;/script&gt;<br /><br /></body><br /></html>
                         </div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_nav_innerhtml2"
                             target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h1 id="id01"&gt;My First
+                        <div><html><br /><body><br /><br />&lt;h1 id="id01"&gt;My First
                             Page&lt;/h1&gt;<br />&lt;p
                             id="id02"&gt;Hello!&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("id02").innerHTML
                             =
-                            document.getElementById("id01").childNodes[0].nodeValue;<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                            document.getElementById("id01").childNodes[0].nodeValue;<br />&lt;/script&gt;<br /><br /></body><br /></html>
                         </div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_nav_innerhtml3"
                             target="_blank" rel="noopener">Try it Yourself &raquo;</a>
@@ -19459,22 +19470,22 @@
                     </ul>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h2&gt;JavaScript
+                        <div><html><br /><body><br /><br />&lt;h2&gt;JavaScript
                             HTMLDOM&lt;/h2&gt;<br />&lt;p&gt;Displaying document.body&lt;/p&gt;<br /><br />&lt;p
                             id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML
-                            = document.body.innerHTML;<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                            = document.body.innerHTML;<br />&lt;/script&gt;<br /><br /></body><br /></html>
                         </div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_body" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;h2&gt;JavaScript
+                        <div><html><br /><body><br /><br />&lt;h2&gt;JavaScript
                             HTMLDOM&lt;/h2&gt;<br />&lt;p&gt;Displaying
                             document.documentElement&lt;/p&gt;<br /><br />&lt;p
                             id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML
                             =
-                            document.documentElement.innerHTML;<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                            document.documentElement.innerHTML;<br />&lt;/script&gt;<br /><br /></body><br /></html>
                         </div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_dom_document" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -19552,7 +19563,7 @@
                                 <tr>
                                     <td>DOCUMENT_NODE</td>
                                     <td>9</td>
-                                    <td>The HTML document itself (the parent of &lt;html&gt;)</td>
+                                    <td>The HTML document itself (the parent of <html>)</td>
                                 </tr>
                                 <tr>
                                     <td>DOCUMENT_TYPE_NODE</td>
@@ -19825,18 +19836,18 @@
                         <p>But, you cannot use Array methods like push(), pop(), or join() on a NodeList.</p>
                     </div>
 
-                    <h1>JavaScript&nbsp;Window - The Browser Object Model</h1>
+                    <h1>JavaScript Window - The Browser Object Model</h1>
                     <p>The Browser Object Model (BOM) allows JavaScript to "talk to" the browser.</p>
                     <hr />
                     <h2>The Browser Object Model (BOM)</h2>
                     <p>There are no official standards for
-                        the&nbsp;<strong>B</strong>rowser&nbsp;<strong>O</strong>bject&nbsp;<strong>M</strong>odel
+                        the <strong>B</strong>rowser <strong>O</strong>bject <strong>M</strong>odel
                         (BOM).</p>
                     <p>Since modern browsers have implemented (almost) the same methods and properties for JavaScript
                         interactivity, it is often referred to, as methods and properties of the BOM.</p>
                     <hr />
                     <h2>The Window Object</h2>
-                    <p>The&nbsp;<code>window</code>&nbsp;object is supported by all browsers. It represents the
+                    <p>The <code>window</code> object is supported by all browsers. It represents the
                         browser's window.</p>
                     <p>All global JavaScript objects, functions, and variables automatically become members of the
                         window object.</p>
@@ -19855,16 +19866,16 @@
                     <p>Two properties can be used to determine the size of the browser window.</p>
                     <p>Both properties return the sizes in pixels:</p>
                     <ul>
-                        <li><code>window.innerHeight</code>&nbsp;- the inner height of the browser window (in pixels)
+                        <li><code>window.innerHeight</code> - the inner height of the browser window (in pixels)
                         </li>
-                        <li><code>window.innerWidth</code>&nbsp;- the inner width of the browser window (in pixels)</li>
+                        <li><code>window.innerWidth</code> - the inner width of the browser window (in pixels)</li>
                     </ul>
                     <div>
                         <p>The browser window (the browser viewport) is NOT including toolbars and scrollbars.</p>
                     </div>
                     <div>
                         <h3>Example</h3>
-                        <div>let&nbsp;w = window.innerWidth;<br />let&nbsp;h = window.innerHeight;</div>
+                        <div>let w = window.innerWidth;<br />let h = window.innerHeight;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_win_inner" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -19872,16 +19883,16 @@
                     <h2>Other Window Methods</h2>
                     <p>Some other methods:</p>
                     <ul>
-                        <li><code>window.open()</code>&nbsp;- open a new window</li>
-                        <li><code>window.close()</code>&nbsp;- close the current window</li>
-                        <li><code>window.moveTo()</code>&nbsp;- move the current window</li>
-                        <li><code>window.resizeTo()</code>&nbsp;- resize the current window</li>
+                        <li><code>window.open()</code> - open a new window</li>
+                        <li><code>window.close()</code> - close the current window</li>
+                        <li><code>window.moveTo()</code> - move the current window</li>
+                        <li><code>window.resizeTo()</code> - resize the current window</li>
                     </ul>
-                    <h1>JavaScript&nbsp;Window Screen</h1>
+                    <h1>JavaScript Window Screen</h1>
                     <p>The window.screen object contains information about the user's screen.</p>
                     <hr />
                     <h2>Window Screen</h2>
-                    <p>The&nbsp;<code>window.screen</code>&nbsp;object can be written without the window prefix.</p>
+                    <p>The <code>window.screen</code> object can be written without the window prefix.</p>
                     <p>Properties:</p>
                     <ul>
                         <li><code>screen.width</code></li>
@@ -19893,12 +19904,12 @@
                     </ul>
                     <hr />
                     <h2>Window Screen Width</h2>
-                    <p>The&nbsp;<code>screen.width</code>&nbsp;property returns the width of the visitor's screen in
+                    <p>The <code>screen.width</code> property returns the width of the visitor's screen in
                         pixels.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the width of the screen in pixels:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Screen Width: "&nbsp;+ screen.width;
+                        <div>document.getElementById("demo").innerHTML =<br />"Screen Width: " + screen.width;
                         </div>
                         <p>Result will be:</p>
                         <div><code>Screen Width: 1366</code></div>
@@ -19907,12 +19918,12 @@
                     </div>
                     <hr />
                     <h2>Window Screen Height</h2>
-                    <p>The&nbsp;<code>screen.height</code>&nbsp;property returns the height of the visitor's screen in
+                    <p>The <code>screen.height</code> property returns the height of the visitor's screen in
                         pixels.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the height of the screen in pixels:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Screen Height: "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Screen Height: " +
                             screen.height;</div>
                         <p>Result will be:</p>
                         <div><code>Screen Height: 768</code></div>
@@ -19922,12 +19933,12 @@
                     <hr />
                     <hr />
                     <h2>Window Screen Available Width</h2>
-                    <p>The&nbsp;<code>screen.availWidth</code>&nbsp;property returns the width of the visitor's screen,
+                    <p>The <code>screen.availWidth</code> property returns the width of the visitor's screen,
                         in pixels, minus interface features like the Windows Taskbar.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the available width of the screen in pixels:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Available Screen Width: "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Available Screen Width: " +
                             screen.availWidth;</div>
                         <p>Result will be:</p>
                         <div><code>Available Screen Width: 1366</code></div>
@@ -19936,12 +19947,12 @@
                     </div>
                     <hr />
                     <h2>Window Screen Available Height</h2>
-                    <p>The&nbsp;<code>screen.availHeight</code>&nbsp;property returns the height of the visitor's
+                    <p>The <code>screen.availHeight</code> property returns the height of the visitor's
                         screen, in pixels, minus interface features like the Windows Taskbar.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the available height of the screen in pixels:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Available Screen Height: "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Available Screen Height: " +
                             screen.availHeight;</div>
                         <p>Result will be:</p>
                         <div><code>Available Screen Height: 736</code></div>
@@ -19950,7 +19961,7 @@
                     </div>
                     <hr />
                     <h2>Window Screen Color Depth</h2>
-                    <p>The&nbsp;<code>screen.colorDepth</code>&nbsp;property returns the number of bits used to display
+                    <p>The <code>screen.colorDepth</code> property returns the number of bits used to display
                         one color.</p>
                     <p>All modern computers use 24 bit or 32 bit hardware for color resolution:</p>
                     <ul>
@@ -19962,7 +19973,7 @@
                     <div>
                         <h3>Example</h3>
                         <p>Display the color depth of the screen in bits:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Screen Color Depth: "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Screen Color Depth: " +
                             screen.colorDepth;</div>
                         <p>Result will be:</p>
                         <div><code>Screen Color Depth: 24</code></div>
@@ -19975,11 +19986,11 @@
                     </div>
                     <hr />
                     <h2>Window Screen Pixel Depth</h2>
-                    <p>The&nbsp;<code>screen.pixelDepth</code>&nbsp;property returns the pixel depth of the screen.</p>
+                    <p>The <code>screen.pixelDepth</code> property returns the pixel depth of the screen.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the pixel depth of the screen in bits:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Screen Pixel Depth: "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Screen Pixel Depth: " +
                             screen.pixelDepth;</div>
                         <p>Result will be:</p>
                         <div><code>Screen Pixel Depth: 24</code></div>
@@ -19990,29 +20001,29 @@
                         <p>For modern computers, Color Depth and Pixel Depth are equal.</p>
                     </div>
 
-                    <h1>JavaScript&nbsp;Window Location</h1>
-                    <p>The&nbsp;<code>window.location</code>&nbsp;object can be used to get the current page address
+                    <h1>JavaScript Window Location</h1>
+                    <p>The <code>window.location</code> object can be used to get the current page address
                         (URL) and to redirect the browser to a new page.</p>
                     <hr />
                     <h2>Window Location</h2>
-                    <p>The&nbsp;<code>window.location</code>&nbsp;object can be written without the window prefix.</p>
+                    <p>The <code>window.location</code> object can be written without the window prefix.</p>
                     <p>Some examples:</p>
                     <ul>
-                        <li><code>window.location.href</code>&nbsp;returns the href (URL) of the current page</li>
-                        <li><code>window.location.hostname</code>&nbsp;returns the domain name of the web host</li>
-                        <li><code>window.location.pathname</code>&nbsp;returns the path and filename of the current page
+                        <li><code>window.location.href</code> returns the href (URL) of the current page</li>
+                        <li><code>window.location.hostname</code> returns the domain name of the web host</li>
+                        <li><code>window.location.pathname</code> returns the path and filename of the current page
                         </li>
-                        <li><code>window.location.protocol</code>&nbsp;returns the web protocol used (http: or https:)
+                        <li><code>window.location.protocol</code> returns the web protocol used (http: or https:)
                         </li>
-                        <li><code>window.location.assign()</code>&nbsp;loads a new document</li>
+                        <li><code>window.location.assign()</code> loads a new document</li>
                     </ul>
                     <hr />
                     <h2>Window Location Href</h2>
-                    <p>The&nbsp;<code>window.location.href</code>&nbsp;property returns the URL of the current page.</p>
+                    <p>The <code>window.location.href</code> property returns the URL of the current page.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the href (URL) of the current page:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Page location is "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Page location is " +
                             window.location.href;</div>
                         <p>Result is:</p>
                         <div><code>Page location is https://www.w3schools.com/js/js_window_location.asp</code></div>
@@ -20021,12 +20032,12 @@
                     </div>
                     <hr />
                     <h2>Window Location Hostname</h2>
-                    <p>The&nbsp;<code>window.location.hostname</code>&nbsp;property returns the name of the internet
+                    <p>The <code>window.location.hostname</code> property returns the name of the internet
                         host (of the current page).</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the name of the host:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Page hostname is "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Page hostname is " +
                             window.location.hostname;</div>
                         <p>Result is:</p>
                         <div><code>Page hostname is www.w3schools.com</code></div>
@@ -20036,12 +20047,12 @@
                     <hr />
                     <hr />
                     <h2>Window Location Pathname</h2>
-                    <p>The&nbsp;<code>window.location.pathname</code>&nbsp;property returns the pathname of the current
+                    <p>The <code>window.location.pathname</code> property returns the pathname of the current
                         page.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the path name of the current URL:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Page path is "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Page path is " +
                             window.location.pathname;</div>
                         <p>Result is:</p>
                         <div><code>Page path is /js/js_window_location.asp</code></div>
@@ -20050,12 +20061,12 @@
                     </div>
                     <hr />
                     <h2>Window Location Protocol</h2>
-                    <p>The&nbsp;<code>window.location.protocol</code>&nbsp;property returns the web protocol of the
+                    <p>The <code>window.location.protocol</code> property returns the web protocol of the
                         page.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the web protocol:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Page protocol is "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Page protocol is " +
                             window.location.protocol;</div>
                         <p>Result is:</p>
                         <div><code>Page protocol is https:</code></div>
@@ -20064,12 +20075,12 @@
                     </div>
                     <hr />
                     <h2>Window Location Port</h2>
-                    <p>The&nbsp;<code>window.location.port</code>&nbsp;property returns the number of the internet host
+                    <p>The <code>window.location.port</code> property returns the number of the internet host
                         port (of the current page).</p>
                     <div>
                         <h3>Example</h3>
                         <p>Display the name of the host:</p>
-                        <div>document.getElementById("demo").innerHTML&nbsp;=<br />"Port number is "&nbsp;+
+                        <div>document.getElementById("demo").innerHTML =<br />"Port number is " +
                             window.location.port;</div>
                         <p>Result is:</p>
                         <div><code>Port number is</code></div>
@@ -20081,35 +20092,35 @@
                     </div>
                     <hr />
                     <h2>Window Location Assign</h2>
-                    <p>The&nbsp;<code>window.location.assign()</code>&nbsp;method loads a new document.</p>
+                    <p>The <code>window.location.assign()</code> method loads a new document.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Load a new document:</p>
                         <div>
-                            &lt;html&gt;<br />&lt;head&gt;<br />&lt;script&gt;<br />function&nbsp;newDoc()&nbsp;{<br />window.location.assign("https://www.w3schools.com")<br />}<br />&lt;/script&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;input&nbsp;type="button"&nbsp;value="Load
-                            new document"&nbsp;onclick="newDoc()"&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                            <html><br />&lt;head&gt;<br />&lt;script&gt;<br />function newDoc() {<br />window.location.assign("https://www.w3schools.com")<br />}<br />&lt;/script&gt;<br />&lt;/head&gt;<br /><body><br /><br />&lt;input type="button" value="Load
+                            new document" onclick="newDoc()"&gt;<br /><br /></body><br /></html></div>
                     </div>
-                    <h1>JavaScript&nbsp;Window History</h1>
-                    <p>The&nbsp;<code>window.history</code>&nbsp;object contains the browsers history.</p>
+                    <h1>JavaScript Window History</h1>
+                    <p>The <code>window.history</code> object contains the browsers history.</p>
                     <hr />
                     <h2>Window History</h2>
-                    <p>The&nbsp;<code>window.history</code>&nbsp;object can be written without the window prefix.</p>
+                    <p>The <code>window.history</code> object can be written without the window prefix.</p>
                     <p>To protect the privacy of the users, there are limitations to how JavaScript can access this
                         object.</p>
                     <p>Some methods:</p>
                     <ul>
-                        <li><code>history.back()</code>&nbsp;- same as clicking back in the browser</li>
-                        <li><code>history.forward()</code>&nbsp;- same as clicking forward in the browser</li>
+                        <li><code>history.back()</code> - same as clicking back in the browser</li>
+                        <li><code>history.forward()</code> - same as clicking forward in the browser</li>
                     </ul>
                     <hr />
                     <h2>Window History Back</h2>
-                    <p>The&nbsp;<code>history.back()</code>&nbsp;method loads the previous URL in the history list.</p>
+                    <p>The <code>history.back()</code> method loads the previous URL in the history list.</p>
                     <p>This is the same as clicking the Back button in the browser.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Create a back button on a page:</p>
-                        <div>&lt;html&gt;<br />&lt;head&gt;<br />&lt;script&gt;<br />function&nbsp;goBack()
-                            {<br />window.history.back()<br />}<br />&lt;/script&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;input&nbsp;type="button"&nbsp;value="Back"&nbsp;onclick="goBack()"&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                        <div><html><br />&lt;head&gt;<br />&lt;script&gt;<br />function goBack()
+                            {<br />window.history.back()<br />}<br />&lt;/script&gt;<br />&lt;/head&gt;<br /><body><br /><br />&lt;input type="button" value="Back" onclick="goBack()"&gt;<br /><br /></body><br /></html>
                         </div>
                         <p>The output of the code above will be:</p>
                         <div><input type="button" value="Back" /></div>
@@ -20117,22 +20128,22 @@
                     <hr />
                     <hr />
                     <h2>Window History Forward</h2>
-                    <p>The&nbsp;<code>history.forward()</code>&nbsp;method loads the next URL in the history list.</p>
+                    <p>The <code>history.forward()</code> method loads the next URL in the history list.</p>
                     <p>This is the same as clicking the Forward button in the browser.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Create a forward button on a page:</p>
-                        <div>&lt;html&gt;<br />&lt;head&gt;<br />&lt;script&gt;<br />function&nbsp;goForward()
-                            {<br />window.history.forward()<br />}<br />&lt;/script&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;input&nbsp;type="button"&nbsp;value="Forward"&nbsp;onclick="goForward()"&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                        <div><html><br />&lt;head&gt;<br />&lt;script&gt;<br />function goForward()
+                            {<br />window.history.forward()<br />}<br />&lt;/script&gt;<br />&lt;/head&gt;<br /><body><br /><br />&lt;input type="button" value="Forward" onclick="goForward()"&gt;<br /><br /></body><br /></html>
                         </div>
                     </div>
 
-                    <h1>JavaScript&nbsp;Window Navigator</h1>
-                    <p>The&nbsp;<code>window.navigator</code>&nbsp;object contains information about the visitor's
+                    <h1>JavaScript Window Navigator</h1>
+                    <p>The <code>window.navigator</code> object contains information about the visitor's
                         browser.</p>
                     <hr />
                     <h2>Window Navigator</h2>
-                    <p>The&nbsp;<code>window.navigator</code>&nbsp;object can be written without the window prefix.</p>
+                    <p>The <code>window.navigator</code> object can be written without the window prefix.</p>
                     <p>Some examples:</p>
                     <ul>
                         <li><code>navigator.cookieEnabled</code></li>
@@ -20141,43 +20152,43 @@
                     </ul>
                     <hr />
                     <h2>Browser Cookies</h2>
-                    <p>The&nbsp;<code>cookieEnabled</code>&nbsp;property returns true if cookies are enabled, otherwise
+                    <p>The <code>cookieEnabled</code> property returns true if cookies are enabled, otherwise
                         false:</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=<br />"cookiesEnabled
-                            is "&nbsp;+ navigator.cookieEnabled;<br />&lt;/script&gt;</div>
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =<br />"cookiesEnabled
+                            is " + navigator.cookieEnabled;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_cookieenabled"
                             target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <hr />
                     <h2>Browser Application Name</h2>
-                    <p>The&nbsp;<code>appName</code>&nbsp;property returns the application name of the browser:</p>
+                    <p>The <code>appName</code> property returns the application name of the browser:</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=<br />"navigator.appName
-                            is "&nbsp;+ navigator.appName;<br />&lt;/script&gt;</div>
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =<br />"navigator.appName
+                            is " + navigator.appName;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_appname" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <div>
                         <h2>Warning</h2>
                         <p>This property is removed (deprecated) in the latest web standard.</p>
-                        <p>Most browsers (IE11, Chrome, Firefox, Safari) returns&nbsp;<strong>Netscape</strong>&nbsp;as
+                        <p>Most browsers (IE11, Chrome, Firefox, Safari) returns <strong>Netscape</strong> as
                             appName.</p>
                     </div>
                     <hr />
                     <hr />
                     <h2>Browser Application Code Name</h2>
-                    <p>The&nbsp;<code>appCodeName</code>&nbsp;property returns the application code name of the browser:
+                    <p>The <code>appCodeName</code> property returns the application code name of the browser:
                     </p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=<br />"navigator.appCodeName
-                            is "&nbsp;+ navigator.appCodeName;<br />&lt;/script&gt;</div>
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =<br />"navigator.appCodeName
+                            is " + navigator.appCodeName;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_appcodename" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -20185,42 +20196,42 @@
                         <h2>Warning</h2>
                         <p>This property is removed (deprecated) in the latest web standard.</p>
                         <p>Most browsers (IE11, Chrome, Firefox, Safari, Opera)
-                            returns&nbsp;<strong>Mozilla</strong>&nbsp;as appCodeName.</p>
+                            returns <strong>Mozilla</strong> as appCodeName.</p>
                     </div>
                     <hr />
                     <h2>The Browser Engine</h2>
-                    <p>The&nbsp;<code>product</code>&nbsp;property returns the product name of the browser engine:</p>
+                    <p>The <code>product</code> property returns the product name of the browser engine:</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=<br />"navigator.product
-                            is "&nbsp;+ navigator.product;<br />&lt;/script&gt;</div>
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =<br />"navigator.product
+                            is " + navigator.product;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_product" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <div>
                         <h2>Warning</h2>
                         <p>This property is removed (deprecated) in the latest web standard.</p>
-                        <p>Most browsers returns&nbsp;<strong>Gecko</strong>&nbsp;as product.</p>
+                        <p>Most browsers returns <strong>Gecko</strong> as product.</p>
                     </div>
                     <hr />
                     <h2>The Browser Version</h2>
-                    <p>The&nbsp;<code>appVersion</code>&nbsp;property returns version information about the browser:</p>
+                    <p>The <code>appVersion</code> property returns version information about the browser:</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =
                             navigator.appVersion;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_appversion" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <h2>The Browser Agent</h2>
-                    <p>The&nbsp;<code>userAgent</code>&nbsp;property returns the user-agent header sent by the browser
+                    <p>The <code>userAgent</code> property returns the user-agent header sent by the browser
                         to the server:</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =
                             navigator.userAgent;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_userAgent" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -20229,8 +20240,8 @@
                     <div>
                         <h2>Warning</h2>
                         <p>The information from the navigator object can often be misleading.</p>
-                        <p>The navigator object should&nbsp;<strong>not be used to detect browser
-                                versions</strong>&nbsp;because:</p>
+                        <p>The navigator object should <strong>not be used to detect browser
+                                versions</strong> because:</p>
                         <ul>
                             <li>Different browsers can use the same name</li>
                             <li>The navigator data can be changed by the browser owner</li>
@@ -20240,49 +20251,49 @@
                     </div>
                     <hr />
                     <h2>The Browser Platform</h2>
-                    <p>The&nbsp;<code>platform</code>&nbsp;property returns the browser platform (operating system):</p>
+                    <p>The <code>platform</code> property returns the browser platform (operating system):</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =
                             navigator.platform;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_platform" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <hr />
                     <h2>The Browser Language</h2>
-                    <p>The&nbsp;<code>language</code>&nbsp;property returns the browser's language:</p>
+                    <p>The <code>language</code> property returns the browser's language:</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =
                             navigator.language;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_language" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <hr />
                     <h2>Is The Browser Online?</h2>
-                    <p>The&nbsp;<code>onLine</code>&nbsp;property returns true if the browser is online:</p>
+                    <p>The <code>onLine</code> property returns true if the browser is online:</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =
                             navigator.onLine;<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_nav_online" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <hr />
                     <h2>Is Java Enabled?</h2>
-                    <p>The&nbsp;<code>javaEnabled()</code>&nbsp;method returns true if&nbsp;<a
-                            href="https://www.w3schools.com/java/default.asp">Java</a>&nbsp;is enabled:</p>
+                    <p>The <code>javaEnabled()</code> method returns true if <a
+                            href="https://www.w3schools.com/java/default.asp">Java</a> is enabled:</p>
                     <div>
                         <h3>Example</h3>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML&nbsp;=
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML =
                             navigator.javaEnabled();<br />&lt;/script&gt;</div>
                     </div>
 
-                    <h1>JavaScript&nbsp;Popup Boxes</h1>
+                    <h1>JavaScript Popup Boxes</h1>
                     <p>JavaScript has three kind of popup boxes: Alert box, Confirm box, and Prompt box.</p>
                     <hr />
                     <h2>Alert Box</h2>
@@ -20292,7 +20303,7 @@
                     <div>
                         <div>window.alert("<em>sometext</em>");</div>
                     </div>
-                    <p>The&nbsp;<code>window.alert()</code>&nbsp;method can be written without the window prefix.</p>
+                    <p>The <code>window.alert()</code> method can be written without the window prefix.</p>
                     <div>
                         <h3>Example</h3>
                         <div>alert("I am an alert box!");</div>
@@ -20303,17 +20314,17 @@
                     <h2>Confirm Box</h2>
                     <p>A confirm box is often used if you want the user to verify or accept something.</p>
                     <p>When a confirm box pops up, the user will have to click either "OK" or "Cancel" to proceed.</p>
-                    <p>If the user clicks "OK", the box returns&nbsp;<strong>true</strong>. If the user clicks "Cancel",
-                        the box returns&nbsp;<strong>false</strong>.</p>
+                    <p>If the user clicks "OK", the box returns <strong>true</strong>. If the user clicks "Cancel",
+                        the box returns <strong>false</strong>.</p>
                     <h3>Syntax</h3>
                     <div>
                         <div>window.confirm("<em>sometext</em>");</div>
                     </div>
-                    <p>The&nbsp;<code>window.confirm()</code>&nbsp;method can be written without the window prefix.</p>
+                    <p>The <code>window.confirm()</code> method can be written without the window prefix.</p>
                     <div>
                         <h3>Example</h3>
-                        <div>if&nbsp;(confirm("Press a button!")) {<br />txt =&nbsp;"You pressed
-                            OK!";<br />}&nbsp;else&nbsp;{<br />txt =&nbsp;"You pressed Cancel!";<br />}</div>
+                        <div>if (confirm("Press a button!")) {<br />txt = "You pressed
+                            OK!";<br />} else {<br />txt = "You pressed Cancel!";<br />}</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_confirm" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -20329,13 +20340,13 @@
                     <div>
                         <div>window.prompt("<em>sometext</em>","<em>defaultText</em>");</div>
                     </div>
-                    <p>The&nbsp;<code>window.prompt()</code>&nbsp;method can be written without the window prefix.</p>
+                    <p>The <code>window.prompt()</code> method can be written without the window prefix.</p>
                     <div>
                         <h3>Example</h3>
-                        <div>let&nbsp;person = prompt("Please enter your name",&nbsp;"Harry
-                            Potter");<br />let&nbsp;text;<br />if&nbsp;(person ==&nbsp;null&nbsp;|| person ==&nbsp;"")
-                            {<br />text =&nbsp;"User cancelled the prompt.";<br />}&nbsp;else&nbsp;{<br />text
-                            =&nbsp;"Hello "&nbsp;+ person +&nbsp;"! How are you today?";<br />}</div>
+                        <div>let person = prompt("Please enter your name", "Harry
+                            Potter");<br />let text;<br />if (person == null || person == "")
+                            {<br />text = "User cancelled the prompt.";<br />} else {<br />text
+                            = "Hello " + person + "! How are you today?";<br />}</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_prompt" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -20347,9 +20358,9 @@
                         <div>alert("Hello\nHow are you?");</div>
                     </div>
 
-                    <h1>JavaScript&nbsp;Timing Events</h1>
+                    <h1>JavaScript Timing Events</h1>
                     <h2>Timing Events</h2>
-                    <p>The&nbsp;<code>window</code>&nbsp;object allows execution of code at specified time intervals.
+                    <p>The <code>window</code> object allows execution of code at specified time intervals.
                     </p>
                     <p>These time intervals are called timing events.</p>
                     <p>The two key methods to use with JavaScript are:</p>
@@ -20364,23 +20375,23 @@
                             repeats the execution of the function continuously.</li>
                     </ul>
                     <div>
-                        <p>The&nbsp;<code>setTimeout()</code>&nbsp;and&nbsp;<code>setInterval()</code>&nbsp;are both
+                        <p>The <code>setTimeout()</code> and <code>setInterval()</code> are both
                             methods of the HTML DOM Window object.</p>
                     </div>
                     <hr />
                     <h2>The setTimeout() Method</h2>
                     <div>
-                        <div>window.setTimeout(<em>function</em>,<em>&nbsp;milliseconds</em>);</div>
+                        <div>window.setTimeout(<em>function</em>,<em> milliseconds</em>);</div>
                     </div>
-                    <p>The&nbsp;<code>window.setTimeout()</code>&nbsp;method can be written without the window prefix.
+                    <p>The <code>window.setTimeout()</code> method can be written without the window prefix.
                     </p>
                     <p>The first parameter is a function to be executed.</p>
                     <p>The second parameter indicates the number of milliseconds before execution.</p>
                     <div>
                         <h3>Example</h3>
                         <p>Click a button. Wait 3 seconds, and the page will alert "Hello":</p>
-                        <div>&lt;button&nbsp;onclick="setTimeout(myFunction, 3000)"&gt;Try
-                            it&lt;/button&gt;<br /><br />&lt;script&gt;<br />function&nbsp;myFunction()
+                        <div>&lt;button onclick="setTimeout(myFunction, 3000)"&gt;Try
+                            it&lt;/button&gt;<br /><br />&lt;script&gt;<br />function myFunction()
                             {<br />alert('Hello');<br />}<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_timing1" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -20388,38 +20399,38 @@
                     <hr />
                     <hr />
                     <h2>How to Stop the Execution?</h2>
-                    <p>The&nbsp;<code>clearTimeout()</code>&nbsp;method stops the execution of the function specified in
+                    <p>The <code>clearTimeout()</code> method stops the execution of the function specified in
                         setTimeout().</p>
                     <div>
                         <div>window.clearTimeout(<em>timeoutVariable</em>)</div>
                     </div>
-                    <p>The&nbsp;<code>window.clearTimeout()</code>&nbsp;method can be written without the window prefix.
+                    <p>The <code>window.clearTimeout()</code> method can be written without the window prefix.
                     </p>
-                    <p>The&nbsp;<code>clearTimeout()</code>&nbsp;method uses the variable returned
-                        from&nbsp;<code>setTimeout()</code>:</p>
+                    <p>The <code>clearTimeout()</code> method uses the variable returned
+                        from <code>setTimeout()</code>:</p>
                     <div>
                         <div>myVar =
-                            setTimeout(<em>function</em>,<em>&nbsp;milliseconds</em>);<br />clearTimeout(myVar);</div>
+                            setTimeout(<em>function</em>,<em> milliseconds</em>);<br />clearTimeout(myVar);</div>
                     </div>
                     <p>If the function has not already been executed, you can stop the execution by calling
-                        the&nbsp;<code>clearTimeout()</code>&nbsp;method:</p>
+                        the <code>clearTimeout()</code> method:</p>
                     <div>
                         <h3>Example</h3>
                         <p>Same example as above, but with an added "Stop" button:</p>
-                        <div>&lt;button&nbsp;onclick="myVar = setTimeout(myFunction, 3000)"&gt;Try
-                            it&lt;/button&gt;<br /><br />&lt;button&nbsp;onclick="clearTimeout(myVar)"&gt;Stop
+                        <div>&lt;button onclick="myVar = setTimeout(myFunction, 3000)"&gt;Try
+                            it&lt;/button&gt;<br /><br />&lt;button onclick="clearTimeout(myVar)"&gt;Stop
                             it&lt;/button&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_settimeout2" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <hr />
                     <h2>The setInterval() Method</h2>
-                    <p>The&nbsp;<code>setInterval()</code>&nbsp;method repeats a given function at every given
+                    <p>The <code>setInterval()</code> method repeats a given function at every given
                         time-interval.</p>
                     <div>
-                        <div>window.setInterval(<em>function</em>,<em>&nbsp;milliseconds</em>);</div>
+                        <div>window.setInterval(<em>function</em>,<em> milliseconds</em>);</div>
                     </div>
-                    <p>The&nbsp;<code>window.setInterval()</code>&nbsp;method can be written without the window prefix.
+                    <p>The <code>window.setInterval()</code> method can be written without the window prefix.
                     </p>
                     <p>The first parameter is the function to be executed.</p>
                     <p>The second parameter indicates the length of the time-interval between each execution.</p>
@@ -20427,8 +20438,8 @@
                     <div>
                         <h3>Example</h3>
                         <p>Display the current time:</p>
-                        <div>setInterval(myTimer,&nbsp;1000);<br /><br />function&nbsp;myTimer() {<br />const&nbsp;d
-                            =&nbsp;new&nbsp;Date();<br />document.getElementById("demo").innerHTML&nbsp;=
+                        <div>setInterval(myTimer, 1000);<br /><br />function myTimer() {<br />const d
+                            = new Date();<br />document.getElementById("demo").innerHTML =
                             d.toLocaleTimeString();<br />}</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_setinterval2" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -20438,31 +20449,31 @@
                     </div>
                     <hr />
                     <h2>How to Stop the Execution?</h2>
-                    <p>The&nbsp;<code>clearInterval()</code>&nbsp;method stops the executions of the function specified
+                    <p>The <code>clearInterval()</code> method stops the executions of the function specified
                         in the setInterval() method.</p>
                     <div>
                         <div>window.clearInterval(<em>timerVariable</em>)</div>
                     </div>
-                    <p>The&nbsp;<code>window.clearInterval()</code>&nbsp;method can be written without the window
+                    <p>The <code>window.clearInterval()</code> method can be written without the window
                         prefix.</p>
-                    <p>The&nbsp;<code>clearInterval()</code>&nbsp;method uses the variable returned
-                        from&nbsp;<code>setInterval()</code>:</p>
+                    <p>The <code>clearInterval()</code> method uses the variable returned
+                        from <code>setInterval()</code>:</p>
                     <div>
                         <div>let myVar =
-                            setInterval(<em>function</em>,<em>&nbsp;milliseconds</em>);<br />clearInterval(myVar);</div>
+                            setInterval(<em>function</em>,<em> milliseconds</em>);<br />clearInterval(myVar);</div>
                     </div>
                     <div>
                         <h3>Example</h3>
                         <p>Same example as above, but we have added a "Stop time" button:</p>
                         <div>
-                            &lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;button&nbsp;onclick="clearInterval(myVar)"&gt;Stop
-                            time&lt;/button&gt;<br /><br />&lt;script&gt;<br />let&nbsp;myVar =
-                            setInterval(myTimer,&nbsp;1000);<br />function&nbsp;myTimer() {<br />const&nbsp;d
-                            =&nbsp;new&nbsp;Date();<br />document.getElementById("demo").innerHTML&nbsp;=
+                            &lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;button onclick="clearInterval(myVar)"&gt;Stop
+                            time&lt;/button&gt;<br /><br />&lt;script&gt;<br />let myVar =
+                            setInterval(myTimer, 1000);<br />function myTimer() {<br />const d
+                            = new Date();<br />document.getElementById("demo").innerHTML =
                             d.toLocaleTimeString();<br />}<br />&lt;/script&gt;</div>
                     </div>
 
-                    <h1>JavaScript&nbsp;Cookies</h1>
+                    <h1>JavaScript Cookies</h1>
                     <p>Cookies let you store user information in web pages.</p>
                     <hr />
                     <h2>What are Cookies?</h2>
@@ -20487,21 +20498,21 @@
                     <hr />
                     <h2>Create a Cookie with JavaScript</h2>
                     <p>JavaScript can create, read, and delete cookies with
-                        the&nbsp;<code>document.cookie</code>&nbsp;property.</p>
+                        the <code>document.cookie</code> property.</p>
                     <p>With JavaScript, a cookie can be created like this:</p>
                     <div>
-                        <div>document.cookie&nbsp;=&nbsp;"username=John Doe";</div>
+                        <div>document.cookie = "username=John Doe";</div>
                     </div>
                     <p>You can also add an expiry date (in UTC time). By default, the cookie is deleted when the browser
                         is closed:</p>
                     <div>
-                        <div>document.cookie&nbsp;=&nbsp;"username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC";
+                        <div>document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC";
                         </div>
                     </div>
                     <p>With a path parameter, you can tell the browser what path the cookie belongs to. By default, the
                         cookie belongs to the current page.</p>
                     <div>
-                        <div>document.cookie&nbsp;=&nbsp;"username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC;
+                        <div>document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC;
                             path=/";</div>
                     </div>
                     <hr />
@@ -20509,17 +20520,17 @@
                     <h2>Read a Cookie with JavaScript</h2>
                     <p>With JavaScript, cookies can be read like this:</p>
                     <div>
-                        <div>let&nbsp;x = document.cookie;</div>
+                        <div>let x = document.cookie;</div>
                     </div>
                     <div>
-                        <p><code>document.cookie</code>&nbsp;will return all cookies in one string much like:
+                        <p><code>document.cookie</code> will return all cookies in one string much like:
                             cookie1=value; cookie2=value; cookie3=value;</p>
                     </div>
                     <hr />
                     <h2>Change a Cookie with JavaScript</h2>
                     <p>With JavaScript, you can change a cookie the same way as you create it:</p>
                     <div>
-                        <div>document.cookie&nbsp;=&nbsp;"username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC;
+                        <div>document.cookie = "username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC;
                             path=/";</div>
                     </div>
                     <p>The old cookie is overwritten.</p>
@@ -20529,7 +20540,7 @@
                     <p>You don't have to specify a cookie value when you delete a cookie.</p>
                     <p>Just set the expires parameter to a past date:</p>
                     <div>
-                        <div>document.cookie&nbsp;=&nbsp;"username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                        <div>document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                         </div>
                     </div>
                     <div>
@@ -20538,7 +20549,7 @@
                     </div>
                     <hr />
                     <h2>The Cookie String</h2>
-                    <p>The&nbsp;<code>document.cookie</code>&nbsp;property looks like a normal text string. But it is
+                    <p>The <code>document.cookie</code> property looks like a normal text string. But it is
                         not.</p>
                     <p>Even if you write a whole cookie string to document.cookie, when you read it out again, you can
                         only see the name-value pair of it.</p>
@@ -20546,8 +20557,9 @@
                         document.cookie, so if you read document.cookie again you will get something like:</p>
                     <p>cookie1 = value; cookie2 = value;</p>
                     <p><button type="button">Display All Cookies</button> <button type="button">Create Cookie 1</button>
-                        <button type="button">Create Cookie 2</button>&nbsp;<button type="button">Delete Cookie
-                            1</button> <button type="button">Delete Cookie 2</button></p>
+                        <button type="button">Create Cookie 2</button> <button type="button">Delete Cookie
+                            1</button> <button type="button">Delete Cookie 2</button>
+                    </p>
                     <p>If you want to find the value of one specified cookie, you must write a JavaScript function that
                         searches for the cookie value in the cookie string.</p>
                     <hr />
@@ -20564,15 +20576,15 @@
                     </ol>
                     <hr />
                     <h2>A Function to Set a Cookie</h2>
-                    <p>First, we create a&nbsp;<code>function</code>&nbsp;that stores the name of the visitor in a
+                    <p>First, we create a <code>function</code> that stores the name of the visitor in a
                         cookie variable:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>function&nbsp;setCookie(cname, cvalue, exdays) {<br />const&nbsp;d
-                            =&nbsp;new&nbsp;Date();<br />d.setTime(d.getTime() +
-                            (exdays*24*60*60*1000));<br />let&nbsp;expires =&nbsp;"expires="+
-                            d.toUTCString();<br />document.cookie&nbsp;= cname +&nbsp;"="&nbsp;+ cvalue
-                            +&nbsp;";"&nbsp;+ expires +&nbsp;";path=/";<br />}</div>
+                        <div>function setCookie(cname, cvalue, exdays) {<br />const d
+                            = new Date();<br />d.setTime(d.getTime() +
+                            (exdays*24*60*60*1000));<br />let expires = "expires="+
+                            d.toUTCString();<br />document.cookie = cname + "=" + cvalue
+                            + ";" + expires + ";path=/";<br />}</div>
                     </div>
                     <p><strong>Example explained:</strong></p>
                     <p>The parameters of the function above are the name of the cookie (cname), the value of the cookie
@@ -20581,18 +20593,18 @@
                         string.</p>
                     <hr />
                     <h2>A Function to Get a Cookie</h2>
-                    <p>Then, we create a&nbsp;<code>function</code>&nbsp;that returns the value of a specified cookie:
+                    <p>Then, we create a <code>function</code> that returns the value of a specified cookie:
                     </p>
                     <div>
                         <h3>Example</h3>
-                        <div>function&nbsp;getCookie(cname) {<br />let&nbsp;name = cname
-                            +&nbsp;"=";<br />let&nbsp;decodedCookie =
-                            decodeURIComponent(document.cookie);<br />let&nbsp;ca =
-                            decodedCookie.split(';');<br />for(let&nbsp;i =&nbsp;0; i &lt;ca.length; i++)
-                            {<br />let&nbsp;c = ca[i];<br />while&nbsp;(c.charAt(0) ==&nbsp;' ') {<br />c =
-                            c.substring(1);<br />}<br />if&nbsp;(c.indexOf(name) ==&nbsp;0)
-                            {<br />return&nbsp;c.substring(name.length,
-                            c.length);<br />}<br />}<br />return&nbsp;"";<br />}</div>
+                        <div>function getCookie(cname) {<br />let name = cname
+                            + "=";<br />let decodedCookie =
+                            decodeURIComponent(document.cookie);<br />let ca =
+                            decodedCookie.split(';');<br />for(let i = 0; i &lt;ca.length; i++)
+                            {<br />let c = ca[i];<br />while (c.charAt(0) == ' ') {<br />c =
+                            c.substring(1);<br />}<br />if (c.indexOf(name) == 0)
+                            {<br />return c.substring(name.length,
+                            c.length);<br />}<br />}<br />return "";<br />}</div>
                     </div>
                     <p><strong>Function explained:</strong></p>
                     <p>Take the cookiename as parameter (cname).</p>
@@ -20609,40 +20621,40 @@
                     <p>If the cookie is set it will display a greeting.</p>
                     <p>If the cookie is not set, it will display a prompt box, asking for the name of the user, and
                         stores the username cookie for 365 days, by calling
-                        the&nbsp;<code>setCookie</code>&nbsp;function:</p>
+                        the <code>setCookie</code> function:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>function&nbsp;checkCookie() {<br />let&nbsp;username =
-                            getCookie("username");<br />if&nbsp;(username !=&nbsp;"") {<br />alert("Welcome again
-                            "&nbsp;+ username);<br />}&nbsp;else&nbsp;{<br />username = prompt("Please enter your
-                            name:",&nbsp;"");<br />if&nbsp;(username !=&nbsp;""&nbsp;&amp;&amp; username !=&nbsp;null)
-                            {<br />setCookie("username", username,&nbsp;365);<br />}<br />}<br />}</div>
+                        <div>function checkCookie() {<br />let username =
+                            getCookie("username");<br />if (username != "") {<br />alert("Welcome again
+                            " + username);<br />} else {<br />username = prompt("Please enter your
+                            name:", "");<br />if (username != "" &amp;&amp; username != null)
+                            {<br />setCookie("username", username, 365);<br />}<br />}<br />}</div>
                     </div>
                     <hr />
                     <h2>All Together Now</h2>
                     <div>
                         <h3>Example</h3>
-                        <div>function&nbsp;setCookie(cname, cvalue, exdays) {<br />const&nbsp;d
-                            =&nbsp;new&nbsp;Date();<br />d.setTime(d.getTime() + (exdays
-                            *&nbsp;24&nbsp;*&nbsp;60&nbsp;*&nbsp;60&nbsp;*&nbsp;1000));<br />let&nbsp;expires
-                            =&nbsp;"expires="+d.toUTCString();<br />document.cookie&nbsp;= cname +&nbsp;"="&nbsp;+
-                            cvalue +&nbsp;";"&nbsp;+ expires
-                            +&nbsp;";path=/";<br />}<br /><br />function&nbsp;getCookie(cname) {<br />let&nbsp;name =
-                            cname +&nbsp;"=";<br />let&nbsp;ca&nbsp;= document.cookie.split(';');<br />for(let&nbsp;i
-                            =&nbsp;0; i &lt; ca.length; i++)&nbsp;{<br />let&nbsp;c =
-                            ca[i];<br />while&nbsp;(c.charAt(0) ==&nbsp;' ') {<br />c =
-                            c.substring(1);<br />}<br />if&nbsp;(c.indexOf(name)&nbsp;==&nbsp;0)
-                            {<br />return&nbsp;c.substring(name.length,
-                            c.length);<br />}<br />}<br />return&nbsp;"";<br />}<br /><br />function&nbsp;checkCookie()
-                            {<br />let&nbsp;user = getCookie("username");<br />if&nbsp;(user
-                            !=&nbsp;"")&nbsp;{<br />alert("Welcome again "&nbsp;+
-                            user);<br />}&nbsp;else&nbsp;{<br />user = prompt("Please enter your
-                            name:",&nbsp;"");<br />if&nbsp;(user !=&nbsp;""&nbsp;&amp;&amp; user !=&nbsp;null)
-                            {<br />setCookie("username", user,&nbsp;365);<br />}<br />}<br />}</div>
+                        <div>function setCookie(cname, cvalue, exdays) {<br />const d
+                            = new Date();<br />d.setTime(d.getTime() + (exdays
+                            * 24 * 60 * 60 * 1000));<br />let expires
+                            = "expires="+d.toUTCString();<br />document.cookie = cname + "=" +
+                            cvalue + ";" + expires
+                            + ";path=/";<br />}<br /><br />function getCookie(cname) {<br />let name =
+                            cname + "=";<br />let ca = document.cookie.split(';');<br />for(let i
+                            = 0; i &lt; ca.length; i++) {<br />let c =
+                            ca[i];<br />while (c.charAt(0) == ' ') {<br />c =
+                            c.substring(1);<br />}<br />if (c.indexOf(name) == 0)
+                            {<br />return c.substring(name.length,
+                            c.length);<br />}<br />}<br />return "";<br />}<br /><br />function checkCookie()
+                            {<br />let user = getCookie("username");<br />if (user
+                            != "") {<br />alert("Welcome again " +
+                            user);<br />} else {<br />user = prompt("Please enter your
+                            name:", "");<br />if (user != "" &amp;&amp; user != null)
+                            {<br />setCookie("username", user, 365);<br />}<br />}<br />}</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_cookie_username" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
-                    <p>The example above runs the&nbsp;<code>checkCookie()</code>&nbsp;function when the page loads.</p>
+                    <p>The example above runs the <code>checkCookie()</code> function when the page loads.</p>
 
                     <h1>Web APIs - Introduction</h1>
                     <div>
@@ -20655,7 +20667,7 @@
                     </div>
                     <h2>What is Web API?</h2>
                     <p>API stands
-                        for&nbsp;<strong>A</strong>pplication&nbsp;<strong>P</strong>rogramming&nbsp;<strong>I</strong>nterface.
+                        for <strong>A</strong>pplication <strong>P</strong>rogramming <strong>I</strong>nterface.
                     </p>
                     <p>A Web API is an application programming interface for the Web.</p>
                     <p>A Browser API can extend the functionality of a web browser.</p>
@@ -20668,14 +20680,14 @@
                     <div>
                         <h3>Example</h3>
                         <p>Get the latitude and longitude of the user's position:</p>
-                        <div>const&nbsp;myElement =
-                            document.getElementById("demo");<br /><br />function&nbsp;getLocation() {<br />
-                            if&nbsp;(navigator.geolocation) {<br />
-                            navigator.geolocation.getCurrentPosition(showPosition);<br /> }&nbsp;else&nbsp;{<br />
-                            myElement.innerHTML&nbsp;=&nbsp;"Geolocation is not supported by this browser.";<br />
-                            }<br />}<br /><br />function&nbsp;showPosition(position) {<br />
-                            myElement.innerHTML&nbsp;=&nbsp;"Latitude: "&nbsp;+ position.coords.latitude&nbsp;+<br />
-                            "&lt;br&gt;Longitude: "&nbsp;+ position.coords.longitude;<br />}</div>
+                        <div>const myElement =
+                            document.getElementById("demo");<br /><br />function getLocation() {<br />
+                            if (navigator.geolocation) {<br />
+                            navigator.geolocation.getCurrentPosition(showPosition);<br /> } else {<br />
+                            myElement.innerHTML = "Geolocation is not supported by this browser.";<br />
+                            }<br />}<br /><br />function showPosition(position) {<br />
+                            myElement.innerHTML = "Latitude: " + position.coords.latitude +<br />
+                            "&lt;br&gt;Longitude: " + position.coords.longitude;<br />}</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_api_geo_coordinates"
                             target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -20691,7 +20703,7 @@
                         <li>Facebook API - Allows you to display Facebook info on a web site.</li>
                     </ul>
 
-                    <h1>JavaScript&nbsp;Validation API</h1>
+                    <h1>JavaScript Validation API</h1>
                     <h2>Constraint Validation DOM Methods</h2>
                     <table>
                         <tbody>
@@ -20714,10 +20726,10 @@
                     <div>
                         <h3>The checkValidity() Method</h3>
                         <div>
-                            &lt;input&nbsp;id="id1"&nbsp;type="number"&nbsp;min="100"&nbsp;max="300"&nbsp;required&gt;<br />&lt;button&nbsp;onclick="myFunction()"&gt;OK&lt;/button&gt;<br /><br />&lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />function&nbsp;myFunction()
-                            {<br />const&nbsp;inpObj =
-                            document.getElementById("id1");<br />if&nbsp;(!inpObj.checkValidity())
-                            {<br />document.getElementById("demo").innerHTML&nbsp;=
+                            &lt;input id="id1" type="number" min="100" max="300" required&gt;<br />&lt;button onclick="myFunction()"&gt;OK&lt;/button&gt;<br /><br />&lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />function myFunction()
+                            {<br />const inpObj =
+                            document.getElementById("id1");<br />if (!inpObj.checkValidity())
+                            {<br />document.getElementById("demo").innerHTML =
                             inpObj.validationMessage;<br />}<br />}<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_validation_check" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -20747,7 +20759,7 @@
                     <hr />
                     <hr />
                     <h2>Validity Properties</h2>
-                    <p>The&nbsp;<strong>validity property</strong>&nbsp;of an input element contains a number of
+                    <p>The <strong>validity property</strong> of an input element contains a number of
                         properties related to the validity of data:</p>
                     <table>
                         <tbody>
@@ -20796,26 +20808,26 @@
                     <hr />
                     <h2>Examples</h2>
                     <p>If the number in an input field is greater than 100 (the
-                        input's&nbsp;<code>max</code>&nbsp;attribute), display a message:</p>
+                        input's <code>max</code> attribute), display a message:</p>
                     <div>
                         <h3>The rangeOverflow Property</h3>
                         <div>
-                            &lt;input&nbsp;id="id1"&nbsp;type="number"&nbsp;max="100"&gt;<br />&lt;button&nbsp;onclick="myFunction()"&gt;OK&lt;/button&gt;<br /><br />&lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />function&nbsp;myFunction()
-                            {<br />let&nbsp;text =&nbsp;"Value
-                            OK";<br />if&nbsp;(document.getElementById("id1").validity.rangeOverflow) {<br />text
-                            =&nbsp;"Value too large";<br />}<br />}<br />&lt;/script&gt;</div>
+                            &lt;input id="id1" type="number" max="100"&gt;<br />&lt;button onclick="myFunction()"&gt;OK&lt;/button&gt;<br /><br />&lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />function myFunction()
+                            {<br />let text = "Value
+                            OK";<br />if (document.getElementById("id1").validity.rangeOverflow) {<br />text
+                            = "Value too large";<br />}<br />}<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_validation_rangeOverflow"
                             target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                     </div>
                     <p>If the number in an input field is less than 100 (the
-                        input's&nbsp;<code>min</code>&nbsp;attribute), display a message:</p>
+                        input's <code>min</code> attribute), display a message:</p>
                     <div>
                         <h3>The rangeUnderflow Property</h3>
                         <div>
-                            &lt;input&nbsp;id="id1"&nbsp;type="number"&nbsp;min="100"&gt;<br />&lt;button&nbsp;onclick="myFunction()"&gt;OK&lt;/button&gt;<br /><br />&lt;p&nbsp;id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />function&nbsp;myFunction()
-                            {<br />let&nbsp;text =&nbsp;"Value
-                            OK";<br />if&nbsp;(document.getElementById("id1").validity.rangeUnderflow) {<br />text
-                            =&nbsp;"Value too small";<br />}<br />}<br />&lt;/script&gt;</div>
+                            &lt;input id="id1" type="number" min="100"&gt;<br />&lt;button onclick="myFunction()"&gt;OK&lt;/button&gt;<br /><br />&lt;p id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />function myFunction()
+                            {<br />let text = "Value
+                            OK";<br />if (document.getElementById("id1").validity.rangeUnderflow) {<br />text
+                            = "Value too small";<br />}<br />}<br />&lt;/script&gt;</div>
                     </div>
 
                     <h1>Web History API</h1>
@@ -20830,8 +20842,8 @@
                     <p>It is the same as clicking the "back arrow" in your browser.</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;button&nbsp;onclick="myFunction()"&gt;Go
-                            Back&lt;/button&gt;<br /><br />&lt;script&gt;<br />function&nbsp;myFunction()
+                        <div>&lt;button onclick="myFunction()"&gt;Go
+                            Back&lt;/button&gt;<br /><br />&lt;script&gt;<br />function myFunction()
                             {<br />window.history.back();<br />}<br />&lt;/script&gt;</div>
                     </div>
                     <p><button>Go Back</button></p>
@@ -20841,8 +20853,8 @@
                     <p>The go() method loads a specific URL from the history list:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;button&nbsp;onclick="myFunction()"&gt;Go Back 2
-                            Pages&lt;/button&gt;<br /><br />&lt;script&gt;<br />function&nbsp;myFunction()
+                        <div>&lt;button onclick="myFunction()"&gt;Go Back 2
+                            Pages&lt;/button&gt;<br /><br />&lt;script&gt;<br />function myFunction()
                             {<br />window.history.go(-2);<br />}<br />&lt;/script&gt;</div>
                     </div>
                     <p><button>Go Back 2 Pages</button></p>
@@ -20887,7 +20899,7 @@
                         easy to use:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>localStorage.setItem("name",&nbsp;"John Doe");<br />localStorage.getItem("name");</div>
+                        <div>localStorage.setItem("name", "John Doe");<br />localStorage.getItem("name");</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_api_storage_example"
                             target="_blank" rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -20923,7 +20935,7 @@
                     <p>It takes a name and a value as parameters:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>localStorage.setItem("name",&nbsp;"John Doe");</div>
+                        <div>localStorage.setItem("name", "John Doe");</div>
                     </div>
                     <hr />
                     <h2>The getItem() Method</h2>
@@ -20951,7 +20963,7 @@
                     <p>It takes a name and a value as parameters:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>sessionStorage.setItem("name",&nbsp;"John Doe");</div>
+                        <div>sessionStorage.setItem("name", "John Doe");</div>
                     </div>
                     <hr />
                     <h2>The getItem() Method</h2>
@@ -20972,7 +20984,7 @@
                             <tr>
                                 <td><a href="https://www.w3schools.com/jsref/met_storage_key.asp">key(<em>n</em>)</a>
                                 </td>
-                                <td>Returns the name of the&nbsp;<em>n</em>th key in the storage</td>
+                                <td>Returns the name of the <em>n</em>th key in the storage</td>
                             </tr>
                             <tr>
                                 <td><a href="https://www.w3schools.com/jsref/prop_storage_length.asp">length</a></td>
@@ -20986,7 +20998,7 @@
                             </tr>
                             <tr>
                                 <td><a
-                                        href="https://www.w3schools.com/jsref/met_storage_setitem.asp">setItem(<em>keyname</em>,&nbsp;<em>value</em>)</a>
+                                        href="https://www.w3schools.com/jsref/met_storage_setitem.asp">setItem(<em>keyname</em>, <em>value</em>)</a>
                                 </td>
                                 <td>Adds a key to the storage, or updates a key value (if it already exists)</td>
                             </tr>
@@ -21062,7 +21074,7 @@
                     <div>
                         <h3>Example</h3>
                         <div>Count numbers:<output></output>
-                            <p><button>Start Worker</button>&nbsp;<button>Stop Worker</button></p>
+                            <p><button>Start Worker</button> <button>Stop Worker</button></p>
                         </div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_webworker" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -21071,8 +21083,8 @@
                     <h2>Check Web Worker Support</h2>
                     <p>Before creating a web worker, check whether the user's browser supports it:</p>
                     <div>
-                        <div>if&nbsp;(typeof(Worker) !==&nbsp;"undefined") {<br />// Yes! Web worker
-                            support!<br />//&nbsp;<em>Some code.....</em><br />}&nbsp;else&nbsp;{<br />// Sorry! No Web
+                        <div>if (typeof(Worker) !== "undefined") {<br />// Yes! Web worker
+                            support!<br />// <em>Some code.....</em><br />} else {<br />// Sorry! No Web
                             Worker support..<br />}</div>
                     </div>
                     <hr />
@@ -21081,13 +21093,13 @@
                     <p>Now, let's create our web worker in an external JavaScript.</p>
                     <p>Here, we create a script that counts. The script is stored in the "demo_workers.js" file:</p>
                     <div>
-                        <div>let&nbsp;i =&nbsp;0;<br /><br />function&nbsp;timedCount()&nbsp;{<br />i
+                        <div>let i = 0;<br /><br />function timedCount() {<br />i
                             ++;<br />postMessage(i);<br />setTimeout("timedCount()",500);<br />}<br /><br />timedCount();
                         </div>
                     </div>
-                    <p>The important part of the code above is the&nbsp;<code>postMessage()</code>&nbsp;method - which
+                    <p>The important part of the code above is the <code>postMessage()</code> method - which
                         is used to post a message back to the HTML page.</p>
-                    <p><strong>Note:</strong>&nbsp;Normally web workers are not used for such simple scripts, but for
+                    <p><strong>Note:</strong> Normally web workers are not used for such simple scripts, but for
                         more CPU intensive tasks.</p>
                     <hr />
                     <h2>Create a Web Worker Object</h2>
@@ -21095,14 +21107,14 @@
                     <p>The following lines checks if the worker already exists, if not - it creates a new web worker
                         object and runs the code in "demo_workers.js":</p>
                     <div>
-                        <div>if&nbsp;(typeof(w) ==&nbsp;"undefined") {<br />w
-                            =&nbsp;new&nbsp;Worker("demo_workers.js");<br />}</div>
+                        <div>if (typeof(w) == "undefined") {<br />w
+                            = new Worker("demo_workers.js");<br />}</div>
                     </div>
                     <p>Then we can send and receive messages from the web worker.</p>
                     <p>Add an "onmessage" event listener to the web worker.</p>
                     <div>
                         <div>
-                            w.onmessage&nbsp;=&nbsp;function(event){<br />document.getElementById("result").innerHTML&nbsp;=&nbsp;event.data;<br />};
+                            w.onmessage = function(event){<br />document.getElementById("result").innerHTML = event.data;<br />};
                         </div>
                     </div>
                     <p>When the web worker posts a message, the code within the event listener is executed. The data
@@ -21112,7 +21124,7 @@
                     <p>When a web worker object is created, it will continue to listen for messages (even after the
                         external script is finished) until it is terminated.</p>
                     <p>To terminate a web worker, and free browser/computer resources, use
-                        the&nbsp;<code>terminate()</code>&nbsp;method:</p>
+                        the <code>terminate()</code> method:</p>
                     <div>
                         <div>w.terminate();</div>
                     </div>
@@ -21128,14 +21140,14 @@
                     <p>We have already seen the Worker code in the .js file. Below is the code for the HTML page:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;!DOCTYPE&nbsp;html&gt;<br />&lt;html&gt;<br />&lt;body&gt;<br /><br />&lt;p&gt;Count
-                            numbers:&nbsp;&lt;output&nbsp;id="result"&gt;&lt;/output&gt;&lt;/p&gt;<br />&lt;button&nbsp;onclick="startWorker()"&gt;Start
-                            Worker&lt;/button&gt;<br />&lt;button&nbsp;onclick="stopWorker()"&gt;Stop
-                            Worker&lt;/button&gt;<br /><br />&lt;script&gt;<br />let&nbsp;w;<br /><br />function&nbsp;startWorker()&nbsp;{<br />if&nbsp;(typeof(w)
-                            ==&nbsp;"undefined") {<br />w
-                            =&nbsp;new&nbsp;Worker("demo_workers.js");<br />}<br />w.onmessage&nbsp;=&nbsp;function(event)
-                            {<br />document.getElementById("result").innerHTML&nbsp;=&nbsp;event.data;<br />};<br />}<br /><br />function&nbsp;stopWorker()&nbsp;{<br />w.terminate();<br />w
-                            = undefined;<br />}<br />&lt;/script&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;</div>
+                        <div><!DOCTYPE html><br /><html><br /><body><br /><br />&lt;p&gt;Count
+                            numbers: &lt;output id="result"&gt;&lt;/output&gt;&lt;/p&gt;<br />&lt;button onclick="startWorker()"&gt;Start
+                            Worker&lt;/button&gt;<br />&lt;button onclick="stopWorker()"&gt;Stop
+                            Worker&lt;/button&gt;<br /><br />&lt;script&gt;<br />let w;<br /><br />function startWorker() {<br />if (typeof(w)
+                            == "undefined") {<br />w
+                            = new Worker("demo_workers.js");<br />}<br />w.onmessage = function(event)
+                            {<br />document.getElementById("result").innerHTML = event.data;<br />};<br />}<br /><br />function stopWorker() {<br />w.terminate();<br />w
+                            = undefined;<br />}<br /></script><br /><br /></body><br /></html></div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_webworker" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
                     </div>
@@ -21162,8 +21174,8 @@
                         this:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>async&nbsp;function&nbsp;getText(file) {<br /> let&nbsp;x
-                            =&nbsp;await&nbsp;fetch(file);<br /> let&nbsp;y =&nbsp;await&nbsp;x.text();<br />
+                        <div>async function getText(file) {<br /> let x
+                            = await fetch(file);<br /> let y = await x.text();<br />
                             myDisplay(y);<br />}</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_api_fetch_await" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -21171,9 +21183,9 @@
                     <p>Or even better: Use understandable names instead of x and y:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>async&nbsp;function&nbsp;getText(file) {<br /> let&nbsp;myObject
-                            =&nbsp;await&nbsp;fetch(file);<br /> let&nbsp;myText
-                            =&nbsp;await&nbsp;myObject.text();<br /> myDisplay(myText);<br />}</div>
+                        <div>async function getText(file) {<br /> let myObject
+                            = await fetch(file);<br /> let myText
+                            = await myObject.text();<br /> myDisplay(myText);<br />}</div>
                     </div>
 
                     <h1>Web Geolocation API</h1>
@@ -21185,18 +21197,18 @@
                     </div>
                     <hr />
                     <h2>Using the Geolocation API</h2>
-                    <p>The&nbsp;<code>getCurrentPosition()</code>&nbsp;method is used to return the user's position.</p>
+                    <p>The <code>getCurrentPosition()</code> method is used to return the user's position.</p>
                     <p>The example below returns the latitude and longitude of the user's position:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;script&gt;<br />const&nbsp;x =
-                            document.getElementById("demo");<br />function&nbsp;getLocation()
-                            {<br />if&nbsp;(navigator.geolocation)
-                            {<br />navigator.geolocation.getCurrentPosition(showPosition);<br />}&nbsp;else&nbsp;{<br />x.innerHTML&nbsp;=&nbsp;"Geolocation
+                        <div>&lt;script&gt;<br />const x =
+                            document.getElementById("demo");<br />function getLocation()
+                            {<br />if (navigator.geolocation)
+                            {<br />navigator.geolocation.getCurrentPosition(showPosition);<br />} else {<br />x.innerHTML = "Geolocation
                             is not supported by this
-                            browser.";<br />}<br />}<br /><br />function&nbsp;showPosition(position)
-                            {<br />x.innerHTML&nbsp;=&nbsp;"Latitude: "&nbsp;+
-                            position.coords.latitude&nbsp;+<br />"&lt;br&gt;Longitude: "&nbsp;+
+                            browser.";<br />}<br />}<br /><br />function showPosition(position)
+                            {<br />x.innerHTML = "Latitude: " +
+                            position.coords.latitude +<br />"&lt;br&gt;Longitude: " +
                             position.coords.longitude;<br />}<br />&lt;/script&gt;</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_api_geolocation" target="_blank"
                             rel="noopener">Try it Yourself &raquo;</a>
@@ -21214,18 +21226,18 @@
                     <hr />
                     <hr />
                     <h2>Handling Errors and Rejections</h2>
-                    <p>The second parameter of the&nbsp;<code>getCurrentPosition()</code>&nbsp;method is used to handle
+                    <p>The second parameter of the <code>getCurrentPosition()</code> method is used to handle
                         errors. It specifies a function to run if it fails to get the user's location:</p>
                     <div>
                         <h3>Example</h3>
-                        <div>function&nbsp;showError(error) {<br />switch(error.code)
-                            {<br />case&nbsp;error.PERMISSION_DENIED:<br />x.innerHTML&nbsp;=&nbsp;"User denied the
+                        <div>function showError(error) {<br />switch(error.code)
+                            {<br />case error.PERMISSION_DENIED:<br />x.innerHTML = "User denied the
                             request for
-                            Geolocation."<br />break;<br />case&nbsp;error.POSITION_UNAVAILABLE:<br />x.innerHTML&nbsp;=&nbsp;"Location
+                            Geolocation."<br />break;<br />case error.POSITION_UNAVAILABLE:<br />x.innerHTML = "Location
                             information is
-                            unavailable."<br />break;<br />case&nbsp;error.TIMEOUT:<br />x.innerHTML&nbsp;=&nbsp;"The
+                            unavailable."<br />break;<br />case error.TIMEOUT:<br />x.innerHTML = "The
                             request to get user location timed
-                            out."<br />break;<br />case&nbsp;error.UNKNOWN_ERROR:<br />x.innerHTML&nbsp;=&nbsp;"An
+                            out."<br />break;<br />case error.UNKNOWN_ERROR:<br />x.innerHTML = "An
                             unknown error occurred."<br />break;<br />}<br />}</div>
                         <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_api_geolocation_error"
                             target="_blank" rel="noopener">Try it Yourself &raquo;</a>
@@ -21237,10 +21249,10 @@
                         Google Map (using a static image):</p>
                     <div>
                         <h3>Example</h3>
-                        <div>function&nbsp;showPosition(position) {<br />let&nbsp;latlon =
-                            position.coords.latitude&nbsp;+&nbsp;","&nbsp;+
-                            position.coords.longitude;<br /><br />let&nbsp;img_url
-                            =&nbsp;"https://maps.googleapis.com/maps/api/staticmap?center=<br />"+latlon+"&amp;zoom=14&amp;size=400x300&amp;sensor=false&amp;key=YOUR_KEY";<br /><br />document.getElementById("mapholder").innerHTML&nbsp;=&nbsp;"&lt;img
+                        <div>function showPosition(position) {<br />let latlon =
+                            position.coords.latitude + "," +
+                            position.coords.longitude;<br /><br />let img_url
+                            = "https://maps.googleapis.com/maps/api/staticmap?center=<br />"+latlon+"&amp;zoom=14&amp;size=400x300&amp;sensor=false&amp;key=YOUR_KEY";<br /><br />document.getElementById("mapholder").innerHTML = "&lt;img
                             src='"+img_url+"'&gt;";<br />}</div>
                     </div>
                     <hr />
@@ -21254,7 +21266,7 @@
                     </ul>
                     <hr />
                     <h2>The getCurrentPosition() Method - Return Data</h2>
-                    <p>The&nbsp;<code>getCurrentPosition()</code>&nbsp;method returns an object on success. The
+                    <p>The <code>getCurrentPosition()</code> method returns an object on success. The
                         latitude, longitude and accuracy properties are always returned. The other properties are
                         returned if available:</p>
                     <table>
@@ -21301,22 +21313,22 @@
                     <h2>Geolocation Object - Other interesting Methods</h2>
                     <p>The Geolocation object also has other interesting methods:</p>
                     <ul>
-                        <li><code>watchPosition()</code>&nbsp;- Returns the current position of the user and continues
+                        <li><code>watchPosition()</code> - Returns the current position of the user and continues
                             to return updated position as the user moves (like the GPS in a car).</li>
-                        <li><code>clearWatch()</code>&nbsp;- Stops the&nbsp;<code>watchPosition()</code>&nbsp;method.
+                        <li><code>clearWatch()</code> - Stops the <code>watchPosition()</code> method.
                         </li>
                     </ul>
-                    <p>The example below shows the&nbsp;<code>watchPosition()</code>&nbsp;method. You need an accurate
+                    <p>The example below shows the <code>watchPosition()</code> method. You need an accurate
                         GPS device to test this (like smartphone):</p>
                     <div>
                         <h3>Example</h3>
-                        <div>&lt;script&gt;<br />const&nbsp;x =
-                            document.getElementById("demo");<br />function&nbsp;getLocation()
-                            {<br />if&nbsp;(navigator.geolocation)
-                            {<br />navigator.geolocation.watchPosition(showPosition);<br />}&nbsp;else&nbsp;{<br />x.innerHTML&nbsp;=&nbsp;"Geolocation
-                            is not supported by this browser.";<br />}<br />}<br />function&nbsp;showPosition(position)
-                            {<br />x.innerHTML&nbsp;=&nbsp;"Latitude: "&nbsp;+
-                            position.coords.latitude&nbsp;+<br />"&lt;br&gt;Longitude: "&nbsp;+
+                        <div>&lt;script&gt;<br />const x =
+                            document.getElementById("demo");<br />function getLocation()
+                            {<br />if (navigator.geolocation)
+                            {<br />navigator.geolocation.watchPosition(showPosition);<br />} else {<br />x.innerHTML = "Geolocation
+                            is not supported by this browser.";<br />}<br />}<br />function showPosition(position)
+                            {<br />x.innerHTML = "Latitude: " +
+                            position.coords.latitude +<br />"&lt;br&gt;Longitude: " +
                             position.coords.longitude;<br />}<br />&lt;/script&gt;</div>
                     </div>
 
