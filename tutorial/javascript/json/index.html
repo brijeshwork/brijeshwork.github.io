@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel</title>
+    <link rel="canonical" href="https://brijesh.work/tutorial/javascript/ajax/" />
+    <meta name="description" content="Brijesh Patel PHP Developer | Magento | Laravel">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
+    <meta property="og:description" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
+    <meta property="og:url" content="https://brijesh.work/tutorial/mysql/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/tutorial/mysql/" />
+    <meta property="og:image:width" content="960" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Brijesh Patel" />
+    <meta name="twitter:label2" content="Est. reading time" />
+    <meta name="twitter:data2" content="9 minutes" />
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+
+                <h1>JSON - Introduction</h1>
+                <p>JSON stands for <strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject
+                    <strong>N</strong>otation</p>
+                <p>JSON is a <strong>text format</strong> for storing and transporting data</p>
+                <p>JSON is "self-describing" and easy to understand</p>
+                <h2>JSON Example</h2>
+                <p>This example is a JSON string:</p>
+                <div>
+                    <div>'{"name":"John", "age":30, "car":null}'</div>
+                </div>
+                <p>It defines an object with 3 properties:</p>
+                <ul>
+                    <li>name</li>
+                    <li>age</li>
+                    <li>car</li>
+                </ul>
+                <p>Each property has a value.</p>
+                <p>If you parse the JSON string with a JavaScript program, you can access the data as an object:</p>
+                <div>
+                    <div>let personName = obj.name;<br />let personAge = obj.age;</div>
+                </div>
+                <hr />
+                <h2>What is JSON?</h2>
+                <ul>
+                    <li>JSON stands for <strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject
+                        <strong>N</strong>otation</li>
+                    <li>JSON is a lightweight data-interchange format</li>
+                    <li>JSON is plain text written in JavaScript object notation</li>
+                    <li>JSON is used to send data between computers</li>
+                    <li>JSON is language independent <strong>*</strong></li>
+                </ul>
+                <div>
+                    <p>*<br />The JSON syntax is derived from JavaScript object notation, but the JSON format is text
+                        only.</p>
+                    <p>Code for reading and generating JSON exists in many programming languages.</p>
+                </div>
+                <p>The JSON format was originally specified by <a href="http://www.crockford.com/" target="_blank"
+                        rel="noopener">Douglas Crockford</a>.</p>
+                <hr />
+                <hr />
+                <h2>Why Use JSON?</h2>
+                <p>The JSON format is syntactically similar to the code for creating JavaScript objects. Because of
+                    this, a JavaScript program can easily convert JSON data into JavaScript objects.</p>
+                <p>Since the format is text only, JSON data can easily be sent between computers, and used by any
+                    programming language.</p>
+                <p>JavaScript has a built in function for converting JSON strings into JavaScript objects:</p>
+                <p><code>JSON.parse()</code></p>
+                <p>JavaScript also has a built in function for converting an object into a JSON string:</p>
+                <p><code>JSON.stringify()</code></p>
+                <div>
+                    <p>You can receive pure text from a server and use it as a JavaScript object.</p>
+                    <p>You can send a JavaScript object to a server in pure text format.</p>
+                    <p>You can work with data as JavaScript objects, with no complicated parsing and translations.</p>
+                </div>
+                <hr />
+                <h2>Storing Data</h2>
+                <p>When storing data, the data has to be a certain format, and regardless of where you choose to store
+                    it, <em>text</em> is always one of the legal formats.</p>
+                <p>JSON makes it possible to store JavaScript objects as text.</p>
+
+                <h1>JSON Syntax</h1>
+                <p>The JSON syntax is a subset of the JavaScript syntax.</p>
+                <hr />
+                <h2>JSON Syntax Rules</h2>
+                <p>JSON syntax is derived from JavaScript object notation syntax:</p>
+                <ul>
+                    <li>Data is in name/value pairs</li>
+                    <li>Data is separated by commas</li>
+                    <li>Curly braces hold objects</li>
+                    <li>Square brackets hold arrays</li>
+                </ul>
+                <hr />
+                <h2>JSON Data - A Name and a Value</h2>
+                <p>JSON data is written as name/value pairs (aka key/value pairs).</p>
+                <p>A name/value pair consists of a field name (in double quotes), followed by a colon, followed by a
+                    value:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>"name":"John"</div>
+                </div>
+                <div>
+                    <p>JSON names require double quotes.</p>
+                </div>
+                <hr />
+                <h2>JSON - Evaluates to JavaScript Objects</h2>
+                <p>The JSON format is almost identical to JavaScript objects.</p>
+                <p>In JSON, <em>keys</em> must be strings, written with double quotes:</p>
+                <div>
+                    <h3>JSON</h3>
+                    <div>{"name":"John"}</div>
+                </div>
+                <p>In JavaScript, keys can be strings, numbers, or identifier names:</p>
+                <div>
+                    <h3>JavaScript</h3>
+                    <div>{name:"John"}</div>
+                </div>
+                <hr />
+                <hr />
+                <h2>JSON Values</h2>
+                <p>In <strong>JSON</strong>, <em>values</em> must be one of the following data types:</p>
+                <ul>
+                    <li>a string</li>
+                    <li>a number</li>
+                    <li>an object</li>
+                    <li>an array</li>
+                    <li>a boolean</li>
+                    <li>null</li>
+                </ul>
+                <p>In <strong>JavaScript</strong> values can be all of the above, plus any other valid JavaScript
+                    expression, including:</p>
+                <ul>
+                    <li>a function</li>
+                    <li>a date</li>
+                    <li>undefined</li>
+                </ul>
+                <p>In JSON, <em>string values</em> must be written with double quotes:</p>
+                <div>
+                    <h3>JSON</h3>
+                    <div>{"name":"John"}</div>
+                </div>
+                <p>In JavaScript, you can write string values with double <em>or</em> single quotes:</p>
+                <div>
+                    <h3>JavaScript</h3>
+                    <div>{name:'John'}</div>
+                </div>
+                <hr />
+                <h2>JavaScript Objects</h2>
+                <p>Because JSON syntax is derived from JavaScript object notation, very little extra software is needed
+                    to work with JSON within JavaScript.</p>
+                <p>With JavaScript you can create an object and assign data to it, like this:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>person = {name:"John", age:31, city:"New York"};</div>
+                </div>
+                <p>You can access a JavaScript object like this:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>// returns John<br />person.name;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_object_access" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>It can also be accessed like this:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>// returns John<br />person["name"];</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_object_access2" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>Data can be modified like this:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>person.name = "Gilbert";</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_modify_object" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>It can also be modified like this:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>person["name"] = "Gilbert";</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_modify_object2" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>You will learn how to convert JavaScript objects into JSON later in this tutorial.</p>
+                <hr />
+                <h2>JavaScript Arrays as JSON</h2>
+                <p>The same way JavaScript objects can be written as JSON, JavaScript arrays can also be written as
+                    JSON.</p>
+                <p>You will learn more about objects and arrays later in this tutorial.</p>
+                <hr />
+                <h2>JSON Files</h2>
+                <ul>
+                    <li>The file type for JSON files is ".json"</li>
+                    <li>The MIME type for JSON text is "application/json"</li>
+                </ul>
+
+                <h1>JSON vs XML</h1>
+                <p>Both JSON and XML can be used to receive data from a web server.</p>
+                <hr />
+                <p>The following JSON and XML examples both define an employees object, with an array of 3 employees:
+                </p>
+                <div>
+                    <h3>JSON Example</h3>
+                    <div>{"employees":[<br />{ "firstName":"John", "lastName":"Doe" },<br />{ "firstName":"Anna",
+                        "lastName":"Smith" },<br />{ "firstName":"Peter", "lastName":"Jones" }<br />]}</div>
+                </div>
+                <div>
+                    <h3>XML Example</h3>
+                    <div>&lt;employees&gt;<br />&lt;employee&gt;<br />&lt;firstName&gt;John&lt;/firstName&gt;
+                        &lt;lastName&gt;Doe&lt;/lastName&gt;<br />&lt;/employee&gt;<br />&lt;employee&gt;<br />&lt;firstName&gt;Anna&lt;/firstName&gt;
+                        &lt;lastName&gt;Smith&lt;/lastName&gt;<br />&lt;/employee&gt;<br />&lt;employee&gt;<br />&lt;firstName&gt;Peter&lt;/firstName&gt;
+                        &lt;lastName&gt;Jones&lt;/lastName&gt;<br />&lt;/employee&gt;<br />&lt;/employees&gt;</div>
+                </div>
+                <hr />
+                <h2> JSON is Like XML Because</h2>
+                <ul>
+                    <li>Both JSON and XML are "self describing" (human readable)</li>
+                    <li>Both JSON and XML are hierarchical (values within values)</li>
+                    <li>Both JSON and XML can be parsed and used by lots of programming languages</li>
+                    <li>Both JSON and XML can be fetched with an XMLHttpRequest</li>
+                </ul>
+                <hr />
+                <h2>JSON is Unlike XML Because</h2>
+                <ul>
+                    <li>JSON doesn't use end tag</li>
+                    <li>JSON is shorter</li>
+                    <li>JSON is quicker to read and write</li>
+                    <li>JSON can use arrays</li>
+                </ul>
+                <p>The biggest difference is:</p>
+                <p> XML has to be parsed with an XML parser. JSON can be parsed by a standard JavaScript function.</p>
+                <hr />
+                <h2>Why JSON is Better Than XML</h2>
+                <div>
+                    <p>XML is much more difficult to parse than JSON.<br />JSON is parsed into a ready-to-use JavaScript
+                        object.</p>
+                </div>
+                <p>For AJAX applications, JSON is faster and easier than XML:</p>
+                <p>Using XML</p>
+                <ul>
+                    <li>Fetch an XML document</li>
+                    <li>Use the XML DOM to loop through the document</li>
+                    <li>Extract values and store in variables</li>
+                </ul>
+                <p>Using JSON</p>
+                <ul>
+                    <li>Fetch a JSON string</li>
+                    <li>JSON.Parse the JSON string</li>
+                </ul>
+
+                <h1>JSON Data Types</h1>
+                <h2>Valid Data Types</h2>
+                <p>In JSON, values must be one of the following data types:</p>
+                <ul>
+                    <li>a string</li>
+                    <li>a number</li>
+                    <li>an object (JSON object)</li>
+                    <li>an array</li>
+                    <li>a boolean</li>
+                    <li><em>null</em></li>
+                </ul>
+                <div>
+                    <p>JSON values <strong>cannot </strong>be one of the following data types:</p>
+                    <ul>
+                        <li>a function</li>
+                        <li>a date</li>
+                        <li><em>undefined</em></li>
+                    </ul>
+                </div>
+                <hr />
+                <h2>JSON Strings</h2>
+                <p>Strings in JSON must be written in double quotes.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>{"name":"John"}</div>
+                </div>
+                <hr />
+                <h2>JSON Numbers</h2>
+                <p>Numbers in JSON must be an integer or a floating point.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>{"age":30}</div>
+                </div>
+                <hr />
+                <h2>JSON Objects</h2>
+                <p>Values in JSON can be objects.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>{<br />"employee":{"name":"John", "age":30, "city":"New York"}<br />}</div>
+                </div>
+                <div>
+                    <p>Objects as values in JSON must follow the JSON syntax.</p>
+                </div>
+                <hr />
+                <hr />
+                <h2>JSON Arrays</h2>
+                <p>Values in JSON can be arrays.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>{<br />"employees":["John", "Anna", "Peter"]<br />}</div>
+                </div>
+                <hr />
+                <h2>JSON Booleans</h2>
+                <p>Values in JSON can be true/false.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>{"sale":true}</div>
+                </div>
+                <hr />
+                <h2>JSON null</h2>
+                <p>Values in JSON can be null.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>{"middlename":null}</div>
+                </div>
+
+                <h1>JSON.parse()</h1>
+                <p>A common use of JSON is to exchange data to/from a web server.</p>
+                <p>When receiving data from a web server, the data is always a string.</p>
+                <p>Parse the data with <code>JSON.parse()</code>, and the data becomes a JavaScript object.</p>
+                <hr />
+                <h2>Example - Parsing JSON</h2>
+                <p>Imagine we received this text from a web server:</p>
+                <div>
+                    <div>'{"name":"John", "age":30, "city":"New York"}'</div>
+                </div>
+                <p>Use the JavaScript function <code>JSON.parse()</code> to convert text into a JavaScript object:</p>
+                <div>
+                    <div>const obj = JSON.parse('{"name":"John", "age":30, "city":"New York"}');</div>
+                </div>
+                <div>
+                    <p>Make sure the text is in JSON format, or else you will get a syntax error.</p>
+                </div>
+                <p>Use the JavaScript object in your page:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>&lt;p
+                        id="demo"&gt;&lt;/p&gt;<br /><br />&lt;script&gt;<br />document.getElementById("demo").innerHTML
+                        = obj.name;<br />&lt;/script&gt;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_parse" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Array as JSON</h2>
+                <p>When using the <code>JSON.parse()</code> on a JSON derived from an array, the method will return a
+                    JavaScript array, instead of a JavaScript object.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const text = '["Ford", "BMW", "Audi", "Fiat"]';<br />const myArr = JSON.parse(text);</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_parse_array" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <hr />
+                <h2>Exceptions</h2>
+                <h3>Parsing Dates</h3>
+                <p>Date objects are not allowed in JSON.</p>
+                <p>If you need to include a date, write it as a string.</p>
+                <p>You can convert it back into a date object later:</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Convert a string into a date:</p>
+                    <div>const text = '{"name":"John", "birth":"1986-12-14", "city":"New York"}';<br />const obj =
+                        JSON.parse(text);<br />obj.birth = new
+                        Date(obj.birth);<br /><br />document.getElementById("demo").innerHTML = obj.name + ", " +
+                        obj.birth;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_parse_date" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>Or, you can use the second parameter, of the <code>JSON.parse()</code> function, called
+                    <em>reviver</em>.</p>
+                <p>The <em>reviver</em> parameter is a function that checks each property, before returning the value.
+                </p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Convert a string into a date, using the <em>reviver</em> function:</p>
+                    <div>const text = '{"name":"John", "birth":"1986-12-14", "city":"New York"}';<br />const obj =
+                        JSON.parse(text, function (key, value) {<br />if (key == "birth") {<br />return new
+                        Date(value);<br />} else {<br />return
+                        value;<br />}<br />});<br /><br />document.getElementById("demo").innerHTML = obj.name + ", " +
+                        obj.birth;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_parse_reviver" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <h3>Parsing Functions</h3>
+                <p>Functions are not allowed in JSON.</p>
+                <p>If you need to include a function, write it as a string.</p>
+                <p>You can convert it back into a function later:</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Convert a string into a function:</p>
+                    <div>const text = '{"name":"John", "age":"function () {return 30;}", "city":"New York"}';<br />const
+                        obj = JSON.parse(text);<br />obj.age = eval("(" + obj.age +
+                        ")");<br /><br />document.getElementById("demo").innerHTML = obj.name + ", " + obj.age();</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_parse_function" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <div>
+                    <p>You should avoid using functions in JSON, the functions will lose their scope, and you would have
+                        to use <code>eval()</code> to convert them back into functions.</p>
+                </div>
+
+                <h1>JSON.stringify()</h1>
+                <p>A common use of JSON is to exchange data to/from a web server.</p>
+                <p>When sending data to a web server, the data has to be a string.</p>
+                <p>Convert a JavaScript object into a string with <code>JSON.stringify()</code>.</p>
+                <hr />
+                <h2>Stringify a JavaScript Object</h2>
+                <p>Imagine we have this object in JavaScript:</p>
+                <div>
+                    <div>const obj = {name: "John", age: 30, city: "New York"};</div>
+                </div>
+                <p>Use the JavaScript function <code>JSON.stringify()</code> to convert it into a string.</p>
+                <div>
+                    <div>const myJSON = JSON.stringify(obj);</div>
+                </div>
+                <div>
+                    <p>The result will be a string following the JSON notation.</p>
+                </div>
+                <p><code>myJSON</code> is now a string, and ready to be sent to a server:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const obj = {name: "John", age: 30, city: "New York"};<br />const myJSON = JSON.stringify(obj);
+                    </div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_stringify" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>You will learn how to send JSON to a server in the next chapters.</p>
+                <hr />
+                <h2>Stringify a JavaScript Array</h2>
+                <p>It is also possible to stringify JavaScript arrays:</p>
+                <p>Imagine we have this array in JavaScript:</p>
+                <div>
+                    <div>const arr = ["John", "Peter", "Sally", "Jane"];</div>
+                </div>
+                <p>Use the JavaScript function <code>JSON.stringify()</code> to convert it into a string.</p>
+                <div>
+                    <div>const myJSON = JSON.stringify(arr);</div>
+                </div>
+                <div>
+                    <p>The result will be a string following the JSON notation.</p>
+                </div>
+                <p><code>myJSON</code> is now a string, and ready to be sent to a server:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const arr = ["John", "Peter", "Sally", "Jane"];<br />const myJSON = JSON.stringify(arr);</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_stringify_array" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>You will learn how to send a JSON string to a server in the next chapters.</p>
+                <hr />
+                <h2>Storing Data</h2>
+                <p>When storing data, the data has to be a certain format, and regardless of where you choose to store
+                    it, <em>text</em> is always one of the legal formats.</p>
+                <p>JSON makes it possible to store JavaScript objects as text.</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Storing data in local storage</p>
+                    <div>// Storing data:<br />const myObj = {name: "John", age: 31, city: "New York"};<br />const
+                        myJSON = JSON.stringify(myObj);<br />localStorage.setItem("testJSON", myJSON);<br /><br />//
+                        Retrieving data:<br />let text = localStorage.getItem("testJSON");<br />let obj =
+                        JSON.parse(text);<br />document.getElementById("demo").innerHTML = obj.name;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_store" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <hr />
+                <h2>Exceptions</h2>
+                <h3>Stringify Dates</h3>
+                <p>In JSON, date objects are not allowed. The <code>JSON.stringify()</code> function will convert any
+                    dates into strings.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const obj = {name: "John", today: new Date(), city : "New York"};<br />const myJSON =
+                        JSON.stringify(obj);</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_stringify_date" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>You can convert the string back into a date object at the receiver.</p>
+                <hr />
+                <h3>Stringify Functions</h3>
+                <p>In JSON, functions are not allowed as object values.</p>
+                <p>The <code>JSON.stringify()</code> function will remove any functions from a JavaScript object, both
+                    the key and the value:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const obj = {name: "John", age: function () {return 30;}, city: "New York"};<br />const myJSON
+                        = JSON.stringify(obj);</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_stringify_function" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>This can be omitted if you convert your functions into strings before running the
+                    <code>JSON.stringify()</code> function.</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const obj = {name: "John", age: function () {return 30;}, city: "New York"};<br />obj.age =
+                        obj.age.toString();<br />const myJSON = JSON.stringify(obj);</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_stringify_function_tostring"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <div>
+                    <p>If you send functions using JSON, the functions will lose their scope, and the receiver would
+                        have to use eval() to convert them back into functions.</p>
+                </div>
+
+                <h1>JSON Object Literals</h1>
+                <p>This is a JSON string:</p>
+                <div>
+                    <div>'{"name":"John", "age":30, "car":null}'</div>
+                </div>
+                <p>Inside the JSON string there is a JSON object literal:</p>
+                <div>
+                    <div>{"name":"John", "age":30, "car":null}</div>
+                </div>
+                <p>JSON object literals are surrounded by curly braces {}.</p>
+                <p>JSON object literals contains key/value pairs.</p>
+                <p>Keys and values are separated by a colon.</p>
+                <p>Keys must be strings, and values must be a valid JSON data type:</p>
+                <ul>
+                    <li>string</li>
+                    <li>number</li>
+                    <li>object</li>
+                    <li>array</li>
+                    <li>boolean</li>
+                    <li>null</li>
+                </ul>
+                <p>Each key/value pair is separated by a comma.</p>
+                <div>
+                    <p>It is a common mistake to call a JSON object literal "a JSON object".</p>
+                    <p>JSON cannot be an object. JSON is a string format.</p>
+                    <p>The data is only JSON when it is in a string format. When it is converted to a JavaScript
+                        variable, it becomes a JavaScript object.</p>
+                </div>
+                <hr />
+                <h2>JavaScript Objects</h2>
+                <p>You can create a JavaScript object from a JSON object literal:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>myObj = {"name":"John", "age":30, "car":null};</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_object_literal" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>Normally, you create a JavaScript object by parsing a JSON string:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>myJSON = '{"name":"John", "age":30, "car":null}';<br />myObj = JSON.parse(myJSON);</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_object_parse" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Accessing Object Values</h2>
+                <p>You can access object values by using dot (.) notation:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const myJSON = '{"name":"John", "age":30, "car":null}';<br />const myObj =
+                        JSON.parse(myJSON);<br />x = myObj.name;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_object_dot" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>You can also access object values by using bracket ([]) notation:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const myJSON = '{"name":"John", "age":30, "car":null}';<br />const myObj =
+                        JSON.parse(myJSON);<br />x = myObj["name"];</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_object_bracket" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <hr />
+                <h2>Looping an Object</h2>
+                <p>You can loop through object properties with a for-in loop:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const myJSON = '{"name":"John", "age":30, "car":null}';<br />const myObj =
+                        JSON.parse(myJSON);<br /><br />let text = "";<br />for (const x in myObj) {<br />text += x + ",
+                        ";<br />}</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_object_loop" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>In a for-in loop, use the bracket notation to access the property <em>values</em>:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const myJSON = '{"name":"John", "age":30, "car":null}';<br />const myObj =
+                        JSON.parse(myJSON);<br /><br />let text = "";<br />for (const x in myObj) {<br />text +=
+                        myObj[x] + ", ";<br />}</div>
+                </div>
+
+                <h1>JSON Array Literals</h1>
+                <p>This is a JSON string:</p>
+                <div>
+                    <div>'["Ford", "BMW", "Fiat"]'</div>
+                </div>
+                <p>Inside the JSON string there is a JSON array literal:</p>
+                <div>
+                    <div>["Ford", "BMW", "Fiat"]</div>
+                </div>
+                <p>Arrays in JSON are almost the same as arrays in JavaScript.</p>
+                <p>In JSON, array values must be of type string, number, object, array, boolean or <em>null</em>.</p>
+                <p>In JavaScript, array values can be all of the above, plus any other valid JavaScript expression,
+                    including functions, dates, and <em>undefined.</em></p>
+                <hr />
+                <h2>JavaScript Arrays</h2>
+                <p>You can create a JavaScript array from a literal:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>myArray = ["Ford", "BMW", "Fiat"];</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_array_literal" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>You can create a JavaScript array by parsing a JSON string:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>myJSON = '["Ford", "BMW", "Fiat"]';<br />myArray = JSON.parse(myJSON);</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_array_parse" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Accessing Array Values</h2>
+                <p>You access array values by index:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>myArray[0];</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_array_index" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Arrays in Objects</h2>
+                <p>Objects can contain arrays:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>{<br />"name":"John",<br />"age":30,<br />"cars":["Ford", "BMW", "Fiat"]<br />}</div>
+                </div>
+                <p>You access array values by index:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>myObj.cars[0];</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_array_access" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <hr />
+                <h2>Looping Through an Array</h2>
+                <p>You can access array values by using a <code>for in</code> loop:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>for (let i in myObj.cars) {<br />x += myObj.cars[i];<br />}</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_array_loop_in" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>Or you can use a <code>for</code> loop:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>for (let i = 0; i &lt; myObj.cars.length; i++) {<br />x += myObj.cars[i];<br />}</div>
+                </div>
+
+                <h1>JSON Server</h1>
+                <p>A common use of JSON is to exchange data to/from a web server.</p>
+                <p>When receiving data from a web server, the data is always a string.</p>
+                <p>Parse the data with <code>JSON.parse()</code>, and the data becomes a JavaScript object.</p>
+                <hr />
+                <h2>Sending Data</h2>
+                <p>If you have data stored in a JavaScript object, you can convert the object into JSON, and send it to
+                    a server:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const myObj = {name: "John", age: 31, city: "New York"};<br />const myJSON =
+                        JSON.stringify(myObj);<br />window.location = "demo_json.php?x=" + myJSON;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_send" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Receiving Data</h2>
+                <p>If you receive data in JSON format, you can easily convert it into a JavaScript object:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const myJSON = '{"name":"John", "age":31, "city":"New York"}';<br />const myObj =
+                        JSON.parse(myJSON);<br />document.getElementById("demo").innerHTML = myObj.name;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_receive" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>JSON From a Server</h2>
+                <p>You can request JSON from the server by using an AJAX request</p>
+                <p>As long as the response from the server is written in JSON format, you can parse the string into a
+                    JavaScript object.</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Use the XMLHttpRequest to get data from the server:</p>
+                    <div>const xmlhttp = new XMLHttpRequest();<br />xmlhttp.onload = function() {<br />const myObj =
+                        JSON.parse(this.responseText);<br />document.getElementById("demo").innerHTML =
+                        myObj.name;<br />};<br />xmlhttp.open("GET", "json_demo.txt");<br />xmlhttp.send();</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_ajax" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>Take a look at <a href="https://www.w3schools.com/js/json_demo.txt" target="_blank"
+                            rel="noopener">json_demo.txt</a></p>
+                </div>
+                <hr />
+                <hr />
+                <h2>Array as JSON</h2>
+                <p>When using the <code>JSON.parse()</code> on JSON derived from an array, the method will return a
+                    JavaScript array, instead of a JavaScript object.</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>JSON returned from a server as an array:</p>
+                    <div>const xmlhttp = new XMLHttpRequest();<br />xmlhttp.onload = function() {<br />const myArr =
+                        JSON.parse(this.responseText);<br />document.getElementById("demo").innerHTML =
+                        myArr[0];<br />}<br />}<br />xmlhttp.open("GET", "json_demo_array.txt",
+                        true);<br />xmlhttp.send();</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_ajax_array" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>Take a look at <a href="https://www.w3schools.com/js/json_demo_array.txt" target="_blank"
+                            rel="noopener">json_demo_array.txt</a></p>
+                </div>
+
+                <h1>JSON PHP</h1>
+                <p>A common use of JSON is to read data from a web server, and display the data in a web page.</p>
+                <p>This chapter will teach you how to exchange JSON data between the client and a PHP server.</p>
+                <hr />
+                <h2>The PHP File</h2>
+                <p>PHP has some built-in functions to handle JSON.</p>
+                <p>Objects in PHP can be converted into JSON by using the PHP function json_encode():</p>
+                <div>
+                    <h3>PHP file</h3>
+                    <div>&lt;?php<br />$myObj-&gt;name = "John";<br />$myObj-&gt;age = 30;<br />$myObj-&gt;city = "New
+                        York";<br /><br />$myJSON = json_encode($myObj);<br /><br />echo $myJSON;<br />?&gt;</div>
+                    <a href="https://www.w3schools.com/js/showphp.asp?filename=demo_file" target="_blank"
+                        rel="noopener">Show PHP file &raquo;</a>
+                </div>
+                <h2>The Client JavaScript</h2>
+                <p>Here is a JavaScript on the client, using an AJAX call to request the PHP file from the example
+                    above:</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Use JSON.parse() to convert the result into a JavaScript object:</p>
+                    <div>const xmlhttp = new XMLHttpRequest();<br />xmlhttp.onload = function() {<br />const myObj =
+                        JSON.parse(this.responseText);<br />document.getElementById("demo").innerHTML =
+                        myObj.name;<br />}<br />xmlhttp.open("GET", "demo_file.php");<br />xmlhttp.send();</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_php_simple" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <hr />
+                <h2>PHP Array</h2>
+                <p>Arrays in PHP will also be converted into JSON when using the PHP function json_encode():</p>
+                <div>
+                    <h3>PHP file</h3>
+                    <div>&lt;?php<br />$myArr = array("John", "Mary", "Peter", "Sally");<br /><br />$myJSON =
+                        json_encode($myArr);<br /><br />echo $myJSON;<br />?&gt;</div>
+                    <a href="https://www.w3schools.com/js/showphp.asp?filename=demo_file_array" target="_blank"
+                        rel="noopener">Show PHP file &raquo;</a>
+                </div>
+                <h2>The Client JavaScript</h2>
+                <p>Here is a JavaScript on the client, using an AJAX call to request the PHP file from the array example
+                    above:</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Use JSON.parse() to convert the result into a JavaScript array:</p>
+                    <div>var xmlhttp = new XMLHttpRequest();<br />xmlhttp.onload = function() {<br />const myObj =
+                        JSON.parse(this.responseText);<br />document.getElementById("demo").innerHTML =
+                        myObj[2];<br />}<br />xmlhttp.open("GET", "demo_file_array.php", true);<br />xmlhttp.send();
+                    </div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_php_array" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>PHP Database</h2>
+                <p>PHP is a server side programming language, and can be used to access a database.</p>
+                <p>Imagine you have a database on your server, and you want to send a request to it from the client
+                    where you ask for the 10 first rows in a table called "customers".</p>
+                <p>On the client, make a JSON object that describes the numbers of rows you want to return.</p>
+                <p>Before you send the request to the server, convert the JSON object into a string and send it as a
+                    parameter to the url of the PHP page:</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Use JSON.stringify() to convert the JavaScript object into JSON:</p>
+                    <div>const limit = {"limit":10};<br />const dbParam = JSON.stringify(limit);<br />xmlhttp = new
+                        XMLHttpRequest();<br />xmlhttp.onload = function()
+                        {<br />document.getElementById("demo").innerHTML =
+                        this.responseText;<br />}<br />xmlhttp.open("GET","json_demo_db.php?x=" +
+                        dbParam);<br />xmlhttp.send();</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_php_db" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <h3>Example explained:</h3>
+                <ul>
+                    <li>Define an object containing a "limit" property and value.</li>
+                    <li>Convert the object into a JSON string.</li>
+                    <li>Send a request to the PHP file, with the JSON string as a parameter.</li>
+                    <li>Wait until the request returns with the result (as JSON)</li>
+                    <li>Display the result received from the PHP file.</li>
+                </ul>
+                <p>Take a look at the PHP file:</p>
+                <div>
+                    <h3>PHP file</h3>
+                    <div>&lt;?php<br />header("Content-Type: application/json; charset=UTF-8");<br />$obj =
+                        json_decode($_GET["x"], false);<br /><br />$conn = new mysqli("myServer", "myUser",
+                        "myPassword", "Northwind");<br />$stmt = $conn-&gt;prepare("SELECT name FROM customers LIMIT
+                        ?");<br />$stmt-&gt;bind_param("s", $obj-&gt;limit);<br />$stmt-&gt;execute();<br />$result =
+                        $stmt-&gt;get_result();<br />$outp = $result-&gt;fetch_all(MYSQLI_ASSOC);<br /><br />echo
+                        json_encode($outp);<br />?&gt;</div>
+                </div>
+                <h3>PHP File explained:</h3>
+                <ul>
+                    <li>Convert the request into an object, using the PHP function json_decode().</li>
+                    <li>Access the database, and fill an array with the requested data.</li>
+                    <li>Add the array to an object, and return the object as JSON using the json_encode() function.</li>
+                </ul>
+                <hr />
+                <h2>Use the Data</h2>
+                <div>
+                    <h3>Example</h3>
+                    <div>xmlhttp.onload = function() {<br />const myObj = JSON.parse(this.responseText);<br />let text =
+                        "";<br />for (let x in myObj) {<br />text += myObj[x].name +
+                        "&lt;br&gt;";<br />}<br />document.getElementById("demo").innerHTML = text;<br />}</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_php_db_loop" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>PHP Method = POST</h2>
+                <p>When sending data to the server, it is often best to use the HTTP <code>POST</code> method.</p>
+                <p>To send AJAX requests using the <code>POST</code> method, specify the method, and the correct header.
+                </p>
+                <p>The data sent to the server must now be an argument to the <code>send()</code> method:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const dbParam = JSON.stringify({"limit":10});<br />const xmlhttp = new
+                        XMLHttpRequest();<br />xmlhttp.onload = function() {<br />const myObj =
+                        JSON.parse(this.responseText);<br />let text ="";<br />for (let x in myObj) {<br />text +=
+                        myObj[x].name + "&lt;br&gt;";<br />}<br />document.getElementById("demo").innerHTML =
+                        text;<br />}<br /><strong>xmlhttp.open("POST",
+                            "json_demo_db_post.php");<br /></strong><strong>xmlhttp.setRequestHeader("Content-type",
+                            "application/x-www-form-urlencoded");<br /></strong><strong>xmlhttp.send("x=" +
+                            dbParam);</strong></div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_php_db_post" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>The only difference in the PHP file is the method for getting the transferred data.</p>
+                <div>
+                    <h3>PHP file</h3>
+                    <p>Use $_POST instead of $_GET:</p>
+                    <div>&lt;?php<br />header("Content-Type: application/json; charset=UTF-8");<br /><strong>$obj =
+                            json_decode($_POST["x"], false);<br /></strong><br />$conn = new mysqli("myServer",
+                        "myUser", "myPassword", "Northwind");<br />$stmt = $conn-&gt;prepare("SELECT name FROM customers
+                        LIMIT ?");<br />$stmt-&gt;bind_param("s",
+                        $obj-&gt;limit);<br />$stmt-&gt;execute();<br />$result = $stmt-&gt;get_result();<br />$outp =
+                        $result-&gt;fetch_all(MYSQLI_ASSOC);<br /><br />echo json_encode($outp);<br />?&gt;</div>
+                </div>
+
+                <h1>JSON HTML</h1>
+                <p>JSON can very easily be translated into JavaScript.</p>
+                <p>JavaScript can be used to make HTML in your web pages.</p>
+                <hr />
+                <h2>HTML Table</h2>
+                <p>Make an HTML table with data received as JSON:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const dbParam = JSON.stringify({table:"customers",limit:20});<br />const xmlhttp = new
+                        XMLHttpRequest();<br />xmlhttp.onload = function() {<br />myObj =
+                        JSON.parse(this.responseText);<br />let text = "&lt;table border='1'&gt;"<br />for (let x in
+                        myObj) {<br />text += "&lt;tr&gt;&lt;td&gt;" + myObj[x].name +
+                        "&lt;/td&gt;&lt;/tr&gt;";<br />}<br />text +=
+                        "&lt;/table&gt;"<br />document.getElementById("demo").innerHTML =
+                        text;<br />}<br />xmlhttp.open("POST",
+                        "json_demo_html_table.php");<br />xmlhttp.setRequestHeader("Content-type",
+                        "application/x-www-form-urlencoded");<br />xmlhttp.send("x=" + dbParam);</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_html_table" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Dynamic HTML Table</h2>
+                <p>Make the HTML table based on the value of a drop down menu: <select
+                        onchange="change_myselect(this.value)">
+                        <option value="">Choose an option:</option>
+                        <option value="customers">Customers</option>
+                        <option value="products">Products</option>
+                        <option value="suppliers">Suppliers</option>
+                    </select></p>
+                <div>
+                    <h3>Example</h3>
+                    <div>&lt;select id="myselect" onchange="change_myselect(this.value)"&gt;<br />&lt;option
+                        value=""&gt;Choose an option:&lt;/option&gt;<br />&lt;option
+                        value="customers"&gt;Customers&lt;/option&gt;<br />&lt;option
+                        value="products"&gt;Products&lt;/option&gt;<br />&lt;option
+                        value="suppliers"&gt;Suppliers&lt;/option&gt;<br />&lt;/select&gt;<br /><br />&lt;script&gt;<br />function
+                        change_myselect(sel) {<br />const dbParam = JSON.stringify({table:sel,limit:20});<br />const
+                        xmlhttp = new XMLHttpRequest();<br />xmlhttp.onload = function() {<br />const myObj =
+                        JSON.parse(this.responseText);<br />let text = "&lt;table border='1'&gt;"<br />for (let x in
+                        myObj) {<br />text += "&lt;tr&gt;&lt;td&gt;" + myObj[x].name +
+                        "&lt;/td&gt;&lt;/tr&gt;";<br />}<br />text +=
+                        "&lt;/table&gt;"<br />document.getElementById("demo").innerHTML =
+                        text;<br />}<br />xmlhttp.open("POST",
+                        "json_demo_html_table.php");<br />xmlhttp.setRequestHeader("Content-type",
+                        "application/x-www-form-urlencoded");<br />xmlhttp.send("x=" +
+                        dbParam);<br />}<br />&lt;/script&gt;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_html_table_dynamic" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <hr />
+                <h2>HTML Drop Down List</h2>
+                <p>Make an HTML drop down list with data received as JSON:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>const dbParam = JSON.stringify({table:"customers",limit:20});<br />const xmlhttp = new
+                        XMLHttpRequest();<br />xmlhttp.onload = function() {<br />const myObj =
+                        JSON.parse(this.responseText);<br />let text = "&lt;select&gt;"<br />for (let x in myObj)
+                        {<br />text += "&lt;option&gt;" + myObj[x].name + "&lt;/option&gt;";<br />}<br />text +=
+                        "&lt;/select&gt;"<br />document.getElementById("demo").innerHTML =
+                        text;<br />}<br />}<br />xmlhttp.open("POST", "json_demo_html_table.php",
+                        true);<br />xmlhttp.setRequestHeader("Content-type",
+                        "application/x-www-form-urlencoded");<br />xmlhttp.send("x=" + dbParam);</div>
+                </div>
+
+                <h1>JSONP</h1>
+                <p>JSONP is a method for sending JSON data without worrying about cross-domain issues.</p>
+                <p>JSONP does not use the <code>XMLHttpRequest</code> object.</p>
+                <p>JSONP uses the <code>&lt;script&gt;</code> tag instead.</p>
+                <hr />
+                <h2>JSONP Intro</h2>
+                <div>
+                    <p>JSONP stands for JSON with Padding.</p>
+                </div>
+                <p>Requesting a file from another domain can cause problems, due to cross-domain policy.</p>
+                <p>Requesting an external <em>script</em> from another domain does not have this problem.</p>
+                <p>JSONP uses this advantage, and request files using the script tag instead of the
+                    <code>XMLHttpRequest</code> object.</p>
+                <div>
+                    <div>&lt;script src="demo_jsonp.php"&gt;</div>
+                </div>
+                <h2>The Server File</h2>
+                <p>The file on the server wraps the result inside a function call:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>&lt;?php<br />$myJSON = '{ "name":"John", "age":30, "city":"New York" }';<br /><br />echo
+                        "myFunc(".$myJSON.");";<br />?&gt;</div>
+                    <a href="https://www.w3schools.com/js/showphp.asp?filename=demo_jsonp" target="_blank"
+                        rel="noopener">Show PHP file &raquo;</a>
+                </div>
+                <p>The result returns a call to a function named "myFunc" with the JSON data as a parameter.</p>
+                <p>Make sure that the function exists on the client.</p>
+                <h2>The JavaScript function</h2>
+                <p>The function named "myFunc" is located on the client, and ready to handle JSON data:</p>
+                <div>
+                    <h3>Example</h3>
+                    <div>function myFunc(myObj) {<br />document.getElementById("demo").innerHTML = myObj.name;<br />}
+                    </div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_jsonp" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <hr />
+                <h2>Creating a Dynamic Script Tag</h2>
+                <p>The example above will execute the "myFunc" function when the page is loading, based on where you put
+                    the script tag, which is not very satisfying.</p>
+                <p>The script tag should only be created when needed:</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>Create and insert the &lt;script&gt; tag when a button is clicked:</p>
+                    <div>function clickButton() {<br />let s = document.createElement("script");<br />s.src =
+                        "demo_jsonp.php";<br />document.body.appendChild(s);<br />}</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_jsonp_create" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Dynamic JSONP Result</h2>
+                <p>The examples above are still very static.</p>
+                <p>Make the example dynamic by sending JSON to the php file, and let the php file return a JSON object
+                    based on the information it gets.</p>
+                <div>
+                    <h3>PHP file</h3>
+                    <div>&lt;?php<br />header("Content-Type: application/json; charset=UTF-8");<br />$obj =
+                        json_decode($_GET["x"], false);<br /><br />$conn = new mysqli("myServer", "myUser",
+                        "myPassword", "Northwind");<br />$result = $conn-&gt;query("SELECT name FROM ".$obj-&gt;$table."
+                        LIMIT ".$obj-&gt;$limit);<br />$outp = array();<br />$outp =
+                        $result-&gt;fetch_all(MYSQLI_ASSOC);<br /><br />echo
+                        "myFunc(".json_encode($outp).")";<br />?&gt;</div>
+                </div>
+                <h3>PHP File explained:</h3>
+                <ul>
+                    <li>Convert the request into an object, using the PHP function json_decode().</li>
+                    <li>Access the database, and fill an array with the requested data.</li>
+                    <li>Add the array to an object.</li>
+                    <li>Convert the array into JSON using the json_encode() function.</li>
+                    <li>Wrap "myFunc()" around the return object.</li>
+                </ul>
+                <div>
+                    <h3>JavaScript Example</h3>
+                    <p>The "myFunc" function will be called from the php file:</p>
+                    <div>const obj = { table: "products", limit: 10 };<br />let s =
+                        document.createElement("script");<br />s.src = "jsonp_demo_db.php?x=" +
+                        JSON.stringify(obj);<br />document.body.appendChild(s);<br /><br />function myFunc(myObj)
+                        {<br />let txt = "";<br />for (let x in myObj) {<br />txt += myObj[x].name +
+                        "&lt;br&gt;";<br />}<br />document.getElementById("demo").innerHTML = txt;<br />}</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjson_jsonp_php" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Callback Function</h2>
+                <p>When you have no control over the server file, how do you get the server file to call the correct
+                    function?</p>
+                <p>Sometimes the server file offers a callback function as a parameter:</p>
+                <div>
+                    <h3>Example</h3>
+                    <p>The php file will call the function you pass as a callback parameter:</p>
+                    <div>let s = document.createElement("script");<br />s.src =
+                        "jsonp_demo_db.php?callback=<strong>myDisplayFunction</strong>";<br />document.body.appendChild(s);
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <!-- <script>includeHTML();</script> -->
+</body>
+
+</html>
+<script>includeHTML();</script>
