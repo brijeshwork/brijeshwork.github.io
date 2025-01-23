@@ -1,3 +1,2410 @@
+
+                    <div class="mt-4">
+                        <h2>JavaScript Functions and Events</h2>
+                        <p>A JavaScript <code>function</code> is a block of JavaScript code that can be executed when "called" for.</p>
+                        <p>For example, a function can be called when an <strong>event</strong> occurs, like when the user clicks a button.</p>
+                        <p>You will learn much more about functions and events in later chapters.</p>
+                    </div>
+                    <hr>
+                    <div class="mt-4">
+                        <h2>JavaScript in &lt;head&gt; or &lt;body&gt; </h2>
+                        <p>You can place any number of scripts in an HTML document.</p>
+                        <p>Scripts can be placed in the <code>&lt;body&gt;</code> or in the <code>&lt;head&gt;</code>
+                            section of an HTML page, or in both.</p>
+                    </div>
+                    <hr>
+                    <div class="mt-4">
+                        <h2>JavaScript in &lt;head&gt;</h2>
+                        <p>In this example, a JavaScript <code>function</code> is placed in the
+                            <code>&lt;head&gt;</code> section of an HTML page.
+                        </p>
+                        <p>The function is invoked (called) when a button is clicked:</p>
+                        <div>
+                            <h5>Example</h5>
+                            <div class="syntax-code p-3 mb-4 bg-light border rounded">
+<xmp>
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function myFunction() {
+            document.getElementById("demo").innerHTML = "Paragraph changed.";
+        }
+    </script>
+</head>
+<body>
+    <h2>Demo JavaScript in Head</h2>
+    <p id="demo">A Paragraph</p>
+    <button type="button" onclick="myFunction()">Try it</button>
+</body>
+</html>
+</xmp>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <h2>JavaScript in < body>
+                    </h2>
+                    <p>In this example, a JavaScript <code>function</code> is placed in the <code><body></code> section
+                        of an HTML page. </p>
+                    <p>The function is invoked (called) when a button is clicked:</p>
+                    <div class="code-snippet">
+                        <h5>Example</h5>
+                        <div class="syntax-code p-3 mb-4 bg-light border rounded">
+<xmp>
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Demo JavaScript in Body</h2>
+    <p id="demo">A Paragraph</p>
+    <button type="button" onclick="myFunction()"> Try it </button>
+    <script>
+        function myFunction() {
+            document.getElementById("demo").innerHTML = "Paragraph changed.";
+        }
+    </script>
+</body>
+</html>
+</xmp>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="section">
+                    <h2>External JavaScript</h2>
+                    <p>Scripts can also be placed in external files:</p>
+                    <div class="code-snippet">
+                        <h3>External file: myScript.js</h3>
+                        <code>
+                            function myFunction() {
+                                document.getElementById("demo").innerHTML = "Paragraph changed.";
+                            }
+                        </code>
+                    </div>
+                    <p>External scripts are practical when the same code is used in many different web pages.</p>
+                    <p>JavaScript files have the file extension <strong>.js</strong>.</p>
+                    <p>To use an external script, put the name of the script file in the <code>src</code> (source)
+                        attribute of a <code>&lt;script&gt;</code> tag:</p>
+                    <div class="code-snippet">
+                        <h5>Example</h5>
+                        <code>
+                            <xmp>
+<script src="myScript.js"></script>
+                            </xmp>
+                        </code>
+                    </div>
+                    <p>You can place an external script reference in <code>&lt;head&gt;</code> or <code><body></code> as
+                        you like.</p>
+                    <p>The script will behave as if it was located exactly where the <code>&lt;script&gt;</code> tag is
+                        located.</p>
+                    <div class="note">
+                        <p>Note: External scripts cannot contain <code>&lt;script&gt;</code> tags.</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="section">
+                    <h2>External JavaScript Advantages</h2>
+                    <p>Placing scripts in external files has some advantages:</p>
+                    <ul>
+                        <li>It separates HTML and code</li>
+                        <li>It makes HTML and JavaScript easier to read and maintain</li>
+                        <li>Cached JavaScript files can speed up page loads</li>
+                    </ul>
+                    <p>To add several script files to one page - use several script tags:</p>
+                    <div class="code-snippet">
+                        <h5>Example</h5>
+                            <xmp>
+<script src="myScript1.js"></script>
+<script src="myScript2.js"></script>
+                            </xmp>
+                    </div>
+                </div>
+                <hr>
+                <div class="section">
+                    <h2>External References</h2>
+                    <p>An external script can be referenced in 3 different ways:</p>
+                    <ul>
+                        <li>With a full URL (a full web address)</li>
+                        <li>With a file path (like /js/)</li>
+                        <li>Without any path</li>
+                    </ul>
+                    <p>This example uses a <strong>full URL</strong> to link to myScript.js:</p>
+                    <div class="code-snippet">
+                        <h5>Example</h5>
+                        <pre><code>&lt;script src="https://www.w3schools.com/js/myScript.js"&gt;&lt;/script&gt;</code></pre>
+                    </div>
+                    <p>This example uses a <strong>file path</strong> to link to myScript.js:</p>
+                    <div class="code-snippet">
+                        <h5>Example</h5>
+                        <pre>
+                            <code>
+                                <script src="/js/myScript.js"></script>
+                            </code>
+                        </pre>
+                    </div>
+                    <p>This Example uses no path to link to myScript.js:</p>
+                    <div class="code-snippet">
+                        <h5>Example</h5>
+                        <pre>
+                            <xmp>
+                            <script src="myScript.js"></script>
+                            </xmp>
+                        </pre>
+                    </div>
+                </div>
+                <div>
+                    <h2>JavaScript Output</h2>
+                    <h3>JavaScript Display Possibilities</h3>
+                    <p>JavaScript can "display" data in different ways:</p>
+                    <ul>
+                        <li>Writing into an HTML element, using <code>innerHTML</code>.</li>
+                        <li>Writing into the HTML output using <code>document.write()</code>.</li>
+                        <li>Writing into an alert box, using <code>window.alert()</code>.</li>
+                        <li>Writing into the browser console, using <code>console.log()</code>.</li>
+                    </ul>
+                    <hr />
+                </div>
+                <h2>Using innerHTML</h2>
+                <p>To access an HTML element, JavaScript can use the <code>document.getElementById(id)</code>
+                    method.</p>
+                <p>The <code>id</code> attribute defines the HTML element. The <code>innerHTML</code> property
+                    defines the HTML content:</p>
+                <div>
+                    <h5>Example</h5>
+                    <pre>
+                <xmp>
+                <!DOCTYPE html>
+                <html>
+                    <body>
+                        <h1>My First Web Page</h1>
+                        <p>My First Paragraph</p>
+                        <p id="demo"></p>
+                        <script>document.getElementById("demo").innerHTML = 5 + 6;</script>
+                    </body>
+                </html>
+            </xmp>
+                </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_dom" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <div>
+                    <p>Changing the innerHTML property of an HTML element is a common way to display data in HTML.</p>
+                </div>
+                <hr />
+
+                <h2>Using document.write()</h2>
+                <p>For testing purposes, it is convenient to use <code>document.write()</code>:</p>
+                <div>
+                    <h5>Example</h5>
+                    <xmp>
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>My First Web Page</h1>
+    <p>My first paragraph.</p>
+    <script>document.write(5 + 6);</script>
+</body>
+</html>
+                    </xmp>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_write" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+
+                <div>
+                    <p>Using document.write() after an HTML document is loaded, will <strong>delete all existing HTML</strong>:</p>
+                </div>
+                <div class="example-code p-3 mb-4 bg-light border rounded">
+                    <h5>Example</h5>
+                    <xmp>
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>My First Web Page</h1>
+    <p>My first paragraph.</p>
+    <button type="button" onclick="document.write(5 + 6)">Try it</button>
+</body>
+</html>
+                    </xmp>
+                </div>
+                <div>
+                    <p>The document.write() method should only be used for testing.</p>
+                </div>
+                <hr />
+
+                <h2>Using window.alert()</h2>
+                <p>You can use an alert box to display data:</p>
+                <div>
+                    <h5>Example</h5>
+                    <xmp>
+<!DOCTYPE html>
+<html>
+<body>
+    <h1> My First Web Page</h1>
+    <p>My first paragraph.</p>
+    <script>window.alert(5 + 6);</script>
+</body>
+</html>
+                    </xmp>
+                </div>
+                <p>You can skip the <code>window</code> keyword.</p>
+                <p>In JavaScript, the window object is the global scope object. This means that variables, properties,
+                    and methods by default belong to the window object. This also means that specifying the
+                    <code>window</code> keyword is optional:
+                </p>
+                <div>
+                    <h5>Example</h5>
+                    <xmp>
+                        <!DOCTYPE html>
+                        <html>
+
+                        <body>
+                            <h1>My First Web Page</h1>
+                            <p>My first paragraph.</p>
+                            <script>alert(5 + 6);</script>
+                        </body>
+
+                        </html>
+                    </xmp>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_alert2" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>Using console.log()</h2>
+                <p>For debugging purposes, you can call the <code>console.log()</code> method in the browser to
+                    display data.</p>
+                <div>
+                    <p>You will learn more about debugging in a later chapter.</p>
+                </div>
+                <div>
+                    <h5>Example</h5>
+                    <xmp>
+                        <!DOCTYPE html>
+                        <html>
+                        <body>
+                            <script>console.log(5 + 6);</script>
+                        </body>
+                        </html>
+                    </xmp>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_output_console" target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <h2>JavaScript Print</h2>
+                <p>JavaScript does not have any print object or print methods.</p>
+                <p>You cannot access output devices from JavaScript.</p>
+                <p>The only exception is that you can call the <code>window.print()</code> method in the browser to
+                    print the content of the current window.</p>
+                <div>
+                    <h5>Example</h5>
+                    <xmp>
+                        <!DOCTYPE html>
+                        <html>
+                        <body>
+                            <button onclick="window.print()">Print this page </button>
+                        </body>
+                        </html>
+                    </xmp>
+                </div>
+                <div>
+                    <h2>JavaScript Statements</h2>
+                    <h5>Example</h5>
+                    <pre>
+            let x, y, z; // Statement 1
+            x = 5; // Statement 2
+            y = 6; // Statement 3
+            z = x + y; // Statement 4
+        </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_statements" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Programs</h2>
+                    <p>A <strong>computer program</strong> is a list of "instructions" to be "executed" by a computer.
+                    </p>
+                    <p>In a programming language, these programming instructions are called <strong>statements</strong>.
+                    </p>
+                    <p>A <strong>JavaScript program</strong> is a list of programming <strong>statements</strong>.</p>
+                    <p>In HTML, JavaScript programs are executed by the web browser.</p>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Statements</h2>
+                    <p>JavaScript statements are composed of:</p>
+                    <p>Values, Operators, Expressions, Keywords, and Comments.</p>
+                    <p>This statement tells the browser to write "Hello Dolly." inside an HTML element with id="demo":
+                    </p>
+
+                    <h5>Example</h5>
+                    <div>document.getElementById("demo").innerHTML = "Hello Dolly.";</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_statement" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+
+                    <p>Most JavaScript programs contain many JavaScript statements.</p>
+                    <p>The statements are executed, one by one, in the same order as they are written.</p>
+
+                    <p>JavaScript programs (and JavaScript statements) are often called JavaScript code.</p>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Semicolons ;</h2>
+                    <p>Semicolons separate JavaScript statements.</p>
+                    <p>Add a semicolon at the end of each executable statement:</p>
+                    <h3>Examples</h3>
+                    <pre>
+                let a, b, c; // Declare 3 variables
+                    a = 5; // Assign the value 5 to a
+                    b = 6; // Assign the value 6 to b
+                    c = a + b; // Assign the sum of a and b to c
+            </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_statements_semicolon1"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <p>When separated by semicolons, multiple statements on one line are allowed:</p>
+                    <pre>a = 5; b = 6; c = a + b;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_statements_semicolon2"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <p>On the web, you might see examples without semicolons. Ending statements with semicolon is not
+                        required, but highly recommended.</p>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript White Space</h2>
+                    <p>JavaScript ignores multiple spaces. You can add white space to your script to make it more
+                        readable.</p>
+                    <p>The following lines are equivalent:</p>
+                    <pre>
+                        let person = "Hege";
+                        let person="Hege";
+                    </pre>
+                    <p>A good practice is to put spaces around operators ( = + - * / ):</p>
+                    <pre>let x = y + z;</pre>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Line Length and Line Breaks</h2>
+                    <p>For best readability, programmers often like to avoid code lines longer than 80 characters.</p>
+                    <p>If a JavaScript statement does not fit on one line, the best place to break it is after an
+                        operator:</p>
+
+                    <h5>Example</h5>
+                    <pre>document.getElementById("demo").innerHTML = "Hello Dolly!";</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_statements_linebreak" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Code Blocks</h2>
+                    <p>JavaScript statements can be grouped together in code blocks, inside curly brackets {...}.</p>
+                    <p>The purpose of code blocks is to define statements to be executed together.</p>
+                    <p>One place you will find statements grouped together in blocks, is in JavaScript functions:</p>
+
+                    <h5>Example</h5>
+                    <pre>
+                            function myFunction() {
+                            document.getElementById("demo1").innerHTML = "Hello Dolly!";
+                            document.getElementById("demo2").innerHTML = "How are you?";
+                            }
+                        </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_statements_blocks" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>In this tutorial we use 2 spaces of indentation for code blocks. You will learn more about
+                        functions later in this tutorial.</p>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Keywords</h2>
+                    <p>JavaScript statements often start with a <strong>keyword</strong> to identify the JavaScript
+                        action to be performed.</p>
+                    <p>Our <a href="https://www.w3schools.com/js/js_reserved.asp">Reserved Words Reference</a> lists all
+                        JavaScript keywords.</p>
+                    <p>Here is a list of some of the keywords you will learn about in this tutorial:</p>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Keyword</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>var</td>
+                                <td>Declares a variable</td>
+                            </tr>
+                            <tr>
+                                <td>let</td>
+                                <td>Declares a block variable</td>
+                            </tr>
+                            <tr>
+                                <td>const</td>
+                                <td>Declares a block constant</td>
+                            </tr>
+                            <tr>
+                                <td>if</td>
+                                <td>Marks a block of statements to be executed on a condition</td>
+                            </tr>
+                            <tr>
+                                <td>switch</td>
+                                <td>Marks a block of statements to be executed in different cases</td>
+                            </tr>
+                            <tr>
+                                <td>for</td>
+                                <td>Marks a block of statements to be executed in a loop</td>
+                            </tr>
+                            <tr>
+                                <td>function</td>
+                                <td>Declares a function</td>
+                            </tr>
+                            <tr>
+                                <td>return</td>
+                                <td>Exits a function</td>
+                            </tr>
+                            <tr>
+                                <td>try</td>
+                                <td>Implements error handling to a block of statements</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <p>JavaScript keywords are reserved words. Reserved words cannot be used as names for variables.
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <h2>JavaScript Syntax</h2>
+                    <p>JavaScript syntax is the set of rules, how JavaScript programs are constructed:</p>
+                    <pre>// How to create variables:
+                var x;
+                let y;
+                // How to use variables:
+                x = 5;
+                y = 6;
+                let z = x + y;
+            </pre>
+                </div>
+                <h2>JavaScript Values</h2>
+                <p>The JavaScript syntax defines two types of values:</p>
+                <ul>
+                    <li>Fixed values</li>
+                    <li>Variable values</li>
+                </ul>
+                <p>Fixed values are called <strong>Literals</strong>.</p>
+                <p>Variable values are called <strong>Variables</strong>.</p>
+                <hr />
+                <h2>JavaScript Literals</h2>
+                <p>The two most important syntax rules for fixed values are:</p>
+                <p>1. <strong>Numbers</strong> are written with or without decimals:</p>
+                <div>
+                    <div>10.50 1001</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_numbers" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <p>2. <strong>Strings</strong> are text, written within double or single quotes:</p>
+                <div>
+                    <div>"John Doe" 'John Doe'</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_strings" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Variables</h2>
+                    <p>In a programming language, <strong>variables</strong> are used to <strong>store</strong> data
+                        values.</p>
+                    <p>JavaScript uses the keywords <code>var</code>, <code>let</code> and <code>const</code> to
+                        <strong>declare</strong> variables.
+                    </p>
+                    <p>An <strong>equal sign</strong> is used to <strong>assign values</strong> to variables.</p>
+                    <p>In this example, x is defined as a variable. Then, x is assigned (given) the value 6:</p>
+                    <pre>
+                    let x;
+                    x = 6;
+                </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_variables" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Operators</h2>
+                    <p>JavaScript uses <strong>arithmetic operators</strong> ( <code>+</code> <code>-</code>
+                        <code>*</code> <code>/</code> ) to <strong>compute</strong> values:
+                    </p>
+                    <pre>(5 + 6) * 10</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_operators" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>JavaScript uses an <strong>assignment operator</strong> ( <code>=</code> ) to
+                        <strong>assign</strong> values to variables:
+                    </p>
+                    <pre>
+                    let x, y;
+                    x = 5;
+                    y = 6;
+                </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_assign" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Expressions</h2>
+                    <p>An expression is a combination of values, variables, and operators, which computes to a value.
+                    </p>
+                    <p>The computation is called an evaluation.</p>
+                    <p>For example, 5 * 10 evaluates to 50:</p>
+                    <pre>5 * 10</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_expressions" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>Expressions can also contain variable values:</p>
+
+                    <pre>x * 10</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_expressions_variables"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+
+                    <p>The values can be of various types, such as numbers and strings.</p>
+                    <p>For example, "John" + " " + "Doe", evaluates to "John Doe":</p>
+
+                    <pre>"John" + " " + "Doe"</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_expressions_strings"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Keywords</h2>
+                    <p>JavaScript <strong>keywords</strong> are used to identify actions to be performed.</p>
+                    <p>The <code>let</code> keyword tells the browser to create variables:</p>
+
+                    <pre>let x, y;
+                            x = 5 + 6;
+                            y = x * 10;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_let" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+
+                    <p>The <code>var</code> keyword also tells the browser to create variables:</p>
+                    <pre>var x, y;
+                            x = 5 + 6;
+                            y = x * 10;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_keywords" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+
+                    <p>In these examples, using <code>var</code> or <code>let</code> will produce the same result.</p>
+                    <p>You will learn more about <code>var</code> and <code>let</code> later in this tutorial.</p>
+                </div>
+                <hr />
+                <div>
+
+                    <h2>JavaScript Comments</h2>
+                    <p>Not all JavaScript statements are "executed".</p>
+                    <p>Code after double slashes <code>//</code> or between <code>/*</code> and <code>*/</code> is
+                        treated as a <strong>comment</strong>.</p>
+                    <p>Comments are ignored, and will not be executed:</p>
+
+                    <pre>let x = 5; // I will be executed
+                                // x = 6; I will NOT be executed</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_comments" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>You will learn more about comments in a later chapter.</p>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Identifiers / Names</h2>
+                    <p>Identifiers are JavaScript names.</p>
+                    <p>Identifiers are used to name variables and keywords, and functions.</p>
+                    <p>The rules for legal names are the same in most programming languages.</p>
+                    <p>A JavaScript name must begin with:</p>
+                    <ul>
+                        <li>A letter (A-Z or a-z)</li>
+                        <li>A dollar sign ($)</li>
+                        <li>Or an underscore (_)</li>
+                    </ul>
+                    <p>Subsequent characters may be letters, digits, underscores, or dollar signs.</p>
+
+                    <h2>Note</h2>
+                    <p>Numbers are not allowed as the first character in names.</p>
+                    <p>This way JavaScript can easily distinguish identifiers from numbers.</p>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript is Case Sensitive</h2>
+                    <p>All JavaScript identifiers are <strong>case sensitive</strong>.</p>
+                    <p>The variables <code>lastName</code> and <code>lastname</code>, are two different variables: </p>
+                    <pre>
+                                    let lastname, lastName;
+                                    lastName = "Doe";
+                                    lastname = "Peterson";
+                                </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_syntax_case" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>JavaScript does not interpret <strong>LET</strong> or <strong>Let</strong> as the keyword
+                        <strong>let</strong>.
+                    </p>
+                </div>
+                <hr />
+
+                <h2>JavaScript and Camel Case</h2>
+                <p>Historically, programmers have used different ways of joining multiple words into one variable name:
+                </p>
+                <p><strong>Hyphens:</strong></p>
+                <p>first-name, last-name, master-card, inter-city.</p>
+                <p>Hyphens are not allowed in JavaScript. They are reserved for subtractions.</p>
+                <p><strong>Underscore:</strong></p>
+                <p>first_name, last_name, master_card, inter_city.</p>
+                <p><strong>Upper Camel Case (Pascal Case):</strong></p>
+                <p>FirstName, LastName, MasterCard, InterCity.</p>
+                <p><strong>Lower Camel Case:</strong></p>
+                <p>JavaScript programmers tend to use camel case that starts with a lowercase letter:</p>
+                <p>firstName, lastName, masterCard, interCity.</p>
+                <hr />
+
+
+                <h2>JavaScript Character Set</h2>
+                <p>JavaScript uses the <strong>Unicode</strong> character set.</p>
+                <p>Unicode covers (almost) all the characters, punctuations, and symbols in the world.</p>
+                <p>For a closer look, please study our <a
+                        href="https://www.w3schools.com/charsets/ref_html_utf8.asp">Complete Unicode Reference</a>.</p>
+
+                <h2>JavaScript Comments</h2>
+                <p>JavaScript comments can be used to explain JavaScript code, and to make it more readable.</p>
+                <p>JavaScript comments can also be used to prevent execution, when testing alternative code.</p>
+                <hr />
+                <h2>Single Line Comments</h2>
+                <p>Single line comments start with <code>//</code>.</p>
+                <p>Any text between <code>//</code> and the end of the line will be ignored by JavaScript (will not be
+                    executed).</p>
+                <p>This example uses a single-line comment before each code line:</p>
+                <h5>Example</h5>
+                <pre>// Change heading:
+            document.getElementById("myH").innerHTML = "My First Page";
+            // Change paragraph:
+            document.getElementById("myP").innerHTML = "My first paragraph.";
+        </pre>
+                <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_comments1" target="_blank"
+                    rel="noopener">Try it Yourself &raquo;</a>
+                <p>This example uses a single line comment at the end of each line to explain the code:</p>
+                <h5>Example</h5>
+                <pre>let x = 5; // Declare x, give it the value of 5
+            let y = x + 2; // Declare y, give
+            it the value of x + 2</pre>
+                <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_comments5" target="_blank"
+                    rel="noopener">Try it Yourself &raquo;</a>
+                <hr />
+                <div>
+                    <h2>Multi-line Comments</h2>
+                    <p>Multi-line comments start with <code>/*</code> and end with <code>*/</code>.</p>
+                    <p>Any text between <code>/*</code> and <code>*/</code> will be ignored by JavaScript.</p>
+                    <p>This example uses a multi-line comment (a comment block) to explain the code:</p>
+
+                    <h5>Example</h5>
+                    <pre>/*
+                            The code below will change
+                            the heading with id="myH"
+                            and the
+                            paragraph with id="myP"
+                            in my web
+                            page:
+                            */
+                            document.getElementById("myH").innerHTML = "My First
+                            Page";
+                            document.getElementById("myP").innerHTML = "My first paragraph.";</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_comments2" target="_blank"
+                        rel="noopener">Try
+                        it Yourself &raquo;</a>
+                    <p>It is most common to use single line comments.
+                        Block comments are often used for
+                        formal documentation.</p>
+                </div>
+                <hr />
+                <div>
+                    <h2>Using Comments to Prevent Execution</h2>
+                    <p>Using comments to prevent execution of code is suitable for code testing.</p>
+                    <p>Adding <code>//</code> in front of a code line changes the code lines from an executable line to
+                        a comment.</p>
+                    <p>This example uses // to prevent execution of one of the code lines:</p>
+                    <h5>Example</h5>
+                    <pre>
+                                    //document.getElementById("myH").innerHTML = "My First Page";
+                                    document.getElementById("myP").innerHTML = "My first paragraph.";</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_comments3" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>This example uses a comment block to prevent execution of multiple lines:</p>
+                    <h5>Example</h5>
+                    <pre>
+                                    /*
+                                    document.getElementById("myH").innerHTML = "My First Page";
+                                    document.getElementById("myP").innerHTML = "My first paragraph.";
+                                    */
+                                </pre>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Variables</h2>
+                    <h3>Variables are Containers for Storing Data</h3>
+                    <p>JavaScript Variables can be declared in 4 ways:</p>
+                    <ul>
+                        <li>Automatically</li>
+                        <li>Using <code>var</code></li>
+                        <li>Using <code>let</code></li>
+                        <li>Using <code>const</code></li>
+                    </ul>
+
+                    <p>In this first example, <code>x</code>, <code>y</code>, and <code>z</code> are undeclared
+                        variables.</p>
+                    <p>They are automatically declared when first used:</p>
+                    <h5>Example</h5>
+                    <div>x = 5;
+                        y = 6;
+                        z = x + y;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_undeclared" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <h2>Note</h2>
+                    <p>It is considered good programming practice to always declare variables before use.</p>
+                    <p>From the examples you can guess:</p>
+                    <ul>
+                        <li>x stores the value 5</li>
+                        <li>y stores the value 6</li>
+                        <li>z stores the value 11</li>
+                    </ul>
+                    <h3>Example using var</h3>
+                    <pre>var x = 5;
+                                    var y = 6;
+                                    var z = x + y;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables" target="_blank"
+                        rel="noopener">Try
+                        it Yourself &raquo;</a>
+                    <h2>Note</h2>
+                    <p>The <code>var</code> keyword was used in all JavaScript code from 1995 to 2015.</p>
+                    <p>The <code>let</code> and <code>const</code> keywords were added to JavaScript in 2015.
+                    </p>
+                    <p>The <code>var</code> keyword should only be used in code written for older browsers.</p>
+                    <h3>Example using let</h3>
+                    <pre>let x = 5;
+                                    let y = 6;
+                                    let z = x + y;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_let" target="_blank"
+                        rel="noopener">Try
+                        it Yourself &raquo;</a>
+                    <h3>Example using const</h3>
+                    <pre>const x = 5;
+                                    const y = 6;
+                                    const z = x + y;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_const" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <h3>Mixed Example</h3>
+                    <pre>const price1 = 5;
+                                    const price2 = 6;
+                                    let total = price1 + price2;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_total" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>The two variables <code>price1</code> and <code>price2</code> are declared with the
+                        <code>const</code> keyword.
+                    </p>
+                    <p>These are constant values and cannot be changed.</p>
+                    <p>The variable <code>total</code> is declared with the <code>let</code> keyword.</p>
+                    <p>The value <code>total</code> can be changed.</p>
+                    <h2>When to Use var, let, or const?</h2>
+                    <p>1. Always declare variables</p>
+                    <p>2. Always use <code>const</code> if the value should not be changed</p>
+                    <p>3. Always use <code>const</code> if the type should not be changed (Arrays and Objects)</p>
+                    <p>4. Only use <code>let</code> if you can't use <code>const</code></p>
+                    <p>5. Only use <code>var</code> if you MUST support old browsers.</p>
+                </div>
+                <hr />
+
+                <h2>Just Like Algebra</h2>
+                <p>Just like in algebra, variables hold values:</p>
+                <pre>
+                    let x = 5;
+                    let y = 6;
+                </pre>
+
+                <p>Just like in algebra, variables are used in expressions:</p>
+                <pre>let z = x + y;</pre>
+                <p>From the example above, you can guess that the total is calculated to be 11.</p>
+
+                <h2>Note</h2>
+                <p>Variables are containers for storing values.</p>
+                <hr />
+                <h2>JavaScript Identifiers</h2>
+                <p>All JavaScript <strong>variables</strong> must be <strong>identified</strong> with <strong>unique
+                        names</strong>.</p>
+                <p>These unique names are called <strong>identifiers</strong>.</p>
+                <p>Identifiers can be short names (like x and y) or more descriptive names (age, sum, totalVolume).</p>
+                <p>The general rules for constructing names for variables (unique identifiers) are:</p>
+                <ul>
+                    <li>Names can contain letters, digits, underscores, and dollar signs.</li>
+                    <li>Names must begin with a letter.</li>
+                    <li>Names can also begin with $ and _ (but we will not use it in this tutorial).</li>
+                    <li>Names are case sensitive (y and Y are different variables).</li>
+                    <li>Reserved words (like JavaScript keywords) cannot be used as names.</li>
+                </ul>
+                <h2>Note</h2>
+                <p>JavaScript identifiers are case-sensitive.</p>
+                <hr />
+
+                <h2>The Assignment Operator</h2>
+                <p>In JavaScript, the equal sign (<code>=</code>) is an "assignment" operator, not an "equal to"
+                    operator.</p>
+                <p>This is different from algebra. The following does not make sense in algebra:</p>
+                <div>x = x + 5</div>
+                <p>In JavaScript, however, it makes perfect sense: it assigns the value of x + 5 to x.</p>
+                <p>(It calculates the value of x + 5 and puts the result into x. The value of x is incremented
+                    by 5.)</p>
+                <h2>Note</h2>
+                <p>The "equal to" operator is written like <code>==</code> in JavaScript.</p>
+                <hr />
+
+                <h2>JavaScript Data Types</h2>
+                <p>JavaScript variables can hold numbers like 100 and text values like "John Doe".</p>
+                <p>In programming, text values are called text strings.</p>
+                <p>JavaScript can handle many types of data, but for now, just think of numbers and strings.</p>
+                <p>Strings are written inside double or single quotes. Numbers are written without quotes.</p>
+                <p>If you put a number in quotes, it will be treated as a text string.</p>
+                <h5>Example</h5>
+                <div>const pi = 3.14;
+                    let person = "John Doe";
+                    let answer = 'Yes I am!';</div>
+                <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_types" target="_blank"
+                    rel="noopener">Try it Yourself &raquo;</a>
+                <hr />
+                <h2>Declaring a JavaScript Variable</h2>
+                <p>Creating a variable in JavaScript is called "declaring" a variable.</p>
+                <p>You declare a JavaScript variable with the <code>var</code> or the <code>let</code> keyword:
+                </p>
+                <div>var carName;</div>
+                or:
+                <div>let carName;</div>
+                <p>After the declaration, the variable has no value (technically it is <code>undefined</code>).</p>
+                <p>To <strong>assign</strong> a value to the variable, use the equal sign:</p>
+                <div>carName = "Volvo";</div>
+                <p>You can also assign a value to the variable when you declare it:</p>
+                <div>let carName = "Volvo";</div>
+                <p>In the example below, we create a variable called <code>carName</code> and assign the value
+                    "Volvo" to it.</p>
+                <p>Then we "output" the value inside an HTML paragraph with id="demo":</p>
+
+                <h5>Example</h5>
+                <pre><p id="demo"></p>
+            <script>
+                let carName = "Volvo";
+                document.getElementById("demo").innerHTML = carName;
+            </script>
+        </pre>
+                <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_create" target="_blank"
+                    rel="noopener">Try it Yourself &raquo;</a>
+                <h2>Note</h2>
+                <p>It's a good programming practice to declare all variables at the beginning of a script.
+                </p>
+                <hr />
+                <div>
+                    <h2>One Statement, Many Variables</h2>
+                    <p>You can declare many variables in one statement.</p>
+                    <p>Start the statement with <code>let</code> and separate the variables by
+                        <strong>comma</strong>:
+                    </p>
+                    <h5>Example</h5>
+                    <div>let person = "John Doe", carName = "Volvo", price = 200;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_multi" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>A declaration can span multiple lines:</p>
+
+                    <h5>Example</h5>
+                    <div>let person = "John Doe",
+                        carName = "Volvo",
+                        price = 200;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_multiline" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>Value = undefined</h2>
+                    <p>In computer programs, variables are often declared without a value. The value can be
+                        something that has to be calculated, or something that will be provided later, like user
+                        input.</p>
+                    <p>A variable declared without a value will have the value <code>undefined</code>.</p>
+                    <p>The variable carName will have the value <code>undefined</code> after the execution of this
+                        statement:</p>
+                    <h5>Example</h5>
+                    <p>let carName;</pre>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_undefined"
+                            target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>Re-Declaring JavaScript Variables</h2>
+                    <p>If you re-declare a JavaScript variable declared with <code>var</code>, it will not lose its
+                        value.</p>
+                    <p>The variable <code>carName</code> will still have the value "Volvo" after the execution of these
+                        statements:</p>
+                    <h5>Example</h5>
+                    <pre>var carName = "Volvo";
+                        var carName;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_redefine" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <h2>Note</h2>
+                    <p>You cannot re-declare a variable declared with <code>let</code> or <code>const</code>.</p>
+                    <p>This will not work:</p>
+                    <pre>let carName = "Volvo";
+                        let carName;</pre>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Arithmetic</h2>
+                    <p>As with algebra, you can do arithmetic with JavaScript variables, using operators like
+                        <code>=</code> and <code>+</code>:
+                    </p>
+                    <h5>Example</h5>
+                    <pre>let x = 5 + 2 + 3;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_add_numbers"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <p>You can also add strings, but strings will be concatenated:</p>
+                    <h5>Example</h5>
+                    <pre>let x = "John" + " " + "Doe";</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_add_strings"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <p>Also try this:</p>
+                    <h5>Example</h5>
+                    <pre>let x = "5" + 2 + 3;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_add_string_number"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <h2>Note</h2>
+                    <p>If you put a number in quotes, the rest of the numbers will be treated as strings, and
+                        concatenated.</p>
+                    <p>Now try this:</p>
+                    <h5>Example</h5>
+                    <pre>let x = 2 + 3 + "5";</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_add_number_string"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+
+
+                <div>
+                    <h2>JavaScript Dollar Sign $</h2>
+                    <p>Since JavaScript treats a dollar sign as a letter, identifiers containing $ are valid
+                        variable names:</p>
+                    <h5>Example</h5>
+                    <pre>let $ = "Hello World";
+            let $$$ = 2;
+            let $myMoney = 5;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_variables_dollar" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+
+                    <p>Using the dollar sign is not very common in JavaScript, but professional programmers often
+                        use it as an alias for the main function in a JavaScript library.</p>
+                    <p>In the JavaScript library jQuery, for instance, the main function <code>$</code> is used to
+                        select HTML elements. In jQuery <code>$("p");</code> means "select all p elements".</p>
+                    <h2>JavaScript Underscore (_)</h2>
+                    <p>Since JavaScript treats underscore as a letter, identifiers containing _ are valid variable
+                        names:</p>
+                    <h5>Example</h5>
+                    <pre>let _lastName = "Johnson";
+                let _x = 2;
+                let _100 = 5;</pre>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Let</h2>
+                    <p>The <code>let</code> keyword was introduced in <a
+                            href="https://www.w3schools.com/js/js_es6.asp">ES6
+                            (2015)</a></p>
+                    <p>Variables declared with <code>let</code> have <strong>Block Scope</strong></p>
+                    <p>Variables declared with <code>let</code> must be <strong>Declared</strong> before use</p>
+                    <p>Variables declared with <code>let</code> cannot be <strong>Redeclared</strong> in the same
+                        scope</p>
+                    <h2>Block Scope</h2>
+                    <p>Before ES6 (2015), JavaScript did not have <strong>Block Scope</strong>.</p>
+                    <p>JavaScript had <strong>Global Scope</strong> and <strong>Function Scope</strong>.</p>
+                    <p>ES6 introduced the two new JavaScript keywords: <code>let</code> and <code>const</code>.</p>
+                    <p>These two keywords provided <strong>Block Scope</strong> in JavaScript:</p>
+                    <h5>Example</h5>
+                    <p>Variables declared inside a { } block cannot be accessed from outside the block:</p>
+                    <pre>{
+                let x = 2;
+                }
+                // x can NOT be used here</pre>
+                </div>
+                <hr />
+
+
+                <div>
+
+                    <h2>Global Scope</h2>
+                    <p>Variables declared with the <code>var</code> always have <strong>Global Scope</strong>.</p>
+                    <p>Variables declared with the <code>var</code> keyword can NOT have block scope:</p>
+                    <h5>Example</h5>
+                    <p>Variables declared with <code>var</code>inside a { } block can be accessed from outside the
+                        block:</p>
+                    <pre>{
+            var x = 2;
+            }
+            // x CAN be used here</pre>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Cannot be Redeclared</h2>
+                    <p>Variables defined with <code>let</code> <strong>can not</strong> be redeclared.</p>
+                    <p>You can not accidentally redeclare a variable declared with <code>let</code>.</p>
+                    <p>With <code>let</code> you <strong>can not</strong> do this:</p>
+                    <pre>let x = "John Doe";
+                let x = 0;</pre>
+                    <p>Variables defined with <code>var</code> <strong>can</strong> be redeclared.</p>
+                    <p>With <code>var</code> you <strong>can</strong> do this:</p>
+                    <pre>var x = "John Doe";
+                var x = 0;</pre>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Redeclaring Variables</h2>
+                    <p>Redeclaring a variable using the <code>var</code> keyword can impose problems.</p>
+                    <p>Redeclaring a variable inside a block will also redeclare the variable outside the block:</p>
+                    <h5>Example</h5>
+                    <pre>
+                    var x = 10;// Here x is 10
+                    {
+                        var x = 2; // Here x is 2
+                    }// Here x is 2
+                    </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_es6_var" target="_blank"
+                        rel="noopener">Try it
+                        Yourself &raquo;</a>
+                    <p>Redeclaring a variable using the <code>let</code> keyword can solve this problem.</p>
+                    <p>Redeclaring a variable inside a block will not redeclare the variable outside the block:</p>
+                    <h5>Example</h5>
+                    <pre>let x = 10;
+                    // Here x is 10
+                    {
+                    let x = 2;
+                    // Here x is
+                    2
+                    }
+                    // Here x is 10</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_es6_let" target="_blank"
+                        rel="noopener">Try it
+                        Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>Difference Between var, let and const</h2>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Scope</td>
+                                <td>Redeclare</td>
+                                <td>Reassign</td>
+                                <td>Hoisted</td>
+                                <td>Binds this</td>
+                            </tr>
+                            <tr>
+                                <td>var</td>
+                                <td>No</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>let</td>
+                                <td>Yes</td>
+                                <td>No</td>
+                                <td>Yes</td>
+                                <td>No</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>const</td>
+                                <td>Yes</td>
+                                <td>No</td>
+                                <td>No</td>
+                                <td>No</td>
+                                <td>No</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>What is Good?</h3>
+                    <p><code>let</code> and <code>const</code> have <strong>block scope</strong>.</p>
+                    <p><code>let</code> and <code>const</code> can not be <strong>redeclared</strong>.</p>
+                    <p><code>let</code> and <code>const</code> must be <strong>declared</strong> before use.</p>
+                    <p><code>let</code> and <code>const</code> does <strong>not bind</strong> to <code>this</code>.</p>
+                    <p><code>let</code> and <code>const</code> are <strong>not hoisted</strong>.</p>
+                    <h3>What is Not Good?</h3>
+                    <p><code>var</code> does not have to be declared.</p>
+                    <p><code>var</code> is hoisted.</p>
+                    <p><code>var</code> binds to this.</p>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Redeclaring</h2>
+                    <p>Redeclaring a JavaScript variable with <code>var</code> is allowed anywhere in a program:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        var x = 2; // Now x is 2
+                        var x = 3; // Now x is 3
+                    </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_let_redeclare_var" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>With <code>let</code>, redeclaring a variable in the same block is NOT allowed:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        var x = 2; // Allowed
+                        let x = 3; // Not allowed
+                        {
+                        let x = 2; // Allowed
+                        let x = 3; // Not allowed
+                        }
+                        {
+                        let x = 2; // Allowed
+                        var x = 3; // Not allowed
+                        }
+                    </pre>
+                    <p>Redeclaring a variable with <code>let</code>, in another block, IS allowed:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        let x = 2; // Allowed
+                        {
+                        let x = 3; // Allowed
+                        }
+                        {
+                        let
+                        x = 4; // Allowed
+                        }
+                    </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_let_redeclare" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Let Hoisting</h2>
+                    <p>Variables defined with <code>var</code> are <strong>hoisted</strong> to the top and can be
+                        initialized at any time.</p>
+                    <p>Meaning: You can use the variable before it is declared:</p>
+                    <h5>Example</h5>
+                    <p>This is OK:</p>
+                    <pre>
+                        carName = "Volvo"; 
+                        var carName;
+                    </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_let_hoisting_var" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>If you want to learn more about hoisting, study the chapter <a
+                            href="https://www.w3schools.com/js/js_hoisting.asp">JavaScript Hoisting</a>.</p>
+                    <p>Variables defined with <code>let</code> are also hoisted to the top of the block, but not
+                        initialized.</p>
+                    <p>Meaning: Using a <code>let</code> variable before it is declared will result in a
+                        <code>ReferenceError</code>:
+                    </p>
+                    <h5>Example</h5>
+                    <pre>
+                        carName = "Saab";
+                        let carName = "Volvo";
+                    </pre>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Const</h2>
+                    <p>The <code>const</code> keyword was introduced in <a
+                            href="https://www.w3schools.com/js/js_es6.asp">ES6 (2015)</a></p>
+                    <p>Variables defined with <code>const</code> cannot be <strong>Redeclared</strong></p>
+                    <p>Variables defined with <code>const</code> cannot be <strong>Reassigned</strong></p>
+                    <p>Variables defined with <code>const</code> have <strong>Block Scope</strong></p>
+                    <h3>Cannot be Reassigned</h3>
+                    <p>A variable defined with the <code>const</code> keyword cannot be reassigned:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        const PI = 3.141592653589793;
+                        PI = 3.14; // This will give an error
+                        PI = PI + 10; // This will also give an error
+                    </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_const_value" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+
+
+                <div>
+                    <h2>Must be Assigned</h2>
+                    <p>JavaScript <code>const</code> variables must be assigned a value when they are declared:</p>
+                    <h3>Correct</h3>
+                    <div>const PI = 3.14159265359;</div>
+                    <h3>Incorrect</h3>
+                    <div>const PI; PI = 3.14159265359;</div>
+                    <h2>When to use JavaScript const?</h2>
+                    <p><strong>Always declare a variable with <code>const</code> when you know that the value should not
+                            be changed.</strong></p>
+                    <p>Use <code>const</code> when you declare:</p>
+                    <ul>
+                        <li>A new Array</li>
+                        <li>A new Object</li>
+                        <li>A new Function</li>
+                        <li>A new RegExp</li>
+                    </ul>
+                </div>
+                <hr />
+
+
+                <div>
+                    <h2>Constant Objects and Arrays</h2>
+                    <p>The keyword <code>const</code> is a little misleading.</p>
+                    <p>It does not define a constant value. It defines a constant reference to a value.</p>
+                    <p>Because of this you can NOT:</p>
+                    <ul>
+                        <li>Reassign a constant value</li>
+                        <li>Reassign a constant array</li>
+                        <li>Reassign a constant object</li>
+                    </ul>
+                    <p>But you CAN:</p>
+                    <ul>
+                        <li>Change the elements of constant array</li>
+                        <li>Change the properties of constant object</li>
+                    </ul>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Constant Arrays</h2>
+                    <p>You can change the elements of a constant array:</p>
+                    <h5>Example</h5>
+                    <xmp>
+                        // You can create a constant array:
+                        const cars = ["Saab", "Volvo","BMW"];
+                        // You can change an element:cars[0] = "Toyota";
+                        // You can add an element:
+                        cars.push("Audi");
+                    </xmp>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_const_array" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>But you can NOT reassign the array:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        const cars = ["Saab", "Volvo", "BMW"];
+                        cars = ["Toyota", "Volvo", "Audi"]; //ERROR
+                    </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_const_array_assign" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Constant Objects</h2>
+                    <p>You can change the properties of a constant object:</p>
+                    <h5>Example</h5>
+                    <pre>
+                    // You can create a const object:
+                    const car = {
+                        type:"Fiat", model:"500",color:"white"
+                    };
+                    // You can change a property:
+                    car.color = "red"; // You can add a property:
+                    car.owner = "Johnson";
+                </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_const_object" target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <p>But you can NOT reassign the object:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        const car = {type:"Fiat", model:"500", color:"white"};
+                        car = {type:"Volvo", model:"EX60", color:"red"}; // ERROR
+                    </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_const_object_assign" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>Difference Between var, let and const</h2>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <td>Scope</td>
+                                <td>Redeclare</td>
+                                <td>Reassign</td>
+                                <td>Hoisted</td>
+                                <td>Binds this</td>
+                            </tr>
+                            <tr>
+                                <td>var</td>
+                                <td>No</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>let</td>
+                                <td>Yes</td>
+                                <td>No</td>
+                                <td>Yes</td>
+                                <td>No</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>const</td>
+                                <td>Yes</td>
+                                <td>No</td>
+                                <td>No</td>
+                                <td>No</td>
+                                <td>No</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>What is Good?</h3>
+                    <p><code>let</code> and <code>const</code> have <strong>block scope</strong>.</p>
+                    <p><code>let</code> and <code>const</code> can not be <strong>redeclared</strong>.</p>
+                    <p><code>let</code> and <code>const</code> must be <strong>declared</strong> before use.</p>
+                    <p><code>let</code> and <code>const</code> does <strong>not bind</strong> to <code>this</code>.</p>
+                    <p><code>let</code> and <code>const</code> are <strong>not hoisted</strong>.</p>
+                    <h3>What is Not Good?</h3>
+                    <p><code>var</code> does not have to be declared.</p>
+                    <p><code>var</code> is hoisted.</p>
+                    <p><code>var</code> binds to this.</p>
+                </div>
+                <hr />
+
+
+
+                <div>
+                    <h2>Block Scope</h2>
+                    <p>Declaring a variable with <code>const</code> is similar to <code>let</code> when it comes to
+                        <strong>Block Scope</strong>.
+                    </p>
+                    <p>The x declared in the block, in this example, is not the same as the x declared outside the
+                        block:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        const x = 10; // Here x is 10
+                        {
+                        const x = 2; // Here x is 2
+                        }// Here x is 10
+                    </pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_const" target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <p>You can learn more about block scope in the chapter <a href="https://www.w3schools.com/js/js_scope.asp">JavaScript Scope</a>.</p>
+
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Redeclaring</h2>
+                    <p>Redeclaring a JavaScript <code>var</code> variable is allowed anywhere in a program:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        var x = 2; // Allowed
+                        var x = 3; // Allowed
+                        x = 4; // Allowed
+                    </pre>
+                    <p>Redeclaring an existing <code>var</code> or <code>let</code> variable to <code>const</code>, in
+                        the same scope, is not allowed:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        var x = 2; // Allowed
+                        const x = 2; // Not allowed
+                        {
+                        let x = 2; // Allowed
+                        const x = 2; // Not allowed
+                        }
+                        {
+                        const x = 2; // Allowed
+                        const x = 2; // Not allowed
+                        }
+                    </pre>
+                    <p>Reassigning an existing <code>const</code> variable, in the same scope, is not allowed:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        const x = 2; // Allowed
+                        x = 2; // Not allowed
+                        var x = 2; // Not allowed
+                        let x = 2; // Not allowed
+                        const x = 2; // Not allowed
+                        {
+                        const x = 2; // Allowed
+                        x = 2; // Not allowed
+                        var x = 2; // Not allowed
+                        let x = 2; // Not allowed
+                        const x = 2; // Not allowed
+                        }
+                    </pre>
+                    <p>Redeclaring a variable with <code>const</code>, in another scope, or in another block, is allowed:</p>
+                    <h5>Example</h5>
+                    <pre>
+                        const x = 2; // Allowed
+                        {
+                        const x = 3; // Allowed
+                        }
+                        {
+                        const x = 4; // Allowed
+                        }
+                    </pre>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Hoisting</h2>
+                    <p>Variables defined with <code>var</code> are <strong>hoisted</strong> to the top and can be
+                        initialized at any time.</p>
+                    <p>Meaning: You can use the variable before it is declared:</p>
+                    <h5>Example</h5>
+                    <p>This is OK:</p>
+                    <div>
+                        carName = "Volvo";
+                        var carName;
+                    </div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_let_hoisting_var" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>If you want to learn more about hoisting, study the chapter <a
+                            href="https://www.w3schools.com/js/js_hoisting.asp">JavaScript Hoisting</a>.</p>
+                    <p>Variables defined with <code>const</code> are also hoisted to the top, but not initialized.</p>
+                    <p>Meaning: Using a <code>const</code> variable before it is declared will result in a
+                        <code>ReferenceError</code>:
+                    </p>
+                    <h5>Example</h5>
+                    <div>
+                        alert (carName); 
+                        const carName = "Volvo";
+                    </div>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Operators</h2>
+                    <p>Javascript operators are used to perform different types of mathematical and logical computations.</p>
+                    <h3>Examples:</h3>
+                    <p>The <strong>Assignment Operator</strong> <strong>=</strong> assigns values</p>
+                    <p>The <strong>Addition Operator</strong> <strong>+</strong> adds values</p>
+                    <p>The <strong>Multiplication Operator</strong> <strong>*</strong> multiplies values</p>
+                    <p>The <strong>Comparison Operator</strong> <strong>></strong> compares values</p>
+                </div>
+                <hr />
+
+
+                <div>
+                    <h2>JavaScript Assignment</h2>
+                    <p>The <strong>Assignment Operator</strong> (<code>=</code>) assigns a value to a variable:</p>
+
+                    <h3>Assignment Examples</h3>
+                    <div>let x = 10;</div>
+                    
+                    <div class="example-code p-3 mb-4 bg-light border rounded">
+                        // Assign the value 5 to x
+                        let x = 5; // Assign the value 2 to y
+                        let y = 2; // Assign the value x + y to z:
+                        let z = x + y;
+                    </div>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Addition</h2>
+                    <p>The <strong>Addition Operator</strong> (<code>+</code>) adds numbers:</p>
+                    <h3>Adding</h3>
+                    <pre>
+                        let x = 5;
+                        let y = 2;
+                        let z = x + y;
+                    </pre>
+                    <h2>JavaScript Multiplication</h2>
+                    <p>The <strong>Multiplication Operator</strong> (<code>*</code>) multiplies numbers:</p>
+                    <h3>Multiplying</h3>
+                    <pre>
+                        let x = 5;
+                        let y = 2;
+                        let z = x * y;
+                    </pre>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Types of JavaScript Operators</h2>
+                    <p>There are different types of JavaScript operators:</p>
+                    <ul>
+                        <li>Arithmetic Operators</li>
+                        <li>Assignment Operators</li>
+                        <li>Comparison Operators</li>
+                        <li>String Operators</li>
+                        <li>Logical Operators</li>
+                        <li>Bitwise Operators</li>
+                        <li>Ternary Operators</li>
+                        <li>Type Operators</li>
+                    </ul>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Arithmetic Operators</h2>
+                    <p><strong>Arithmetic Operators</strong> are used to perform arithmetic on numbers:</p>
+                    <h3>Arithmetic Operators Example</h3>
+                    <pre>let a = 3;
+                                                                let x = (100 + 50) * a;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetic_expressions"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>+</td>
+                                <td>Addition</td>
+                            </tr>
+                            <tr>
+                                <td>-</td>
+                                <td>Subtraction</td>
+                            </tr>
+                            <tr>
+                                <td>*</td>
+                                <td>Multiplication</td>
+                            </tr>
+                            <tr>
+                                <td>**</td>
+                                <td>Exponentiation (<a href="https://www.w3schools.com/js/js_2016.asp">ES2016</a>)</td>
+                            </tr>
+                            <tr>
+                                <td>/</td>
+                                <td>Division</td>
+                            </tr>
+                            <tr>
+                                <td>%</td>
+                                <td>Modulus (Division Remainder)</td>
+                            </tr>
+                            <tr>
+                                <td>++</td>
+                                <td>Increment</td>
+                            </tr>
+                            <tr>
+                                <td>--</td>
+                                <td>Decrement</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h2>Note</h2>
+                    <p>Arithmetic operators are fully described in the <strong><a
+                                href="https://www.w3schools.com/js/js_arithmetic.asp">JS Arithmetic</a></strong>
+                        chapter.</p>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Assignment Operators</h2>
+                    <p>Assignment operators assign values to JavaScript variables.</p>
+                    <p>The <strong>Addition Assignment Operator</strong> (<code>+=</code>) adds a value to a variable.
+                    </p>
+                    <h3>Assignment</h3>
+                    <pre>let x = 10;
+                                                                    x += 5;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_plusequal" target="_blank"
+                        rel="noopener">Try it
+                        Yourself &raquo;</a>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Example</th>
+                                <th>Same As</th>
+                            </tr>
+                            <tr>
+                                <td>=</td>
+                                <td>x = y</td>
+                                <td>x = y</td>
+                            </tr>
+                            <tr>
+                                <td>+=</td>
+                                <td>x += y</td>
+                                <td>x = x + y</td>
+                            </tr>
+                            <tr>
+                                <td>-=</td>
+                                <td>x -= y</td>
+                                <td>x = x - y</td>
+                            </tr>
+                            <tr>
+                                <td>*=</td>
+                                <td>x *= y</td>
+                                <td>x = x * y</td>
+                            </tr>
+                            <tr>
+                                <td>/=</td>
+                                <td>x /= y</td>
+                                <td>x = x / y</td>
+                            </tr>
+                            <tr>
+                                <td>%=</td>
+                                <td>x %= y</td>
+                                <td>x = x % y</td>
+                            </tr>
+                            <tr>
+                                <td>**=</td>
+                                <td>x **= y</td>
+                                <td>x = x ** y</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h2>Note</h2>
+                    <p>Assignment operators are fully described in the <strong><a
+                                href="https://www.w3schools.com/js/js_assignment.asp">JS Assignment</a></strong>
+                        chapter.</p>
+                </div>
+                <hr />
+
+
+                <div>
+                    <h2>JavaScript Comparison Operators</h2>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>==</td>
+                                <td>equal to</td>
+                            </tr>
+                            <tr>
+                                <td>===</td>
+                                <td>equal value and equal type</td>
+                            </tr>
+                            <tr>
+                                <td>!=</td>
+                                <td>not equal</td>
+                            </tr>
+                            <tr>
+                                <td>!==</td>
+                                <td>not equal value or not equal type</td>
+                            </tr>
+                            <tr>
+                                <td>></td>
+                                <td>greater than</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    << </td>
+                                <td>less than</td>
+                            </tr>
+                            <tr>
+                                <td>>=</td>
+                                <td>greater than or equal to</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <=< </td>
+                                <td>less than or equal to</td>
+                            </tr>
+                            <tr>
+                                <td>?</td>
+                                <td>ternary operator</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h2>Note</h2>
+                    <p>Comparison operators are fully described in the <strong><a
+                                href="https://www.w3schools.com/js/js_comparisons.asp">JS Comparisons</a></strong>
+                        chapter.</p>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript String Comparison</h2>
+                    <p>All the comparison operators above can also be used on strings:</p>
+                    <h5>Example</h5>
+                    <pre>let text1 = "A";
+                let text2 = "B";
+                let result = text1 < text2;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_string_comparison"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    <p>Note that strings are compared alphabetically:</p>
+                    <h5>Example</h5>
+                    <pre>let text1 = "20";
+                        let text2 = "5";
+                        let result = text1 < text2;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_string_comparison1"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript String Addition</h2>
+                    <p>The <code>+</code> can also be used to add (concatenate) strings:</p>
+                    <h5>Example</h5>
+                    <pre>let text1 = "John";
+                                let text2 = "Doe";
+                                let text3 = text1 + " " + text2;</pre>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_concatenate" target="_blank"
+                        rel="noopener">Try
+                        it Yourself &raquo;</a>
+                    <p>The <code>+=</code> assignment operator can also be used to add (concatenate) strings:</p>
+                    <h5>Example</h5>
+                    <pre>let text1 = "What a very ";
+                                text1 += "nice day";</pre>
+                    <p>The result of text1 will be:</p>
+                    <div><code>What a very nice day</code></div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_concat4" target="_blank"
+                        rel="noopener">Try
+                        it Yourself &raquo;</a>
+                    <h2>Note</h2>
+                    <p>When used on strings, the + operator is called the concatenation operator.</p>
+                </div>
+                <hr />
+                <div>
+                    <h2>Adding Strings and Numbers</h2>
+                    <p>Adding two numbers, will return the sum, but adding a number and a string will return a string:
+                    </p>
+                    <h5>Example</h5>
+                    <pre>let x = 5 + 5;
+                                    let y = "5" + 5;
+                                    let z = "Hello" + 5;</pre>
+                    <p>The result of <em>x</em>,<em> y</em>, and <em>z</em> will be:</p>
+                    <div><code>10
+                            55
+                            Hello5</code></div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_concat5" target="_blank"
+                        rel="noopener">Try
+                        it Yourself &raquo;</a>
+                    <h2>Note</h2>
+                    <p>If you add a number and a string, the result will be a string!</p>
+                </div>
+                <hr />
+                <div>
+                    <h2>JavaScript Logical Operators</h2>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>&amp;&amp;</td>
+                                <td>logical and</td>
+                            </tr>
+                            <tr>
+                                <td>||</td>
+                                <td>logical or</td>
+                            </tr>
+                            <tr>
+                                <td>!</td>
+                                <td>logical not</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h2>Note</h2>
+                    <p>Logical operators are fully described in the <strong><a
+                                href="https://www.w3schools.com/js/js_comparisons.asp">JS
+                                Comparisons</a></strong>
+                        chapter.</p>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Type Operators</h2>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>typeof</td>
+                                <td>Returns the type of a variable</td>
+                            </tr>
+                            <tr>
+                                <td>instanceof</td>
+                                <td>Returns true if an object is an instance of an object type</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h2>Note</h2>
+                    <p>Type operators are fully described in the <strong><a
+                                href="https://www.w3schools.com/js/js_type_conversion.asp">JS Type
+                                Conversion</a></strong> chapter.</p>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Bitwise Operators</h2>
+                    <p>Bit operators work on 32 bits numbers.</p>
+                    <p>Any numeric operand in the operation is converted into a 32 bit number. The result is converted
+                        back to a JavaScript number.</p>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                                <th>Same as</th>
+                                <th>Result</th>
+                                <th>Decimal</th>
+                            </tr>
+                            <tr>
+                                <td>&amp;</td>
+                                <td>AND</td>
+                                <td>5 &amp; 1</td>
+                                <td>0101 &amp; 0001</td>
+                                <td>0001</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>|</td>
+                                <td>OR</td>
+                                <td>5 | 1</td>
+                                <td>0101 | 0001</td>
+                                <td>0101</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>~</td>
+                                <td>NOT</td>
+                                <td>~ 5</td>
+                                <td>~0101</td>
+                                <td>1010</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>^</td>
+                                <td>XOR</td>
+                                <td>5 ^ 1</td>
+                                <td>0101 ^ 0001</td>
+                                <td>0100</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <<< /td>
+                                <td>left shift</td>
+                                <td>5 << 1</td>
+                                <td>0101 << 1</td>
+                                <td>1010</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>>></td>
+                                <td>right shift</td>
+                                <td>5 >> 1</td>
+                                <td>0101 >> 1</td>
+                                <td>0010</td>
+                                <td>2</td>
+                            </tr>
+                            <tr>
+                                <td>>>></td>
+                                <td>unsigned right shift</td>
+                                <td>5 >>> 1</td>
+                                <td>0101 >>> 1</td>
+                                <td>0010</td>
+                                <td>2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>The examples above uses 4 bits unsigned examples. But JavaScript uses 32-bit signed
+                        numbers.
+                        Because of this, in JavaScript, ~ 5 will not return 10. It will return
+                        -6.
+                        ~00000000000000000000000000000101 will return 11111111111111111111111111111010</p>
+                    <p>Bitwise operators are fully described in the <a
+                            href="https://www.w3schools.com/js/js_bitwise.asp"><strong>JS
+                                Bitwise</strong></a>
+                        chapter.</p>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>JavaScript Arithmetic</h2>
+                    <h3>JavaScript Arithmetic Operators</h3>
+                    <p>Arithmetic operators perform arithmetic on numbers (literals or variables).</p>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>+</td>
+                                <td>Addition</td>
+                            </tr>
+                            <tr>
+                                <td>-</td>
+                                <td>Subtraction</td>
+                            </tr>
+                            <tr>
+                                <td>*</td>
+                                <td>Multiplication</td>
+                            </tr>
+                            <tr>
+                                <td>**</td>
+                                <td>Exponentiation (<a href="https://www.w3schools.com/js/js_2016.asp">ES2016</a>)</td>
+                            </tr>
+                            <tr>
+                                <td>/</td>
+                                <td>Division</td>
+                            </tr>
+                            <tr>
+                                <td>%</td>
+                                <td>Modulus (Remainder)</td>
+                            </tr>
+                            <tr>
+                                <td>++</td>
+                                <td>Increment</td>
+                            </tr>
+                            <tr>
+                                <td>--</td>
+                                <td>Decrement</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+
+                <div>
+                    <h2>Arithmetic Operations</h2>
+                    <p>A typical arithmetic operation operates on two numbers.</p>
+                    <p>The two numbers can be literals:</p>
+                    <h5>Example</h5>
+                    <div>let x = 100 + 50;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetic_operation" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>or variables:</p>
+                    <h5>Example</h5>
+                    <div>let x = a + b;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetic_variables" target="_blank"
+                        rel="noopener">Try it Yourself &raquo;</a>
+                    <p>or expressions:</p>
+                    <h5>Example</h5>
+                    <div>let x = (100 + 50) * a;</div>
+                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetic_expressions"
+                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                </div>
+                <hr />
+
+
+                <div>
+                    <h2>Operators and Operands</h2>
+                    <p>The numbers (in an arithmetic operation) are called <strong>operands</strong>.</p>
+                    <p>The operation (to be performed between the two operands) is defined by an
+                        <strong>operator</strong>.
+                    </p>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Operand</th>
+                                <th>Operator</th>
+                                <th>Operand</th>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>+</td>
+                                <td>50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <h3>Adding</h3>
+                        <p>The <strong>addition</strong> operator (<code>+</code>) adds numbers:</p>
+                        <h5>Example</h5>
+                        <pre>let x = 5;
+                                                            let y = 2;
+                                                            let z = x + y;</pre>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_add" target="_blank"
+                            rel="noopener">Try it
+                            Yourself &raquo;</a>
+
+                    </div>
+                    <div>
+                        <h2>Subtracting</h2>
+                        <p>The <strong>subtraction</strong> operator (<code>-</code>) subtracts numbers.</p>
+                        <div>
+                            <h5>Example</h5>
+                            <div>let x = 5;
+                                let y = 2;
+                                let z = x - y;</div>
+                            <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_sub" target="_blank"
+                                rel="noopener">Try it
+                                Yourself &raquo;</a>
+                        </div>
+
+                        <h3>Multiplying</h3>
+                        <p>The <strong>multiplication</strong> operator (<code>*</code>) multiplies numbers.</p>
+                        <h5>Example</h5>
+                        <div>let x = 5;
+                            let y = 2;
+                            let z = x * y;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_mult" target="_blank"
+                            rel="noopener">Try it
+                            Yourself &raquo;</a>
+
+
+
+
+
+
+                        <h3>Dividing</h3>
+                        <p>The <strong>division</strong> operator (<code>/</code>) divides numbers.</p>
+                        <h5>Example</h5>
+                        <div>let x = 5;
+                            let y = 2;
+                            let z = x / y;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_div" target="_blank"
+                            rel="noopener">Try it
+                            Yourself &raquo;</a>
+
+                        <h3>Remainder</h3>
+                        <p>The <strong>modulus</strong> operator (<code>%</code>) returns the division remainder.</p>
+                        <h5>Example</h5>
+                        <div>let x = 5;
+                            let y = 2;
+                            let z = x % y;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_mod" target="_blank"
+                            rel="noopener">Try it
+                            Yourself &raquo;</a>
+                        <div>
+                            <p>In arithmetic, the division of two integers produces a <strong>quotient</strong> and a
+                                <strong>remainder</strong>.
+                            </p>
+                            <p>In mathematics, the result of a <strong>modulo operation</strong> is the
+                                <strong>remainder</strong> of an arithmetic division.
+                            </p>
+                        </div>
+                        <h2>Incrementing</h2>
+                        <p>The <strong>increment</strong> operator (<code>++</code>) increments numbers.</p>
+                        <h5>Example</h5>
+                        <div>let x = 5;
+                            x++;
+                            let z = x;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_increment" target="_blank"
+                            rel="noopener">Try it
+                            Yourself &raquo;</a>
+
+                        <h2>Decrementing</h2>
+                        <p>The <strong>decrement</strong> operator (<code>--</code>) decrements numbers.</p>
+                        <h5>Example</h5>
+                        <div>let x = 5;
+                            x--;
+                            let z = x;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_oper_decrement" target="_blank"
+                            rel="noopener">Try it
+                            Yourself &raquo;</a>
+
+
+                        <h3>Exponentiation</h3>
+                        <p>The <strong>exponentiation</strong> operator (<code>**</code>) raises the first operand to
+                            the
+                            power of the second operand.</p>
+                        <h5>Example</h5>
+                        <div>let x = 5;
+                            let z = x ** 2;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetric_exponent1"
+                            target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                        <p>x ** y produces the same result as <code>Math.pow(x,y)</code>:</p>
+                        <h5>Example</h5>
+                        <div>let x = 5;
+                            let z = Math.pow(x,2);</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetric_exponent2"
+                            target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+
+                        <h3>Operator Precedence</h3>
+                        <p>Operator precedence describes the order in which operations are performed in an arithmetic
+                            expression.</p>
+                        <h5>Example</h5>
+                        <div>let x = 100 + 50 * 3;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetic_precedence1"
+                            target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                        <p>Is the result of example above the same as 150 * 3, or is it the same as 100 + 150?</p>
+                        <p>Is the addition or the multiplication done first?</p>
+                        <p>As in traditional school mathematics, the multiplication is done first.</p>
+                        <p>Multiplication (<code>*</code>) and division (<code>/</code>) have higher
+                            <strong>precedence</strong> than addition (<code>+</code>) and subtraction (<code>-</code>).
+                        </p>
+                        <p>And (as in school mathematics) the precedence can be changed by using parentheses.</p>
+                        <p>When using parentheses, the operations inside the parentheses are computed first:</p>
+                        <h5>Example</h5>
+                        <div>let x = (100 + 50) * 3;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetic_precedence2"
+                            target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                        <p>When many operations have the same precedence (like addition and subtraction or
+                            multiplication
+                            and division), they are computed from left to right:</p>
+                        <h3>Examples</h3>
+                        <div>let x = 100 + 50 - 3;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_arithmetic_precedence4"
+                            target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                        <div>let x = 100 / 50 * 3;</div>
+
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>JavaScript Assignment</h2>
+                        <h3>JavaScript Assignment Operators</h3>
+                        <p>Assignment operators assign values to JavaScript variables.</p>
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Example</th>
+                                    <th>Same As</th>
+                                </tr>
+                                <tr>
+                                    <td>=</td>
+                                    <td>x = y</td>
+                                    <td>x = y</td>
+                                </tr>
+                                <tr>
+                                    <td>+=</td>
+                                    <td>x += y</td>
+                                    <td>x = x + y</td>
+                                </tr>
+                                <tr>
+                                    <td>-=</td>
+                                    <td>x -= y</td>
+                                    <td>x = x - y</td>
+                                </tr>
+                                <tr>
+                                    <td>*=</td>
+                                    <td>x *= y</td>
+                                    <td>x = x * y</td>
+                                </tr>
+                                <tr>
+                                    <td>/=</td>
+                                    <td>x /= y</td>
+                                    <td>x = x / y</td>
+                                </tr>
+                                <tr>
+                                    <td>%=</td>
+                                    <td>x %= y</td>
+                                    <td>x = x % y</td>
+                                </tr>
+                                <tr>
+                                    <td>**=</td>
+                                    <td>x **= y</td>
+                                    <td>x = x ** y</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>Shift Assignment Operators</h2>
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Example</th>
+                                    <th>Same As</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <<= </td>
+                                    <td>x <<= y</td>
+                                    <td>x = x << y</td>
+                                </tr>
+                                <tr>
+                                    <td>>>=</td>
+                                    <td>x >>= y</td>
+                                    <td>x = x >> y</td>
+                                </tr>
+                                <tr>
+                                    <td>>>>=</td>
+                                    <td>x >>>= y</td>
+                                    <td>x = x >>> y</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>Bitwise Assignment Operators</h2>
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Example</th>
+                                    <th>Same As</th>
+                                </tr>
+                                <tr>
+                                    <td>&amp;=</td>
+                                    <td>x &amp;= y</td>
+                                    <td>x = x &amp; y</td>
+                                </tr>
+                                <tr>
+                                    <td>^=</td>
+                                    <td>x ^= y</td>
+                                    <td>x = x ^ y</td>
+                                </tr>
+                                <tr>
+                                    <td>|=</td>
+                                    <td>x |= y</td>
+                                    <td>x = x | y</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <div>
+                        <h2>Logical Assignment Operators</h2>
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Operator</th>
+                                    <th>Example</th>
+                                    <th>Same As</th>
+                                </tr>
+                                <tr>
+                                    <td>&amp;&amp;=</td>
+                                    <td>x &amp;&amp;= y</td>
+                                    <td>x = x &amp;&amp; (x = y)</td>
+                                </tr>
+                                <tr>
+                                    <td>||=</td>
+                                    <td>x ||= y</td>
+                                    <td>x = x || (x = y)</td>
+                                </tr>
+                                <tr>
+                                    <td>??=</td>
+                                    <td>x ??= y</td>
+                                    <td>x = x ?? (x = y)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h2>Note</h2>
+                        <p>The Logical assignment operators are <a href="https://www.w3schools.com/js/js_2020.asp">ES2020</a>.</p>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>The = Operator</h2>
+                        <p>The <strong>Simple Assignment Operator</strong> assigns a value to a variable.</p>
+                        <h3>Simple Assignment Examples</h3>
+                        <div>let x = 10;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_equal" target="_blank"
+                            rel="noopener">Try
+                            it Yourself &raquo;</a>
+                        <div>let x = 10 + y;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_equal2" target="_blank"
+                            rel="noopener">Try
+                            it Yourself &raquo;</a>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>The += Operator</h2>
+                        <p>The <strong>Addition Assignment Operator</strong> adds a value to a variable.</p>
+                        <h3>Addition Assignment Examples</h3>
+                        <div>let x = 10;
+                            x += 5;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_plusequal" target="_blank"
+                            rel="noopener">Try
+                            it Yourself &raquo;</a>
+                        <div>let text = "Hello"; text += " World";</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_plusequal2"
+                            target="_blank" rel="noopener">Try
+                            it Yourself &raquo;</a>
+                    </div>
+                    <hr />
+
+
+                    <div>
+                        <h2>The -= Operator</h2>
+                        <p>The <strong>Subtraction Assignment Operator</strong> subtracts a value from a variable.</p>
+                        <h3>Subtraction Assignment Example</h3>
+                        <div>let x = 10;
+                            x -= 5;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_minequal" target="_blank"
+                            rel="noopener">Try
+                            it Yourself &raquo;</a>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>The *= Operator</h2>
+                        <p>The <strong>Multiplication Assignment Operator</strong> multiplies a variable.</p>
+                        <h3>Multiplication Assignment Example</h3>
+                        <div>let x = 10;
+                            x *= 5;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_multequal" target="_blank"
+                            rel="noopener">Try
+                            it Yourself &raquo;</a>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>The **= Operator</h2>
+                        <p>The <strong>Exponentiation Assignment Operator</strong> raises a variable to the power of the
+                            operand.</p>
+                        <h3>Exponentiation Assignment Example</h3>
+                        <div>let x = 10;
+                            x **= 5;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_exponential"
+                            target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>The /= Operator</h2>
+                        <p>The <strong>Division Assignment Operator</strong> divides a variable.</p>
+                        <h3>Division Assignment Example</h3>
+                        <div>let x = 10;
+                            x /= 5;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_divequal" target="_blank"
+                            rel="noopener">Try
+                            it Yourself &raquo;</a>
+                    </div>
+                    <hr />
+                    <div>
+                        <h2>The %= Operator</h2>
+                        <p>The <strong>Remainder Assignment Operator</strong> assigns a remainder to a variable.</p>
+                        <h3>Remainder Assignment Example</h3>
+                        <div>let x = 10;
+                            x %= 5;</div>
+                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_modequal" target="_blank"
+                            rel="noopener">Try
+                            it Yourself &raquo;</a>
+                    </div>
+                    <hr />
+
+                    <div>
+                        <h2>The <<= Operator</h2>
+                                <p>The <strong>Left Shift Assignment Operator</strong> left shifts a variable.</p>
+                                <h3>Left Shift Assignment Example</h3>
+                                <div>let x = -100;
+                                    x <<= 5;</div>
+                                        <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_left_shift"
+                                            target="_blank" rel="noopener">Try
+                                            it Yourself &raquo;</a>
+                                </div>
+                                <hr />
+
+                                <div>
+                                    <h2>The >>= Operator</h2>
+                                    <p>The <strong>Right Shift Assignment Operator</strong> right shifts a variable
+                                        (signed).</p>
+                                    <h3>Right Shift Assignment Example</h3>
+                                    <div>let x = -100;
+                                        x >>= 5;</div>
+                                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_right_shift"
+                                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                                </div>
+                                <hr />
+                                <div>
+                                    <h2>The >>>= Operator</h2>
+                                    <p>The <strong>Unsigned Right Shift Assignment Operator</strong> right shifts a
+                                        variable (unsigned).</p>
+                                    <h3>Unsigned Right Shift Assignment Example</h3>
+                                    <div>let x = -100;
+                                        x >>>= 5;</div>
+                                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_unsigned_right_shift"
+                                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                                </div>
+                                <hr />
+                                <div>
+                                    <h2>The &amp;= Operator</h2>
+                                    <p>The <strong>Bitwise AND Assignment Operator</strong> does a bitwise AND operation
+                                        on two operands
+                                        and assigns the result to the the variable.</p>
+                                    <h3>Bitwise AND Assignment Example</h3>
+                                    <div>let x = 10;
+                                        x &amp;= 5;</div>
+                                    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_assign_bitwise_and"
+                                        target="_blank" rel="noopener">Try it Yourself &raquo;</a>
+                                </div>
+                                <hr />
+
+
 <div>
 <h2>The |= Operator</h2>
 <p>The <strong>Bitwise OR Assignment Operator</strong> does a bitwise OR operation on two operands
@@ -82,42 +2489,34 @@
     <div>// Numbers:
         let length = 16;
         let weight = 7.5;
-        // Strings:
-        let
+        // Strings:let
         color = "Yellow";
         let lastName = "Johnson";
         // Booleans
-        let x =
-        true;
+        let x = true;
         let y = false;
         // Object:
-        const person = {firstName:"John",
-        lastName:"Doe"};
+        const person = {firstName:"John",lastName:"Doe"};
         // Array object:
-        const cars = ["Saab", "Volvo",
-        "BMW"];
+        const cars = ["Saab", "Volvo","BMW"];
         // Date object:
         const date = new Date("2022-03-25");</div>
-</div>
-<div>
+
     <h2>Note</h2>
     <p>A JavaScript variable can hold any type of data.</p>
 </div>
+<hr />
 <h2>The Concept of Data Types</h2>
 <p>In programming, data types is an important concept.</p>
 <p>To be able to operate on variables, it is important to know something about the type.</p>
 <p>Without data types, a computer cannot safely solve this:</p>
-<div>
+
     <div>let x = 16 + "Volvo";</div>
-</div>
-<p>Does it make any sense to add "Volvo" to sixteen? Will it produce an error or will it produce a
-    result?</p>
+<p>Does it make any sense to add "Volvo" to sixteen? Will it produce an error or will it produce a result?</p>
 <p>JavaScript will treat the example above as:</p>
-<div>
+
     <div>let x = "16" + "Volvo";</div>
-</div>
-<div>
-    <h2>Note</h2>
+    <h4>Note</h4>
     <p>When adding a number and a string, JavaScript will treat the number as a string.</p>
 </div>
 <div>
@@ -132,57 +2531,41 @@
     <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_datatypes_addstring2" target="_blank"
         rel="noopener">Try it Yourself &raquo;</a>
 </div>
-<p>JavaScript evaluates expressions from left to right. Different sequences can produce different
-    results:</p>
+<p>JavaScript evaluates expressions from left to right. Different sequences can produce different results:</p>
 <div>
     <h3>JavaScript:</h3>
     <div>let x = 16 + 4 + "Volvo";</div>
     <p>Result:</p>
-    <div><code>20Volvo</code></div>
-    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_datatypes_addstrings_1" target="_blank"
-        rel="noopener">Try it Yourself &raquo;</a>
+    <div><code>20 Volvo</code></div>
+    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_datatypes_addstrings_1" target="_blank" rel="noopener">Try it Yourself &raquo;</a>
 </div>
 <div>
     <h3>JavaScript:</h3>
     <div>let x = "Volvo" + 16 + 4;</div>
     <p>Result:</p>
     <div><code>Volvo164</code></div>
-    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_datatypes_addstrings_2" target="_blank"
-        rel="noopener">Try it Yourself &raquo;</a>
+    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_datatypes_addstrings_2" target="_blank" rel="noopener">Try it Yourself &raquo;</a>
 </div>
 <p>In the first example, JavaScript treats 16 and 4 as numbers, until it reaches "Volvo".</p>
-<p>In the second example, since the first operand is a string, all operands are treated as strings.
-</p>
+<p>In the second example, since the first operand is a string, all operands are treated as strings.</p>
 <hr />
-
-
-
-
-
-
-<hr />
-
-
 
 
 
 
 <h2>JavaScript Types are Dynamic</h2>
-<p>JavaScript has dynamic types. This means that the same variable can be used to hold different
-    data types:</p>
+<p>JavaScript has dynamic types. This means that the same variable can be used to hold different data types:</p>
 <div>
     <h5>Example</h5>
-    <div>let x; // Now x is undefined
+    <code>
+        let x; // Now x is undefined
         x = 5; // Now x is a Number
         x = "John"; // Now x is
-        a String</div>
-    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_datatypes_dynamic" target="_blank" rel="noopener">Try
-        it Yourself &raquo;</a>
+        a String
+    </code>
+    <a href="https://www.w3schools.com/js/tryit.asp?filename=tryjs_datatypes_dynamic" target="_blank" rel="noopener">Try it Yourself &raquo;</a>
 </div>
 <hr />
-
-
-
 
 
 
