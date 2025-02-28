@@ -1,4 +1,15 @@
+/* Add CSS reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Use CSS custom properties for consistency */
 :root {
+    --primary-color: #007bff;
+    --text-color: #333;
+    --header-height: 70px;
     --font-family-primary: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-family-secondary: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-family-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -56,9 +67,6 @@
     --sizes-button-xsmall-padding: 10px;
     --sizes-button-xsmall-text: var(--sizes-text-xsmall-size);
 }
-
-
-
 
 header {
     padding-top: 30px;
@@ -331,4 +339,9 @@ nav ul li a {
 /* nav ul li a:hover:not(.active) {background-color: #111;} */
 .active {
     background-color: #04AA6D;
+}
+
+/* Add responsive breakpoints */
+@media (max-width: 768px) {
+    /* ...responsive styles... */
 }
