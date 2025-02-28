@@ -35,6 +35,147 @@
         th {
             background-color: #f2f2f2;
         }
+        
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            position: relative;
+        }
+        
+        .sidebar {
+            width: 300px;
+            position: sticky;
+            top: 20px;
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+            padding: 20px;
+            background: #fff;
+            border-right: 1px solid #dee2e6;
+        }
+        
+        .main-content {
+            flex: 1;
+            max-width: calc(100% - 330px);
+        }
+        
+        .sidebar ul, .sidebar ol {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .sidebar a:hover {
+            background: #f0f0f0;
+            color: #007bff;
+        }
+        
+        .sidebar ul ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        
+        /* Add smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 20px;
+        }
+        .sidebar {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px 25px;
+      max-width: 350px;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+    
+    .sidebar h2 {
+      color: #2c3e50;
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #3498db;
+    }
+    
+    .sidebar ol {
+      counter-reset: section;
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 0;
+    }
+    
+    .sidebar ol > li {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 12px;
+      counter-increment: section;
+      font-weight: 500;
+    }
+    
+    .sidebar ol > li::before {
+      content: counter(section) ".";
+      position: absolute;
+      left: 0;
+      color: #3498db;
+      font-weight: 600;
+    }
+    
+    .sidebar ul {
+      list-style-type: none;
+      padding-left: 25px;
+      margin-top: 8px;
+      margin-bottom: 5px;
+    }
+    
+    .sidebar ul > li {
+      margin-bottom: 8px;
+      font-weight: normal;
+      position: relative;
+      padding-left: 15px;
+    }
+    
+    .sidebar ul > li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #3498db;
+    }
+    
+    .sidebar a {
+      color: #34495e;
+      text-decoration: none;
+      transition: color 0.2s;
+      display: inline-block;
+      line-height: 1.4;
+    }
+    
+    .sidebar a:hover {
+      color: #3498db;
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        max-width: 100%;
+      }
+    }
+
+       
+       
+
+           
+        
     </style>
 </head>
 <body>
@@ -61,492 +202,525 @@
     </header>
 
     <div class="container mt-5">
-        <h1 class="mb-4">Detailed Explanation of Each Point for REST API Development</h1>
+        <div class="content-wrapper">
+            <!-- Sidebar with Table of Contents -->
+            <div class="sidebar">
+    <h2>Table of Contents</h2>
+    <ol>
+      <li><a href="#what-is-rest">What is a REST API?</a></li>
+      <li><a href="#key-features">Key Features of REST API</a></li>
+      <li><a href="#http-methods">HTTP Methods in REST API</a>
+        <ul>
+          <li><a href="#get-method">GET - Retrieve Data</a></li>
+          <li><a href="#post-method">POST - Create New Resource</a></li>
+          <li><a href="#put-method">PUT - Update Resource</a></li>
+          <li><a href="#patch-method">PATCH - Partial Update</a></li>
+          <li><a href="#delete-method">DELETE - Remove Resource</a></li>
+        </ul>
+      </li>
+      <li><a href="#less-common-methods">Less Common HTTP Methods</a></li>
+      <li><a href="#best-practices">Best Practices for API Design</a></li>
+      <li><a href="#authentication">Authentication</a></li>
+      <li><a href="#caching">REST API Caching Strategies</a></li>
+      <li><a href="#headers">HTTP Headers: A Deep Dive</a></li>
+      <li><a href="#development-steps">Steps to Develop a REST API</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#documentation">Documentation</a></li>
+      <li><a href="#testing">Testing</a></li>
+      <li><a href="#versioning">Versioning</a></li>
+      <li><a href="#deployment">Deployment</a></li>
+      <li><a href="#frameworks">Frameworks</a></li>
+    </ol>
+  </div>
 
-        <section class="mb-5 section-bg">
-            <h2>1. What is a REST API?</h2>
-            <p><b>REST (Representational State Transfer)</b> is an architectural style for networked applications using <b>stateless communication</b>.</p>
-            <h3>Key Aspects:</h3>
-            <ul>
-                <li>Works over <b>HTTP/HTTPS</b>.</li>
-                <li>Uses <b>resources</b> (users, products) represented by <b>URLs</b>.</li>
-                <li>Stateless.</li>
-            </ul>
-            <p><b>Example:</b></p>
-            <div class="code-block">
-                <pre><code class="text">https://api.example.com/v1/users/123</code></pre>
-            </div>
-        </section>
+            <!-- Main Content -->
+            <div class="main-content">
+                <h1 class="mb-4">Detailed Explanation of Each Point for REST API Development</h1>
 
-        <section class="mb-5 section-bg">
-            <h2>2. Key Features of REST API</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Feature</th>
-                        <th>Explanation</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Stateless</td>
-                        <td>Each request contains all data.</td>
-                    </tr>
-                    <tr>
-                        <td>Client-Server Separation</td>
-                        <td>Frontend and backend are independent.</td>
-                    </tr>
-                    <tr>
-                        <td>Uniform Interface</td>
-                        <td>Consistent format.</td>
-                    </tr>
-                    <tr>
-                        <td>Cacheable</td>
-                        <td>Responses can be cached.</td>
-                    </tr>
-                    <tr>
-                        <td>Layered System</td>
-                        <td>Supports proxies, load balancers.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="what-is-rest" class="mb-5 section-bg">
+                    <h2>1. What is a REST API?</h2>
+                    <p><b>REST (Representational State Transfer)</b> is an architectural style for networked applications using <b>stateless communication</b>.</p>
+                    <h3>Key Aspects:</h3>
+                    <ul>
+                        <li>Works over <b>HTTP/HTTPS</b>.</li>
+                        <li>Uses <b>resources</b> (users, products) represented by <b>URLs</b>.</li>
+                        <li>Stateless.</li>
+                    </ul>
+                    <p><b>Example:</b></p>
+                    <div class="code-block">
+                        <pre><code class="text">https://api.example.com/v1/users/123</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3. HTTP Methods in REST API</h2>
-            <p>HTTP methods are <b>verbs</b> for actions on resources.</p>
-            <p>Common verbs: <b>GET, POST, PUT, PATCH, DELETE</b></p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>CRUD</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>GET</td>
-                        <td>Read</td>
-                        <td>Retrieve Data</td>
-                    </tr>
-                    <tr>
-                        <td>POST</td>
-                        <td>Create</td>
-                        <td>Add New Data</td>
-                    </tr>
-                    <tr>
-                        <td>PUT</td>
-                        <td>Update</td>
-                        <td>Full Update</td>
-                    </tr>
-                    <tr>
-                        <td>PATCH</td>
-                        <td>Update</td>
-                        <td>Partial Update</td>
-                    </tr>
-                    <tr>
-                        <td>DELETE</td>
-                        <td>Delete</td>
-                        <td>Remove Data</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="key-features" class="mb-5 section-bg">
+                    <h2>2. Key Features of REST API</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Explanation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Stateless</td>
+                                <td>Each request contains all data.</td>
+                            </tr>
+                            <tr>
+                                <td>Client-Server Separation</td>
+                                <td>Frontend and backend are independent.</td>
+                            </tr>
+                            <tr>
+                                <td>Uniform Interface</td>
+                                <td>Consistent format.</td>
+                            </tr>
+                            <tr>
+                                <td>Cacheable</td>
+                                <td>Responses can be cached.</td>
+                            </tr>
+                            <tr>
+                                <td>Layered System</td>
+                                <td>Supports proxies, load balancers.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3.1 GET - Retrieve Data</h2>
-            <h3>Purpose</h3>
-            <p>Fetch data (read-only).</p>
-            <h3>Characteristics</h3>
-            <ul>
-                <li>Idempotent.</li>
-                <li>Safe.</li>
-            </ul>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">GET /api/users/123</code></pre>
-            </div>
-            <h3>Response:</h3>
-            <div class="code-block">
-                <pre><code class="json">{
+                <section id="http-methods" class="mb-5 section-bg">
+                    <h2>3. HTTP Methods in REST API</h2>
+                    <p>HTTP methods are <b>verbs</b> for actions on resources.</p>
+                    <p>Common verbs: <b>GET, POST, PUT, PATCH, DELETE</b></p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>CRUD</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GET</td>
+                                <td>Read</td>
+                                <td>Retrieve Data</td>
+                            </tr>
+                            <tr>
+                                <td>POST</td>
+                                <td>Create</td>
+                                <td>Add New Data</td>
+                            </tr>
+                            <tr>
+                                <td>PUT</td>
+                                <td>Update</td>
+                                <td>Full Update</td>
+                            </tr>
+                            <tr>
+                                <td>PATCH</td>
+                                <td>Update</td>
+                                <td>Partial Update</td>
+                            </tr>
+                            <tr>
+                                <td>DELETE</td>
+                                <td>Delete</td>
+                                <td>Remove Data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="get-method" class="mb-5 section-bg">
+                    <h2>3.1 GET - Retrieve Data</h2>
+                    <h3>Purpose</h3>
+                    <p>Fetch data (read-only).</p>
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>Idempotent.</li>
+                        <li>Safe.</li>
+                    </ul>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">GET /api/users/123</code></pre>
+                    </div>
+                    <h3>Response:</h3>
+                    <div class="code-block">
+                        <pre><code class="json">{
     "id": 123,
     "name": "John Doe",
     "email": "john@example.com"
 }</code></pre>
-            </div>
-            <h3>Best Practices</h3>
-            <ul>
-                <li>✅ Clear URLs.</li>
-                <li>✅ Avoid sensitive data in URLs.</li>
-            </ul>
-        </section>
+                    </div>
+                    <h3>Best Practices</h3>
+                    <ul>
+                        <li>✅ Clear URLs.</li>
+                        <li>✅ Avoid sensitive data in URLs.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3.2 POST - Create New Resource</h2>
-            <h3>Purpose</h3>
-            <p>Create a new resource.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">POST /api/products</code></pre>
-            </div>
-            <h3>Request Body:</h3>
-            <div class="code-block">
-                <pre><code class="json">{
+                <section id="post-method" class="mb-5 section-bg">
+                    <h2>3.2 POST - Create New Resource</h2>
+                    <h3>Purpose</h3>
+                    <p>Create a new resource.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">POST /api/products</code></pre>
+                    </div>
+                    <h3>Request Body:</h3>
+                    <div class="code-block">
+                        <pre><code class="json">{
     "name": "Wireless Mouse",
     "price": 25.99,
     "stock": 100
 }</code></pre>
-            </div>
-            <h3>Key Considerations</h3>
-            <ul>
-                <li>✅ Validate data.</li>
-                <li>✅ Document required fields.</li>
-            </ul>
-        </section>
+                    </div>
+                    <h3>Key Considerations</h3>
+                    <ul>
+                        <li>✅ Validate data.</li>
+                        <li>✅ Document required fields.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3.3 PUT - Update Resource</h2>
-            <h3>Purpose</h3>
-            <p>Replace a resource.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">PUT /api/users/123</code></pre>
-            </div>
-            <h3>Request Body:</h3>
-            <div class="code-block">
-                <pre><code class="json">{
+                <section id="put-method" class="mb-5 section-bg">
+                    <h2>3.3 PUT - Update Resource</h2>
+                    <h3>Purpose</h3>
+                    <p>Replace a resource.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">PUT /api/users/123</code></pre>
+                    </div>
+                    <h3>Request Body:</h3>
+                    <div class="code-block">
+                        <pre><code class="json">{
     "name": "John Updated",
     "email": "john.updated@example.com"
 }</code></pre>
-            </div>
-            <h3>Characteristics</h3>
-            <ul>
-                <li>Idempotent.</li>
-            </ul>
-            <h3>Best Practices</h3>
-            <ul>
-                <li>✅ Send all fields.</li>
-                <li>✅ Use for full updates.</li>
-            </ul>
-        </section>
+                    </div>
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>Idempotent.</li>
+                    </ul>
+                    <h3>Best Practices</h3>
+                    <ul>
+                        <li>✅ Send all fields.</li>
+                        <li>✅ Use for full updates.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3.4 PATCH - Partial Update</h2>
-            <h3>Purpose</h3>
-            <p>Modify specific fields.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">PATCH /api/products/45</code></pre>
-            </div>
-            <h3>Request Body:</h3>
-            <div class="code-block">
-                <pre><code class="json">{
+                <section id="patch-method" class="mb-5 section-bg">
+                    <h2>3.4 PATCH - Partial Update</h2>
+                    <h3>Purpose</h3>
+                    <p>Modify specific fields.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">PATCH /api/products/45</code></pre>
+                    </div>
+                    <h3>Request Body:</h3>
+                    <div class="code-block">
+                        <pre><code class="json">{
     "stock": 150
 }</code></pre>
-            </div>
-            <h3>Key Considerations</h3>
-            <ul>
-                <li>✅ Ensure data consistency.</li>
-                <li>✅ Document allowed fields.</li>
-            </ul>
-        </section>
+                    </div>
+                    <h3>Key Considerations</h3>
+                    <ul>
+                        <li>✅ Ensure data consistency.</li>
+                        <li>✅ Document allowed fields.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3.5 DELETE - Remove Resource</h2>
-            <h3>Purpose</h3>
-            <p>Delete a resource.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">DELETE /api/orders/78</code></pre>
-            </div>
-            <h3>Characteristics</h3>
-            <ul>
-                <li>Idempotent.</li>
-            </ul>
-            <h3>Best Practices</h3>
-            <ul>
-                <li>✅ Manage related data.</li>
-                <li>✅ Consider soft delete.</li>
-            </ul>
-        </section>
+                <section id="delete-method" class="mb-5 section-bg">
+                    <h2>3.5 DELETE - Remove Resource</h2>
+                    <h3>Purpose</h3>
+                    <p>Delete a resource.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">DELETE /api/orders/78</code></pre>
+                    </div>
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>Idempotent.</li>
+                    </ul>
+                    <h3>Best Practices</h3>
+                    <ul>
+                        <li>✅ Manage related data.</li>
+                        <li>✅ Consider soft delete.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>4. Less Common HTTP Methods</h2>
-        </section>
+                <section id="less-common-methods" class="mb-5 section-bg">
+                    <h2>4. Less Common HTTP Methods</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>4.1 HEAD - Retrieve Headers</h2>
-            <h3>Purpose</h3>
-            <p>Get headers only.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">HEAD /api/products/45</code></pre>
-            </div>
-            <h3>Use Cases</h3>
-            <ul>
-                <li>Check if resource exists.</li>
-                <li>Get content length.</li>
-            </ul>
-        </section>
+                <section id="head-method" class="mb-5 section-bg">
+                    <h2>4.1 HEAD - Retrieve Headers</h2>
+                    <h3>Purpose</h3>
+                    <p>Get headers only.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">HEAD /api/products/45</code></pre>
+                    </div>
+                    <h3>Use Cases</h3>
+                    <ul>
+                        <li>Check if resource exists.</li>
+                        <li>Get content length.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>4.2 OPTIONS - Describe Operations</h2>
-            <h3>Purpose</h3>
-            <p>Ask allowed HTTP methods.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">OPTIONS /api/products</code></pre>
-            </div>
-            <h3>Response:</h3>
-            <div class="code-block">
-                <pre><code class="http">Allow: GET, POST, PUT, DELETE</code></pre>
-            </div>
-            <h3>Use Case</h3>
-            <ul>
-                <li>CORS pre-flight requests.</li>
-            </ul>
-        </section>
+                <section id="options-method" class="mb-5 section-bg">
+                    <h2>4.2 OPTIONS - Describe Operations</h2>
+                    <h3>Purpose</h3>
+                    <p>Ask allowed HTTP methods.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">OPTIONS /api/products</code></pre>
+                    </div>
+                    <h3>Response:</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Allow: GET, POST, PUT, DELETE</code></pre>
+                    </div>
+                    <h3>Use Case</h3>
+                    <ul>
+                        <li>CORS pre-flight requests.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>5. Best Practices for API Design</h2>
-            <h3>1️⃣ Use Appropriate HTTP Method</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Action</th>
-                        <th>Method</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Fetch items</td>
-                        <td>GET</td>
-                    </tr>
-                    <tr>
-                        <td>Create item</td>
-                        <td>POST</td>
-                    </tr>
-                    <tr>
-                        <td>Full Update</td>
-                        <td>PUT</td>
-                    </tr>
-                    <tr>
-                        <td>Partial Update</td>
-                        <td>PATCH</td>
-                    </tr>
-                    <tr>
-                        <td>Delete item</td>
-                        <td>DELETE</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>2️⃣ Follow REST Principles</h3>
-            <ul>
-                <li>Nouns for resources.</li>
-                <li>Verbs in HTTP methods.</li>
-            </ul>
-            <h3>Example:</h3>
-            <div class="code-block">
-                <pre><code class="text">GET /users ✔️
+                <section id="best-practices" class="mb-5 section-bg">
+                    <h2>5. Best Practices for API Design</h2>
+                    <h3>1️⃣ Use Appropriate HTTP Method</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Method</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fetch items</td>
+                                <td>GET</td>
+                            </tr>
+                            <tr>
+                                <td>Create item</td>
+                                <td>POST</td>
+                            </tr>
+                            <tr>
+                                <td>Full Update</td>
+                                <td>PUT</td>
+                            </tr>
+                            <tr>
+                                <td>Partial Update</td>
+                                <td>PATCH</td>
+                            </tr>
+                            <tr>
+                                <td>Delete item</td>
+                                <td>DELETE</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>2️⃣ Follow REST Principles</h3>
+                    <ul>
+                        <li>Nouns for resources.</li>
+                        <li>Verbs in HTTP methods.</li>
+                    </ul>
+                    <h3>Example:</h3>
+                    <div class="code-block">
+                        <pre><code class="text">GET /users ✔️
 POST /users ✔️
 DELETE /users/123 ✔️</code></pre>
-            </div>
-            <h3>3️⃣ Return Proper Status Codes</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Code</th>
-                        <th>Meaning</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>200</td>
-                        <td>Success</td>
-                    </tr>
-                    <tr>
-                        <td>201</td>
-                        <td>Created</td>
-                    </tr>
-                    <tr>
-                        <td>400</td>
-                        <td>Bad Request</td>
-                    </tr>
-                    <tr>
-                        <td>404</td>
-                        <td>Not Found</td>
-                    </tr>
-                    <tr>
-                        <td>500</td>
-                        <td>Server Error</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>4️⃣ Secure Your API</h3>
-            <ul>
-                <li>✅ Use HTTPS.</li>
-                <li>✅ Validate inputs.</li>
-                <li>✅ Use authentication.</li>
-                <li>✅ Implement rate limiting.</li>
-            </ul>
-            <h3>5️⃣ Document Everything</h3>
-            <p>Use tools like Swagger or Postman.</p>
-            <h3>Example:</h3>
-            <div class="code-block">
-                <pre><code class="yaml">paths:
+                    </div>
+                    <h3>3️⃣ Return Proper Status Codes</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>200</td>
+                                <td>Success</td>
+                            </tr>
+                            <tr>
+                                <td>201</td>
+                                <td>Created</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>Bad Request</td>
+                            </tr>
+                            <tr>
+                                <td>404</td>
+                                <td>Not Found</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>Server Error</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>4️⃣ Secure Your API</h3>
+                    <ul>
+                        <li>✅ Use HTTPS.</li>
+                        <li>✅ Validate inputs.</li>
+                        <li>✅ Use authentication.</li>
+                        <li>✅ Implement rate limiting.</li>
+                    </ul>
+                    <h3>5️⃣ Document Everything</h3>
+                    <p>Use tools like Swagger or Postman.</p>
+                    <h3>Example:</h3>
+                    <div class="code-block">
+                        <pre><code class="yaml">paths:
   /users:
     get:
       summary: Get all users
       responses:
         200:
           description: List of users</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>6. Quick Recap</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>Action</th>
-                        <th>Example</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>GET</td>
-                        <td>Read</td>
-                        <td>GET /users/123</td>
-                    </tr>
-                    <tr>
-                        <td>POST</td>
-                        <td>Create</td>
-                        <td>POST /products</td>
-                    </tr>
-                    <tr>
-                        <td>PUT</td>
-                        <td>Update</td>
-                        <td>PUT /users/123</td>
-                    </tr>
-                    <tr>
-                        <td>PATCH</td>
-                        <td>Update</td>
-                        <td>PATCH /products/45</td>
-                    </tr>
-                    <tr>
-                        <td>DELETE</td>
-                        <td>Remove</td>
-                        <td>DELETE /orders/78</td>
-                    </tr>
-                    <tr>
-                        <td>HEAD</td>
-                        <td>Headers</td>
-                        <td>HEAD /products/45</td>
-                    </tr>
-                    <tr>
-                        <td>OPTIONS</td>
-                        <td>Allowed</td>
-                        <td>OPTIONS /products</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="recap" class="mb-5 section-bg">
+                    <h2>6. Quick Recap</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Action</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GET</td>
+                                <td>Read</td>
+                                <td>GET /users/123</td>
+                            </tr>
+                            <tr>
+                                <td>POST</td>
+                                <td>Create</td>
+                                <td>POST /products</td>
+                            </tr>
+                            <tr>
+                                <td>PUT</td>
+                                <td>Update</td>
+                                <td>PUT /users/123</td>
+                            </tr>
+                            <tr>
+                                <td>PATCH</td>
+                                <td>Update</td>
+                                <td>PATCH /products/45</td>
+                            </tr>
+                            <tr>
+                                <td>DELETE</td>
+                                <td>Remove</td>
+                                <td>DELETE /orders/78</td>
+                            </tr>
+                            <tr>
+                                <td>HEAD</td>
+                                <td>Headers</td>
+                                <td>HEAD /products/45</td>
+                            </tr>
+                            <tr>
+                                <td>OPTIONS</td>
+                                <td>Allowed</td>
+                                <td>OPTIONS /products</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>4. Steps to Develop a REST API</h2>
-            <h3>a) Define the Purpose</h3>
-            <ul>
-                <li>What data?</li>
-                <li>Who will use it?</li>
-            </ul>
-            <h3>b) Choose a Tech Stack</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Language</th>
-                        <th>Framework</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>PHP</td>
-                        <td>Laravel, Slim</td>
-                    </tr>
-                    <tr>
-                        <td>Node.js</td>
-                        <td>Express.js</td>
-                    </tr>
-                    <tr>
-                        <td>Python</td>
-                        <td>Flask, FastAPI</td>
-                    </tr>
-                    <tr>
-                        <td>Java</td>
-                        <td>Spring Boot</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>c) Setup Environment</h3>
-            <ul>
-                <li>Install runtime.</li>
-                <li>Setup database.</li>
-            </ul>
-        </section>
+                <section id="development-steps" class="mb-5 section-bg">
+                    <h2>4. Steps to Develop a REST API</h2>
+                    <h3>a) Define the Purpose</h3>
+                    <ul>
+                        <li>What data?</li>
+                        <li>Who will use it?</li>
+                    </ul>
+                    <h3>b) Choose a Tech Stack</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Language</th>
+                                <th>Framework</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PHP</td>
+                                <td>Laravel, Slim</td>
+                            </tr>
+                            <tr>
+                                <td>Node.js</td>
+                                <td>Express.js</td>
+                            </tr>
+                            <tr>
+                                <td>Python</td>
+                                <td>Flask, FastAPI</td>
+                            </tr>
+                            <tr>
+                                <td>Java</td>
+                                <td>Spring Boot</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h3>c) Setup Environment</h3>
+                    <ul>
+                        <li>Install runtime.</li>
+                        <li>Setup database.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>5. Design RESTful Endpoints</h2>
-            <p><b>Rule:</b> Nouns for resources, verbs in HTTP methods.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Action</th>
-                        <th>HTTP</th>
-                        <th>Endpoint</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>List Users</td>
-                        <td>GET</td>
-                        <td><code>/users</code></td>
-                        <td>Retrieve all.</td>
-                    </tr>
-                    <tr>
-                        <td>Get User</td>
-                        <td>GET</td>
-                        <td><code>/users/{id}</code></td>
-                        <td>Retrieve specific.</td>
-                    </tr>
-                    <tr>
-                        <td>Create User</td>
-                        <td>POST</td>
-                        <td><code>/users</code></td>
-                        <td>Add new.</td>
-                    </tr>
-                    <tr>
-                        <td>Update User</td>
-                        <td>PUT</td>
-                        <td><code>/users/{id}</code></td>
-                        <td>Update data.</td>
-                    </tr>
-                    <tr>
-                        <td>Delete User</td>
-                        <td>DELETE</td>
-                        <td><code>/users/{id}</code></td>
-                        <td>Remove.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="design-endpoints" class="mb-5 section-bg">
+                    <h2>5. Design RESTful Endpoints</h2>
+                    <p><b>Rule:</b> Nouns for resources, verbs in HTTP methods.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>HTTP</th>
+                                <th>Endpoint</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>List Users</td>
+                                <td>GET</td>
+                                <td><code>/users</code></td>
+                                <td>Retrieve all.</td>
+                            </tr>
+                            <tr>
+                                <td>Get User</td>
+                                <td>GET</td>
+                                <td><code>/users/{id}</code></td>
+                                <td>Retrieve specific.</td>
+                            </tr>
+                            <tr>
+                                <td>Create User</td>
+                                <td>POST</td>
+                                <td><code>/users</code></td>
+                                <td>Add new.</td>
+                            </tr>
+                            <tr>
+                                <td>Update User</td>
+                                <td>PUT</td>
+                                <td><code>/users/{id}</code></td>
+                                <td>Update data.</td>
+                            </tr>
+                            <tr>
+                                <td>Delete User</td>
+                                <td>DELETE</td>
+                                <td><code>/users/{id}</code></td>
+                                <td>Remove.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>6. Implement CRUD</h2>
-            <p><b>PHP Example:</b></p>
-            <div class="code-block">
-                <pre><code class="php">switch ($_SERVER['REQUEST_METHOD']) {
+                <section id="implement-crud" class="mb-5 section-bg">
+                    <h2>6. Implement CRUD</h2>
+                    <p><b>PHP Example:</b></p>
+                    <div class="code-block">
+                        <pre><code class="php">switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         if (isset($_GET['id'])) {
             getUser($_GET['id']);
@@ -565,320 +739,401 @@ DELETE /users/123 ✔️</code></pre>
         deleteUser($_GET['id']);
         break;
 }</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>7. Use Response Codes</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Code</th>
-                        <th>Meaning</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>200</td>
-                        <td>Success</td>
-                    </tr>
-                    <tr>
-                        <td>201</td>
-                        <td>Created</td>
-                    </tr>
-                    <tr>
-                        <td>400</td>
-                        <td>Bad Request</td>
-                    </tr>
-                    <tr>
-                        <td>401</td>
-                        <td>Unauthorized</td>
-                    </tr>
-                    <tr>
-                        <td>404</td>
-                        <td>Not Found</td>
-                    </tr>
-                    <tr>
-                        <td>500</td>
-                        <td>Server Error</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p><b>Example:</b></p>
-            <div class="code-block">
-                <pre><code class="json">{
+                <section id="response-codes" class="mb-5 section-bg">
+                    <h2>7. Use Response Codes</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>200</td>
+                                <td>Success</td>
+                            </tr>
+                            <tr>
+                                <td>201</td>
+                                <td>Created</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>Bad Request</td>
+                            </tr>
+                            <tr>
+                                <td>401</td>
+                                <td>Unauthorized</td>
+                            </tr>
+                            <tr>
+                                <td>404</td>
+                                <td>Not Found</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>Server Error</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><b>Example:</b></p>
+                    <div class="code-block">
+                        <pre><code class="json">{
     "status": 404,
     "message": "User not found"
 }</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>8. Authentication</h2>
-        </section>
+                <section id="authentication" class="mb-5 section-bg">
+                    <h2>8. Authentication</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>🔐 What is API Authentication?</h2>
-            <p>Verifying the identity of a client accessing an API.</p>
-        </section>
+                <section id="api-authentication" class="mb-5 section-bg">
+                    <h2>🔐 What is API Authentication?</h2>
+                    <p>Verifying the identity of a client accessing an API.</p>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>🚀 Key Methods</h3>
-            <h3>1️⃣ API Keys</h3>
-            <h4>🔧 How It Works</h4>
-            <p>Unique token in each request.</p>
-            <h4>✅ Example</h4>
-            <div class="code-block">
-                <pre><code class="http">GET /api/v1/users
+                <section id="key-methods" class="mb-5 section-bg">
+                    <h2>🚀 Key Methods</h3>
+                    <h3>1️⃣ API Keys</h3>
+                    <h4>🔧 How It Works</h4>
+                    <p>Unique token in each request.</p>
+                    <h4>✅ Example</h4>
+                    <div class="code-block">
+                        <pre><code class="http">GET /api/v1/users
 Headers:
     Authorization: ApiKey xyz1234securetoken</code></pre>
-            </div>
-            <h4>📌 Suitable For</h4>
-            <ul>
-                <li>Internal services.</li>
-                <li>Low-security APIs.</li>
-            </ul>
-            <h4>⚠️ Limitations</h4>
-            <ul>
-                <li>No identity context.</li>
-                <li>Vulnerable to leaks.</li>
-            </ul>
-        </section>
+                    </div>
+                    <h4>📌 Suitable For</h4>
+                    <ul>
+                        <li>Internal services.</li>
+                        <li>Low-security APIs.</li>
+                    </ul>
+                    <h4>⚠️ Limitations</h4>
+                    <ul>
+                        <li>No identity context.</li>
+                        <li>Vulnerable to leaks.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>2️⃣ JWT (JSON Web Token)</h3>
-            <h4>🔧 How It Works</h4>
-            <p>Server generates signed token with claims.</p>
-            <h4>✅ Example</h4>
-            <div class="code-block">
-                <pre><code class="http">GET /api/v1/orders
+                <section id="jwt" class="mb-5 section-bg">
+                    <h3>2️⃣ JWT (JSON Web Token)</h3>
+                    <h4>🔧 How It Works</h4>
+                    <p>Server generates signed token with claims.</p>
+                    <h4>✅ Example</h4>
+                    <div class="code-block">
+                        <pre><code class="http">GET /api/v1/orders
 Headers:
     Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI...</code></pre>
-            </div>
-            <h4>📌 Suitable For</h4>
-            <ul>
-                <li>Microservices.</li>
-                <li>Stateless APIs.</li>
-            </ul>
-            <h4>🌟 Benefits</h4>
-            <ul>
-                <li>Self-contained.</li>
-                <li>Works across environments.</li>
-            </ul>
-        </section>
+                    </div>
+                    <h4>📌 Suitable For</h4>
+                    <ul>
+                        <li>Microservices.</li>
+                        <li>Stateless APIs.</li>
+                    </ul>
+                    <h4>🌟 Benefits</h4>
+                    <ul>
+                        <li>Self-contained.</li>
+                        <li>Works across environments.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>3️⃣ OAuth 2.0</h3>
-            <h4>🔧 How It Works</h4>
-            <p>Delegated authorization for third-party access.</p>
-            <h4>✅ Example Flow</h4>
-            <p>App redirects to auth URL:</p>
-            <div class="code-block">
-                <pre><code class="arduino">https://auth.example.com/oauth/authorize</code></pre>
-            </div>
-            <p>App calls API with:</p>
-            <div class="code-block">
-                <pre><code class="http">GET /api/v1/photos
+                <section id="oauth" class="mb-5 section-bg">
+                    <h3>3️⃣ OAuth 2.0</h3>
+                    <h4>🔧 How It Works</h4>
+                    <p>Delegated authorization for third-party access.</p>
+                    <h4>✅ Example Flow</h4>
+                    <p>App redirects to auth URL:</p>
+                    <div class="code-block">
+                        <pre><code class="arduino">https://auth.example.com/oauth/authorize</code></pre>
+                    </div>
+                    <p>App calls API with:</p>
+                    <div class="code-block">
+                        <pre><code class="http">GET /api/v1/photos
 Headers:
     Authorization: Bearer access_token_abc123</code></pre>
-            </div>
-            <h4>📌 Suitable For</h4>
-            <ul>
-                <li>Social logins.</li>
-                <li>Third-party apps.</li>
-            </ul>
-            <h4>🌟 Benefits</h4>
-            <ul>
-                <li>Fine-grained scopes.</li>
-                <li>Standardized.</li>
-            </ul>
-        </section>
+                    </div>
+                    <h4>📌 Suitable For</h4>
+                    <ul>
+                        <li>Social logins.</li>
+                        <li>Third-party apps.</li>
+                    </ul>
+                    <h4>🌟 Benefits</h4>
+                    <ul>
+                        <li>Fine-grained scopes.</li>
+                        <li>Standardized.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>🔎 Comparison</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>Security</th>
-                        <th>Stateless?</th>
-                        <th>Identity</th>
-                        <th>Use Case</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>API Keys</td>
-                        <td>Basic</td>
-                        <td>✅</td>
-                        <td>❌</td>
-                        <td>Internal APIs</td>
-                    </tr>
-                    <tr>
-                        <td>JWT</td>
-                        <td>Strong</td>
-                        <td>✅</td>
-                        <td>✅</td>
-                        <td>Microservices</td>
-                    </tr>
-                    <tr>
-                        <td>OAuth 2.0</td>
-                        <td>Strong</td>
-                        <td>✅</td>
-                        <td>✅</td>
-                        <td>Third-party apps</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="comparison" class="mb-5 section-bg">
+                    <h2>🔎 Comparison</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Security</th>
+                                <th>Stateless?</th>
+                                <th>Identity</th>
+                                <th>Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>API Keys</td>
+                                <td>Basic</td>
+                                <td>✅</td>
+                                <td>❌</td>
+                                <td>Internal APIs</td>
+                            </tr>
+                            <tr>
+                                <td>JWT</td>
+                                <td>Strong</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                                <td>Microservices</td>
+                            </tr>
+                            <tr>
+                                <td>OAuth 2.0</td>
+                                <td>Strong</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                                <td>Third-party apps</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>✅ Choose Method</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Scenario</th>
-                        <th>Method</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Quick internal APIs</td>
-                        <td>API Key</td>
-                    </tr>
-                    <tr>
-                        <td>Stateless API</td>
-                        <td>JWT</td>
-                    </tr>
-                    <tr>
-                        <td>Third-party access</td>
-                        <td>OAuth 2.0</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="choose-method" class="mb-5 section-bg">
+                    <h2>✅ Choose Method</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Method</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Quick internal APIs</td>
+                                <td>API Key</td>
+                            </tr>
+                            <tr>
+                                <td>Stateless API</td>
+                                <td>JWT</td>
+                            </tr>
+                            <tr>
+                                <td>Third-party access</td>
+                                <td>OAuth 2.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>🔐 Best Practices</h2>
-            <h3>1️⃣ Enforce HTTPS</h3>
-            <p>Encrypt traffic.</p>
-            <h3>2️⃣ Secure Storage</h3>
-            <p>Secure API Keys.</p>
-            <h3>3️⃣ Rotate Secrets</h3>
-            <p>Rotate keys/tokens.</p>
-            <h3>4️⃣ Least Privilege</h3>
-            <p>Grant minimal permissions.</p>
-            <h3>5️⃣ Validate Inputs</h3>
-            <p>Protect against injection.</p>
-            <h3>6️⃣ Monitor Access</h3>
-            <p>Log authentication events.</p>
-        </section>
+                <section id="best-practices-auth" class="mb-5 section-bg">
+                    <h2>🔐 Best Practices</h2>
+                    <h3>1️⃣ Enforce HTTPS</h3>
+                    <p>Encrypt traffic.</p>
+                    <h3>2️⃣ Secure Storage</h3>
+                    <p>Secure API Keys.</p>
+                    <h3>3️⃣ Rotate Secrets</h3>
+                    <p>Rotate keys/tokens.</p>
+                    <h3>4️⃣ Least Privilege</h3>
+                    <p>Grant minimal permissions.</p>
+                    <h3>5️⃣ Validate Inputs</h3>
+                    <p>Protect against injection.</p>
+                    <h3>6️⃣ Monitor Access</h3>
+                    <p>Log authentication events.</p>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>⚠️ Common Mistakes</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Mistake</th>
-                        <th>Why It’s Risky</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Exposing API Keys</td>
-                        <td>Unauthorized access.</td>
-                    </tr>
-                    <tr>
-                        <td>Same key forever</td>
-                        <td>Risk of abuse.</td>
-                    </tr>
-                    <tr>
-                        <td>Using HTTP</td>
-                        <td>Exposes credentials.</td>
-                    </tr>
-                    <tr>
-                        <td>Skipping validation</td>
-                        <td>Injection attacks.</td>
-                    </tr>
-                    <tr>
-                        <td>Excessive permissions</td>
-                        <td>Violates least privilege.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="common-mistakes-auth" class="mb-5 section-bg">
+                    <h2>⚠️ Common Mistakes</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mistake</th>
+                                <th>Why It’s Risky</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Exposing API Keys</td>
+                                <td>Unauthorized access.</td>
+                            </tr>
+                            <tr>
+                                <td>Same key forever</td>
+                                <td>Risk of abuse.</td>
+                            </tr>
+                            <tr>
+                                <td>Using HTTP</td>
+                                <td>Exposes credentials.</td>
+                            </tr>
+                            <tr>
+                                <td>Skipping validation</td>
+                                <td>Injection attacks.</td>
+                            </tr>
+                            <tr>
+                                <td>Excessive permissions</td>
+                                <td>Violates least privilege.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>📣 Conclusion</h2>
-        </section>
+                <section id="conclusion-auth" class="mb-5 section-bg">
+                    <h2>📣 Conclusion</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>9. Input Validation</h2>
-            <p>Validate data to prevent SQL Injection.</p>
-            <p><b>PHP Example:</b></p>
-            <div class="code-block">
-                <pre><code class="php">if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                <section id="input-validation" class="mb-5 section-bg">
+                    <h2>9. Input Validation</h2>
+                    <p>Validate data to prevent SQL Injection.</p>
+                    <p><b>PHP Example:</b></p>
+                    <div class="code-block">
+                        <pre><code class="php">if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(["error" => "Invalid email"]);
     exit;
 }</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>10. Error Handling</h2>
-            <p>Log errors and return clean messages.</p>
-            <p><b>Example:</p>
-            <div class="code-block">
-                <pre><code class="json">{
+                <section id="error-handling" class="mb-5 section-bg">
+                    <h2>10. Error Handling</h2>
+                    <p>Log errors and return clean messages.</p>
+                    <p><b>Example:</p>
+                    <div class="code-block">
+                        <pre><code class="json">{
     "error": "User not found",
     "code": 404
 }</code></pre>
-            </div>
-            <p><b>PHP Log:</b></p>
-            <div class="code-block">
-                <pre><code class="php">error_log("User not found: ID " . $user_id);</code></pre>
-            </div>
-        </section>
+                    </div>
+                    <p><b>PHP Log:</b></p>
+                    <div class="code-block">
+                        <pre><code class="php">error_log("User not found: ID " . $user_id);</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>11. Pagination</h2>
-            <p>Paginate large datasets.</p>
-            <p><b>Example Query:</b></p>
-            <div class="code-block">
-                <pre><code class="text">GET /users?page=2&limit=10</code></pre>
-            </div>
-            <p><b>Example Response:</b></p>
-            <div class="code-block">
-                <pre><code class="json">{
+                <section id="pagination" class="mb-5 section-bg">
+                    <h2>11. Pagination</h2>
+                    <p>Paginate large datasets.</p>
+                    <p><b>Example Query:</b></p>
+                    <div class="code-block">
+                        <pre><code class="text">GET /users?page=2&limit=10</code></pre>
+                    </div>
+                    <p><b>Example Response:</b></p>
+                    <div class="code-block">
+                        <pre><code class="json">{
     "page": 2,
     "total_pages": 5,
     "data": [/* User list */]
 }</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-                <h2>12. Security</h2>
-            <ul>
-                <li><b>HTTPS</b>.</li>
-                <li><b>Input Sanitization</b>.</li>
-                <li><b>Rate Limiting</b>.</li>
-                <li><b>Tokens/JWT</b>.</li>
-            </ul>
-            <p><b>Rate Limit (PHP):</b></p>
-            <div class="code-block">
-                <pre><code class="php">$ip = $_SERVER['REMOTE_ADDR'];
-// Track IP requests</code></pre>
-            </div>
-        </section>
+                <section id="security" class="mb-5 section-bg">
+                    <h2>12. Security</h2>
+                    <p class="lead">Security is a critical aspect of API development. Here are essential security best practices to protect your API from common vulnerabilities.</p>
 
-        <section class="mb-5 section-bg">
-            <h2>13. Documentation</h2>
-            <p>Use Swagger or Postman.</p>
-            <p><b>Example:</b></p>
-            <div class="code-block">
-                <pre><code class="json">{
+                    <h3>12.1 Input Validation</h3>
+                    <p>Always validate all incoming data to prevent <b>injection attacks</b>.</p>
+                    <div class="code-block">
+                        <pre><code class="php">// Example: Validating 'id' parameter
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+if ($id === false) {
+    http_response_code(400);
+    echo json_encode(["error" => "Invalid ID"]);
+    exit;
+}</code></pre>
+                    </div>
+
+                    <h3>12.2 Output Encoding</h3>
+                    <p>Encode all API responses to prevent <b>cross-site scripting (XSS)</b>.</p>
+                    <div class="code-block">
+                        <pre><code class="php">$name = htmlspecialchars($user['name'], ENT_QUOTES, 'UTF-8');
+echo json_encode(['name' => $name]);</code></pre>
+                    </div>
+
+                    <h3>12.3 Authentication</h3>
+                    <p>Use strong authentication mechanisms:</p>
+                    <ul>
+                        <li>OAuth 2.0</li>
+                        <li>JWT (JSON Web Tokens)</li>
+                        <li>API Keys</li>
+                    </ul>
+                    <div class="code-block">
+                        <pre><code class="php">// JWT Authentication Example
+$jwt = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
+
+if (!$jwt || !validateJWT($jwt)) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit;
+}</code></pre>
+                    </div>
+
+                    <h3>12.4 Rate Limiting</h3>
+                    <p>Protect from abuse and DoS attacks:</p>
+                    <div class="code-block">
+                        <pre><code class="php">$ip = $_SERVER['REMOTE_ADDR'];
+$rateLimitKey = "rate_limit:$ip";
+
+// Using Redis for tracking
+$requests = $redis->incr($rateLimitKey);
+$redis->expire($rateLimitKey, 60);  // 60 seconds window
+
+if ($requests > 100) {
+    http_response_code(429);
+    echo json_encode(['error' => 'Too many requests']);
+    exit;
+}</code></pre>
+                    </div>
+
+                    <h3>12.5 HTTPS Enforcement</h3>
+                    <p>Always use HTTPS to encrypt data in transit:</p>
+                    <div class="code-block">
+                        <pre><code class="php">if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off') {
+    header("Location: https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+    exit;
+}</code></pre>
+                    </div>
+
+                    <h3>12.6 Secure Error Handling</h3>
+                    <p>Avoid exposing sensitive information in errors:</p>
+                    <div class="code-block">
+                        <pre><code class="php">try {
+    // Risky operation
+} catch (Exception $e) {
+    // Log detailed error internally
+    error_log($e->getMessage());
+    
+    // Return generic error to client
+    http_response_code(500);
+    echo json_encode(['error' => 'An unexpected error occurred']);
+}</code></pre>
+                    </div>
+
+                    <h3>12.7 Security Checklist</h3>
+                    <ul>
+                        <li>✅ Validate all inputs</li>
+                        <li>✅ Use HTTPS everywhere</li>
+                        <li>✅ Implement proper authentication</li>
+                        <li>✅ Add rate limiting</li>
+                        <li>✅ Secure error handling</li>
+                        <li>✅ Regular security audits</li>
+                        <li>✅ Keep dependencies updated</li>
+                        <li>✅ Implement logging and monitoring</li>
+                    </ul>
+                </section>
+
+                <section id="documentation" class="mb-5 section-bg">
+                    <h2>13. Documentation</h2>
+                    <p>Use Swagger or Postman.</p>
+                    <p><b>Example:</b></p>
+                    <div class="code-block">
+                        <pre><code class="json">{
     "openapi": "3.0.0",
     "paths": {
         "/users": {
@@ -891,402 +1146,402 @@ Headers:
         }
     }
 }</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>14. Testing</h2>
-            <ul>
-                <li>Manual: Postman, cURL.</li>
-                <li>Automated: PHPUnit, Jest, PyTest.</li>
-            </ul>
-            <p><b>PHPUnit Example:</b></p>
-            <div class="code-block">
-                <pre><code class="php">public function testGetUsers() {
+                <section id="testing" class="mb-5 section-bg">
+                    <h2>14. Testing</h2>
+                    <ul>
+                        <li>Manual: Postman, cURL.</li>
+                        <li>Automated: PHPUnit, Jest, PyTest.</li>
+                    </ul>
+                    <p><b>PHPUnit Example:</b></p>
+                    <div class="code-block">
+                        <pre><code class="php">public function testGetUsers() {
     $response = $this->get('/api/v1/users');
     $this->assertEquals(200, $response->status());
 }</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>15. Versioning</h2>
-            <p>Version APIs.</p>
-            <p><b>Example:</b></p>
-            <div class="code-block">
-                <pre><code class="text">https://api.example.com/v1/users</code></pre>
-            </div>
-        </section>
+                <section id="versioning" class="mb-5 section-bg">
+                    <h2>15. Versioning</h2>
+                    <p>Version APIs.</p>
+                    <p><b>Example:</b></p>
+                    <div class="code-block">
+                        <pre><code class="text">https://api.example.com/v1/users</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>16. Deployment</h2>
-            <ul>
-                <li>Cloud (AWS, DigitalOcean).</li>
-                <li>Reverse proxy (Nginx, Apache).</li>
-            </ul>
-            <p>Monitor with:</p>
-            <ul>
-                <li>New Relic</li>
-                <li>ELK Stack</li>
-            </ul>
-        </section>
+                <section id="deployment" class="mb-5 section-bg">
+                    <h2>16. Deployment</h2>
+                    <ul>
+                        <li>Cloud (AWS, DigitalOcean).</li>
+                        <li>Reverse proxy (Nginx, Apache).</li>
+                    </ul>
+                    <p>Monitor with:</p>
+                    <ul>
+                        <li>New Relic</li>
+                        <li>ELK Stack</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>17. Frameworks</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Language</th>
-                        <th>Framework</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>PHP</td>
-                        <td>Laravel</td>
-                    </tr>
-                    <tr>
-                        <td>Python</td>
-                        <td>Django</td>
-                    </tr>
-                    <tr>
-                        <td>Node.js</td>
-                        <td>Express</td>
-                    </tr>
-                    <tr>
-                        <td>Java</td>
-                        <td>Spring Boot</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="frameworks" class="mb-5 section-bg">
+                    <h2>17. Frameworks</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Language</th>
+                                <th>Framework</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PHP</td>
+                                <td>Laravel</td>
+                            </tr>
+                            <tr>
+                                <td>Python</td>
+                                <td>Django</td>
+                            </tr>
+                            <tr>
+                                <td>Node.js</td>
+                                <td>Express</td>
+                            </tr>
+                            <tr>
+                                <td>Java</td>
+                                <td>Spring Boot</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>Final Checklist</h2>
-            <ul>
-                <li>✅ RESTful Naming.</li>
-                <li>✅ Validate Inputs.</li>
-                <li>✅ Status Codes.</li>
-                <li>✅ Document Endpoints.</li>
-                <li>✅ Secure Data.</li>
-                <li>✅ Monitor Performance.</li>
-                <li>✅ Pagination.</li>
-            </ul>
-        </section>
+                <section id="final-checklist" class="mb-5 section-bg">
+                    <h2>Final Checklist</h2>
+                    <ul>
+                        <li>✅ RESTful Naming.</li>
+                        <li>✅ Validate Inputs.</li>
+                        <li>✅ Status Codes.</li>
+                        <li>✅ Document Endpoints.</li>
+                        <li>✅ Secure Data.</li>
+                        <li>✅ Monitor Performance.</li>
+                        <li>✅ Pagination.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>HTTP Headers: A Deep Dive</h2>
-        </section>
+                <section id="headers" class="mb-5 section-bg">
+                    <h2>HTTP Headers: A Deep Dive</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>Introduction</h2>
-            <p><b>HTTP headers</b> ensure <b>efficient communication</b>, <b>strong security</b>, and <b>better user experience</b> in web development.</p>
-        </section>
+                <section id="introduction" class="mb-5 section-bg">
+                    <h2>Introduction</h2>
+                    <p><b>HTTP headers</b> ensure <b>efficient communication</b>, <b>strong security</b>, and <b>better user experience</b> in web development.</p>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>What are HTTP Headers?</h2>
-            <h3>Metadata</h3>
-            <p><b>Key-value pairs</b> between client and server, providing context.</p>
-        </section>
+                <section id="what-are-headers" class="mb-5 section-bg">
+                    <h2>What are HTTP Headers?</h2>
+                    <h3>Metadata</h3>
+                    <p><b>Key-value pairs</b> between client and server, providing context.</p>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>How to Inspect</h2>
-            <h3>1️⃣ Dev Tools</h3>
-            <p><b>Right-click > Inspect > Network Tab</b></p>
-            <h3>2️⃣ Curl</h3>
-            <div class="code-block">
-                <pre><code class="bash">curl -I https://example.com</code></pre>
-            </div>
-        </section>
+                <section id="how-to-inspect" class="mb-5 section-bg">
+                    <h2>How to Inspect</h2>
+                    <h3>1️⃣ Dev Tools</h3>
+                    <p><b>Right-click > Inspect > Network Tab</b></p>
+                    <h3>2️⃣ Curl</h3>
+                    <div class="code-block">
+                        <pre><code class="bash">curl -I https://example.com</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>Key Headers</h2>
-        </section>
+                <section id="key-headers" class="mb-5 section-bg">
+                    <h2>Key Headers</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>1️⃣ Content-Type</h2>
-            <h3>Purpose</h3>
-            <p>Defines data format.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">Content-Type: application/json</code></pre>
-            </div>
-        </section>
+                <section id="content-type" class="mb-5 section-bg">
+                    <h2>1️⃣ Content-Type</h2>
+                    <h3>Purpose</h3>
+                    <p>Defines data format.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Content-Type: application/json</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>2️⃣ Accept</h2>
-            <h3>Purpose</h3>
-            <p>Client's preferred formats.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">Accept: application/json, text/html</code></pre>
-            </div>
-        </section>
+                <section id="accept" class="mb-5 section-bg">
+                    <h2>2️⃣ Accept</h2>
+                    <h3>Purpose</h3>
+                    <p>Client's preferred formats.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Accept: application/json, text/html</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3️⃣ Cache-Control</h3>
-            <h3>Purpose</h3>
-            <p>Controls caching.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">Cache-Control: max-age=3600</code></pre>
-            </div>
-        </section>
+                <section id="cache-control" class="mb-5 section-bg">
+                    <h2>3️⃣ Cache-Control</h3>
+                    <h3>Purpose</h3>
+                    <p>Controls caching.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Cache-Control: max-age=3600</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>4️⃣ Set-Cookie</h2>
-            <h3>Purpose</h3>
-            <p>Stores client-side data.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">Set-Cookie: session_id=abc123; HttpOnly; Secure</code></pre>
-            </div>
-        </section>
+                <section id="set-cookie" class="mb-5 section-bg">
+                    <h2>4️⃣ Set-Cookie</h2>
+                    <h3>Purpose</h3>
+                    <p>Stores client-side data.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Set-Cookie: session_id=abc123; HttpOnly; Secure</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>5️⃣ Authorization</h2>
-            <h3>Purpose</h3>
-            <p>Carries credentials.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">Authorization: Bearer your-jwt-token-here</code></pre>
-            </div>
-        </section>
+                <section id="authorization" class="mb-5 section-bg">
+                    <h2>5️⃣ Authorization</h2>
+                    <h3>Purpose</h3>
+                    <p>Carries credentials.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Authorization: Bearer your-jwt-token-here</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>Security Headers</h2>
-        </section>
+                <section id="security-headers" class="mb-5 section-bg">
+                    <h2>Security Headers</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>1️⃣ HttpOnly</h2>
-            <h3>Purpose</h3>
-            <p>Protects cookies from XSS.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">Set-Cookie: authToken=secureToken123; HttpOnly</code></pre>
-            </div>
-        </section>
+                <section id="httponly" class="mb-5 section-bg">
+                    <h2>1️⃣ HttpOnly</h2>
+                    <h3>Purpose</h3>
+                    <p>Protects cookies from XSS.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Set-Cookie: authToken=secureToken123; HttpOnly</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>2️⃣ Secure</h2>
-            <h3>Purpose</h3>
-            <p>HTTPS-only cookies.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">Set-Cookie: session=abc123; Secure</code></pre>
-            </div>
-        </section>
+                <section id="secure" class="mb-5 section-bg">
+                    <h2>2️⃣ Secure</h2>
+                    <h3>Purpose</h3>
+                    <p>HTTPS-only cookies.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Set-Cookie: session=abc123; Secure</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3️⃣ CORS Headers</h2>
-            <h3>Purpose</h3>
-            <p>Controls cross-origin access.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">Access-Control-Allow-Origin: https://trusted-site.com
+                <section id="cors-headers" class="mb-5 section-bg">
+                    <h2>3️⃣ CORS Headers</h2>
+                    <h3>Purpose</h3>
+                    <p>Controls cross-origin access.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">Access-Control-Allow-Origin: https://trusted-site.com
 Access-Control-Allow-Methods: GET, POST, PUT</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>4️⃣ X-Frame-Options</h2>
-            <h3>Purpose</h3>
-            <p>Clickjacking protection.</p>
-            <h3>Example</h3>
-            <div class="code-block">
-                <pre><code class="http">X-Frame-Options: DENY</code></pre>
-            </div>
-        </section>
+                <section id="x-frame-options" class="mb-5 section-bg">
+                    <h2>4️⃣ X-Frame-Options</h2>
+                    <h3>Purpose</h3>
+                    <p>Clickjacking protection.</p>
+                    <h3>Example</h3>
+                    <div class="code-block">
+                        <pre><code class="http">X-Frame-Options: DENY</code></pre>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>Best Practices</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Best Practice</th>
-                        <th>Why</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Set Content-Type</td>
-                        <td>Correct parsing</td>
-                    </tr>
-                    <tr>
-                        <td>Use CORS</td>
-                        <td>Safeguards API</td>
-                    </tr>
-                    <tr>
-                        <td>HttpOnly + Secure</td>
-                        <td>Enhances security</td>
-                    </tr>
-                    <tr>
-                        <td>X-Frame-Options</td>
-                        <td>Clickjacking protection</td>
-                    </tr>
-                    <tr>
-                        <td>Cache wisely</td>
-                        <td>Improves speed</td>
-                    </tr>
-                    <tr>
-                        <td>Secure Authorization</td>
-                        <td>Protects API</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="best-practices-headers" class="mb-5 section-bg">
+                    <h2>Best Practices</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Best Practice</th>
+                                <th>Why</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Set Content-Type</td>
+                                <td>Correct parsing</td>
+                            </tr>
+                            <tr>
+                                <td>Use CORS</td>
+                                <td>Safeguards API</td>
+                            </tr>
+                            <tr>
+                                <td>HttpOnly + Secure</td>
+                                <td>Enhances security</td>
+                            </tr>
+                            <tr>
+                                <td>X-Frame-Options</td>
+                                <td>Clickjacking protection</td>
+                            </tr>
+                            <tr>
+                                <td>Cache wisely</td>
+                                <td>Improves speed</td>
+                            </tr>
+                            <tr>
+                                <td>Secure Authorization</td>
+                                <td>Protects API</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>Quick Reference</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Header</th>
-                        <th>Type</th>
-                        <th>Example</th>
-                        <th>Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Content-Type</td>
-                        <td>Req/Resp</td>
-                        <td>application/json</td>
-                        <td>Data format</td>
-                    </tr>
-                    <tr>
-                        <td>Accept</td>
-                        <td>Request</td>
-                        <td>application/json</td>
-                        <td>Response format</td>
-                    </tr>
-                    <tr>
-                        <td>Cache-Control</td>
-                        <td>Response</td>
-                        <td>max-age=3600</td>
-                        <td>Caching rules</td>
-                    </tr>
-                    <tr>
-                        <td>Set-Cookie</td>
-                        <td>Response</td>
-                        <td>session=xyz123</td>
-                        <td>Client data</td>
-                    </tr>
-                    <tr>
-                        <td>Authorization</td>
-                        <td>Request</td>
-                        <td>Bearer token123</td>
-                        <td>Auth</td>
-                    </tr>
-                    <tr>
-                        <td>Access-Control-Allow-Origin</td>
-                        <td>Response</td>
-                        <td>https://your-frontend.com</td>
-                        <td>CORS</td>
-                    </tr>
-                    <tr>
-                        <td>X-Frame-Options</td>
-                        <td>Response</td>
-                        <td>DENY</td>
-                        <td>Clickjacking</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+                <section id="quick-reference" class="mb-5 section-bg">
+                    <h2>Quick Reference</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Header</th>
+                                <th>Type</th>
+                                <th>Example</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Content-Type</td>
+                                <td>Req/Resp</td>
+                                <td>application/json</td>
+                                <td>Data format</td>
+                            </tr>
+                            <tr>
+                                <td>Accept</td>
+                                <td>Request</td>
+                                <td>application/json</td>
+                                <td>Response format</td>
+                            </tr>
+                            <tr>
+                                <td>Cache-Control</td>
+                                <td>Response</td>
+                                <td>max-age=3600</td>
+                                <td>Caching rules</td>
+                            </tr>
+                            <tr>
+                                <td>Set-Cookie</td>
+                                <td>Response</td>
+                                <td>session=xyz123</td>
+                                <td>Client data</td>
+                            </tr>
+                            <tr>
+                                <td>Authorization</td>
+                                <td>Request</td>
+                                <td>Bearer token123</td>
+                                <td>Auth</td>
+                            </tr>
+                            <tr>
+                                <td>Access-Control-Allow-Origin</td>
+                                <td>Response</td>
+                                <td>https://your-frontend.com</td>
+                                <td>CORS</td>
+                            </tr>
+                            <tr>
+                                <td>X-Frame-Options</td>
+                                <td>Response</td>
+                                <td>DENY</td>
+                                <td>Clickjacking</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>Conclusion</h2>
-        </section>
+                <section id="conclusion-headers" class="mb-5 section-bg">
+                    <h2>Conclusion</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>REST API Caching Strategies</h2>
-        </section>
+                <section id="caching" class="mb-5 section-bg">
+                    <h2>REST API Caching Strategies</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>🔥 Why Caching Matters</h2>
-            <p>Caching allows the <b>temporary storage of responses</b>, reducing:</p>
-            <ul>
-                <li>✅ <b>Server Load</b></li>
-                <li>✅ <b>Latency</b></li>
-                <li>✅ <b>Bandwidth Usage</b></li>
-            </ul>
-        </section>
+                <section id="why-caching-matters" class="mb-5 section-bg">
+                    <h2>🔥 Why Caching Matters</h2>
+                    <p>Caching allows the <b>temporary storage of responses</b>, reducing:</p>
+                    <ul>
+                        <li>✅ <b>Server Load</b></li>
+                        <li>✅ <b>Latency</b></li>
+                        <li>✅ <b>Bandwidth Usage</b></li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>⚙️ Types of Caching Strategies</h2>
-        </section>
+                <section id="types-of-caching" class="mb-5 section-bg">
+                    <h2>⚙️ Types of Caching Strategies</h2>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>1️⃣ Client-Side Caching</h2>
-            <h3>🔧 What is it?</h3>
-            <p>Client caches <b>API responses</b> locally.</p>
-            <h3>📂 Key Types</h3>
-            <ul>
-                <li>Browser Caching</li>
-                <li>Mobile App Caching</li>
-            </ul>
-        </section>
+                <section id="client-side-caching" class="mb-5 section-bg">
+                    <h2>1️⃣ Client-Side Caching</h2>
+                    <h3>🔧 What is it?</h3>
+                    <p>Client caches <b>API responses</b> locally.</p>
+                    <h3>📂 Key Types</h3>
+                    <ul>
+                        <li>Browser Caching</li>
+                        <li>Mobile App Caching</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>✅ Example: Browser Caching</h3>
-            <div class="code-block">
-                <pre><code class="http">GET /products
+                <section id="browser-caching" class="mb-5 section-bg">
+                    <h3>✅ Example: Browser Caching</h3>
+                    <div class="code-block">
+                        <pre><code class="http">GET /products
 Cache-Control: max-age=3600</code></pre>
-            </div>
-            <p>Caches response for <b>1 hour</b>.</p>
-        </section>
+                    </div>
+                    <p>Caches response for <b>1 hour</b>.</p>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>🚨 When to Use</h3>
-            <ul>
-                <li>Static data.</li>
-                <li>Offline functionality.</li>
-            </ul>
-        </section>
+                <section id="when-to-use-client-caching" class="mb-5 section-bg">
+                    <h3>🚨 When to Use</h3>
+                    <ul>
+                        <li>Static data.</li>
+                        <li>Offline functionality.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>2️⃣ Server-Side Caching</h2>
-            <h3>🔧 What is it?</h3>
-            <p>API infrastructure caches responses.</p>
-            <h3>📂 Key Types</h3>
-            <ul>
-                <li>Reverse Proxy Cache</li>
-                <li>CDN Cache</li>
-                <li>API Gateway Cache</li>
-            </ul>
-        </section>
+                <section id="server-side-caching" class="mb-5 section-bg">
+                    <h2>2️⃣ Server-Side Caching</h2>
+                    <h3>🔧 What is it?</h3>
+                    <p>API infrastructure caches responses.</p>
+                    <h3>📂 Key Types</h3>
+                    <ul>
+                        <li>Reverse Proxy Cache</li>
+                        <li>CDN Cache</li>
+                        <li>API Gateway Cache</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>✅ Example: CDN Cache</h3>
-            <div class="code-block">
-                <pre><code class="http">GET https://cdn.example.com/api/products</code></pre>
-            </div>
-            <p>CDN responds <b>directly</b>.</p>
-        </section>
+                <section id="cdn-cache" class="mb-5 section-bg">
+                    <h3>✅ Example: CDN Cache</h3>
+                    <div class="code-block">
+                        <pre><code class="http">GET https://cdn.example.com/api/products</code></pre>
+                    </div>
+                    <p>CDN responds <b>directly</b>.</p>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>🚨 When to Use</h3>
-            <ul>
-                <li>Public APIs.</li>
-                <li>Read-heavy traffic.</li>
-            </ul>
-        </section>
+                <section id="when-to-use-server-caching" class="mb-5 section-bg">
+                    <h3>🚨 When to Use</h3>
+                    <ul>
+                        <li>Public APIs.</li>
+                        <li>Read-heavy traffic.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>3️⃣ Application/Service Caching</h2>
-            <h3>🔧 What is it?</h3>
-            <p>Application caches data internally.</p>
-            <h3>📂 Key Types</h3>
-            <ul>
-                <li>In-Memory Cache</li>
-                <li>Database Cache</li>
-            </ul>
-        </section>
+                <section id="application-caching" class="mb-5 section-bg">
+                    <h2>3️⃣ Application/Service Caching</h2>
+                    <h3>🔧 What is it?</h3>
+                    <p>Application caches data internally.</p>
+                    <h3>📂 Key Types</h3>
+                    <ul>
+                        <li>In-Memory Cache</li>
+                        <li>Database Cache</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>✅ Example: Redis Cache</h3>
-            <div class="code-block">
-                <pre><code class="php">$cacheKey = "user_profile_123";
+                <section id="redis-cache" class="mb-5 section-bg">
+                    <h3>✅ Example: Redis Cache</h3>
+                    <div class="code-block">
+                        <pre><code class="php">$cacheKey = "user_profile_123";
 $data = $redis->get($cacheKey);
 
 if (!$data) {
@@ -1294,173 +1549,175 @@ if (!$data) {
     $redis->set($cacheKey, json_encode($data), 3600); // Cache for 1 hour
 }
 return $data;</code></pre>
-            </div>
-        </section>
+                    </div>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>🚨 When to Use</h3>
-            <ul>
-                <li>Frequently accessed data.</li>
-                <li>Expensive queries.</li>
-            </ul>
-        </section>
+                <section id="when-to-use-application-caching" class="mb-5 section-bg">
+                    <h3>🚨 When to Use</h3>
+                    <ul>
+                        <li>Frequently accessed data.</li>
+                        <li>Expensive queries.</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h2>4️⃣ HTTP Caching Headers</h2>
-            <h3>🔧 What is it?</h3>
-            <p>HTTP headers guide caching.</p>
-            <h3>🔗 Important Headers</h3>
-            <ul>
-                <li>Cache-Control</li>
-                <li>ETag</li>
-                <li>Last-Modified</li>
-            </ul>
-        </section>
+                <section id="http-caching-headers" class="mb-5 section-bg">
+                    <h2>4️⃣ HTTP Caching Headers</h2>
+                    <h3>🔧 What is it?</h3>
+                    <p>HTTP headers guide caching.</p>
+                    <h3>🔗 Important Headers</h3>
+                    <ul>
+                        <li>Cache-Control</li>
+                        <li>ETag</li>
+                        <li>Last-Modified</li>
+                    </ul>
+                </section>
 
-        <section class="mb-5 section-bg">
-            <h3>✅ Example: Conditional Requests</h3>
-            <p>1. Initial Request:</p>
-            <div class="code-block">
-                <pre><code class="http">GET /profile/123
+                <section id="conditional-requests" class="mb-5 section-bg">
+                    <h3>✅ Example: Conditional Requests</h3>
+                    <p>1. Initial Request:</p>
+                    <div class="code-block">
+                        <pre><code class="http">GET /profile/123
 ETag: "v1.0"</code></pre>
-            </div>
-            <p>2. Later request:</p>
-             <div class="code-block">
-                <pre><code class="http">GET /profile/123
+                    </div>
+                    <p>2. Later request:</p>
+                     <div class="code-block">
+                        <pre><code class="http">GET /profile/123
 If-None-Match: "v1.0"</code></pre>
+                    </div>
+                    <p>3. If data unchanged:</p>
+                     <div class="code-block">
+                        <pre><code class="http">304 Not Modified</code></pre>
+                    </div>
+                </section>
+
+                <section id="when-to-use-http-caching" class="mb-5 section-bg">
+                    <h3>🚨 When to Use</h3>
+                    <ul>
+                        <li>Periodically changing data.</li>
+                        <li>Reducing bandwidth.</li>
+                    </ul>
+                </section>
+
+                <section id="comparison-caching" class="mb-5 section-bg">
+                    <h2>📊 Comparison</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Strategy</th>
+                                <th>Stored Where?</th>
+                                <th>Use Case</th>
+                                <th>Benefit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Client-Side</td>
+                                <td>Browser/App</td>
+                                <td>Product Lists</td>
+                                <td>Fastest</td>
+                            </tr>
+                            <tr>
+                                <td>Server-Side</td>
+                                <td>CDN/Proxy</td>
+                                <td>News Feeds</td>
+                                <td>Global scale</td>
+                            </tr>
+                            <tr>
+                                <td>Application</td>
+                                <td>API service</td>
+                                <td>User Profiles</td>
+                                <td>App level control</td>
+                            </tr>
+                            <tr>
+                                <td>HTTP Headers</td>
+                                <td>Everywhere</td>
+                                <td>User Avatars</td>
+                                <td>Flexible</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="choosing-strategy" class="mb-5 section-bg"></section>
+                    <h2>🎯 Choosing Strategy</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Requirement</th>
+                                <th>Best Fit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Speeding up static data</td>
+                                <td>Client-Side Cache</td>
+                            </tr>
+                            <tr>
+                                <td>Global caching</td>
+                                <td>CDN</td>
+                            </tr>
+                            <tr>
+                                <td>Speeding up dynamic data</td>
+                                <td>Application Cache</td>
+                            </tr>
+                            <tr>
+                                <td>Flexible caching</td>
+                                <td>HTTP Headers</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="best-practices-caching" class="mb-5 section-bg">
+                    <h2>✅ Best Practices</h2>
+                    <h3>1️⃣ Cache What Makes Sense</h3>
+                    <p>Cache frequently accessed data.</p>
+                    <h3>2️⃣ Set Expiry Times</h3>
+                    <p>Short TTL for fast-changing data.</p>
+                    <h3>3️⃣ Invalidate Wisely</h3>
+                    <p>Invalidate cache on data changes.</p>
+                    <h3>4️⃣ Leverage HTTP Headers</h3>
+                    <p>Set Cache-Control, ETag.</p>
+                    <h3>5️⃣ Monitor Performance</h3>
+                    <p>Log cache hits vs misses.</p>
+                </section>
+
+                <section id="common-mistakes-caching" class="mb-5 section-bg">
+                    <h2>⚠️ Common Mistakes</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mistake</th>
+                                <th>Risk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Caching Sensitive Data</td>
+                                <td>Data leak</td>
+                            </tr>
+                            <tr>
+                                <td>No Expiry Set</td>
+                                <td>Stale data</td>
+                            </tr>
+                            <tr>
+                                <td>Overcaching</td>
+                                <td>Outdated info</td>
+                            </tr>
+                            <tr>
+                                <td>Not Invalidating</td>
+                                <td>Incorrect data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="conclusion-caching" class="mb-5 section-bg">
+                    <h2>📣 Conclusion</h2>
+                    <p>Smart caching = Faster, Cheaper, Better APIs</p>
+                </section>
             </div>
-            <p>3. If data unchanged:</p>
-             <div class="code-block">
-                <pre><code class="http">304 Not Modified</code></pre>
-            </div>
-        </section>
-
-        <section class="mb-5 section-bg">
-            <h3>🚨 When to Use</h3>
-            <ul>
-                <li>Periodically changing data.</li>
-                <li>Reducing bandwidth.</li>
-            </ul>
-        </section>
-
-        <section class="mb-5 section-bg">
-            <h2>📊 Comparison</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Strategy</th>
-                        <th>Stored Where?</th>
-                        <th>Use Case</th>
-                        <th>Benefit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Client-Side</td>
-                        <td>Browser/App</td>
-                        <td>Product Lists</td>
-                        <td>Fastest</td>
-                    </tr>
-                    <tr>
-                        <td>Server-Side</td>
-                        <td>CDN/Proxy</td>
-                        <td>News Feeds</td>
-                        <td>Global scale</td>
-                    </tr>
-                    <tr>
-                        <td>Application</td>
-                        <td>API service</td>
-                        <td>User Profiles</td>
-                        <td>App level control</td>
-                    </tr>
-                    <tr>
-                        <td>HTTP Headers</td>
-                        <td>Everywhere</td>
-                        <td>User Avatars</td>
-                        <td>Flexible</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section class="mb-5 section-bg">
-            <h2>🎯 Choosing Strategy</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Requirement</th>
-                        <th>Best Fit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Speeding up static data</td>
-                        <td>Client-Side Cache</td>
-                    </tr>
-                    <tr>
-                        <td>Global caching</td>
-                        <td>CDN</td>
-                    </tr>
-                    <tr>
-                        <td>Speeding up dynamic data</td>
-                        <td>Application Cache</td>
-                    </tr>
-                    <tr>
-                        <td>Flexible caching</td>
-                        <td>HTTP Headers</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section class="mb-5 section-bg">
-            <h2>✅ Best Practices</h2>
-            <h3>1️⃣ Cache What Makes Sense</h3>
-            <p>Cache frequently accessed data.</p>
-            <h3>2️⃣ Set Expiry Times</h3>
-            <p>Short TTL for fast-changing data.</p>
-            <h3>3️⃣ Invalidate Wisely</h3>
-            <p>Invalidate cache on data changes.</p>
-            <h3>4️⃣ Leverage HTTP Headers</h3>
-            <p>Set Cache-Control, ETag.</p>
-            <h3>5️⃣ Monitor Performance</h3>
-            <p>Log cache hits vs misses.</p>
-        </section>
-
-        <section class="mb-5 section-bg">
-            <h2>⚠️ Common Mistakes</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Mistake</th>
-                        <th>Risk</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Caching Sensitive Data</td>
-                        <td>Data leak</td>
-                    </tr>
-                    <tr>
-                        <td>No Expiry Set</td>
-                        <td>Stale data</td>
-                    </tr>
-                    <tr>
-                        <td>Overcaching</td>
-                        <td>Outdated info</td>
-                    </tr>
-                    <tr>
-                        <td>Not Invalidating</td>
-                        <td>Incorrect data</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <section class="mb-5 section-bg">
-            <h2>📣 Conclusion</h2>
-            <p>Smart caching = Faster, Cheaper, Better APIs</p>
-        </section>
+        </div>
     </div>
 
     <footer>
