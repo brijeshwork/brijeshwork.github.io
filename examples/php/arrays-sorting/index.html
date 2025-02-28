@@ -48,6 +48,7 @@
 
     <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
     <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/array-examples.css">
     <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
 
 </head>
@@ -55,204 +56,141 @@
 <body>
     <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>sort() - Sort array in ascending alphabetical order</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $cars = array("Volvo", "BMW", "Toyota");
-                    sort($cars);
-                    
-                    $clength = count($cars);
-                    for($x = 0; $x < $clength; $x++) {
-                      echo $cars[$x];
-                      echo "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>sort() - Sort array in ascending numerical order</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $numbers = array(4, 6, 2, 22, 11);
-                    sort($numbers);
-                    
-                    $arrlength = count($numbers);
-                    for($x = 0; $x < $arrlength; $x++) {
-                      echo $numbers[$x];
-                      echo "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>rsort() - Sort array in descending alphabetical order</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $cars = array("Volvo", "BMW", "Toyota");
-                    rsort($cars);
-                    
-                    $clength = count($cars);
-                    for($x = 0; $x < $clength; $x++) {
-                      echo $cars[$x];
-                      echo "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>rsort() - Sort array in descending numerical order</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $numbers = array(4, 6, 2, 22, 11);
-                    rsort($numbers);
-                    
-                    $arrlength = count($numbers);
-                    for($x = 0; $x < $arrlength; $x++) {
-                      echo $numbers[$x];
-                      echo "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>asort() - Sort array in ascending order, according to value</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
-                    asort($age);
-                    
-                    foreach($age as $x => $x_value) {
-                      echo "Key=" . $x . ", Value=" . $x_value;
-                      echo "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>ksort() - Sort array in ascending order, according to key</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
-                    ksort($age);
-                    
-                    foreach($age as $x => $x_value) {
-                      echo "Key=" . $x . ", Value=" . $x_value;
-                      echo "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>arsort() - Sort array in descending order, according to value</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
-                    arsort($age);
-                    
-                    foreach($age as $x => $x_value) {
-                      echo "Key=" . $x . ", Value=" . $x_value;
-                      echo "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>krsort() - Sort array in descending order, according to key</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
-                    krsort($age);
-                    
-                    foreach($age as $x => $x_value) {
-                      echo "Key=" . $x . ", Value=" . $x_value;
-                      echo "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">PHP Array Sorting Examples</h2>
 
+        <div class="example-section">
+            <h4>sort() - Sort array in ascending alphabetical order</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$cars = array("Volvo", "BMW", "Toyota");
+sort($cars);
 
+$clength = count($cars);
+for($x = 0; $x < $clength; $x++) {
+    echo $cars[$x];
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>sort() - Sort array in ascending numerical order</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$numbers = array(4, 6, 2, 22, 11);
+sort($numbers);
+
+$arrlength = count($numbers);
+for($x = 0; $x < $arrlength; $x++) {
+    echo $numbers[$x];
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>rsort() - Sort array in descending alphabetical order</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$cars = array("Volvo", "BMW", "Toyota");
+rsort($cars);
+
+$clength = count($cars);
+for($x = 0; $x < $clength; $x++) {
+    echo $cars[$x];
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>rsort() - Sort array in descending numerical order</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$numbers = array(4, 6, 2, 22, 11);
+rsort($numbers);
+
+$arrlength = count($numbers);
+for($x = 0; $x < $arrlength; $x++) {
+    echo $numbers[$x];
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>asort() - Sort array in ascending order, according to value</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
+asort($age);
+
+foreach($age as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>ksort() - Sort array in ascending order, according to key</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
+ksort($age);
+
+foreach($age as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>arsort() - Sort array in descending order, according to value</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
+arsort($age);
+
+foreach($age as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>krsort() - Sort array in descending order, according to key</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
+krsort($age);
+
+foreach($age as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+    </div>
 
     <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
     <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
