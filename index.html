@@ -43,6 +43,17 @@
 <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
 <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
 
+<style>
+.hireme-btn svg path {
+  fill: #ffffff;
+  transition: fill 0.3s ease;
+}
+
+.hireme-btn:hover svg path {
+  fill: #000000;
+}
+</style>
+
 </head>
 <body>
     <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
@@ -62,30 +73,168 @@
           <h1 style="margin:0;font-size: 6rem;" class="fontColor">Full-Stack <br /> Developer</h1> <br /><br />
           <!-- <h2 style="font-size: 45px;line-height: 40%;" >From Delhi - India</h2><br /> -->
           <a rel="nofollow" target="_blank" class="button hireme-btn" href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91">Start a project &nbsp;
-            <svg width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M5 13h11.86l-3.63 4.36a1 1 0 0 0 1.54 1.28l5-6a1.19 1.19 0 0 0 .09-.15c0-.05.05-.08.07-.13A1 1 0 0 0 20 12a1 1 0 0 0-.07-.36c0-.05-.05-.08-.07-.13a1.19 1.19 0 0 0-.09-.15l-5-6A1 1 0 0 0 14 5a1 1 0 0 0-.64.23 1 1 0 0 0-.13 1.41L16.86 11H5a1 1 0 0 0 0 2z" data-name="arrow-forward"/></g></svg></a>
-          <a rel="nofollow" target="_blank" class="button hireme-btn" href="https://brijesh.work/resume/">Resume</a>
+            <svg width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g data-name="Layer 2">
+                <path d="M5 13h11.86l-3.63 4.36a1 1 0 0 0 1.54 1.28l5-6a1.19 1.19 0 0 0 .09-.15c0-.05.05-.08.07-.13A1 1 0 0 0 20 12a1 1 0 0 0-.07-.36c0-.05-.05-.08-.07-.13a1.19 1.19 0 0 0-.09-.15l-5-6A1 1 0 0 0 14 5a1 1 0 0 0-.64.23 1 1 0 0 0-.13 1.41L16.86 11H5a1 1 0 0 0 0 2z" data-name="arrow-forward"/>
+              </g>
+            </svg>
+          </a>
+          <!-- <a rel="nofollow" target="_blank" class="button hireme-btn" href="https://brijesh.work/resume/">Resume</a> -->
         </div>
       </div>
       </div>
     </section>
-    <section style="background-color: #fbfbfb;margin-top: 50px;">
+    <section class="about-section">
       <div class="container">
-        <div class="col-lg-4 pullLeft">
-          <div style="text-align: center;padding-top:70px;">
-            <span class="yearsofexperience">09</span>
-            <p style="font-size:22px;">Years of <b>Experiance</b></p>
+        <div class="about-wrapper">
+          <div class="col-lg-4 pullLeft">
+            <div class="experience-counter">
+              <span class="yearsofexperience">10</span>
+              <p class="experience-text">Years of <strong>Experience</strong></p>
+            </div>
+          </div>
+          <div class="col-lg-8 pullRight">
+            <div class="about-content">
+              <span class="section-subtitle">About Me</span>
+              <h3 class="section-title fontColor">INTRODUCTION</h3>
+              <p class="about-description">I'm a Developer with a passion of web development. I enjoy developing simple clean and slick website that provide real value to the end user. Thousands of clients have procured exceptional results while working with me. Delivering work within time and budget which meets client's requirements is our motto.</p>
+              
+              <div class="about-details">
+                <div class="detail-row">
+                  <div class="detail-item">
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value">Brijesh Patel</span>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">From:</span>
+                    <span class="detail-value">New Delhi, India</span>
+                  </div>
+                </div>
+                <div class="detail-row">
+                  <div class="detail-item">
+                    <span class="detail-label">Email:</span>
+                    <a href="mailto:brijeshdevops@gmail.com" class="detail-value">brijeshdevops@gmail.com</a>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Skype:</span>
+                    <a href="skype:bibrijeshpatel?chat" class="detail-value">bibrijeshpatel</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-lg-8 pullRight">
-          <h4>About Me</h4>
-          <h3 style="font-size: 35px;" class="fontColor"><b>INTRODUCTION</b></h3>
-          <p style="font-size: 18px;line-height: 150%;">I'm a Developer with a passion of web development. I enjoy developing simple clean ans slick website thet provide real value to the end user. Thousand of clients have procured exceptional results while working with me. Delivering work within time and budget which meets client's requirement is out moto.</p>
-          <p class="col-lg-6 pullLeft"><b>Name:</b> Brijesh Patel</p>
-          <p class="col-lg-6 pullLeft"><b>From:</b> New Delhi, India</p>
-          <p class="col-lg-6 pullLeft"><b>Email:</b> <a href="https://mail.google.com/mail/u/0/?fs=1&to=brijeshdevops@gmail.com&tf=cm">brijeshdevops@gmail.com</a></p>
-          <p class="col-lg-6 pullLeft"><b>Skype:</b> <a href="skype:bibrijeshpatel?chat">bibrijeshpatel</a></p>
-        </div>
       </div>
+    
+      <style>
+        .about-section {
+          background-color: #fbfbfb;
+          padding: 100px 0;
+          margin-top: 50px;
+        }
+    
+        .about-wrapper {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+        }
+    
+        .experience-counter {
+          text-align: center;
+          padding: 40px;
+          background: white;
+          border-radius: 20px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+          transition: transform 0.3s ease;
+        }
+    
+        .experience-counter:hover {
+          transform: translateY(-5px);
+        }
+    
+        .yearsofexperience {
+          font-size: 72px;
+          font-weight: 700;
+          color: var(--color-primary);
+          line-height: 1;
+        }
+    
+        .experience-text {
+          font-size: 22px;
+          margin-top: 10px;
+          color: #333;
+        }
+    
+        .about-content {
+          padding: 0 40px;
+        }
+    
+        .section-subtitle {
+          font-size: 18px;
+          color: var(--color-primary);
+          margin-bottom: 10px;
+          display: block;
+        }
+    
+        .section-title {
+          font-size: 35px;
+          font-weight: 700;
+          margin-bottom: 25px;
+        }
+    
+        .about-description {
+          font-size: 18px;
+          line-height: 1.8;
+          color: #555;
+          margin-bottom: 40px;
+        }
+    
+        .about-details {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+    
+        .detail-row {
+          display: flex;
+          gap: 30px;
+        }
+    
+        .detail-item {
+          flex: 1;
+        }
+    
+        .detail-label {
+          font-weight: 600;
+          color: #333;
+          margin-right: 10px;
+        }
+    
+        .detail-value {
+          color: #555;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+    
+        .detail-value:hover {
+          color: var(--color-primary);
+        }
+    
+        @media (max-width: 768px) {
+          .about-section {
+            padding: 60px 0;
+          }
+    
+          .about-content {
+            padding: 40px 20px 0;
+          }
+    
+          .detail-row {
+            flex-direction: column;
+            gap: 15px;
+          }
+        }
+      </style>
     </section>
     <section style="background-color: #f2f2f2;margin-top: 50px;">
       <div class="container">
@@ -283,7 +432,65 @@
         </script> 
   </section>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<footer>
+  <div class="container-fix border-bottom" style="background-color:#fbfbfb;padding:5px 0;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 style="font-size:80px;color: var(--color-primary);">Turn your brand <br /> into a great one.</h1>
+          <a rel="nofollow" target="_blank" class="button hireme-btn" href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91">Start a project &nbsp;<svg width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M5 13h11.86l-3.63 4.36a1 1 0 0 0 1.54 1.28l5-6a1.19 1.19 0 0 0 .09-.15c0-.05.05-.08.07-.13A1 1 0 0 0 20 12a1 1 0 0 0-.07-.36c0-.05-.05-.08-.07-.13a1.19 1.19 0 0 0-.09-.15l-5-6A1 1 0 0 0 14 5a1 1 0 0 0-.64.23 1 1 0 0 0-.13 1.41L16.86 11H5a1 1 0 0 0 0 2z" data-name="arrow-forward"/></g></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fix border-bottom" style="background-color:#fbfbfb;padding:5px 0;">
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            <h4><a href="https://brijesh.work/tutorial/">Tutorial</a></h4>
+            <p><a href="https://brijesh.work/tutorial/html5/">Html</a></p>
+            <p><a href="https://brijesh.work/tutorial/css/">CSS</a></p>
+            <p><a href="https://brijesh.work/tutorial/javascript/">JavaScript</a></p>
+            <p><a href="https://brijesh.work/tutorial/php/">PHP</a></p>
+            <p><a href="https://brijesh.work/tutorial/mysql/">Mysql</a></p>
+          </div>
+          <div class="col">
+            <h4><a href="https://brijesh.work/cheatsheet/">Cheat Sheet</a></h4>
+            <p><a href="https://brijesh.work/cheatsheet/chatgpt/">ChatGPT</a></p>
+            <p><a href="https://brijesh.work/cheatsheet/html/">Html</a></p>
+            <p><a href="https://brijesh.work/cheatsheet/css/">CSS</a></p>
+            <p><a href="https://brijesh.work/cheatsheet/wordpress/">Wordpress</a></p>
+            <p><a href="https://brijesh.work/cheatsheet/mysql/">MySql</a></p>
+          </div>
+          <div class="col">
+            <h4><a href="https://brijesh.work/interview/">Interview</a></h4>
+            <p><a href="https://brijesh.work/interview/project-management/">Project Management</a></p>
+            <p><a href="https://brijesh.work/interview/php/">PHP</a></p>
+            <p><a href="https://brijesh.work/interview/mysql/">MySql</a></p>
+          </div>
+          <div class="col">
+            <h4><a href="https://brijesh.work/marketing/">Marketing</a></h4>
+            <p><a href="https://brijesh.work/marketing/instagram/">Instagram</a></p>
+            <p><a href="https://brijesh.work/marketing/seo/">SEO</a></p>
+          </div>
+          <div class="col">
+            <h4><a href="https://brijesh.work/examples/">Examples</a></h4>
+            <p><a href="https://brijesh.work/examples/javascript/">Javascript</a></p>
+            <p><a href="https://brijesh.work/examples/php/">php</a></p>
+            <p><a href="https://brijesh.work/examples/mysql/">MySql</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fix" style="background-color:#fbfbfb;padding:5px 0;">
+    <div class="container">
+      <div class="row">
+        <p class="text-center" style="color: var(--color-primary);text-align: center;"><a href="mailto:bp@brijesh.work">Email Me</a></p>
+      </div>
+    </div>
+
+</footer>
 <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
 </body>
 </html>
