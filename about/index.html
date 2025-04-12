@@ -327,6 +327,168 @@
   left: 50%;
   margin-left: -1px;
 }
+
+/* Certificate Section Styles */
+.certificates-section {
+  padding: 60px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20px;
+  margin-bottom: 60px;
+}
+
+.certificates-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+/* Updated Certificate Section Styles */
+.certificate-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.certificate-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--color-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.certificate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.certificate-card:hover::before {
+  opacity: 1;
+}
+
+.certificate-icon {
+  font-size: 32px;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.certificate-issuer {
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.issuer-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  padding: 4px;
+  background: #f8fafc;
+}
+
+.issuer-icon path {
+  fill: currentColor;
+}
+
+/* Issuer-specific colors */
+.issuer-meta {
+  color: #0866ff;
+}
+
+.issuer-google {
+  color: #4285f4;
+}
+
+.issuer-ibm {
+  color: #0f62fe;
+}
+
+.issuer-aws {
+  color: #ff9900;
+}
+
+@media (max-width: 768px) {
+  .certificates-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Certificate Category Styles */
+.certificate-category {
+  margin-bottom: 40px;
+}
+
+.category-title {
+  font-size: 24px;
+  color: #1e293b;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.category-certificates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* Add new styles */
+.completed-courses {
+  margin-top: 15px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 15px;
+}
+
+.course-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.course-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.course-icon {
+  color: #059669;
+  flex-shrink: 0;
+}
+
+.course-name {
+  flex-grow: 1;
+}
+
+.course-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.course-link:hover {
+  color: var(--color-primary);
+}
 </style>
 
 </head>
@@ -502,6 +664,397 @@
         </div>
       </div>
     </section>
+
+    <section class="certificates-section reveal">
+      <h2 class="section-title">Professional Certificates</h2>
+      
+      <!-- Frontend Development -->
+      <div class="certificate-category">
+        <h3 class="category-title">Frontend Development</h3>
+        <div class="category-certificates">
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/YUVD3SZ6AM7G" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Meta Front-End Developer</h3>
+            <div class="completed-courses">
+              <ul class="course-list">
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Introduction to Front-End Development</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Programming with JavaScript</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>  
+                  <span class="course-name">HTML and CSS in depth</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Advanced React</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Front-End Developer Capstone</span>
+                </li>
+              </ul>
+            </div>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-meta" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Meta
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/7GHVSUDRZ2DY" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Google UX Design</h3>
+            <div class="completed-courses">
+              <ul class="course-list">
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Foundations of User Experience Design</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Start the UX Design Process</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Build Wireframes and Low-Fidelity Prototypes</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Conduct UX Research</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Create High-Fidelity Designs and Prototypes in Figma</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Responsive Web Design in Adobe XD</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Design a User Experience for Social Good</span>
+                </li>
+              </ul>
+            </div>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-google" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Google
+            </p>
+          </a>
+        </div>
+      </div>
+    
+      <!-- Backend Development -->
+      <div class="certificate-category">
+        <h3 class="category-title">Backend Development</h3>
+        <div class="category-certificates">
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/3JZVDVLU485X" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Meta Database Engineer Professional Certificate</h3>
+            <div class="completed-courses">
+              <ul class="course-list">
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Introduction to Databases</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Version Control</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Database Structures and Management</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Advanced MySQL Topics</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Programming in Python</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Database Engineer Capstone</span>
+                </li>
+              </ul>
+            </div>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-meta" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Meta
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/3VZRUNZA9VPQ" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Meta Back-End Developer</h3>
+            <div class="completed-courses">
+              <ul class="course-list">
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Introduction to Back-End Development</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Programming in Python</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Version Control</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Database Engineering</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Django Web Framework</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">APIs</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">The Full Stack</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Back-End Developer Capstone</span>
+                </li>
+              </ul>
+            </div>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-meta" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Meta
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/SELHGPSC5GWX" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">IBM Back-End Development</h3>
+            <div class="completed-courses">
+              <ul class="course-list">
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Introduction to Cloud Computing</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Introduction to Web Development with HTML, CSS, JavaScript</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Getting Started with Git and GitHub</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Python for Data Science, AI & Development</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Developing Back-End Apps with Node.js and Express</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Python Project for AI & Application Development</span>
+                </li>
+              </ul>
+            </div>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-ibm" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by IBM
+            </p>
+          </a>
+        </div>
+      </div>
+    
+      <!-- DevOps & Cloud -->
+      <div class="certificate-category">
+        <h3 class="category-title">DevOps & Cloud</h3>
+        <div class="category-certificates">
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/ACHUJSJQJGNQ" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">IBM DevOps and Software Engineering</h3>
+            <div class="completed-courses">
+              <ul class="course-list">
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Introduction to DevOps</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Git and GitHub Essentials</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Python for Data Science and AI Development</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Application Development using Microservices and Serverless</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">Introduction to Containers with Docker, Kubernetes & OpenShift</span>
+                </li>
+                <li class="course-item">
+                  <i class="bi bi-check-circle-fill course-icon"></i>
+                  <span class="course-name">DevOps Capstone Project</span>
+                </li>
+              </ul>
+            </div>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-ibm" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by IBM
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/specialization/G3XKLMFNNG84" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">DevOps on AWS</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-aws" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by AWS
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/G9FXY6HSHRNH" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">AWS Cloud Solutions Architect</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-aws" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by AWS
+            </p>
+          </a>
+        </div>
+      </div>
+    
+      <!-- Data & Analytics -->
+      <div class="certificate-category">
+        <h3 class="category-title">Data & Analytics</h3>
+        <div class="category-certificates">
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/PCV7KDHMX5PW" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Google Advanced Data Analytics</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-google" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Google
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/LAY6DX7MYUB8" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Google Data Analytics</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-google" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Google
+            </p>
+          </a>
+        </div>
+      </div>
+    
+      <!-- Marketing & Business -->
+      <div class="certificate-category">
+        <h3 class="category-title">Marketing & Business</h3>
+        <div class="category-certificates">
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/5YU2LBVDQCCM" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Meta Marketing Analytics</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-meta" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Meta
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/QP2YLK5M8E7Y" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Google Digital Marketing & E-commerce</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-google" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Google
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/69WE3K7AE35L" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Google Business Intelligence</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-google" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Google
+            </p>
+          </a>
+        </div>
+      </div>
+    
+      <!-- Project Management -->
+      <div class="certificate-category">
+        <h3 class="category-title">Project Management</h3>
+        <div class="category-certificates">
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/HZZK9MHB4M53" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">IBM IT Project Manager</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-ibm" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by IBM
+            </p>
+          </a>
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/B667U2R7NJS8" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Google Project Management</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-google" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Google
+            </p>
+          </a>
+        </div>
+      </div>
+    
+      <!-- Security -->
+      <div class="certificate-category">
+        <h3 class="category-title">Security</h3>
+        <div class="category-certificates">
+          <a href="https://www.coursera.org/account/accomplishments/professional-cert/G3KXTKYBLMZL" class="certificate-card" target="_blank">
+            <i class="bi bi-award certificate-icon"></i>
+            <h3 class="certificate-title">Google Cybersecurity</h3>
+            <p class="certificate-issuer">
+              <svg class="issuer-icon issuer-google" viewBox="0 0 48 48">
+                <path d="M48 24C48 37.254 37.254 48 24 48C10.746 48 0 37.254 0 24C0 10.746 10.746 0 24 0C37.254 0 48 10.746 48 24ZM26.163 34.946L35.19 21.429H27.462L28.165 16.054L19.138 29.571H26.866L26.163 34.946Z"/>
+              </svg>
+              Issued by Google
+            </p>
+          </a>
+        </div>
+      </div>
+      
+    </section>
+
   </div>
 </div>
 
