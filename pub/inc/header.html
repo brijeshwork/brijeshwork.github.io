@@ -1,20 +1,123 @@
-<div class="container">
-    <nav>
-      <ul>
-        <li>
-          <p>
-            <a style="padding:0;margin: 0;color: #ffffff;" href="https://brijesh.work/">
-              <img style="width:40px;" src="https://brijesh.work/pub/media/img/brijesh-work-logo.png" alt="Brijesh Work Logo">
-            </a> 
-          </p>
+<!-- Test Navbar Start -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="https://brijesh.work/">
+      <img src="https://brijesh.work/pub/media/img/brijesh-work-logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top me-2">
+      Brijesh Work
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTest" aria-controls="navbarTest" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTest">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+        <li class="nav-item">
+          <div class="d-flex gap-3 justify-content-center my-3 my-lg-0">
+            <a href="https://twitter.com/brijeshwork/" class="nav-link p-1" target="_blank" rel="nofollow">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg" alt="Twitter" width="20" class="social-icon">
+            </a>
+            <a href="https://www.linkedin.com/in/brijeshwork/" class="nav-link p-1" target="_blank" rel="nofollow">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" alt="LinkedIn" width="20" class="social-icon">
+            </a>
+            <a href="https://github.com/brijeshwork/" class="nav-link p-1" target="_blank" rel="nofollow">
+              <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" alt="GitHub" width="20" class="social-icon">
+            </a>
+          </div>
         </li>
-        <li><p><a target="_blank" href="https://twitter.com/brijeshwork/" rel="nofollow"><img align="left" alt="Brijesh Patel Twitter" width="28px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg" style="max-width: 100%;"></a></p></li>
-        <li><p><a target="_blank" href="https://www.linkedin.com/in/brijeshwork/" rel="nofollow"><img align="left" alt="Brijesh Patel LinkedIn" width="28px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" style="max-width: 100%;"></a></p></li>
-        <li><p><a target="_blank" href="https://github.com/brijeshwork/" rel="nofollow"><img align="left" alt="Brijesh Patel Github" width="28px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" style="max-width: 100%;"></a></p></li>
-        <li class="pullRight"><a href="https://brijesh.work/about/"> About</a></li>
-        <li class="pullRight"><a href="https://brijesh.work/portfolio/">Work</a></li>
-        <li class="pullRight"><a href="https://brijesh.work/service/">Service</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="/service/">Service</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="/portfolio/">Work</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="/about/">About</a></li>
       </ul>
-    </nav>
+    </div>
   </div>
+</nav>
+
+<!-- Existing navbar code below -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="https://brijesh.work/">
+      <img src="https://brijesh.work/pub/media/img/brijesh-work-logo.png" alt="Logo" width="32" height="32" class="d-inline-block align-text-top">
+      Brijesh Work
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="offcanvas offcanvas-end bg-dark" tabindex="-1" id="offcanvasNavbar">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-white" id="offcanvasNavbarLabel">Menu</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 gap-2">
+          <li class="nav-item d-flex justify-content-center">
+            <div class="social-links d-flex gap-3">
+              <a class="nav-link p-1" target="_blank" href="https://twitter.com/brijeshwork/" rel="nofollow">
+                <img alt="Twitter" width="24" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg" class="social-icon">
+              </a>
+              <a class="nav-link p-1" target="_blank" href="https://www.linkedin.com/in/brijeshwork/" rel="nofollow">
+                <img alt="LinkedIn" width="24" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" class="social-icon">
+              </a>
+              <a class="nav-link p-1" target="_blank" href="https://github.com/brijeshwork/" rel="nofollow">
+                <img alt="GitHub" width="24" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" class="social-icon">
+              </a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://brijesh.work/service/">Service</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://brijesh.work/portfolio/">Work</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://brijesh.work/about/">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+.navbar {
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.social-icon {
+  filter: invert(1);
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.social-icon:hover {
+  opacity: 1;
+}
+
+.offcanvas {
+  width: 250px;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-nav .nav-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
   
+  .navbar-nav .nav-item:last-child {
+    border-bottom: none;
+  }
+  
+  .social-links {
+    padding: 1rem 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-nav {
+    align-items: center;
+  }
+}
+</style>
+
+<!-- Add margin to body to prevent content from hiding under fixed navbar -->
+<div style="margin-top: 76px;"></div>
