@@ -68,9 +68,6 @@
     --sizes-button-xsmall-text: var(--sizes-text-xsmall-size);
 }
 
-header {
-    padding-top: 30px;
-}
 
 header,
 section {
