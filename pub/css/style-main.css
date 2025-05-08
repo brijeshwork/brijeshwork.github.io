@@ -140,10 +140,10 @@ section {
     transform: rotate(-5deg);
     /* position: relative; */
     position: absolute;
-    top: 120px;
+    top: 40px;
     /* right: 10%; */
-    width: 360px;
-    height: 480px;
+    width: 320px;
+    height: 440px;
     background-repeat: no-repeat;
     z-index: 2;
     border-radius: 15px;
@@ -155,10 +155,10 @@ section {
     transform: rotate(2deg);
     /* position: relative; */
     position: absolute;
-    top: 120px;
+    top: 40px;
     /* right: 14%; */
-    width: 360px;
-    height: 480px;
+    width: 320px;
+    height: 440px;
     z-index: 1;
     border-radius: 15px;
 }
