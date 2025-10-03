@@ -1,66 +1,58 @@
-cheatsheet/index.html # fixed
-cheatsheet/chatgpt/index.html # fixed
-cheatsheet/css/index.html # fixed
-cheatsheet/html/index.html # fixed
-cheatsheet/mysql/index.html # fixed
-cheatsheet/wordpress/index.html # fixed
-examples/index.html # fixed
-examples/javascript/index.html # fixed
-examples/mysql/index.html # fixed
-examples/php/index.html # fixed
-examples/php/arrays-sorting/index.html # fixed
-examples/php/arrays/index.html # fixed
-examples/php/classes-objects/index.html # fixed
-examples/php/comments/index.html # fixed
-examples/php/constants/index.html # fixed
-examples/php/cookies/index.html # fixed
-examples/php/data/index.html # fixed
-examples/php/date-time/index.html # fixed
-examples/php/echo-print/index.html # fixed
-examples/php/exceptions/index.html # fixed
-examples/php/file-handling/index.html # fixed
-examples/php/file/index.html # fixed
-examples/php/files-Include/index.html # fixed
-examples/php/filters/index.html # fixed
-examples/php/form-validation/index.html # fixed
-examples/php/functions/index.html # fixed
-examples/php/If-else-switch-statements/index.html # fixed
-examples/php/json/index.html # fixed
-examples/php/math/index.html # fixed
-examples/php/multidimensional-arrays/index.html # fixed
-examples/php/mysql-data/index.html # fixed
-examples/php/numbers/index.html # fixed
-examples/php/operators/index.html # fixed
-examples/php/regular-expressions/index.html # fixed
-examples/php/sessions/index.html # fixed
-examples/php/simplexml/index.html # fixed
-examples/php/strings/index.html # fixed
-examples/php/superglobals/index.html # fixed
-examples/php/syntax/index.html # fixed
-examples/php/variables/index.html # fixed
-examples/php/while-for-loops/index.html # fixed
-examples/php/xml-expat/index.html # fixed
-interview/index.html # fixed
-interview/php-questions-and-answers-for-experienced/index.html # fixed
-interview/project-management/index.html # fixed
-marketing/index.html # fixed
-marketing/instagram/index.html # fixed
-marketing/seo/checklist/index.html # fixed
-marketing/seo/tools/index.html # fixed
-portfolio/index.html # fixed
-portfolio/anticos/index.html # fixed
-portfolio/backlinkstools/index.html # fixed
-portfolio/dlaguna/index.html # fixed
-portfolio/grownwithus/index.html # fixed
-portfolio/itsthyme/index.html # fixed
-portfolio/kalpane/index.html # fixed
-portfolio/onlinestools/index.html # fixed
-portfolio/remerasya/index.html # fixed
-portfolio/royalkilt/index.html # fixed
-portfolio/theexperthelp/index.html # fixed
-portfolio/voltelectricalsupply/index.html # fixed
-service/index.html # fixed
-service/magento-ecommerce-development/index.html # fixed
-service/web-development/index.html # fixed
-service/wordpress-development/index.html # fixed
-tutorial/index.html # fixed
+cheatsheet/css/index.html
+service/index.html
+portfolio/index.html
+examples/index.html
+examples/javascript/index.html
+service/web-development/index.html
+cheatsheet/index.html
+tutorial/index.html
+examples/php/index.html
+cheatsheet/mysql/index.html
+marketing/index.html
+examples/mysql/index.html
+cheatsheet/html/index.html
+cheatsheet/chatgpt/index.html
+examples/php/mysql-data/index.html
+examples/php/regular-expressions/index.html
+examples/php/operators/index.html
+examples/php/filters/index.html
+examples/php/strings/index.html
+examples/php/functions/index.html
+examples/php/classes-objects/index.html
+portfolio/kalpane/index.html
+examples/php/arrays/index.html
+examples/php/file-handling/index.html
+examples/php/file/index.html
+portfolio/onlinestools/index.html
+marketing/seo/checklist/index.html
+examples/php/arrays-sorting/index.html
+examples/php/multidimensional-arrays/index.html
+portfolio/backlinkstools/index.html
+examples/php/form-validation/index.html
+examples/php/syntax/index.html
+portfolio/anticos/index.html
+examples/php/data/index.html
+examples/php/superglobals/index.html
+examples/php/echo-print/index.html
+examples/php/date-time/index.html
+examples/php/numbers/index.html
+examples/php/math/index.html
+examples/php/variables/index.html
+examples/php/while-for-loops/index.html
+portfolio/dlaguna/index.html
+portfolio/itsthyme/index.html
+examples/php/xml-expat/index.html
+examples/php/comments/index.html
+examples/php/exceptions/index.html
+portfolio/grownwithus/index.html
+examples/php/cookies/index.html
+examples/php/files-Include/index.html
+portfolio/theexperthelp/index.html
+examples/php/sessions/index.html
+portfolio/voltelectricalsupply/index.html
+examples/php/If-else-switch-statements/index.html
+examples/php/json/index.html
+portfolio/royalkilt/index.html
+examples/php/simplexml/index.html
+portfolio/remerasya/index.html
+examples/php/constants/index.html
