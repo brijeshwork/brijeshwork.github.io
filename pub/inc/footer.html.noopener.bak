@@ -1,0 +1,93 @@
+<div class="container-fix border-bottom" style="background-color:#fbfbfb;padding:5px 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1 style="font-size:clamp(2.5rem,10vw,80px);color: var(--color-primary);">Turn your brand <br /> into a great one.</h1>
+        <a rel="nofollow" target="_blank" class="button hireme-btn mt-3" href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91" style="display:inline-flex;align-items:center;">
+          Start a project &nbsp;
+          <svg width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M5 13h11.86l-3.63 4.36a1 1 0 0 0 1.54 1.28l5-6a1.19 1.19 0 0 0 .09-.15c0-.05.05-.08.07-.13A1 1 0 0 0 20 12a1 1 0 0 0-.07-.36c0-.05-.05-.08-.07-.13a1.19 1.19 0 0 0-.09-.15l-5-6A1 1 0 0 0 14 5a1 1 0 0 0-.64.23 1 1 0 0 0-.13 1.41L16.86 11H5a1 1 0 0 0 0 2z" data-name="arrow-forward"/></g></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fix border-bottom" style="background-color:#fbfbfb;padding:5px 0;">
+  <div class="container">
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-3 text-center text-md-start">
+      <div class="col">
+        <h4><a href="https://brijesh.work/tutorial/">Tutorial</a></h4>
+        <p><a href="https://brijesh.work/tutorial/html5/">Html</a></p>
+        <p><a href="https://brijesh.work/tutorial/css/">CSS</a></p>
+        <p><a href="https://brijesh.work/tutorial/javascript/">JavaScript</a></p>
+        <p><a href="https://brijesh.work/tutorial/php/">PHP</a></p>
+        <p><a href="https://brijesh.work/tutorial/mysql/">Mysql</a></p>
+      </div>
+      <div class="col">
+        <h4><a href="https://brijesh.work/cheatsheet/">Cheat Sheet</a></h4>
+        <p><a href="https://brijesh.work/cheatsheet/chatgpt/">ChatGPT</a></p>
+        <p><a href="https://brijesh.work/cheatsheet/html/">Html</a></p>
+        <p><a href="https://brijesh.work/cheatsheet/css/">CSS</a></p>
+        <p><a href="https://brijesh.work/cheatsheet/wordpress/">Wordpress</a></p>
+        <p><a href="https://brijesh.work/cheatsheet/mysql/">MySql</a></p>
+      </div>
+      <div class="col">
+        <h4><a href="https://brijesh.work/interview/">Interview</a></h4>
+        <p><a href="https://brijesh.work/interview/project-management/">Project Management</a></p>
+        <p><a href="https://brijesh.work/interview/php/">PHP</a></p>
+        <p><a href="https://brijesh.work/interview/mysql/">MySql</a></p>
+      </div>
+      <div class="col">
+        <h4><a href="https://brijesh.work/marketing/">Marketing</a></h4>
+        <p><a href="https://brijesh.work/marketing/instagram/">Instagram</a></p>
+        <p><a href="https://brijesh.work/marketing/seo/">SEO</a></p>
+      </div>
+      <div class="col">
+        <h4><a href="https://brijesh.work/examples/">Examples</a></h4>
+        <p><a href="https://brijesh.work/examples/javascript/">Javascript</a></p>
+        <p><a href="https://brijesh.work/examples/php/">php</a></p>
+        <p><a href="https://brijesh.work/examples/mysql/">MySql</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fix" style="background-color:#fbfbfb;padding:5px 0;">
+  <div class="container">
+    <div class="row">
+      <p class="text-center" style="color: var(--color-primary);text-align: center;"><a href="mailto:bp@brijesh.work">Email Me</a></p>
+    </div>
+  </div>
+</div>
+<style>
+/* filepath: /var/www/html/github/brijeshwork.github.io/pub/inc/footer.html */
+@media (max-width: 767.98px) {
+  .container-fix h1 {
+    font-size: 2.2rem !important;
+    line-height: 1.1;
+  }
+  .container-fix .hireme-btn {
+    font-size: 1rem;
+    padding: 0.5rem 1.2rem;
+    margin-top: 1rem;
+  }
+  .container-fix .row-cols-2 > .col,
+  .container-fix .row-cols-sm-3 > .col,
+  .container-fix .row-cols-md-5 > .col {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  .container-fix .row-cols-2,
+  .container-fix .row-cols-sm-3,
+  .container-fix .row-cols-md-5 {
+    flex-direction: column !important;
+    align-items: center;
+  }
+  .container-fix .col h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .container-fix .col p {
+    margin-bottom: 0.3rem;
+  }
+}
+</style>

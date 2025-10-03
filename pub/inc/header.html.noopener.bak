@@ -1,0 +1,40 @@
+<!-- 
+  This file is intended to be loaded via:
+  <header loadhtml="http://localhost/github/brijeshwork.github.io/pub/inc/header.html" class="header shadow-sm bg-white" role="banner"></header>
+  Do NOT wrap with another <header> tag.
+-->
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-2 shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="https://brijesh.work/">
+      <img src="https://brijesh.work/pub/media/img/brijesh-work-logo.png" alt="Brijesh Work Logo" width="40" class="me-2">
+      <!-- Removed: <span class="fw-bold d-none d-md-inline text-primary">Brijesh Work</span> -->
+    </a>
+    <div class="d-flex align-items-center me-3">
+      <a class="nav-link px-1" href="https://twitter.com/brijeshwork/" target="_blank" rel="nofollow noreferrer" aria-label="Twitter">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg" alt="Twitter" width="22" style="vertical-align:middle;">
+      </a>
+      <a class="nav-link px-1" href="https://www.linkedin.com/in/brijeshwork/" target="_blank" rel="nofollow noreferrer" aria-label="LinkedIn">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" alt="LinkedIn" width="22" style="vertical-align:middle;">
+      </a>
+      <a class="nav-link px-1" href="https://github.com/brijeshwork/" target="_blank" rel="nofollow noreferrer" aria-label="GitHub">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" alt="GitHub" width="22" style="vertical-align:middle;">
+      </a>
+    </div>
+    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="mainNavbar">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item me-2">
+          <a class="nav-link px-2" href="https://brijesh.work/service/">Service</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link px-2" href="https://brijesh.work/portfolio/">Work</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link px-2" href="https://brijesh.work/about/">About</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

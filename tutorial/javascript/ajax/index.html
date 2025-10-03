@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel</title>
     <link rel="canonical" href="https://brijesh.work/tutorial/javascript/ajax/" />
@@ -28,7 +28,7 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
-    <meta property="og:description" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
+    <meta property="og:description" content="Brijesh Patel PHP Developer | Magento | Laravel" />
     <meta property="og:url" content="https://brijesh.work/tutorial/mysql/" />
     <meta property="og:site_name" content="Brijesh Patel" />
     <meta property="og:image" content="https://brijesh.work/tutorial/mysql/" />
@@ -655,7 +655,7 @@
                     <div>
                         <p><strong>Start typing a name in the input field below:</strong></p>
                         <p>Suggestions:</p>
-                        <p>First name: <input size="20" type="text" /></p>
+                        <p>First name: <input id="firstname-php" size="20" type="text" aria-label="First name" /></p>
                     </div>
                 </div>
                 <hr />
@@ -728,7 +728,7 @@
                     <div>
                         <p><strong>Start typing a name in the input field below:</strong></p>
                         <p>Suggestions:</p>
-                        <p>First name: <input type="text" /></p>
+                        <p>First name: <input id="firstname-asp" type="text" aria-label="First name" /></p>
                     </div>
                 </div>
                 <hr />
@@ -793,7 +793,8 @@
                 <div>
                     <h3>Example</h3>
                     <div>
-                        <form action="https://www.w3schools.com/js/js_ajax_database.asp"><select name="customers"
+                        <form action="https://www.w3schools.com/js/js_ajax_database.asp">
+                            <select id="customers-select" name="customers" aria-label="Select a customer"
                                 onchange="showCustomer(this.value)">
                                 <option value="">Select a customer:</option>
                                 <option value="ALFKI">Alfreds Futterkiste</option>

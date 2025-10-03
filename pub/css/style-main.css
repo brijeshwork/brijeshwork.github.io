@@ -342,3 +342,79 @@ nav ul li a {
 @media (max-width: 768px) {
     /* ...responsive styles... */
 }
+
+/* Fallback for responsive images in case bootstrap is not loaded */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Logos & skills section styles moved from inline */
+.clients-section {
+    background-color: #ffffff;
+    margin-top: 0;
+}
+.skills-section {
+    background-color: #fbfbfb;
+    margin-top: 50px;
+}
+.skills-section h2 {
+    text-align: center;
+    font-weight: 900;
+}
+.text-center-imp { text-align: center !important; }
+
+/* Footer bar style moved from inline */
+.footer-bar {
+    background-color: #fbfbfb;
+    padding: 5px 0;
+}
+
+/* Services grid and SVG wrapper */
+.services-grid-section {
+    background-color: #f2f2f2;
+    margin-top: 50px;
+}
+.service-svg-wrapper {
+    width: 112px;
+    height: 112px;
+    display: inline-block;
+}
+.service-title {
+    font-weight: bold;
+    font-size: 21px;
+}
+.service-sub {
+    font-size: 14px;
+}
+
+/* Clients logos area */
+.clients-section {
+    background-color: #ffffff;
+}
+.icon-sm {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+/* Footer small tweaks */
+.footer-email { color: var(--color-primary); }
+
+/* Fiverr card and stats */
+.fiverr-card {
+    border:1.5px solid #a259ff;
+    border-radius:12px;
+    padding:5px 20px;
+    display:inline-block;
+    background:rgba(30,30,40,0.7);
+    min-width:120px;
+}
+.fiverr-card-title { font-size:1.1rem; color:#fff; font-weight:600; letter-spacing:1px; }
+.fiverr-card-subtitle { font-size:0.95rem; color:#fff; margin-top:2px; }
+.fiverr-stars { margin-left:2px; }
+.stat-number { font-size:2.1rem; font-weight:700; letter-spacing:2px; min-width:54px; text-align:right; color:#23243a; }
+.stat-plus { font-size:1.2rem; }
+.stat-label { font-size:1rem; color:#23243a; margin-left:10px; text-align:left; }
+

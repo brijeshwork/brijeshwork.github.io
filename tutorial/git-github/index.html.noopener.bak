@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Git & GitHub Tutorial: Beginner to Advanced</title>
+    <link rel="canonical" href="https://brijesh.work/tutorial/git-github/" />
+    <meta name="description" content="A comprehensive guide to Git and GitHub for beginners, intermediate, and advanced users. Learn version control, collaboration, branching, pull requests, and more.">
+    <meta name="keywords" content="Git, GitHub, Version Control, Tutorial, Beginner, Advanced, Branching, Pull Request, Workflow, Open Source">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Git & GitHub Tutorial: Beginner to Advanced" />
+    <meta property="og:description" content="A complete Git & GitHub tutorial for all levels. Covers basics, collaboration, advanced workflows, and best practices." />
+    <meta property="og:url" content="https://brijesh.work/tutorial/git-github/" />
+    <meta property="og:site_name" content="Brijesh Patel - Web Development Tutorials" />
+    <meta property="og:image" content="https://brijesh.work/pub/media/images/git-github-tutorial.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:title" content="Git & GitHub Tutorial: Beginner to Advanced" />
+    <meta name="twitter:description" content="A complete guide to Git & GitHub for all levels. Learn version control, collaboration, and advanced workflows." />
+    <meta name="twitter:image" content="https://brijesh.work/pub/media/images/git-github-tutorial.jpg" />
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <style>
+      body {
+        background: linear-gradient(120deg, #f8fafc 0%, #e9ecef 100%);
+        color: #23243a;
+      }
+      .git-hero {
+        background: linear-gradient(90deg, #23243a 60%, #4f8cff 100%);
+        color: #fff;
+        border-radius: 18px;
+        padding: 48px 32px 32px 32px;
+        margin-bottom: 36px;
+        box-shadow: 0 4px 32px rgba(44,62,80,0.08);
+        position: relative;
+        overflow: hidden;
+      }
+      .git-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 900;
+        margin-bottom: 12px;
+        letter-spacing: -1px;
+      }
+      .git-hero p {
+        font-size: 1.25rem;
+        margin-bottom: 0;
+        opacity: 0.95;
+      }
+      .git-hero .git-logo {
+        position: absolute;
+        right: 32px;
+        bottom: 16px;
+        opacity: 0.12;
+        width: 180px;
+        max-width: 40vw;
+        pointer-events: none;
+      }
+      .toc {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(44,62,80,0.05);
+        padding: 24px 28px;
+        margin-bottom: 36px;
+      }
+      .toc h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .toc ul {
+        padding-left: 18px;
+        margin-bottom: 0;
+      }
+      .toc li {
+        margin-bottom: 7px;
+        font-size: 1.05rem;
+      }
+      .tip, .warn {
+        border-radius: 6px;
+        padding: 12px 18px;
+        margin: 22px 0;
+        font-size: 1rem;
+      }
+      .tip {
+        background: #e6f7ff;
+        border-left: 4px solid #1890ff;
+      }
+      .warn {
+        background: #fffbe6;
+        border-left: 4px solid #faad14;
+      }
+      pre, code {
+        background: #f4f4f4;
+        border-radius: 5px;
+        font-size: 1rem;
+        color: #23243a;
+      }
+      pre {
+        padding: 14px 18px;
+        margin-bottom: 18px;
+        overflow-x: auto;
+      }
+      code {
+        padding: 2px 7px;
+      }
+      h2 {
+        margin-top: 44px;
+        font-size: 2rem;
+        font-weight: 800;
+        color: #23243a;
+      }
+      h3 {
+        margin-top: 32px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #4f8cff;
+      }
+      ul, ol {
+        margin-bottom: 18px;
+      }
+      .faq-section b {
+        color: #4f8cff;
+      }
+      .git-footer {
+        margin-top: 60px;
+        text-align: center;
+        color: #888;
+        font-size: 1.1rem;
+      }
+      @media (max-width: 600px) {
+        .git-hero { padding: 32px 12px 24px 12px; }
+        .git-hero .git-logo { display: none; }
+        .toc { padding: 16px 10px; }
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1.3rem; }
+      }
+    </style>
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header shadow-sm bg-white" role="banner"></header>
+
+    <div class="container" style="max-width: 900px; margin: 0 auto;">
+      <section class="git-hero mb-4">
+        <h1>Git &amp; GitHub Tutorial: Beginner to Advanced</h1>
+        <p>Master version control, collaboration, and advanced workflows with this in-depth Git &amp; GitHub guide for all levels.</p>
+        <img src="https://brijesh.work/pub/media/images/git-github-tutorial.jpg" alt="Git & GitHub" class="git-logo" />
+      </section>
+
+      <div class="toc">
+        <h3>Table of Contents</h3>
+        <ul>
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#git-basics">1. Git Basics (Beginner)</a></li>
+          <li><a href="#github-basics">2. GitHub Basics (Beginner)</a></li>
+          <li><a href="#intermediate">3. Intermediate Git & GitHub</a></li>
+          <li><a href="#advanced">4. Advanced Git & GitHub</a></li>
+          <li><a href="#tips">5. Tips, Best Practices & Resources</a></li>
+          <li><a href="#faq">6. FAQ</a></li>
+        </ul>
+      </div>
+
+      <h2 id="intro">Introduction</h2>
+      <p>
+        <b>Git</b> is a distributed version control system that helps you track changes in your code and collaborate with others. <b>GitHub</b> is a cloud-based hosting service for Git repositories, making it easy to share, review, and manage code with teams or the open source community.
+      </p>
+      <div class="tip">
+        <b>Who is this guide for?</b> <br>
+        Anyone who wants to learn Git &amp; GitHub, from absolute beginners to advanced users looking for best practices and advanced workflows.
+      </div>
+
+      <h2 id="git-basics">1. Git Basics (Beginner)</h2>
+      <h3>1.1. Installing Git</h3>
+      <ul>
+        <li><b>Windows:</b> <a href="https://git-scm.com/download/win" target="_blank">Download Git for Windows</a></li>
+        <li><b>Mac:</b> <code>brew install git</code> (with <a href="https://brew.sh/" target="_blank">Homebrew</a>)</li>
+        <li><b>Linux:</b> <code>sudo apt install git</code> (Debian/Ubuntu)</li>
+      </ul>
+
+      <h3>1.2. Git Configuration</h3>
+      <pre><code>git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+git config --global core.editor "code --wait"   # Use VSCode as editor
+</code></pre>
+
+      <h3>1.3. Creating a Repository</h3>
+      <pre><code>git init my-project
+cd my-project
+</code></pre>
+      <p>This creates a new folder <code>my-project</code> with a Git repository.</p>
+
+      <h3>1.4. Basic Workflow</h3>
+      <ol>
+        <li>Edit or add files in your project directory.</li>
+        <li>Stage changes: <code>git add filename</code> or <code>git add .</code></li>
+        <li>Commit changes: <code>git commit -m "Describe your changes"</code></li>
+        <li>View history: <code>git log</code></li>
+      </ol>
+
+      <h3>1.5. Cloning a Repository</h3>
+      <pre><code>git clone https://github.com/username/repo.git</code></pre>
+
+      <h3>1.6. Checking Status</h3>
+      <pre><code>git status</code></pre>
+
+      <h3>1.7. Ignoring Files</h3>
+      <p>Create a <code>.gitignore</code> file to exclude files/folders from version control.</p>
+      <pre><code>node_modules/
+.env
+*.log
+</code></pre>
+
+      <h2 id="github-basics">2. GitHub Basics (Beginner)</h2>
+      <h3>2.1. Creating a GitHub Account</h3>
+      <p>Sign up at <a href="https://github.com/" target="_blank">github.com</a>.</p>
+
+      <h3>2.2. Creating a Repository on GitHub</h3>
+      <ol>
+        <li>Click <b>New</b> on your GitHub dashboard.</li>
+        <li>Fill in repository name, description, and choose public/private.</li>
+        <li>Click <b>Create repository</b>.</li>
+      </ol>
+
+      <h3>2.3. Connecting Local Repo to GitHub</h3>
+      <pre><code>git remote add origin https://github.com/username/repo.git
+git push -u origin main   # or master
+</code></pre>
+
+      <h3>2.4. Forking & Pull Requests</h3>
+      <ul>
+        <li><b>Fork:</b> Copy someone else's repo to your account.</li>
+        <li><b>Pull Request (PR):</b> Propose changes to the original repo.</li>
+      </ul>
+      <ol>
+        <li>Fork a repo on GitHub.</li>
+        <li>Clone your fork, make changes, push to your fork.</li>
+        <li>On GitHub, click <b>New pull request</b> to propose your changes.</li>
+      </ol>
+
+      <h3>2.5. Collaborators & Permissions</h3>
+      <ul>
+        <li>Add collaborators in repo settings to allow others to push changes.</li>
+        <li>Use <b>Issues</b> and <b>Projects</b> for project management.</li>
+      </ul>
+
+      <h2 id="intermediate">3. Intermediate Git & GitHub</h2>
+      <h3>3.1. Branching & Merging</h3>
+      <pre><code>git branch feature-x         # Create branch
+git checkout feature-x      # Switch to branch
+# or: git switch feature-x
+git merge feature-x         # Merge into current branch
+git branch -d feature-x     # Delete branch
+</code></pre>
+      <div class="tip">
+        <b>Tip:</b> Use branches for new features, bug fixes, or experiments.
+      </div>
+
+      <h3>3.2. Resolving Merge Conflicts</h3>
+      <ol>
+        <li>Git will mark conflicts in files.</li>
+        <li>Edit files to resolve conflicts, then:</li>
+      </ol>
+      <pre><code>git add conflicted-file
+git commit
+</code></pre>
+
+      <h3>3.3. Stashing Changes</h3>
+      <pre><code>git stash           # Save uncommitted changes
+git stash pop       # Restore them later
+</code></pre>
+
+      <h3>3.4. Undoing Changes</h3>
+      <ul>
+        <li><b>Unstage file:</b> <code>git reset HEAD filename</code></li>
+        <li><b>Discard changes:</b> <code>git checkout -- filename</code></li>
+        <li><b>Amend last commit:</b> <code>git commit --amend</code></li>
+      </ul>
+
+      <h3>3.5. Working with Remotes</h3>
+      <pre><code>git remote -v                # List remotes
+git remote add upstream URL  # Add another remote
+git fetch upstream           # Fetch changes
+git merge upstream/main      # Merge upstream changes
+</code></pre>
+
+      <h2 id="advanced">4. Advanced Git & GitHub</h2>
+      <h3>4.1. Rebase</h3>
+      <pre><code>git checkout feature-x
+git rebase main
+</code></pre>
+      <p>Rebase rewrites commit history for a cleaner project history.</p>
+
+      <h3>4.2. Interactive Rebase</h3>
+      <pre><code>git rebase -i HEAD~5</code></pre>
+      <p>Squash, edit, or reorder commits interactively.</p>
+
+      <h3>4.3. Cherry-pick</h3>
+      <pre><code>git cherry-pick &lt;commit-hash&gt;</code></pre>
+      <p>Apply a specific commit from another branch.</p>
+
+      <h3>4.4. Tags & Releases</h3>
+      <pre><code>git tag v1.0.0
+git push origin v1.0.0
+</code></pre>
+      <p>Tags mark specific points in history (e.g., releases).</p>
+
+      <h3>4.5. Submodules</h3>
+      <pre><code>git submodule add https://github.com/other/repo.git path/to/submodule
+git submodule update --init --recursive
+</code></pre>
+      <p>Include other repositories inside your repo.</p>
+
+      <h3>4.6. GitHub Actions (CI/CD)</h3>
+      <ul>
+        <li>Automate tests, builds, and deployments with <a href="https://docs.github.com/en/actions" target="_blank">GitHub Actions</a>.</li>
+        <li>Example: <code>.github/workflows/ci.yml</code></li>
+      </ul>
+
+      <h3>4.7. Security & Secrets</h3>
+      <ul>
+        <li>Never commit secrets or passwords.</li>
+        <li>Use <b>GitHub Secrets</b> for CI/CD workflows.</li>
+        <li>Use <code>git-crypt</code> or <code>git-secret</code> for encrypting files.</li>
+      </ul>
+
+      <h2 id="tips">5. Tips, Best Practices & Resources</h2>
+      <ul>
+        <li>Write clear commit messages: <code>feat: add login page</code></li>
+        <li>Pull before you push: <code>git pull origin main</code></li>
+        <li>Use <code>git log --oneline --graph --all</code> for a visual history.</li>
+        <li>Keep your branches up to date with <code>main</code>.</li>
+        <li>Review pull requests before merging.</li>
+        <li>Use <a href="https://desktop.github.com/" target="_blank">GitHub Desktop</a> or <a href="https://gitkraken.com/" target="_blank">GitKraken</a> for GUI.</li>
+        <li>Read the <a href="https://git-scm.com/book/en/v2" target="_blank">Pro Git Book</a> (free online).</li>
+      </ul>
+
+      <h2 id="faq" class="faq-section">6. FAQ</h2>
+      <b>Q: What is the difference between Git and GitHub?</b>
+      <div>A: Git is a version control tool; GitHub is a platform for hosting and collaborating on Git repositories.</div>
+      <br>
+      <b>Q: What is a pull request?</b>
+      <div>A: A request to merge your changes into another branch or repository, often used for code review.</div>
+      <br>
+      <b>Q: How do I undo a commit?</b>
+      <div>A: Use <code>git revert &lt;commit&gt;</code> to create a new commit that undoes changes, or <code>git reset</code> for local history changes.</div>
+      <br>
+      <b>Q: How do I contribute to open source?</b>
+      <div>A: Fork the repo, make changes, push to your fork, and open a pull request.</div>
+      <br>
+      <b>Q: How do I resolve merge conflicts?</b>
+      <div>A: Edit the conflicted files, remove conflict markers, then <code>git add</code> and <code>git commit</code>.</div>
+
+      
+    </div>
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html" class="bg-white shadow-sm" role="contentinfo"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>includeHTML();</script>
+</body>
+</html>
