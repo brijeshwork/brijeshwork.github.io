@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Designing a Real-Time Notification Queue — System Design | Brijesh Patel</title>
+<meta name="description" content="Design patterns for real-time notification queues: message ordering, fanout, retries, backpressure and integration with downstream processors.">
+<link rel="canonical" href="https://brijesh.work/system-design/notification-queue/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing a Real-Time Notification Queue</h1>
+        <p class="lead">Architectures for real-time message queues: ordering, backpressure, retry strategies, and high-throughput fanout for notifications.</p>
+
+        <h2 id="components">Key components</h2>
+        <ul>
+          <li>Message broker (Kafka, Pulsar) for durable high-throughput queues</li>
+          <li>Consumer groups for scalable processing and partitioned ordering</li>
+          <li>Backpressure and rate limiting to protect downstream systems</li>
+          <li>Retry and dead-letter queues for failed deliveries</li>
+        </ul>
+
+        <h2 id="integration">Integration notes</h2>
+        <p>Integrate with notification delivery services (email, SMS, push) via worker pools and use idempotency for safe retries.</p>
+      </div>
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Components</a></li><li><a href="#integration">Integration</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Session vs Token Authentication — System Design | Brijesh Patel</title>
+<meta name="description" content="Compare session-based authentication vs token-based (JWT) authentication: trade-offs, revocation, scaling and best practices.">
+<link rel="canonical" href="https://brijesh.work/system-design/session-vs-token/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Session vs Token Authentication</h1>
+        <p class="lead">A practical comparison of session-based and token-based authentication with implementation recommendations for scalable systems.</p>
+
+        <h2 id="comparison">Comparison</h2>
+        <table class="table">
+          <thead><tr><th>Aspect</th><th>Session</th><th>Token (JWT)</th></tr></thead>
+          <tbody>
+            <tr><td>State</td><td>Server-side state (session store)</td><td>Stateless tokens (JWT)</td></tr>
+            <tr><td>Revocation</td><td>Easy (invalidate session)</td><td>Hard (requires revocation list / short TTL)</td></tr>
+            <tr><td>Scaling</td><td>Session store needed</td><td>Scales with CDN / edge</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="recommendations">Recommendations</h2>
+        <ul>
+          <li>Use short-lived JWT with refresh tokens for public APIs</li>
+          <li>Use session-store for highly-sensitive admin flows with server-side revocation</li>
+          <li>Consider hybrid approaches: JWT for edge, session for critical operations</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../jwt-authentication/">JWT Authentication</a></li><li><a href="../user-management/">User Management</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

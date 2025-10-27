@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Load Balancing and Horizontal Scaling Explained — System Design | Brijesh Patel</title>
+<meta name="description" content="Load balancing patterns and horizontal scaling: algorithms, health checks, sticky sessions, and CDN interplay for high-availability systems.">
+<link rel="canonical" href="https://brijesh.work/system-design/load-balancing/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Load Balancing and Horizontal Scaling Explained</h1>
+        <p class="lead">Understand load balancing algorithms, health checks, session affinity, and how CDNs and edge caches fit into scaling strategies.</p>
+
+        <h2 id="algorithms">Algorithms</h2>
+        <ul>
+          <li>Round-robin, least-connections, IP-hash, and weighted strategies</li>
+          <li>Client-side vs server-side load balancing trade-offs</li>
+        </ul>
+
+        <h2 id="cdn">CDN & caching</h2>
+        <p>Link → CDN article (not included) — CDNs offload traffic, reduce latency, and interact with origin scaling decisions.</p>
+      </div>
+      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#algorithms">Algorithms</a></li><li><a href="#cdn">CDN</a></li></ul></div></div></aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

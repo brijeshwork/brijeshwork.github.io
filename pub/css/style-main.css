@@ -68,16 +68,375 @@
     --sizes-button-xsmall-text: var(--sizes-text-xsmall-size);
 }
 
+/* ============================================
+   RESPONSIVE LAYOUT FIXES
+   ============================================ */
 
 header,
 section {
     width: 100%;
-    display: inline-block;
+    display: block;
 }
 
+/* Fix container responsiveness */
 .container {
-    width: 1280px;
-    margin: auto;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 40px 0;
+        min-height: 400px;
+    }
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 0;
+    color: var(--color-primary);
+}
+
+.hero-title .fw-light {
+    font-weight: 300;
+}
+
+.hero-title .fw-black {
+    font-weight: 900;
+    color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .hero-content p {
+        text-align: center;
+        font-size: 1.1rem;
+    }
+}
+
+.image-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.hero-image-bg {
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .hero-image-bg {
+        height: 300px;
+        margin-bottom: 2rem;
+    }
+}
+
+.shape {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, #007bff, #6f42c1);
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: -1;
+}
+
+.hireme-btn {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s ease;
+    border: none;
+}
+
+.hireme-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,123,255,0.3);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .hireme-btn {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: #343a40;
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-2px);
+    background: #007bff;
+    color: white;
+}
+
+/* ============================================
+   STATS SECTION
+   ============================================ */
+
+.stats-section {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .stats-section {
+        padding: 60px 0;
+    }
+}
+
+.stat-card {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+@media (max-width: 576px) {
+    .stat-number {
+        font-size: 2rem;
+    }
+}
+
+/* ============================================
+   INSTAGRAM SECTION
+   ============================================ */
+
+.instagram-section {
+    padding: 80px 0;
+    background: white;
+}
+
+@media (max-width: 768px) {
+    .instagram-section {
+        padding: 60px 0;
+    }
+}
+
+.instagram-grid .col-6,
+.instagram-grid .col-md-4,
+.instagram-grid .col-lg-2 {
+    padding: 5px;
+}
+
+.instagram-post {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    aspect-ratio: 1;
+}
+
+.instagram-post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.instagram-post:hover img {
+    transform: scale(1.1);
+}
+
+/* ============================================
+   TECH SKILLS SECTION
+   ============================================ */
+
+.tech-skills-section {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .tech-skills-section {
+        padding: 60px 0;
+    }
+}
+
+.tech-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin: 0 auto 1rem;
+    transition: transform 0.2s ease;
+}
+
+.tech-icon:hover {
+    transform: translateY(-3px);
+}
+
+.tech-icon i {
+    font-size: 24px;
+    color: #007bff;
+}
+
+/* ============================================
+   PORTFOLIO SECTION
+   ============================================ */
+
+.portfolio-section {
+    padding: 80px 0;
+    background: white;
+}
+
+@media (max-width: 768px) {
+    .portfolio-section {
+        padding: 60px 0;
+    }
+}
+
+.portfolio-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover img {
+    transform: scale(1.05);
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+/* Fix float conflicts with Bootstrap */
+.row .col,
+.row [class*="col-"] {
+    float: none !important;
+}
+
+/* Override legacy float classes on mobile */
+@media (max-width: 768px) {
+    .pullLeft,
+    .pullRight {
+        float: none !important;
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 1rem !important;
+    }
+}
+
+/* Ensure responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Fix text alignment on mobile */
+@media (max-width: 768px) {
+    .text-center-mobile {
+        text-align: center !important;
+    }
+    
+    .mb-4-mobile {
+        margin-bottom: 1.5rem !important;
+    }
 }
 
 .logo {
@@ -3343,3 +3702,86 @@ nav ul li a {
         }
 
         *{box-sizing:border-box}body{font-family:Verdana,sans-serif;margin:0}.mySlides{display:none}img{vertical-align:middle}.slideshow-container{max-width:100%;position:relative;margin:auto}.prev,.next{cursor:pointer;position:absolute;top:50%;width:auto;padding:16px;margin-top:-22px;color:white;font-weight:bold;font-size:18px;transition:.6s ease;border-radius:0 3px 3px 0;-webkit-user-select:none;user-select:none}.next{right:0;border-radius:3px 0 0 3px}.prev:hover,.next:hover{background-color:rgba(0,0,0,.8)}.text{color:#f2f2f2;font-size:15px;padding:8px 12px;position:absolute;bottom:8px;width:100%;text-align:center}.numbertext{color:#f2f2f2;font-size:12px;padding:8px 12px;position:absolute;top:0}.active,.dot:hover{background-color:#717171}.fades{-webkit-animation-name:fade;-webkit-animation-duration:1.5s;animation-name:fade;animation-duration:1.5s}@-webkit-keyframes fade{from{opacity:.4}to{opacity:1}}@keyframes fade{from{opacity:.4}to{opacity:1}}@media only screen and (max-width:300px){.prev,.next,.text{font-size:11px}}
+
+/* ============================================
+   FOOTER RESPONSIVE FIXES
+   ============================================ */
+
+/* Fix footer columns stacking on mobile and tablet */
+@media (max-width: 992px) {
+    #site-footer .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    #site-footer .col-6,
+    #site-footer .col-md-2,
+    #site-footer .col-md-4 {
+        width: 50% !important;
+        max-width: 50% !important;
+        flex: 0 0 50% !important;
+        margin-bottom: 2rem !important;
+    }
+    
+    #site-footer .col-12.col-md-4 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        text-align: center !important;
+        margin-bottom: 2rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #site-footer .col-6,
+    #site-footer .col-md-2,
+    #site-footer .col-md-4 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+        text-align: center !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    #site-footer .d-flex {
+        justify-content: center !important;
+    }
+    
+    #site-footer .list-unstyled {
+        text-align: center !important;
+    }
+}
+
+/* Fix CTA section responsive issues */
+@media (max-width: 768px) {
+    .footer-cta {
+        padding: 40px 0 !important;
+    }
+    
+    .cta-stats {
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 16px !important;
+        width: 100% !important;
+    }
+    
+    .stat {
+        justify-content: center !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .cta-title {
+        font-size: 2rem !important;
+    }
+    
+    .cta-actions {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    .hireme-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}

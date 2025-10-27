@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Infrastructure as Code (IaC) — Automating with Terraform — System Design | Brijesh Patel</title>
+<meta name="description" content="Infrastructure as Code design patterns and best practices using Terraform: modules, state management, remote backends, and workflows.">
+<link rel="canonical" href="https://brijesh.work/system-design/infrastructure-as-code-terraform/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Infrastructure as Code (IaC) — Automating with Terraform</h1>
+        <p class="lead">A practical overview of Terraform-driven IaC: organizing modules, managing state, and creating reproducible infrastructure deployments.</p>
+
+        <h2 id="key-concepts">Key concepts</h2>
+        <ul>
+          <li>Modules for reuse and encapsulation</li>
+          <li>State management and remote backends (S3, GCS)</li>
+          <li>Workspaces, CI-driven plans and apply gates</li>
+          <li>Drift detection and policy-as-code (Sentinel, OPA)</li>
+        </ul>
+
+        <!-- Architecture diagram -->
+        <div class="mb-4">
+          <svg width="100%" height="160" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Terraform IaC architecture">
+            <defs>
+              <style>.c{fill:#f8f9fa;stroke:#adb5bd;stroke-width:1}.t{font-size:12px;fill:#212529}</style>
+            </defs>
+            <rect x="20" y="20" width="220" height="120" class="c" rx="6"/>
+            <text x="130" y="50" text-anchor="middle" class="t">Git Repo (modules & envs)</text>
+            <text x="130" y="70" text-anchor="middle" class="t">.tf, modules/, env/*.tfvars</text>
+
+            <rect x="270" y="20" width="260" height="120" class="c" rx="6"/>
+            <text x="400" y="50" text-anchor="middle" class="t">CI/CD Runner</text>
+            <text x="400" y="70" text-anchor="middle" class="t">terraform init/plan/apply</text>
+
+            <rect x="560" y="10" width="320" height="140" class="c" rx="6"/>
+            <text x="720" y="45" text-anchor="middle" class="t">Remote Backend</text>
+            <text x="720" y="65" text-anchor="middle" class="t">S3/GCS + State Lock (DynamoDB)</text>
+            <text x="720" y="85" text-anchor="middle" class="t">Workspaces for envs / tenant</text>
+
+            <path d="M240 80 L270 80" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
+            <path d="M530 80 L560 80" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
+            <defs><marker id="m" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#495057"/></marker></defs>
+          </svg>
+          <p class="small text-muted">Figure: store Terraform in Git, run plan/apply in CI, keep state in a remote backend with locking and use workspaces for environment isolation.</p>
+        </div>
+
+        <h3 id="module-example">Terraform module example</h3>
+        <p>Keep reusable components as modules. Example: simple VPC/network module (modules/network/main.tf).</p>
+        <pre><code class="language-hcl">// modules/network/main.tf
+variable "name" {}
+variable "cidr" { default = "10.0.0.0/16" }
+
+resource "aws_vpc" "this" {
+  cidr_block = var.cidr
+  tags = { Name = var.name }
+}
+
+output "vpc_id" { value = aws_vpc.this.id }
+</code></pre>
+
+        <h3 id="root-module">Root module usage</h3>
+        <pre><code class="language-hcl">module "network" {
+  source = "./modules/network"
+  name   = "prod-vpc"
+  cidr   = "10.1.0.0/16"
+}
+</code></pre>
+
+        <h3 id="remote-backend">Remote backend example (S3 + DynamoDB locking)</h3>
+        <pre><code class="language-hcl">terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state"
+    key            = "envs/prod/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform-state-lock"
+    encrypt        = true
+  }
+}
+</code></pre>
+
+        <h3 id="workspaces-vars">Workspaces & variable files</h3>
+        <p>Use workspaces or one directory per environment. Keep secrets out of version control and supply via secure variable sources (Vault, cloud secrets).</p>
+        <pre><code class="language-bash"># recommended workflow
+terraform workspace new prod
+terraform init
+terraform plan -var-file=env/prod.tfvars
+terraform apply -var-file=env/prod.tfvars
+</code></pre>
+
+        <h3 id="ci-integration">CI integration (GitHub Actions example)</h3>
+        <p>Run plan on PRs and apply only after approvals or merging to main/production branch.</p>
+        <pre><code class="language-yaml">name: Terraform
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Format
+        run: terraform fmt -check
+      - name: Terraform Plan
+        run: terraform plan -var-file=env/${{ github.ref_name }}.tfvars
+      - name: Upload plan artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfplan
+          path: plan.out
+</code></pre>
+
+        <h3 id="best-practices">Best practices & notes</h3>
+        <ul>
+          <li>Use modules to encapsulate reusable infra patterns.</li>
+          <li>Store state remotely with encryption and locking to avoid concurrent applies.</li>
+          <li>Run plan in CI and gate apply via approvals, protected branches or automation with least privilege.</li>
+          <li>Use policy-as-code (OPA/Sentinel) to enforce guardrails before apply.</li>
+        </ul>
+
+        <!-- Prism.js for highlighting -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Use Terraform modules, remote state with locking, and automated plan/apply in CI to maintain stable, auditable infrastructure across environments. Treat state carefully, secure secrets, and adopt policy-as-code to prevent risky changes.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#key-concepts">Key concepts</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

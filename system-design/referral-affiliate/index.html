@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Designing a Referral and Affiliate Tracking System — System Design | Brijesh Patel</title>
+<meta name="description" content="Patterns for building referral and affiliate tracking systems: attribution models, fraud detection, payout workflows and CRM integrations.">
+<link rel="canonical" href="https://brijesh.work/system-design/referral-affiliate/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing a Referral and Affiliate Tracking System</h1>
+        <p class="lead">How to track referrals and affiliates: unique tracking links, attribution windows, deduplication, payout calculations and CRM integration.</p>
+
+        <h2 id="requirements">Requirements</h2>
+        <ul>
+          <li>Track referral attribution reliably across sessions and channels</li>
+          <li>Prevent fraud and duplicate attributions</li>
+          <li>Support reports for payouts and partner dashboards</li>
+          <li>Integrate with CRM and billing for payouts</li>
+        </ul>
+
+        <h2 id="architecture">Architecture</h2>
+        <ul>
+          <li>Tracking pixel / link redirects for capturing source and utm-like metadata</li>
+          <li>Event ingestion pipeline (message queue) to process conversions and attribute them</li>
+          <li>Attribution store with TTLs and idempotent writes</li>
+          <li>Fraud detection via scoring and heuristics</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#architecture">Architecture</a></li><li><a href="#requirements">Requirements</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

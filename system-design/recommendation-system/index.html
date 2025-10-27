@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Recommendation System Design — AI Meets System Architecture — System Design | Brijesh Patel</title>
+<meta name="description" content="Designing recommendation systems: collaborative filtering, ranking, online vs offline models, and serving recommendations at scale.">
+<link rel="canonical" href="https://brijesh.work/system-design/recommendation-system/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Recommendation System Design — AI Meets System Architecture</h1>
+        <p class="lead">Overview of recommendation architectures: offline training, online feature stores, serving layer, A/B testing and scaling strategies.</p>
+
+        <h2 id="approaches">Approaches</h2>
+        <ul>
+          <li>Collaborative filtering (matrix factorization, embeddings)</li>
+          <li>Content-based filtering (item features, metadata)</li>
+          <li>Hybrid models combining both approaches</li>
+        </ul>
+
+        <h2 id="pipeline">Pipeline</h2>
+        <ul>
+          <li>Data collection → feature engineering → model training (offline)</li>
+          <li>Online feature store and low-latency model serving for real-time recommendations</li>
+          <li>Ranking layer to combine candidate generation and scoring</li>
+        </ul>
+
+        <h2 id="evaluation">Evaluation & experimentation</h2>
+        <p>Use A/B testing, offline metrics (precision/recall, NDCG) and guardrails to avoid feedback loops and bias.</p>
+
+      </div>
+      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#pipeline">Pipeline</a></li><li><a href="#evaluation">Evaluation</a></li></ul></div></div></aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

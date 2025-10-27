@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Booking Management System Design — System Design | Brijesh Patel</title>
+<meta name="description" content="Design patterns for booking management systems (hotels, appointments, events): availability, conflict resolution, calendar sync and scaling strategies.">
+<link rel="canonical" href="https://brijesh.work/system-design/booking-management/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Booking Management System Design</h1>
+        <p class="lead">Architectural patterns for booking systems — availability models, conflict handling, calendar integration and high-concurrency booking flows.</p>
+
+        <h2 id="requirements">Requirements</h2>
+        <ul>
+          <li>Accurate availability checks and prevention of double-booking</li>
+          <li>Support time zones and recurring bookings</li>
+          <li>Low-latency booking confirmation (user experience)</li>
+          <li>High concurrency and consistency for inventory like rooms or slots</li>
+        </ul>
+
+        <h2 id="architecture">Architecture patterns</h2>
+        <ul>
+          <li>Optimistic locking with conflict resolution for low-latency flows</li>
+          <li>Pessimistic locking (database row locks) for critical resources</li>
+          <li>Distributed lock service (Redis Redlock) for cross-node consistency</li>
+          <li>Event-driven eventual consistency for calendar sync and notifications</li>
+        </ul>
+
+        <h2 id="availability-models">Availability models</h2>
+        <p>Represent availability as time slots or capacity units depending on domain. Pre-reserve inventory for a short TTL to prevent race conditions during checkout.</p>
+
+        <h2 id="scaling">Scaling & data flow</h2>
+        <ul>
+          <li>Partition bookings by resource (hotel id, location) to distribute load</li>
+          <li>Use CQRS for separating read-optimized availability views from write paths</li>
+          <li>Batch processing for reconciliation and cleanup of orphaned reservations</li>
+        </ul>
+
+        <h2 id="integration">Integrations & calendars</h2>
+        <p>Integrate with external calendars (Google Calendar, Outlook) using webhooks and normalized event models. Implement exponential backoff + deduplication for webhook retries.</p>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Choose an availability model that matches your domain and combine locking strategies with a resilient reconciliation pipeline to maintain consistency and user experience.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#architecture">Architecture</a></li><li><a href="#availability-models">Availability models</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

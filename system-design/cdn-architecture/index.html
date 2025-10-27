@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CDN Architecture — How Content Delivery Works Globally — System Design | Brijesh Patel</title>
+<meta name="description" content="CDN architecture design: edge caching, TTLs, origin selection, and global performance considerations.">
+<link rel="canonical" href="https://brijesh.work/system-design/cdn-architecture/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>CDN Architecture — How Content Delivery Works Globally</h1>
+        <p class="lead">Designing a CDN: edge caching, cache hierarchies, invalidation and origin selection to achieve low-latency global delivery.</p>
+
+        <h2 id="key-concepts">Key concepts</h2>
+        <ul>
+          <li>Edge cache vs origin</li>
+          <li>Cache-control headers and TTLs</li>
+          <li>Cache invalidation and purging strategies</li>
+          <li>Geographic routing and latency optimization</li>
+        </ul>
+
+        <!-- Architecture diagram -->
+        <div class="mb-4">
+          <svg width="100%" height="160" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CDN architecture diagram">
+            <defs><style>.n{fill:#f8f9fa;stroke:#adb5bd;stroke-width:1}.t{font-size:12px;fill:#212529}</style></defs>
+            <rect x="20" y="30" width="200" height="100" class="n" rx="6"/>
+            <text x="120" y="60" text-anchor="middle" class="t">Users (Global)</text>
+
+            <rect x="250" y="10" width="220" height="60" class="n" rx="6"/>
+            <text x="360" y="40" text-anchor="middle" class="t">Edge POPs</text>
+            <text x="360" y="55" text-anchor="middle" class="t">(cache, TLS, routing)</text>
+
+            <rect x="250" y="90" width="220" height="40" class="n" rx="6"/>
+            <text x="360" y="115" text-anchor="middle" class="t">Regional cache / Mid-tier</text>
+
+            <rect x="500" y="20" width="360" height="120" class="n" rx="6"/>
+            <text x="680" y="50" text-anchor="middle" class="t">Origin (app servers / object storage)</text>
+
+            <path d="M220 80 L250 40" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
+            <path d="M470 100 L500 100" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
+            <defs><marker id="m" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#495057"/></marker></defs>
+          </svg>
+          <p class="small text-muted">Figure: Users hit Edge POPs; misses go to regional caches or origin. CDNs provide TLS termination, caching and request routing close to users.</p>
+        </div>
+
+        <h3 id="cache-headers">Cache-control headers examples</h3>
+        <p>Use Cache-Control and surrogate-control headers to control edge behavior.</p>
+        <pre><code class="language-http"># Static assets (long cache, allow CDN to serve)
+Cache-Control: public, max-age=31536000, immutable
+
+# HTML (shorter TTL, allow stale while revalidate)
+Cache-Control: public, max-age=60, stale-while-revalidate=300
+
+# Surrogate control for CDN (example header used by origin to instruct CDN)
+Surrogate-Control: max-age=3600
+</code></pre>
+
+        <h3 id="cache-invalidation">Invalidation & cache purging strategies</h3>
+        <ul>
+          <li>Preferrable: cache-busted URLs (artifact fingerprinting) to avoid wide purges.</li>
+          <li>When necessary, perform targeted invalidation (path or tag-based) rather than full-pop purge.</li>
+          <li>Use TTL and stale-if-error to reduce user impact during origin outages.</li>
+        </ul>
+
+        <h3 id="origin-selection">Origin selection & failover</h3>
+        <p>Use origin pools and health checks in the CDN. Prefer regional origins and nearest-origin routing for latency-sensitive requests.</p>
+
+        <h3 id="cloudfront-example">AWS CloudFront — invalidation CLI example</h3>
+        <pre><code class="language-bash"># invalidate a path
+aws cloudfront create-invalidation --distribution-id EXXXXXXX --paths "/static/css/*"
+
+# invalidate multiple paths
+aws cloudfront create-invalidation --distribution-id EXXXXXXX --paths "/index.html" "/app/*"
+</code></pre>
+
+        <h3 id="edge-compute">Edge compute & personalization</h3>
+        <p>Edge functions (Cloudflare Workers, Lambda@Edge) enable personalization and A/B at the edge. Be cautious: keep execution time short and avoid heavy CPU work.</p>
+
+        <h3 id="tradeoffs">Trade-offs & tuning</h3>
+        <ul>
+          <li>Cache hit ratio vs freshness: longer TTLs increase hit ratio but risk stale content.</li>
+          <li>Costs: frequent invalidations or low TTLs increase origin traffic and cost.</li>
+          <li>Testing: measure cache hit rate by region and tune TTLs per content type.</li>
+        </ul>
+
+        <!-- Prism.js for highlighting -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>CDNs are essential for fast global delivery — choose cache policies and purging strategies that match your content's update frequency and consistency needs.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#key-concepts">Key concepts</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

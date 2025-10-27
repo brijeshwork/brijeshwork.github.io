@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Designing a Logging and Monitoring System — System Design | Brijesh Patel</title>
+<meta name="description" content="Design patterns for logging and monitoring: centralized logging, metrics, tracing, alerting and dashboards, linked with analytics dashboards.">
+<link rel="canonical" href="https://brijesh.work/system-design/logging-monitoring/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing a Logging and Monitoring System</h1>
+        <p class="lead">Patterns for centralized logging, metrics collection, distributed tracing, alerting and observability. Links to analytics dashboard design for visualization.</p>
+
+        <h2 id="components">Components</h2>
+        <ul>
+          <li>Log aggregation (ELK/Fluentd/FluentBit), metrics (Prometheus), tracing (Jaeger)</li>
+          <li>Retention policies and cost control for large volumes of logs</li>
+          <li>Dashboards and alerting rules tied to SLOs</li>
+        </ul>
+
+        <h2 id="integration">Integration</h2>
+        <p>Link → <a href="../analytics-dashboard/">Analytics Dashboard</a> for visualizing aggregated metrics and logs.</p>
+
+      </div>
+      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Components</a></li><li><a href="#integration">Integration</a></li></ul></div></div></aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

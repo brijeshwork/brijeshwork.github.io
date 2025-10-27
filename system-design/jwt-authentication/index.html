@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Implementing JWT Authentication with Refresh Tokens — System Design | Brijesh Patel</title>
+<meta name="description" content="Design patterns for JWT authentication: secure storage, refresh token rotations, revocation, and how to implement refresh flows at scale.">
+<link rel="canonical" href="https://brijesh.work/system-design/jwt-authentication/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Implementing JWT Authentication with Refresh Tokens</h1>
+        <p class="lead">How to design secure JWT flows with refresh token rotation, secure storage, and revocation strategies for scalable APIs.</p>
+
+        <h2 id="flow">High-level flow</h2>
+        <ol>
+          <li>User authenticates → receives access token (short-lived) and refresh token (longer-lived)</li>
+          <li>Client uses access token for API calls; when expired, exchanges refresh token for new access token</li>
+          <li>Rotate refresh tokens and maintain revocation list for immediate invalidation</li>
+        </ol>
+
+        <h2 id="security">Security considerations</h2>
+        <ul>
+          <li>Store refresh tokens in secure, httpOnly cookies or secure storage</li>
+          <li>Use refresh token rotation to prevent reuse after theft</li>
+          <li>Monitor anomalous refresh patterns and revoke tokens when malicious behavior detected</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../session-vs-token/">Session vs Token</a></li><li><a href="../user-management/">User Management</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>
