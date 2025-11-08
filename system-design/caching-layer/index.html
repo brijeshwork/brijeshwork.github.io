@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Designing a Caching Layer for High-Traffic Systems — System Design | Brijesh Patel</title>
+<meta name="description" content="Caching strategy architecture: where to cache, cache invalidation patterns, Redis vs CDN, and cache-aside vs write-through patterns.">
+<link rel="canonical" href="https://brijesh.work/system-design/caching-layer/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing a Caching Layer for High-Traffic Systems</h1>
+        <p class="lead">Practical caching strategies: Redis for fast lookups, CDNs for static assets, invalidation patterns and cache warming.
+</p>
+
+        <h2 id="where-to-cache">Where to cache</h2>
+        <ul>
+          <li>Edge/CDN for static assets and CDN-cached dynamic responses</li>
+          <li>Application-level caches (Redis) for hot keys and session caching</li>
+          <li>Database-level caches (read replicas) for heavy read workloads</li>
+        </ul>
+
+        <h2 id="patterns">Patterns</h2>
+        <ul>
+          <li>Cache-aside: applications manage cache population</li>
+          <li>Write-through: writer populates cache on writes</li>
+          <li>Cache invalidation: TTLs, cache-busting, and pub/sub invalidation</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#patterns">Patterns</a></li><li><a href="#where-to-cache">Where to cache</a></li></ul></div></div></aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

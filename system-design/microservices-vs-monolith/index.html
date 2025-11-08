@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Microservices vs Monoliths — Which Architecture Fits Your Project? — System Design | Brijesh Patel</title>
+<meta name="description" content="Compare microservices and monolith architectures: trade-offs, operational complexity, scaling, and when to choose each for your project.">
+<link rel="canonical" href="https://brijesh.work/system-design/microservices-vs-monolith/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Microservices vs Monoliths — Which Architecture Fits Your Project?</h1>
+        <p class="lead">A practical comparison of monolithic and microservice architectures with guidance on trade-offs, team organization, deployment and scaling.</p>
+
+        <h2 id="summary">Summary</h2>
+        <p>Monoliths are simpler to develop and deploy early; microservices improve modularity and independent scaling but add operational overhead. Choose based on team size, release cadence, and scaling needs.</p>
+
+        <h2 id="tradeoffs">Key trade-offs</h2>
+        <ul>
+          <li>Operational complexity vs deployment independence</li>
+          <li>Latency & distributed transactions vs single-process performance</li>
+          <li>Team ownership and release velocity</li>
+        </ul>
+
+        <h2 id="recommendations">Recommendations</h2>
+        <ul>
+          <li>Start with a modular monolith; split into microservices when scaling and organizational needs demand it</li>
+          <li>Invest in observability, CI/CD and automation before breaking into many services</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../multi-tenant-saas/">Multi-tenant SaaS</a></li><li><a href="../fault-tolerant-patterns/">Fault-tolerant Patterns</a></li></ul></div></div></aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

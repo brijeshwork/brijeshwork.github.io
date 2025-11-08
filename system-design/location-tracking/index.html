@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Designing a Real-Time Location Tracking System (Uber-like) — System Design | Brijesh Patel</title>
+<meta name="description" content="Design patterns for real-time location tracking systems: GPS ingestion, location indexing, WebSocket delivery, geospatial queries, and scaling strategies.">
+<link rel="canonical" href="https://brijesh.work/system-design/location-tracking/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing a Real-Time Location Tracking System (Uber-like)</h1>
+        <p class="lead">Patterns for ingesting GPS data, real-time delivery with WebSockets, geospatial indexing, and handling scale and accuracy trade-offs.</p>
+
+        <h2 id="requirements">Requirements</h2>
+        <ul>
+          <li>Process frequent GPS updates from many devices with low latency</li>
+          <li>Support real-time updates to nearby users and routing services</li>
+          <li>Geospatial queries for nearest-neighbor and zone membership</li>
+          <li>Tolerate noisy GPS and provide smoothing/filters</li>
+        </ul>
+
+        <h2 id="architecture">Architecture notes</h2>
+        <ul>
+          <li>Ingest GPS via HTTP or UDP into an ingestion tier (load balanced)</li>
+          <li>Normalize, validate and deduplicate location events</li>
+          <li>Use in-memory stores (Redis, in-memory grids) with geospatial indexes for fast proximity queries</li>
+          <li>Push updates to clients over WebSocket/QUIC connections using a presence/routing service</li>
+        </ul>
+
+        <h2 id="geospatial">Geospatial considerations</h2>
+        <ul>
+          <li>Use S2 geometry, geohash or R-tree indexes depending on accuracy and query patterns</li>
+          <li>Bucket moving entities into tiles to limit query radius and fanout</li>
+        </ul>
+
+        <h2 id="scaling">Scaling</h2>
+        <ul>
+          <li>Partition by geography and shard by tiles/regions</li>
+          <li>Use edge aggregation for very high update rates (aggregate frequent updates before forwarding)</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#geospatial">Geospatial</a></li><li><a href="#scaling">Scaling</a></li></ul></div></div></aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

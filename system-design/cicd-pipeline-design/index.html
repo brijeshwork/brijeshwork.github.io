@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CI/CD Pipeline Design for Scalable Deployments — System Design | Brijesh Patel</title>
+<meta name="description" content="Designing CI/CD pipelines for scalable deployments: pipelines, testing, blue/green, canary, and deployment automation.">
+<link rel="canonical" href="https://brijesh.work/system-design/cicd-pipeline-design/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>CI/CD Pipeline Design for Scalable Deployments</h1>
+        <p class="lead">How to design CI/CD pipelines that enable repeatable, safe deployments across environments at scale.</p>
+
+        <h2 id="overview">Overview</h2>
+        <p>CI/CD pipelines automate build, test and deploy steps. For scalable systems, focus on fast feedback, safe rollouts and reliable automation that integrates with your environment (k8s, VMs, serverless).</p>
+
+        <!-- Simple inline architecture diagram -->
+        <div class="mb-4" aria-hidden="false">
+          <svg width="100%" height="140" viewBox="0 0 900 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CI CD pipeline diagram">
+            <defs>
+              <style>.box{fill:#f8f9fa;stroke:#adb5bd;stroke-width:1;border-radius:6px}.arrow{stroke:#495057;stroke-width:2;fill:none;marker-end:url(#arrowhead)}</style>
+              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#495057"/></marker>
+            </defs>
+            <rect x="10" y="20" width="160" height="80" class="box" rx="6"/>
+            <text x="90" y="60" text-anchor="middle" font-size="12" fill="#212529">Git (PRs)</text>
+
+            <rect x="200" y="8" width="160" height="48" class="box" rx="6"/>
+            <text x="280" y="38" text-anchor="middle" font-size="12" fill="#212529">CI Runners</text>
+
+            <rect x="200" y="74" width="160" height="48" class="box" rx="6"/>
+            <text x="280" y="104" text-anchor="middle" font-size="12" fill="#212529">Test Grid</text>
+
+            <rect x="390" y="20" width="160" height="80" class="box" rx="6"/>
+            <text x="470" y="60" text-anchor="middle" font-size="12" fill="#212529">Artifact Registry</text>
+
+            <rect x="580" y="20" width="220" height="80" class="box" rx="6"/>
+            <text x="690" y="60" text-anchor="middle" font-size="12" fill="#212529">CD / GitOps (ArgoCD, Spinnaker)</text>
+
+            <path d="M170 60 L200 30" class="arrow"/>
+            <path d="M360 60 L390 60" class="arrow"/>
+            <path d="M550 60 L580 60" class="arrow"/>
+          </svg>
+          <p class="small text-muted">Figure: simplified CI/CD flow — source → CI (build/test) → artifact registry → CD/GitOps → production.</p>
+        </div>
+
+        <h3 id="requirements">Requirements</h3>
+
+        <h3 id="requirements">Requirements</h3>
+        <ul>
+          <li>Fast and reliable builds</li>
+          <li>Automated testing across unit, integration and e2e</li>
+          <li>Safe deployment strategies (canary, blue/green)</li>
+          <li>Rollback and observability hooks</li>
+        </ul>
+
+        <h3 id="architecture">Pipeline components</h3>
+        <ol>
+          <li>Source control (Git) with PR-based merges</li>
+          <li>CI runners (self-hosted or cloud) for builds and tests</li>
+          <li>Artifact repository (container registry / package repo)</li>
+          <li>CD orchestrator (ArgoCD, Spinnaker, Jenkins X) or GitOps workflows</li>
+          <li>Deployment strategies and traffic-shift mechanisms</li>
+        </ol>
+
+        <h3 id="patterns">Patterns & best practices</h3>
+        <ul>
+          <li>Pipeline as code (stored with the repo)</li>
+          <li>Immutable artifacts and versioned releases</li>
+          <li>Progressive delivery: feature flags + canary releases</li>
+          <li>Automated rollback on failures and health checks</li>
+        </ul>
+
+        <h3 id="security">Security and compliance</h3>
+        <p>Include signing of artifacts, vulnerability scanning, secrets management (HashiCorp Vault, cloud KMS), and enforce policy gates for production releases.</p>
+
+        <h2 id="examples">Examples</h2>
+        <h3 id="github-actions">GitHub Actions — sample pipeline</h3>
+        <pre><code class="language-yaml">name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install & test
+        run: |
+          npm ci
+          npm test
+      - name: Build image
+        run: |
+          docker build -t ghcr.io/ORG/APP:${{ github.sha }} .
+      - name: Push image
+        run: |
+          echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker push ghcr.io/ORG/APP:${{ github.sha }}
+</code></pre>
+
+        <h3 id="canary">Canary deployment example (Kubernetes)</h3>
+        <p>Deploy new version to a small subset of traffic, observe metrics and promote when healthy.</p>
+        <pre><code class="language-bash"># update deployment image (creates a new ReplicaSet)
+kubectl set image deployment/my-app my-app=ghcr.io/ORG/APP:v2 --record
+
+# scale to include canary replica
+kubectl scale deploy my-app --replicas=11
+
+# observe readiness and metrics, then gradually move traffic via Service/Ingress rules or a service mesh
+</code></pre>
+
+        <h3 id="gitops">GitOps (ArgoCD) quick tip</h3>
+        <p>Commit manifests (updated image tags) to the GitOps repo; ArgoCD will reconcile and perform the rollout. Use automated health checks to trigger promotion or rollback.</p>
+
+        <!-- Prism.js for pipeline code highlighting -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Design CI/CD pipelines with reproducibility, observability and safety at the core. Use GitOps where possible and encode deployment policies as automated checks.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#overview">Overview</a></li><li><a href="#architecture">Pipeline components</a></li><li><a href="#patterns">Patterns</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Master Role-Based Access Control Patterns — System Design | Brijesh Patel</title>
+<meta name="description" content="Master patterns for Role-Based Access Control (RBAC): models, schema, enforcement points, scaling, audit, and migration strategies for building secure, maintainable access control in large systems.">
+<meta name="author" content="Brijesh Patel">
+<link rel="canonical" href="https://brijesh.work/system-design/rbac/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Master Role-Based Access Control Patterns — System Design" />
+<meta property="og:description" content="Design patterns and operational guidance to build scalable, auditable Role-Based Access Control (RBAC) systems for modern applications." />
+<meta property="og:url" content="https://brijesh.work/system-design/rbac/" />
+<meta property="og:site_name" content="Brijesh Patel - System Design" />
+<meta property="og:image" content="https://brijesh.work/system-design/rbac/rbac-architecture.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@brijeshwork" />
+
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Master Role-Based Access Control Patterns</h1>
+        <p class="lead">Practical system design patterns for RBAC — models, enforcement, scaling, auditing and migration strategies to secure large applications.</p>
+
+        <h2 id="overview">Overview</h2>
+        <p>Role-Based Access Control (RBAC) is a widely-adopted pattern that maps users to roles and roles to permissions. This page explains core RBAC patterns and operational concerns for building a production-ready access control system.</p>
+
+        <h3 id="requirements">Requirements</h3>
+        <ul>
+          <li>Enforce least-privilege access across services and data</li>
+          <li>Support role hierarchy and permission delegation</li>
+          <li>Low-latency checks for request-time enforcement</li>
+          <li>Efficient policy updates and distribution to enforcement points</li>
+          <li>Comprehensive audit logging and RBAC migration support</li>
+        </ul>
+
+        <h3 id="models">RBAC Models</h3>
+        <h4>Classic RBAC</h4>
+        <p>Users are assigned roles; roles contain permissions. A permission is typically an action on a resource (e.g., <code>invoice:read</code>, <code>invoice:write</code>).</p>
+
+        <h4>RBAC with Role Hierarchies</h4>
+        <p>Role hierarchies let roles inherit permissions from other roles (e.g., <code>manager &gt; employee</code>), reducing duplication.</p>
+
+        <h4>Attribute Combined RBAC (RBAC+ABAC)</h4>
+        <p>Combine RBAC with attributes (resource owner, environment) to express fine-grained rules: allow <code>invoice:read</code> when <code>user.organization == resource.organization</code>.</p>
+
+        <h2 id="data-model">Data model & schema</h2>
+        <p>Core tables (relational example):</p>
+        <pre><code class="language-sql">-- Users, Roles, Permissions, RoleAssignments
+CREATE TABLE users (id UUID PRIMARY KEY, username TEXT, ...);
+CREATE TABLE roles (id UUID PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+CREATE TABLE permissions (id UUID PRIMARY KEY, name TEXT UNIQUE, description TEXT);
+CREATE TABLE role_permissions (role_id UUID REFERENCES roles(id), permission_id UUID REFERENCES permissions(id), PRIMARY KEY(role_id, permission_id));
+CREATE TABLE user_roles (user_id UUID REFERENCES users(id), role_id UUID REFERENCES roles(id), PRIMARY KEY(user_id, role_id));
+
+-- Optional: role hierarchy
+CREATE TABLE role_inherits (parent_role UUID REFERENCES roles(id), child_role UUID REFERENCES roles(id), PRIMARY KEY(parent_role, child_role));
+</code></pre>
+
+        <h2 id="enforcement-points">Enforcement Points</h2>
+        <ul>
+          <li>API Gateway / Edge — first line of defense for coarse-grained blocking</li>
+          <li>Service-level checks — fine-grained checks close to the data</li>
+          <li>Database row-level policies — e.g., Postgres RLS for per-row constraints</li>
+          <li>UI/Client-side shading — hide actions that the user cannot perform</li>
+        </ul>
+
+        <h2 id="lookup-strategies">Lookup Strategies & Caching</h2>
+        <p>Authorization checks must be fast. Strategies include:</p>
+        <ul>
+          <li>Direct DB lookup (simple, but high latency)</li>
+          <li>Cache (Redis) with TTL and invalidation on policy updates</li>
+          <li>JWT tokens carrying role claims for stateless checks at the edge (suitable for short-lived tokens)</li>
+          <li>Local in-memory cache on service instances with pub/sub invalidation</li>
+        </ul>
+
+        <h3 id="permission-evaluation">Permission evaluation algorithm (pseudo)</h3>
+        <pre><code class="language-javascript">// Simplified permission check
+function isAllowed(userId, action, resource) {
+  const roles = cache.getUserRoles(userId) || db.fetchUserRoles(userId);
+  for (const role of roles) {
+    if (cache.roleHasPermission(role, action)) return true;
+    // consider role hierarchy and dynamic attributes
+  }
+  return false;
+}
+</code></pre>
+
+        <h2 id="scaling">Scaling & performance</h2>
+        <ul>
+          <li>Cache computed effective permissions per user or per role set</li>
+          <li>Use Bloom filters for quick negative checks (likely-not-have permission)</li>
+          <li>Shard role/permission data by tenant for multi-tenant systems</li>
+          <li>Precompute role expansion (resolve inheritance) offline for large hierarchies</li>
+        </ul>
+
+        <h2 id="audit">Auditing & compliance</h2>
+        <p>Capture who changed roles/permissions and when. Important events include role assignment, permission addition/removal, and policy changes. Store immutably (append-only log) and stream to SIEM for retention and analysis.</p>
+
+        <h2 id="policy-updates">Policy updates & propagation</h2>
+        <p>Use a configuration service + pub/sub to push changes. When updating critical policies, prefer staged rollout and provide rollback. Use versioned policies and a validation sandbox to test effects before production rollout.</p>
+
+        <h2 id="migration">Migration strategies</h2>
+        <ul>
+          <li>Lift-and-shift: migrate existing groups/ACLs to roles in a compatibility mode</li>
+          <li>Dual-write: write to old and new systems and gradually switch read path to new RBAC</li>
+          <li>Audit-driven migration: run reports to identify effective permissions before cutting over</li>
+        </ul>
+
+        <h2 id="examples">Examples & implementation snippets</h2>
+        <h3>SQL: compute effective permissions (simple)</h3>
+        <pre><code class="language-sql">-- effective permissions for a user (including role inheritance)
+WITH RECURSIVE inherited(parent, child) AS (
+  SELECT parent_role, child_role FROM role_inherits
+  UNION
+  SELECT r.parent_role, i.child_role FROM role_inherits r JOIN inherited i ON i.parent = r.child_role
+)
+SELECT DISTINCT p.name FROM permissions p
+JOIN role_permissions rp ON rp.permission_id = p.id
+JOIN roles r ON r.id = rp.role_id
+JOIN user_roles ur ON ur.role_id = r.id
+LEFT JOIN inherited i ON i.parent = r.id
+WHERE ur.user_id = :user_id;
+</code></pre>
+
+        <h3>JWT Claim pattern</h3>
+        <p>Include <code>roles</code> and a short expiration. Avoid embedding per-resource permissions for high cardinality; prefer role names and keep tokens short-lived.</p>
+
+        <h2 id="tradeoffs">Trade-offs & considerations</h2>
+        <ul>
+          <li>Token-based (JWT) checks are fast but require short TTLs or revocation lists for immediate changes</li>
+          <li>Centralized checks offer up-to-date policies but add latency — cache aggressively</li>
+          <li>DB normalization vs read performance: denormalize effective permissions for fast reads at scale</li>
+        </ul>
+
+        <h2 id="best-practices">Best practices</h2>
+        <ul>
+          <li>Model permissions as verbs on resources (action:resource)</li>
+          <li>Keep roles coarse-grained and compose them for fine-grained access</li>
+          <li>Implement comprehensive audit trails for role/permission changes</li>
+          <li>Use policy versioning and staged rollouts</li>
+          <li>Protect administrative APIs with multi-factor and stricter RBAC</li>
+        </ul>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>RBAC is a pragmatic, scalable approach for access control. Combine caching, clear enforcement points, and strong audit/propagation tooling to build a secure production RBAC system.</p>
+
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5>Quick links</h5>
+            <ul class="list-unstyled">
+              <li><a href="#overview">Overview</a></li>
+              <li><a href="#models">RBAC Models</a></li>
+              <li><a href="#data-model">Data model</a></li>
+              <li><a href="#enforcement-points">Enforcement Points</a></li>
+              <li><a href="#scaling">Scaling</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h6>Further reading</h6>
+            <ul class="list-unstyled">
+              <li><a href="https://csrc.nist.gov/glossary/term/role-based_access_control" target="_blank" rel="noopener">NIST RBAC</a></li>
+              <li><a href="https://en.wikipedia.org/wiki/Role-based_access_control" target="_blank" rel="noopener">RBAC (Wikipedia)</a></li>
+              <li><a href="https://auth0.com/docs/authorization/rbac/" target="_blank" rel="noopener">Auth0 RBAC guide</a></li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+https://www.youtube.com/watch?v=Cy-o0LECWWU
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+
+<!-- Prism.js for code highlighting -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script>
+// Smooth scroll for anchors and active link highlighting
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+});
+</script>
+
+<script>includeHTML();</script>
+</body>
+</html>

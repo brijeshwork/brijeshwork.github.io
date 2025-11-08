@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>Multidimensional Arrays - PHP Examples & Guide | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/examples/php/multidimensional-arrays/" />
+        <meta name="description" content="Multidimensional Arrays: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+    <link rel="canonical" href="https://brijesh.work/examples/php/multidimensional-arrays/" />
+    <meta name="description" content="Multidimensional Arrays: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Multidimensional Arrays - PHP Examples & Guide | Brijesh Patel" />
+    <meta property="og:description" content="Multidimensional Arrays: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices." />
+    <meta property="og:url" content="https://brijesh.work/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/" />
+    <meta property="og:image:width" content="960" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Brijesh Patel" />
+    <meta name="twitter:label2" content="Est. reading time" />
+    <meta name="twitter:data2" content="9 minutes" />
+
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>PHP Multidimensional Arrays Examples</h1>
+                    <p>PHP multidimensional array examples and manipulation techniques.</p>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Output elements from a multidimensional array</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $cars = array (
+                      array("Volvo",22,18),
+                      array("BMW",15,13),
+                      array("Saab",5,2),
+                      array("Land Rover",17,15)
+                    );
+                      
+                    echo $cars[0][0].": In stock: ".$cars[0][1].", sold: ".$cars[0][2].".<br>";
+                    echo $cars[1][0].": In stock: ".$cars[1][1].", sold: ".$cars[1][2].".<br>";
+                    echo $cars[2][0].": In stock: ".$cars[2][1].", sold: ".$cars[2][2].".<br>";
+                    echo $cars[3][0].": In stock: ".$cars[3][1].", sold: ".$cars[3][2].".<br>";
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Loop through a multidimensional array</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $cars = array (
+                      array("Volvo",22,18),
+                      array("BMW",15,13),
+                      array("Saab",5,2),
+                      array("Land Rover",17,15)
+                    );
+                        
+                    for ($row = 0; $row < 4; $row++) {
+                      echo "<p><b>Row number $row</b></p>";
+                      echo "<ul>";
+                      for ($col = 0; $col < 3; $col++) {
+                        echo "<li>".$cars[$row][$col]."</li>";
+                      }
+                      echo "</ul>";
+                    }
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script>includeHTML();</script>

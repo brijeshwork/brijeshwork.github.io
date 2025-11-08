@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mysql Data - PHP Examples & Guide | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/examples/php/mysql-data/" />
+    <meta name="description" content="Mysql Data: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Mysql Data - PHP Examples & Guide | Brijesh Patel" />
+    <meta property="og:description" content="Mysql Data: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices." />
+    <meta property="og:url" content="https://brijesh.work/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/" />
+    <meta property="og:image:width" content="960" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Brijesh Patel" />
+    <meta name="twitter:label2" content="Est. reading time" />
+    <meta name="twitter:data2" content="9 minutes" />
+
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>PHP MySQL Data Examples</h1>
+                    <p>PHP examples for working with MySQL databases, including data retrieval, insertion, and manipulation.</p>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Select data with MySQLi (Object-oriented)</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $servername = "localhost";
+                    $username = "username";
+                    $password = "password";
+                    $dbname = "myDB";
+                    
+                    // Create connection
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    
+                    $sql = "SELECT id, firstname, lastname FROM MyGuests";
+                    $result = $conn->query($sql);
+                    
+                    if ($result->num_rows > 0) {
+                        // output data of each row
+                        while($row = $result->fetch_assoc()) {
+                            echo "<br> id: ". $row["id"]. " - Name: ". $row["firstname"]. " " . $row["lastname"] . "<br>";
+                        }
+                    } else {
+                        echo "0 results";
+                    }
+                    
+                    $conn->close();
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Select data with MySQLi (Procedural)</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $servername = "localhost";
+                    $username = "username";
+                    $password = "password";
+                    $dbname = "myDB";
+                    
+                    // Create connection
+                    $conn = mysqli_connect($servername, $username, $password, $dbname);
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+                    
+                    $sql = "SELECT id, firstname, lastname FROM MyGuests";
+                    $result = mysqli_query($conn, $sql);
+                    
+                    if (mysqli_num_rows($result) > 0) {
+                        // output data of each row
+                        while($row = mysqli_fetch_assoc($result)) {
+                            echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+                        }
+                    } else {
+                        echo "0 results";
+                    }
+                    
+                    mysqli_close($conn);
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Put the resut in an HTML table (Object-oriented)</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $servername = "localhost";
+                    $username = "username";
+                    $password = "password";
+                    $dbname = "myDB";
+                    
+                    // Create connection
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    
+                    $sql = "SELECT id, firstname, lastname FROM MyGuests";
+                    $result = $conn->query($sql);
+                    
+                    if ($result->num_rows > 0) {
+                        echo "<table><tr><th>ID</th><th>Name</th></tr>";
+                        // output data of each row
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr><td>" . $row["id"]. "</td><td>" . $row["firstname"]. " " . $row["lastname"]. "</td></tr>";
+                        }
+                        echo "</table>";
+                    } else {
+                        echo "0 results";
+                    }
+                    
+                    $conn->close();
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Select data with PDO (+ Prepared statements)</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    echo "<table style='border: solid 1px black;'>";
+                     echo "<tr><th>Id</th><th>Firstname</th><th>Lastname</th></tr>";
+                    
+                    class TableRows extends RecursiveIteratorIterator {
+                        function __construct($it) {
+                            parent::__construct($it, self::LEAVES_ONLY);
+                        }
+                    
+                        function current() {
+                            return "<td style='width: 150px; border: 1px solid black;'>" . parent::current(). "</td>";
+                        }
+                    
+                        function beginChildren() {
+                            echo "<tr>";
+                        }
+                    
+                        function endChildren() {
+                            echo "</tr>" . "\n";
+                        }
+                    }
+                    
+                    $servername = "localhost";
+                    $username = "username";
+                    $password = "password";
+                    $dbname = "myDBPDO";
+                    
+                    try {
+                        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $stmt = $conn->prepare("SELECT id, firstname, lastname FROM MyGuests");
+                        $stmt->execute();
+                    
+                        // set the resulting array to associative
+                        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                    
+                        foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
+                            echo $v;
+                        }
+                    }
+                    catch(PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                    $conn = null;
+                    echo "</table>";
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script>includeHTML();</script>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Math - PHP Examples & Guide | Brijesh Patel</title>
+<link rel="canonical" href="https://brijesh.work/examples/php/math/" />
+<meta name="description" content="Math: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+
+<link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Math - PHP Examples & Guide | Brijesh Patel" />
+<meta property="og:description" content="Math: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices." />
+<meta property="og:url" content="https://brijesh.work/" />
+<meta property="og:site_name" content="Brijesh Patel" />
+<meta property="og:image" content="https://brijesh.work/" />
+<meta property="og:image:width" content="960" />
+<meta property="og:image:height" content="640" />
+<meta property="og:image:type" content="image/jpeg" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@brijeshwork" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="Brijesh Patel" />
+<meta name="twitter:label2" content="Est. reading time" />
+<meta name="twitter:data2" content="9 minutes" />
+
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>PHP Math Examples</h1>
+                    <p>PHP mathematical functions and calculations.</p>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Find the value of PI</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    echo(pi());
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>PHP Math Examples</h1>
+                    <p>PHP mathematical functions and calculations.</p>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Find the lowest and highest value in a list of arguments</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    echo(min(0, 150, 30, 20, -8, -200) . "<br>");
+                    echo(max(0, 150, 30, 20, -8, -200));
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Find the absolute (positive) value of a number</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    echo(abs(-6.7));
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Find the square root of a number</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    echo(sqrt(64) . "<br>");
+                    echo(sqrt(0) . "<br>");
+                    echo(sqrt(1) . "<br>");
+                    echo(sqrt(9));
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Round a floating-point number to its nearest integer</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    echo(round(0.60) . "<br>");
+                    echo(round(0.50) . "<br>");
+                    echo(round(0.49) . "<br>");
+                    echo(round(-4.40) . "<br>");
+                    echo(round(-4.60));
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Generate a random number</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    echo(rand());
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Generate a random number between 10 and 100</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    echo(rand(10, 100));
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+</body>
+</html>
+<script>includeHTML();</script>

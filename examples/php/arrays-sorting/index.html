@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>Arrays Sorting - PHP Examples & Guide | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/examples/php/arrays-sorting/" />
+    <meta name="description" content="Arrays Sorting: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+    <link rel="canonical" href="https://brijesh.work/examples/php/arrays-sorting/" />
+    <meta name="description" content="Arrays Sorting: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Arrays Sorting - PHP Examples & Guide | Brijesh Patel" />
+    <meta property="og:description" content="Arrays Sorting: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices." />
+    <meta property="og:url" content="https://brijesh.work/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/" />
+    <meta property="og:image:width" content="960" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Brijesh Patel" />
+    <meta name="twitter:label2" content="Est. reading time" />
+    <meta name="twitter:data2" content="9 minutes" />
+
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/array-examples.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">PHP Array Sorting Examples</h2>
+
+        <div class="example-section">
+            <h4>sort() - Sort array in ascending alphabetical order</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$cars = array("Volvo", "BMW", "Toyota");
+sort($cars);
+
+$clength = count($cars);
+for($x = 0; $x < $clength; $x++) {
+    echo $cars[$x];
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>sort() - Sort array in ascending numerical order</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$numbers = array(4, 6, 2, 22, 11);
+sort($numbers);
+
+$arrlength = count($numbers);
+for($x = 0; $x < $arrlength; $x++) {
+    echo $numbers[$x];
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>rsort() - Sort array in descending alphabetical order</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$cars = array("Volvo", "BMW", "Toyota");
+rsort($cars);
+
+$clength = count($cars);
+for($x = 0; $x < $clength; $x++) {
+    echo $cars[$x];
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>rsort() - Sort array in descending numerical order</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$numbers = array(4, 6, 2, 22, 11);
+rsort($numbers);
+
+$arrlength = count($numbers);
+for($x = 0; $x < $arrlength; $x++) {
+    echo $numbers[$x];
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>asort() - Sort array in ascending order, according to value</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
+asort($age);
+
+foreach($age as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>ksort() - Sort array in ascending order, according to key</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
+ksort($age);
+
+foreach($age as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>arsort() - Sort array in descending order, according to value</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
+arsort($age);
+
+foreach($age as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+
+        <div class="example-section">
+            <h4>krsort() - Sort array in descending order, according to key</h4>
+            <div class="code-block">
+                <pre><xmp>
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43");
+krsort($age);
+
+foreach($age as $x => $x_value) {
+    echo "Key=" . $x . ", Value=" . $x_value;
+    echo "<br>";
+}
+?></xmp></pre>
+            </div>
+        </div>
+    </div>
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script>includeHTML();</script>

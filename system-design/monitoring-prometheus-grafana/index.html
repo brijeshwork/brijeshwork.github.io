@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designing a Monitoring System with Prometheus and Grafana — System Design | Brijesh Patel</title>
+<meta name="description" content="Monitoring system design using Prometheus and Grafana: metrics collection, alerting, retention and dashboard design.">
+<link rel="canonical" href="https://brijesh.work/system-design/monitoring-prometheus-grafana/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing a Monitoring System with Prometheus and Grafana</h1>
+        <p class="lead">A practical tutorial on setting up a metrics-driven monitoring stack using Prometheus for collection and Grafana for visualization and alerting.</p>
+
+        <h2 id="components">Components</h2>
+        <ul>
+          <li>Metrics instrumentation (client libraries)</li>
+          <li>Prometheus scraping and federation</li>
+          <li>Long-term storage and retention (Thanos/Loki)</li>
+          <li>Grafana dashboards and alerting rules</li>
+        </ul>
+
+        <h2 id="best-practices">Best practices</h2>
+        <ul>
+          <li>Use cardinality controls to avoid high-series counts</li>
+          <li>Define meaningful SLOs and alert thresholds</li>
+          <li>Instrument business and system metrics</li>
+        </ul>
+
+        <h2 id="prometheus-recording-rules">Prometheus — recording rules example</h2>
+        <p>Use recording rules to precompute expensive queries and reduce dashboard latency.</p>
+        <pre><code class="language-yaml">groups:
+  - name: recording_rules
+    rules:
+      - record: job:http_inprogress_requests:sum
+        expr: sum(http_inprogress_requests) by (job)
+      - record: instance:cpu:rate5m
+        expr: avg(rate(node_cpu_seconds_total{mode!="idle"}[5m])) by (instance)
+</code></pre>
+
+        <h2 id="prometheus-alerts">Prometheus — alerting rules example</h2>
+        <p>Example alert: high error rate and slow response time for a service.</p>
+        <pre><code class="language-yaml">groups:
+  - name: service_alerts
+    rules:
+      - alert: HighRequestErrorRate
+        expr: increase(http_requests_total{status=~"5.."}[5m]) / increase(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: page
+        annotations:
+          summary: "High 5xx rate for {{ $labels.service }}"
+          description: "5xx rate is >5% for 5 minutes."
+
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, service)) > 1
+        for: 10m
+        labels:
+          severity: ticket
+        annotations:
+          summary: "High p95 latency for {{ $labels.service }}"
+</code></pre>
+
+        <h2 id="grafana-dashboard">Grafana — minimal dashboard snippet</h2>
+        <p>This is a tiny example of a Grafana dashboard JSON model (simplified).</p>
+        <pre><code class="language-json">{
+  "title": "Service Overview",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Request rate (rps)",
+      "targets": [{"expr": "sum(rate(http_requests_total[1m])) by (service)"}]
+    },
+    {
+      "type": "graph",
+      "title": "P95 Latency",
+      "targets": [{"expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, service))"}]
+    }
+  ]
+}
+</code></pre>
+
+        <h2 id="thanos">Long-term storage — Thanos / Cortex notes</h2>
+        <p>For long-term retention and global query, integrate Prometheus with Thanos or Cortex. Thanos Sidecar uploads blocks to object storage and provides a global query layer.</p>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Combine Prometheus's short-term storage with a long-term system like Thanos for retention, and create dashboards that reflect SLOs, not just raw metrics. Use recording rules to optimize dashboards and alerting to detect incidents early.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Components</a></li><li><a href="#best-practices">Best practices</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

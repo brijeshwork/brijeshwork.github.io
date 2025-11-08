@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Numbers - PHP Examples & Guide | Brijesh Patel</title>
+<link rel="canonical" href="https://brijesh.work/examples/php/numbers/" />
+<meta name="description" content="Numbers: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+
+<link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Numbers - PHP Examples & Guide | Brijesh Patel" />
+<meta property="og:description" content="Numbers: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices." />
+<meta property="og:url" content="https://brijesh.work/" />
+<meta property="og:site_name" content="Brijesh Patel" />
+<meta property="og:image" content="https://brijesh.work/" />
+<meta property="og:image:width" content="960" />
+<meta property="og:image:height" content="640" />
+<meta property="og:image:type" content="image/jpeg" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@brijeshwork" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="Brijesh Patel" />
+<meta name="twitter:label2" content="Est. reading time" />
+<meta name="twitter:data2" content="9 minutes" />
+
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>PHP Numbers Examples</h1>
+                    <p>PHP number handling and mathematical operations.</p>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Check if the type of a variable is integer</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    // Check if the type of a variable is integer   
+                    $x = 5985;
+                    var_dump(is_int($x));
+                    
+                    echo "<br>";
+                    
+                    // Check again... 
+                    $x = 59.85;
+                    var_dump(is_int($x));
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>PHP Numbers Examples</h1>
+                    <p>PHP number handling and mathematical operations.</p>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Check if the type of a variable is float</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    // Check if the type of a variable is float 
+                    $x = 10.365;
+                    var_dump(is_float($x));
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Check if a numeric value is finite or infinite</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    // Check if a numeric value is finite or infinite 
+                    $x = 1.9e411;
+                    var_dump($x);
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Invalid calculation will return a NaN value</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    // Invalid calculation will return a NaN value
+                    $x = acos(8);
+                    var_dump($x);
+                    ?> 
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Check if a variable is numeric</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    // Check if the variable is numeric   
+                    $x = 5985;
+                    var_dump(is_numeric($x));
+                    
+                    echo "<br>";
+                    
+                    $x = "5985";
+                    var_dump(is_numeric($x));
+                    
+                    echo "<br>";
+                    
+                    $x = "59.85" + 100;
+                    var_dump(is_numeric($x));
+                    
+                    echo "<br>";
+                    
+                    $x = "Hello";
+                    var_dump(is_numeric($x));
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fix">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>Cast float and string to integer</h4>
+            </div>
+            <div class="col-lg-12">
+                <pre>
+                <xmp>
+                    <?php
+                    // Cast float to int 
+                    $x = 23465.768;
+                    $int_cast = (int)$x;
+                    echo $int_cast;
+                      
+                    echo "<br>";
+                    
+                    // Cast string to int
+                    $x = "23465.768";
+                    $int_cast = (int)$x;
+                    echo $int_cast;
+                    ?>
+                </xmp>
+                </pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+</body>
+</html>
+<script>includeHTML();</script>

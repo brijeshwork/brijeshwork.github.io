@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Event-Driven Architecture — Designing with Kafka and RabbitMQ — System Design | Brijesh Patel</title>
+<meta name="description" content="Event-driven architecture patterns using Kafka and RabbitMQ: event models, ordering, delivery guarantees, and system design trade-offs.">
+<link rel="canonical" href="https://brijesh.work/system-design/event-driven-architecture/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Event-Driven Architecture — Designing with Kafka and RabbitMQ</h1>
+        <p class="lead">Patterns and trade-offs for event-driven systems: message formats, ordering, exactly-once vs at-least-once, and integration with notification queues.</p>
+
+        <h2 id="components">Core components</h2>
+        <ul>
+          <li>Event producers and consumers</li>
+          <li>Message broker (Kafka for durable logs, RabbitMQ for routing and queues)</li>
+          <li>Schema registry and event contracts</li>
+        </ul>
+
+        <h2 id="guarantees">Delivery guarantees</h2>
+        <ul>
+          <li>At-least-once: simpler, requires idempotency on consumers</li>
+          <li>Exactly-once: possible with Kafka Streams or additional coordination but more complex</li>
+        </ul>
+
+        <h2 id="integration">Integration</h2>
+        <p>Link → <a href="../notification-queue/">Real-Time Notification Queue</a> for fanout and delivery considerations.</p>
+      </div>
+      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Core components</a></li><li><a href="#guarantees">Guarantees</a></li></ul></div></div></aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Echo Print - PHP Examples & Guide | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/examples/php/echo-print/" />
+    <meta name="description" content="Echo Print: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Echo Print - PHP Examples & Guide | Brijesh Patel" />
+    <meta property="og:description" content="Echo Print: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices." />
+    <meta property="og:url" content="https://brijesh.work/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/" />
+    <meta property="og:image:width" content="960" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Brijesh Patel" />
+    <meta name="twitter:label2" content="Est. reading time" />
+    <meta name="twitter:data2" content="9 minutes" />
+
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>PHP Echo and Print Examples</h1>
+                    <p>PHP echo and print statement examples.</p>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Display strings with the echo command</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    echo "<h2>PHP is Fun!</h2>";
+                    echo "Hello world!<br>";
+                    echo "I'm about to learn PHP!<br>";
+                    echo "This ", "string ", "was ", "made ", "with multiple parameters.";
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>PHP Echo and Print Examples</h1>
+                    <p>PHP echo and print statement examples.</p>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Display strings and variables with the echo command</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $txt1 = "Learn PHP";
+                    $txt2 = "W3Schools.com";
+                    $x = 5;
+                    $y = 4;
+                    
+                    echo "<h2>" . $txt1 . "</h2>";
+                    echo "Study PHP at " . $txt2 . "<br>";
+                    echo $x + $y;
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Display strings with the print command</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    print "<h2>PHP is Fun!</h2>";
+                    print "Hello world!<br>";
+                    print "I'm about to learn PHP!";
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fix">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Display strings and variables with the print command</h4>
+                </div>
+                <div class="col-lg-12">
+                    <pre>
+                <xmp>
+                    <?php
+                    $txt1 = "Learn PHP";
+                    $txt2 = "W3Schools.com";
+                    $x = 5;
+                    $y = 4;
+                    
+                    print "<h2>" . $txt1 . "</h2>";
+                    print "Study PHP at " . $txt2 . "<br>";
+                    print $x + $y;
+                    ?>
+                </xmp>
+                </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
+<script>includeHTML();</script>

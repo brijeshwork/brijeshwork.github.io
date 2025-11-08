@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Webhooks vs APIs — What’s the Difference and When to Use Each — System Design | Brijesh Patel</title>
+<meta name="description" content="Compare webhooks and APIs: event-driven architectures, delivery guarantees, retries, and when to choose each pattern in system design.">
+<link rel="canonical" href="https://brijesh.work/system-design/webhooks-vs-apis/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Webhooks vs APIs — What’s the Difference and When to Use Each</h1>
+        <p class="lead">Practical guide comparing event-driven webhooks and request-driven APIs, including delivery guarantees, idempotency, and retries.</p>
+
+        <h2 id="comparison">Comparison</h2>
+        <ul>
+          <li>APIs: client pulls data on demand, synchronous, request/response</li>
+          <li>Webhooks: server pushes events to clients, asynchronous, best-effort delivery</li>
+        </ul>
+
+        <h2 id="when-to-use">When to use which</h2>
+        <ul>
+          <li>Use webhooks for event notifications and near-real-time updates</li>
+          <li>Use APIs for on-demand reads/writes and deterministic responses</li>
+          <li>Combine both: webhook for events + API for backfill and retries</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../notification/">Notification System</a></li><li><a href="../">System Design hub</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

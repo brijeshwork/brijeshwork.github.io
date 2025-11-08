@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Building a Real-Time Chat System — System Design | Brijesh Patel</title>
+<meta name="description" content="Design a real-time chat system (WhatsApp-like): message routing, delivery guarantees, presence, storage, and scaling strategies.">
+<link rel="canonical" href="https://brijesh.work/system-design/chat-system/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Building a Real-Time Chat System (WhatsApp-like)</h1>
+        <p class="lead">Patterns for real-time messaging: connection management, delivery guarantees, replication, presence, and storage trade-offs.</p>
+
+        <h2 id="components">Core components</h2>
+        <ul>
+          <li>Connection layer (WebSocket/QUIC) for persistent connections</li>
+          <li>Message broker for fanout and durable delivery (Kafka, NATS Streaming)</li>
+          <li>Delivery semantics: at-most-once, at-least-once, exactly-once (trade-offs)</li>
+          <li>Storage: hot store for recent messages, cold store for archives</li>
+        </ul>
+
+        <h2 id="scaling">Scaling</h2>
+        <ul>
+          <li>Partition conversation space by conversation id</li>
+          <li>Use presence service for routing to active connections</li>
+          <li>Design for eventual consistency across multi-device delivery</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Components</a></li><li><a href="#scaling">Scaling</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

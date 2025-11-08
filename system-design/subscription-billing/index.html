@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Designing a Subscription and Billing System — System Design | Brijesh Patel</title>
+<meta name="description" content="Design patterns for subscription billing: plans, metering, invoicing, dunning, and integration with payment gateways.">
+<link rel="canonical" href="https://brijesh.work/system-design/subscription-billing/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing a Subscription and Billing System</h1>
+        <p class="lead">Patterns for subscription management, metering, invoicing, billing cycles and integrating with payment gateways.</p>
+
+        <h2 id="requirements">Requirements</h2>
+        <ul>
+          <li>Support multiple plans, trial periods, upgrades/downgrades</li>
+          <li>Accurate metering for usage-based billing</li>
+          <li>Reliable invoicing and retry (dunning) flows</li>
+          <li>PCI-compliant payment gateway integrations</li>
+        </ul>
+
+        <h2 id="architecture">Architecture</h2>
+        <ul>
+          <li>Billing service for plan & customer lifecycle</li>
+          <li>Usage collector for events and metering (message queue → aggregator)</li>
+          <li>Scheduler for billing cycles and invoicing</li>
+          <li>Webhooks for payment gateway notifications and reconciliation</li>
+        </ul>
+
+        <h2 id="notes">Notes</h2>
+        <p>Link to payment gateway design and ensure idempotent operations for external callbacks.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#architecture">Architecture</a></li><li><a href="#notes">Notes</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

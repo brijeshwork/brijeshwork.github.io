@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API Gateway and Service Mesh Design in Microservices — System Design | Brijesh Patel</title>
+<meta name="description" content="Compare API gateway and service mesh design: responsibilities, routing, observability, and when to use each.">
+<link rel="canonical" href="https://brijesh.work/system-design/api-gateway-service-mesh/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>API Gateway and Service Mesh Design in Microservices</h1>
+        <p class="lead">Understanding the roles of API gateways and service meshes and how they complement each other in microservices architectures.</p>
+
+        <h2 id="roles">Roles and responsibilities</h2>
+        <p>API gateways handle north-south traffic (external requests), offering routing, auth, rate-limiting and aggregation. Service meshes handle east-west traffic (service-to-service) offering mTLS, observability and fine-grained traffic control.</p>
+
+        <!-- Architecture diagram -->
+        <div class="mb-4">
+          <svg width="100%" height="160" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="API gateway and service mesh architecture">
+            <defs><style>.r{fill:#f8f9fa;stroke:#adb5bd;stroke-width:1}.t{font-size:12px;fill:#212529}</style></defs>
+            <rect x="20" y="20" width="200" height="120" class="r" rx="6"/>
+            <text x="120" y="50" text-anchor="middle" class="t">Clients / External</text>
+
+            <rect x="250" y="15" width="220" height="60" class="r" rx="6"/>
+            <text x="360" y="45" text-anchor="middle" class="t">API Gateway (Envoy/Nginx)</text>
+
+            <rect x="250" y="85" width="220" height="50" class="r" rx="6"/>
+            <text x="360" y="110" text-anchor="middle" class="t">Service Mesh (sidecars)</text>
+
+            <rect x="500" y="20" width="360" height="120" class="r" rx="6"/>
+            <text x="680" y="50" text-anchor="middle" class="t">Microservices (pods)</text>
+            <path d="M220 80 L250 45" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
+            <path d="M470 80 L500 80" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
+            <defs><marker id="m" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#495057"/></marker></defs>
+          </svg>
+          <p class="small text-muted">Figure: clients → API gateway (north-south) → service mesh + sidecars (east-west) → microservices.</p>
+        </div>
+
+        <h3 id="comparison">Gateway vs Mesh — quick comparison</h3>
+        <table class="table table-sm">
+          <thead><tr><th>Capability</th><th>API Gateway</th><th>Service Mesh</th></tr></thead>
+          <tbody>
+            <tr><td>Traffic direction</td><td>North-South</td><td>East-West</td></tr>
+            <tr><td>Auth</td><td>Edge auth, JWT/OAuth</td><td>mTLS, service identity</td></tr>
+            <tr><td>Rate limiting</td><td>Yes (edge)</td><td>可 per-service (with sidecar)</td></tr>
+            <tr><td>Observability</td><td>Basic metrics/tracing</td><td>Rich telemetry per RPC</td></tr>
+            <tr><td>Traffic shaping</td><td>Limited</td><td>Advanced (traffic split, retries)</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="envoy-example">Envoy — example HTTP route (snippet)</h3>
+        <pre><code class="language-yaml"># Simplified Envoy virtual host route
+static_resources:
+  listeners:
+  - name: listener_0
+    address: { socket_address: { address: 0.0.0.0, port_value: 8080 }}
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress_http
+          route_config:
+            virtual_hosts:
+            - name: backend
+              domains: ["*"]
+              routes:
+              - match: { prefix: "/api/" }
+                route: { cluster: service_backend }
+</code></pre>
+
+        <h3 id="istio-canary">Istio — VirtualService canary example</h3>
+        <p>Traffic splitting to perform canary rollouts.</p>
+        <pre><code class="language-yaml">apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: my-service
+spec:
+  hosts: ["my-service.default.svc.cluster.local"]
+  http:
+  - route:
+    - destination: { host: my-service, subset: stable }
+      weight: 90
+    - destination: { host: my-service, subset: canary }
+      weight: 10
+</code></pre>
+
+        <h3 id="recommendations">Recommendations</h3>
+        <ul>
+          <li>Start with an API gateway for external concerns; add a service mesh when you need mTLS, advanced traffic control, or richer telemetry.</li>
+          <li>Prefer gradual rollouts (canaries) and automated health checks for promotion/rollback.</li>
+          <li>Use policy-as-code to centralize routing and security policies.</li>
+        </ul>
+
+        <h3 id="when-to-use">When to adopt a service mesh</h3>
+        <ul>
+          <li>Need for mutual TLS between services</li>
+          <li>Fine-grained traffic shaping and retries</li>
+          <li>Centralized telemetry for east-west calls</li>
+        </ul>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Use API gateways for external concerns and use service meshes to augment service-to-service control; both together solve different parts of the networking and security puzzle.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#roles">Roles</a></li><li><a href="#when-to-use">When to use</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

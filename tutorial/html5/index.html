@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HTML Tutorial - Basic HTML Tags and Elements Guide | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/tutorial/html5/" />
+    <meta name="description" content="Learn HTML basics including DOCTYPE, HTML tags, document structure, headings, paragraphs and more. Complete guide with examples for beginners.">
+    <meta name="keywords" content="HTML tutorial, HTML5, basic HTML, HTML tags, HTML elements, web development, DOCTYPE, html lang">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="HTML Tutorial - Basic HTML Tags and Elements Guide" />
+    <meta property="og:description" content="Comprehensive HTML tutorial covering basic tags, document structure, and essential elements. Perfect for beginners learning web development." />
+    <meta property="og:url" content="https://brijesh.work/tutorial/html5/" />
+    <meta property="og:site_name" content="Brijesh Patel - Web Development Tutorials" />
+    <meta property="og:image" content="https://brijesh.work/pub/media/images/html-tutorial.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="article:published_time" content="2023-01-01T08:00:00+00:00" />
+    <meta property="article:modified_time" content="2023-08-01T08:00:00+00:00" />
+    <meta property="article:author" content="Brijesh Patel" />
+    <meta property="article:section" content="Web Development" />
+    <meta property="article:tag" content="HTML" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:title" content="HTML Tutorial - Basic HTML Tags and Elements Guide" />
+    <meta name="twitter:description" content="Learn HTML basics including DOCTYPE, HTML tags, document structure, headings, paragraphs and more. Complete guide with examples for beginners." />
+    <meta name="twitter:image" content="https://brijesh.work/pub/media/images/html-tutorial.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Brijesh Patel" />
+    <meta name="twitter:label2" content="Est. reading time" />
+    <meta name="twitter:data2" content="15 minutes" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+    <style>
+        .tutorial-section {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            min-height: calc(100vh - 6rem); /* Add minimum height */
+        }
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #0d6efd;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+        
+        .sidebar-nav {
+            padding: 0rem;
+        }
+        
+        .sidebar-nav .nav-link {
+            color: #495057;
+            padding: .5rem 1rem;
+            border-radius: 5px;
+        }
+        
+        .sidebar-nav .nav-link:hover,
+        .sidebar-nav .nav-link.active {
+            color: #0d6efd;
+            background-color: #f8f9fa;
+        }
+        
+        @media (max-width: 991.98px) {
+            .sidebar {
+                position: relative;
+                height: auto;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header shadow-sm bg-white" role="banner"></header>
+
+    <main class="py-5" role="main">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Sidebar Navigation -->
+                <div class="col-12 col-lg-3">
+                    <nav class="sidebar tutorial-section" role="navigation" aria-label="Tutorial sections">
+                        <h4 class="section-title h5">Contents</h4>
+                        <div class="sidebar-nav">
+                            <div class="nav flex-column" role="menu">
+                                <a class="nav-link active" href="#basic-html" role="menuitem">Basic HTML</a>
+                                <a class="nav-link" href="#doctype" role="menuitem">HTML DOCTYPE</a>
+                                <a class="nav-link" href="#html-tag" role="menuitem">HTML Tag</a>
+                                <a class="nav-link" href="#html-head" role="menuitem">HTML &lt;head&gt;</a>
+                                <a class="nav-link" href="#html-body" role="menuitem">HTML &lt;body&gt;</a>
+                                <a class="nav-link" href="#html-title" role="menuitem">HTML &lt;title&gt;</a>
+                                <a class="nav-link" href="#headings" role="menuitem">Headings (h1-h6)</a>
+                                <a class="nav-link" href="#html-paragraph" role="menuitem">Paragraphs</a>
+                                <a class="nav-link" href="#html-formatting" role="menuitem">Text Formatting</a>
+                                <a class="nav-link" href="#html-abbr" role="menuitem">Abbreviations</a>
+                                <a class="nav-link" href="#html-address" role="menuitem">Address</a>
+                                <a class="nav-link" href="#html-b" role="menuitem">Bold Text</a>
+                                <a class="nav-link" href="#html-bdi" role="menuitem">BDI</a>
+                                <a class="nav-link" href="#html-bdo" role="menuitem">BDO</a>
+                                <a class="nav-link" href="#html-blockquote" role="menuitem">Blockquote</a>
+                                <a class="nav-link" href="#html-cite" role="menuitem">Cite</a>
+                                <a class="nav-link" href="#html-code" role="menuitem">Code</a>
+                                <a class="nav-link" href="#html-del" role="menuitem">Del</a>
+                                <a class="nav-link" href="#html-dfn" role="menuitem">DFN</a>
+                                <a class="nav-link" href="#html-em" role="menuitem">Emphasis</a>
+                                <a class="nav-link" href="#html-i" role="menuitem">Italic</a>
+                                <a class="nav-link" href="#html-ins" role="menuitem">Inserted Text</a>
+                                <a class="nav-link" href="#html-kbd" role="menuitem">Keyboard Input</a>
+                                <a class="nav-link" href="#html-mark" role="menuitem">Mark</a>
+                                <a class="nav-link" href="#html-meter" role="menuitem">Meter</a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="col-12 col-lg-9" role="region" aria-label="Tutorial content">
+                    <!-- Basic HTML Section -->
+                    <section id="basic-html" class="tutorial-section" aria-labelledby="basic-html-title">
+                        <h2 id="basic-html-title" class="section-title">Basic HTML Structure</h2>
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <thead>
+                                    <tr>
+                                        <th>Tag</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_doctype.asp">&lt;!DOCTYPE&gt;</a>&nbsp;</td>
+                                        <td>Defines the document type</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_html.asp">&lt;html&gt;</a></td>
+                                        <td>Defines an HTML document</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_head.asp">&lt;head&gt;</a></td>
+                                        <td>Contains metadata/information for the document</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_title.asp">&lt;title&gt;</a></td>
+                                        <td>Defines a title for the document</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_body.asp">&lt;body&gt;</a></td>
+                                        <td>Defines the document's body</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_hn.asp">&lt;h1&gt; to &lt;h6&gt;</a></td>
+                                        <td>Defines HTML headings</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_p.asp">&lt;p&gt;</a></td>
+                                        <td>Defines a paragraph</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_br.asp">&lt;br&gt;</a></td>
+                                        <td>Inserts a single line break</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_hr.asp">&lt;hr&gt;</a></td>
+                                        <td>Defines a thematic change in the content</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_comment.asp">&lt;!--...--&gt;</a></td>
+                                        <td>Defines a comment</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- HTML Body Section -->
+                    <section id="html-body" class="tutorial-section" aria-labelledby="html-body-title">
+                        <h2 id="html-body-title" class="section-title">HTML &lt;body&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <div class="code-block">
+                            &lt;html&gt;<br />
+                            &lt;head&gt;<br />
+                            &nbsp;&nbsp;&lt;title&gt;Title of the document&lt;/title&gt;<br />
+                            &lt;/head&gt;<br />
+                            &lt;body&gt;<br />
+                            &nbsp;&nbsp;&lt;h1&gt;This is a heading&lt;/h1&gt;<br />
+                            &nbsp;&nbsp;&lt;p&gt;This is a paragraph.&lt;/p&gt;<br />
+                            &lt;/body&gt;<br />
+                            &lt;/html&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;body&gt;</code> tag defines the document's body.</p>
+                        <p>The <code>&lt;body&gt;</code> element contains all the contents of an HTML document, such as headings, paragraphs, images, hyperlinks, tables, lists, etc.</p>
+                        
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Note:</strong> There can only be one <code>&lt;body&gt;</code> element in an HTML document.</p>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">More Examples</h3>
+                        
+                        <h4 class="h6 mt-4 mb-2">Background Image Example:</h4>
+                        <div class="code-block">
+                            &lt;html&gt;<br />
+                            &lt;head&gt;<br />
+                            &nbsp;&nbsp;&lt;style&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;body {<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background-image: url(w3s.png);<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                            &nbsp;&nbsp;&lt;/style&gt;<br />
+                            &lt;/head&gt;<br />
+                            &lt;body&gt;<br />
+                            &nbsp;&nbsp;&lt;h1&gt;Hello world!&lt;/h1&gt;<br />
+                            &nbsp;&nbsp;&lt;p&gt;&lt;a href="https://www.w3schools.com"&gt;Visit W3Schools.com!&lt;/a&gt;&lt;/p&gt;<br />
+                            &lt;/body&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Background Color Example:</h4>
+                        <div class="code-block">
+                            &lt;html&gt;<br />
+                            &lt;head&gt;<br />
+                            &nbsp;&nbsp;&lt;style&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;body {<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background-color: #E6E6FA;<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+                            &nbsp;&nbsp;&lt;/style&gt;<br />
+                            &lt;/head&gt;<br />
+                            &lt;body&gt;<br />
+                            &nbsp;&nbsp;&lt;h1&gt;Hello world!&lt;/h1&gt;<br />
+                            &nbsp;&nbsp;&lt;p&gt;&lt;a href="https://www.w3schools.com"&gt;Visit W3Schools.com!&lt;/a&gt;&lt;/p&gt;<br />
+                            &lt;/body&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Link Styling Examples:</h4>
+                        <div class="code-block">
+                            <p class="mb-2">Unvisited Links:</p>
+                            a:link { color: #0000FF; }
+
+                            <p class="mt-3 mb-2">Active Links:</p>
+                            a:active { color: #00FF00; }
+
+                            <p class="mt-3 mb-2">Visited Links:</p>
+                            a:visited { color: #FF0000; }
+                        </div>
+                    </section>
+
+                    <!-- DOCTYPE Section -->
+                    <section id="doctype" class="tutorial-section" aria-labelledby="doctype-title">
+                        <h2 id="doctype-title" class="section-title">HTML &lt;!DOCTYPE&gt; Declaration</h2>
+                        <xmp class="code-block">
+                            <!DOCTYPE html>
+                            <html>
+
+                            <head>
+                                <title>Title of the document</title>
+                            </head>
+
+                            <body>
+                                The content of the document......
+                            </body>
+
+                            </html>
+                        </xmp>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">
+                        All HTML documents must start with a <code>&lt;!DOCTYPE&gt;</code> declaration.
+                        </p>
+                        <p>The declaration is not an HTML tag. It is an "information" to the browser about what document type to expect.
+                        </p>
+                        <p>In HTML 5, the declaration is simple:</p>
+
+                        <div class="bg-light p-3 rounded mb-4">&lt;!DOCTYPE html&gt;</div>
+                        <h2>Older HTML Documents</h2>
+                        <p>In older documents (HTML 4 or XHTML), the declaration is more complicated because the declaration must refer
+                            to a
+                            DTD (Document Type Definition).</p>
+                        <p>HTML 4.01:</p>
+                        <div>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                            "http://www.w3.org/TR/html4/loose.dtd"&gt;
+                        </div>
+                        <p>XHTML 1.1:</p>
+                        <div>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+                        </div>
+                        <h2>Tips and Notes</h2>
+                        <p><strong>Tip:</strong> The <code>&lt;!DOCTYPE&gt;</code> declaration is NOT case sensitive.</p>
+                        <div>
+                            <h3>Examples</h3>
+                            <div>&lt;!DOCTYPE html&gt;</div>
+                            <div>&lt;!DocType html&gt;</div>
+                            <div>&lt;!Doctype html&gt;</div>
+                            <div>&lt;!doctype html&gt;</div>
+                        </div>
+                    </section>
+
+                    <!-- HTML Tag Section -->
+                    <section id="html-tag" class="tutorial-section" aria-labelledby="html-tag-title">
+                        <h2 id="html-tag-title" class="section-title">HTML &lt;html&gt; Tag</h2>
+                        <div class="code-block mb-4">
+                            <p>A simple HTML document:</p>
+                            <div class="bg-light p-3 rounded mb-4">&lt;!DOCTYPE&nbsp;html&gt;<br />&lt;html&nbsp;lang="en"&gt;<br />&lt;head&gt;<br />&lt;title&gt;Title of the
+                                document&lt;/title&gt;<br />&lt;/head&gt;<br />&lt;body&gt;<br /><br />&lt;h1&gt;This is a
+                                heading&lt;/h1&gt;<br />&lt;p&gt;This is a paragraph.&lt;/p&gt;<br /><br />&lt;/body&gt;<br />&lt;/html&gt;
+                            </div>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">
+                        The&nbsp;<code>&lt;html&gt;</code>&nbsp;tag represents the root of an HTML document.
+                        </p>
+                        <p>The&nbsp;<code>&lt;html&gt;</code>&nbsp;tag is the container for all other HTML elements (except for the&nbsp;<a
+                                href="https://www.w3schools.com/tags/tag_doctype.asp">&lt;!DOCTYPE&gt;</a>&nbsp;tag).</p>
+                        <p><strong>Note:</strong>&nbsp;You should always include the&nbsp;<a
+                                href="https://www.w3schools.com/tags/att_global_lang.asp">lang</a>&nbsp;attribute inside
+                            the&nbsp;<code>&lt;html&gt;</code>&nbsp;tag, to declare the language of the Web page. This is meant to assist
+                            search engines and browsers.</p>
+                        <h3 class="h5 mt-4 mb-3">Attributes</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <tbody>
+                                    <tr>
+                                        <th>Attribute</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_html_xmlns.asp">xmlns</a></td>
+                                        <td>http://www.w3.org/1999/xhtml</td>
+                                        <td>Specifies the XML namespace attribute (If you need your content to conform to XHTML)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- HTML Head Section -->
+                    <section id="html-head" class="tutorial-section" aria-labelledby="html-head-title">
+                        <h2 id="html-head-title" class="section-title">HTML &lt;head&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <div class="code-block">
+                            &lt;!DOCTYPE html&gt;<br />
+                            &lt;html lang="en"&gt;<br />
+                            &lt;head&gt;<br />
+                            &nbsp;&nbsp;&lt;title&gt;Title of the document&lt;/title&gt;<br />
+                            &lt;/head&gt;<br />
+                            &lt;body&gt;<br />
+                            &nbsp;&nbsp;&lt;h1&gt;This is a heading&lt;/h1&gt;<br />
+                            &nbsp;&nbsp;&lt;p&gt;This is a paragraph.&lt;/p&gt;<br />
+                            &lt;/body&gt;<br />
+                            &lt;/html&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;head&gt;</code> element is a container for metadata (data about data) and is placed between the &lt;html&gt; tag and the &lt;body&gt; tag.</p>
+                        
+                        <p>Metadata is data about the HTML document. Metadata is not displayed.</p>
+                        <p>Metadata typically define the document title, character set, styles, scripts, and other meta information.</p>
+                        
+                        <h4 class="h6 mt-4 mb-3">Elements inside &lt;head&gt;:</h4>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item"><a href="https://www.w3schools.com/tags/tag_title.asp">&lt;title&gt;</a> (required in every HTML document)</li>
+                            <li class="list-group-item"><a href="https://www.w3schools.com/tags/tag_style.asp">&lt;style&gt;</a></li>
+                            <li class="list-group-item"><a href="https://www.w3schools.com/tags/tag_base.asp">&lt;base&gt;</a></li>
+                            <li class="list-group-item"><a href="https://www.w3schools.com/tags/tag_link.asp">&lt;link&gt;</a></li>
+                            <li class="list-group-item"><a href="https://www.w3schools.com/tags/tag_meta.asp">&lt;meta&gt;</a></li>
+                            <li class="list-group-item"><a href="https://www.w3schools.com/tags/tag_script.asp">&lt;script&gt;</a></li>
+                            <li class="list-group-item"><a href="https://www.w3schools.com/tags/tag_noscript.asp">&lt;noscript&gt;</a></li>
+                        </ul>
+
+                        <h3 class="h5 mt-4 mb-3">More Examples</h3>
+                        
+                        <h4 class="h6 mt-4 mb-2">Base Tag Example:</h4>
+                        <div class="code-block">
+                            &lt;html&gt;<br />
+                            &lt;head&gt;<br />
+                            &nbsp;&nbsp;&lt;base href="https://www.w3schools.com/" target="_blank"&gt;<br />
+                            &lt;/head&gt;<br />
+                            &lt;body&gt;<br />
+                            &nbsp;&nbsp;&lt;img src="images/stickman.gif" width="24" height="39" alt="Stickman"&gt;<br />
+                            &nbsp;&nbsp;&lt;a href="tags/tag_base.asp"&gt;HTML base Tag&lt;/a&gt;<br />
+                            &lt;/body&gt;<br />
+                            &lt;/html&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Style Tag Example:</h4>
+                        <div class="code-block">
+                            &lt;html&gt;<br />
+                            &lt;head&gt;<br />
+                            &nbsp;&nbsp;&lt;style&gt;<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;h1 {color:red;}<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;p {color:blue;}<br />
+                            &nbsp;&nbsp;&lt;/style&gt;<br />
+                            &lt;/head&gt;<br />
+                            &lt;body&gt;<br />
+                            &nbsp;&nbsp;&lt;h1&gt;A heading&lt;/h1&gt;<br />
+                            &nbsp;&nbsp;&lt;p&gt;A paragraph.&lt;/p&gt;<br />
+                            &lt;/body&gt;<br />
+                            &lt;/html&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Link Tag Example:</h4>
+                        <div class="code-block">
+                            &lt;html&gt;<br />
+                            &lt;head&gt;<br />
+                            &nbsp;&nbsp;&lt;link rel="stylesheet" type="text/css" href="styles.css"&gt;<br />
+                            &lt;/head&gt;<br />
+                            &lt;body&gt;<br />
+                            &nbsp;&nbsp;&lt;h1&gt;I am formatted with a linked style sheet&lt;/h1&gt;<br />
+                            &nbsp;&nbsp;&lt;p&gt;Me too!&lt;/p&gt;<br />
+                            &lt;/body&gt;<br />
+                            &lt;/html&gt;
+                        </div>
+
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Note:</strong> Most browsers will display the <code>&lt;head&gt;</code> element with: <code>display: none;</code></p>
+                        </div>
+                    </section>
+
+                    <!-- HTML Title Section -->
+                    <section id="html-title" class="tutorial-section" aria-labelledby="html-title-title">
+                        <h2 id="html-title-title" class="section-title">HTML &lt;title&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <div class="code-block">
+                            &lt;!DOCTYPE html&gt;<br />
+                            &lt;html&gt;<br />
+                            &lt;head&gt;<br />
+                            &nbsp;&nbsp;&lt;title&gt;HTML Elements Reference&lt;/title&gt;<br />
+                            &lt;/head&gt;<br />
+                            &lt;body&gt;<br />
+                            &nbsp;&nbsp;&lt;h1&gt;This is a heading&lt;/h1&gt;<br />
+                            &nbsp;&nbsp;&lt;p&gt;This is a paragraph.&lt;/p&gt;<br />
+                            &lt;/body&gt;<br />
+                            &lt;/html&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;title&gt;</code> tag defines the title of the document. The title must be text-only, and it is shown in the browser's title bar or in the page's tab.</p>
+                        
+                        <div class="alert alert-warning">
+                            <strong>Important:</strong> The <code>&lt;title&gt;</code> tag is required in HTML documents!
+                        </div>
+
+                        <p>The contents of a page title is very important for search engine optimization (SEO)! The page title is used by search engine algorithms to decide the order when listing pages in search results.</p>
+
+                        <h4 class="h6 mt-4 mb-3">The &lt;title&gt; element:</h4>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item">defines a title in the browser toolbar</li>
+                            <li class="list-group-item">provides a title for the page when it is added to favorites</li>
+                            <li class="list-group-item">displays a title for the page in search-engine results</li>
+                        </ul>
+
+                        <h4 class="h6 mt-4 mb-3">Tips for creating good titles:</h4>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item">Go for a longer, descriptive title (avoid one- or two-word titles)</li>
+                            <li class="list-group-item">Search engines will display about 50-60 characters of the title, so try not to have titles longer than that</li>
+                            <li class="list-group-item">Do not use just a list of words as the title (this may reduce the page's position in search results)</li>
+                        </ul>
+
+                        <p>So, try to make the title as accurate and meaningful as possible!</p>
+
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Note:</strong> You can NOT have more than one <code>&lt;title&gt;</code> element in an HTML document.</p>
+                        </div>
+                    </section>
+
+                    <!-- HTML Headings Section -->
+                    <section id="headings" class="tutorial-section" aria-labelledby="headings-title">
+                        <h2 id="headings-title" class="section-title">HTML &lt;h1&gt; to &lt;h6&gt; Tags</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>The six different HTML headings:</p>
+                        <div class="code-block">
+                            &lt;h1&gt;This is heading 1&lt;/h1&gt;<br />
+                            &lt;h2&gt;This is heading 2&lt;/h2&gt;<br />
+                            &lt;h3&gt;This is heading 3&lt;/h3&gt;<br />
+                            &lt;h4&gt;This is heading 4&lt;/h4&gt;<br />
+                            &lt;h5&gt;This is heading 5&lt;/h5&gt;<br />
+                            &lt;h6&gt;This is heading 6&lt;/h6&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> tags are used to define HTML headings.</p>
+                        <p><code>&lt;h1&gt;</code> defines the most important heading. <code>&lt;h6&gt;</code> defines the least important heading.</p>
+                        
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Note:</strong> Only use one <code>&lt;h1&gt;</code> per page - this should represent the main heading/subject for the whole page. Also, do not skip heading levels - start with <code>&lt;h1&gt;</code>, then use <code>&lt;h2&gt;</code>, and so on.</p>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Styling Examples</h3>
+                        <h4 class="h6 mt-4 mb-2">Background and Text Color:</h4>
+                        <div class="code-block">
+                            &lt;h1 style="background-color:DodgerBlue;"&gt;Hello World&lt;/h1&gt;<br />
+                            &lt;h2 style="color:Tomato;"&gt;Hello World&lt;/h2&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Text Alignment:</h4>
+                        <div class="code-block">
+                            &lt;h1 style="text-align:center"&gt;This is heading 1&lt;/h1&gt;<br />
+                            &lt;h2 style="text-align:left"&gt;This is heading 2&lt;/h2&gt;<br />
+                            &lt;h3 style="text-align:right"&gt;This is heading 3&lt;/h3&gt;<br />
+                            &lt;h4 style="text-align:justify"&gt;This is heading 4&lt;/h4&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Default CSS Settings</h3>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <h4 class="h6 mb-2">h1 Default Style:</h4>
+                                <div class="code-block">
+                                    h1 {
+                                        display: block;
+                                        font-size: 2em;
+                                        margin: 0.67em 0;
+                                        font-weight: bold;
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="h6 mb-2">h2 Default Style:</h4>
+                                <div class="code-block">
+                                    h2 {
+                                        display: block;
+                                        font-size: 1.5em;
+                                        margin: 0.83em 0;
+                                        font-weight: bold;
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="h6 mb-2">h3 Default Style:</h4>
+                                <div class="code-block">
+                                    h3 {
+                                        display: block;
+                                        font-size: 1.17em;
+                                        margin: 1em 0;
+                                        font-weight: bold;
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="h6 mb-2">h4-h6 Default Styles:</h4>
+                                <div class="code-block">
+                                    h4 { font-size: 1em; margin: 1.33em 0; }
+                                    h5 { font-size: .83em; margin: 1.67em 0; }
+                                    h6 { font-size: .67em; margin: 2.33em 0; }
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- HTML Paragraphs Section -->
+                    <section id="html-paragraph" class="tutorial-section" aria-labelledby="html-paragraph-title">
+                        <h2 id="html-paragraph-title" class="section-title">HTML &lt;p&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>A paragraph is marked up as follows:</p>
+                        <div class="code-block">
+                            &lt;p&gt;This is some text in a paragraph.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;p&gt;</code> tag defines a paragraph.</p>
+                        <p>Browsers automatically add a single blank line before and after each <code>&lt;p&gt;</code> element.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Styling Examples</h3>
+                        
+                        <h4 class="h6 mt-4 mb-2">Text Alignment:</h4>
+                        <div class="code-block">
+                            &lt;p style="text-align:right"&gt;This is some text in a paragraph.&lt;/p&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">CSS Styling:</h4>
+                        <div class="code-block">
+                            &lt;html&gt;
+                            &lt;head&gt;
+                            &nbsp;&nbsp;&lt;style&gt;
+                            &nbsp;&nbsp;&nbsp;&nbsp;p {
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color: navy;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text-indent: 30px;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text-transform: uppercase;
+                            &nbsp;&nbsp;&nbsp;&nbsp;}
+                            &nbsp;&nbsp;&lt;/style&gt;
+                            &lt;/head&gt;
+                            &lt;body&gt;
+                            &nbsp;&nbsp;&lt;p&gt;Lorem ipsum dolor sit amet...&lt;/p&gt;
+                            &lt;/body&gt;
+                            &lt;/html&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Line Breaks in Source Code:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;
+                            This paragraph
+                            contains a lot of lines
+                            in the source code,
+                            but the browser
+                            ignores it.
+                            &lt;/p&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Poem Example:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;
+                            My Bonnie lies over the ocean.<br />
+                            My Bonnie lies over the sea.<br />
+                            My Bonnie lies over the ocean.<br />
+                            Oh, bring back my Bonnie to me.
+                            &lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Default CSS Settings</h3>
+                        <div class="code-block">
+                            p {
+                                display: block;
+                                margin-top: 1em;
+                                margin-bottom: 1em;
+                                margin-left: 0;
+                                margin-right: 0;
+                            }
+                        </div>
+                    </section>
+
+                    <!-- HTML BR Tag Section -->
+                    <section id="html-br" class="tutorial-section" aria-labelledby="html-br-title">
+                        <h2 id="html-br-title" class="section-title">HTML &lt;br&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Insert single line breaks in a text:</p>
+                        <div class="code-block">
+                            &lt;p&gt;To force&lt;br&gt; line breaks&lt;br&gt; in a text,&lt;br&gt; use the br&lt;br&gt; element.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;br&gt;</code> tag inserts a single line break.</p>
+                        <p>The <code>&lt;br&gt;</code> tag is useful for writing addresses or poems.</p>
+                        <p>The <code>&lt;br&gt;</code> tag is an empty tag which means that it has no end tag.</p>
+                        
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Note:</strong> Use the <code>&lt;br&gt;</code> tag to enter line breaks, not to add space between paragraphs.</p>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <h4 class="h6 mt-4 mb-2">Using &lt;br&gt; in a poem:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;
+                            Be not afraid of greatness.&lt;br&gt;
+                            Some are born great,&lt;br&gt;
+                            some achieve greatness,&lt;br&gt;
+                            and others have greatness thrust upon them.
+                            &lt;/p&gt;
+                            
+                            &lt;p&gt;&lt;em&gt;-William Shakespeare&lt;/em&gt;&lt;/p&gt;
+                        </div>
+                    </section>
+
+                    <!-- HTML HR Tag Section -->
+                    <section id="html-hr" class="tutorial-section" aria-labelledby="html-hr-title">
+                        <h2 id="html-hr-title" class="section-title">HTML &lt;hr&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Use the &lt;hr&gt; tag to define thematic changes in the content:</p>
+                        <div class="code-block">
+                            &lt;h1&gt;The Main Languages of the Web&lt;/h1&gt;
+
+                            &lt;p&gt;HTML is the standard markup language for creating Web pages. HTML describes the structure of a Web page, and consists of a series of elements. HTML elements tell the browser how to display the content.&lt;/p&gt;
+
+                            &lt;hr&gt;
+
+                            &lt;p&gt;CSS is a language that describes how HTML elements are to be displayed on screen, paper, or in other media. CSS saves a lot of work, because it can control the layout of multiple web pages all at once.&lt;/p&gt;
+
+                            &lt;hr&gt;
+
+                            &lt;p&gt;JavaScript is the programming language of HTML and the Web. JavaScript can change HTML content and attribute values. JavaScript can change CSS. JavaScript can hide and show HTML elements, and more.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;hr&gt;</code> tag defines a thematic break in an HTML page (e.g. a shift of topic).</p>
+                        <p>The <code>&lt;hr&gt;</code> element is most often displayed as a horizontal rule that is used to separate content (or define a change) in an HTML page.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Styling Examples</h3>
+                        
+                        <h4 class="h6 mt-4 mb-2">Align a &lt;hr&gt; element:</h4>
+                        <div class="code-block">
+                            &lt;hr style="width:50%;text-align:left;margin-left:0"&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">A noshaded &lt;hr&gt;:</h4>
+                        <div class="code-block">
+                            &lt;hr style="height:2px;border-width:0;color:gray;background-color:gray"&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Set the height:</h4>
+                        <div class="code-block">
+                            &lt;hr style="height:30px"&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Set the width:</h4>
+                        <div class="code-block">
+                            &lt;hr style="width:50%"&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Default CSS Settings</h3>
+                        <div class="code-block">
+                            hr {
+                                display: block;
+                                margin-top: 0.5em;
+                                margin-bottom: 0.5em;
+                                margin-left: auto;
+                                margin-right: auto;
+                                border-style: inset;
+                                border-width: 1px;
+                            }
+                        </div>
+                    </section>
+
+                    <!-- HTML Comments Section -->
+                    <section id="html-comments" class="tutorial-section" aria-labelledby="html-comments-title">
+                        <h2 id="html-comments-title" class="section-title">HTML Comments</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Here is how you add comments in HTML:</p>
+                        <div class="code-block">
+                            &lt;!-- Write your comments here --&gt;
+                            
+                            &lt;!-- This is a comment --&gt;
+                            
+                            &lt;p&gt;This is a paragraph.&lt;/p&gt;
+                            
+                            &lt;!-- Remember to add more information here --&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">HTML comments are not displayed in the browser, but they can help document your HTML source code.</p>
+                        
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Note:</strong> Comments are used to explain the code and can help when you edit the source code later.</p>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Examples</h3>
+                        
+                        <h4 class="h6 mt-4 mb-2">Hide Content:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;This is a paragraph.&lt;/p&gt;
+                            
+                            &lt;!-- &lt;p&gt;This is another paragraph&lt;/p&gt; --&gt;
+                            
+                            &lt;p&gt;This is a paragraph too.&lt;/p&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Hide Inline Content:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;This &lt;!-- great text --&gt; is a paragraph.&lt;/p&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">Multi-line Comments:</h4>
+                        <div class="code-block">
+                            &lt;!--
+                            &lt;div class="menu"&gt;
+                                &lt;a href="/html/"&gt;HTML&lt;/a&gt;
+                                &lt;a href="/css/"&gt;CSS&lt;/a&gt;
+                                &lt;a href="/js/"&gt;JavaScript&lt;/a&gt;
+                            &lt;/div&gt;
+                            --&gt;
+                        </div>
+
+                        <div class="alert alert-warning mt-4">
+                            <p class="mb-0"><strong>Warning:</strong> You cannot nest HTML comments (put one comment inside another).</p>
+                        </div>
+                    </section>
+
+                    <!-- HTML Formatting Section -->
+                    <section id="html-formatting" class="tutorial-section" aria-labelledby="html-formatting-title">
+                        <h2 id="html-formatting-title" class="section-title">HTML Formatting Tags</h2>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <thead>
+                                    <tr>
+                                        <th>Tag</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_acronym.asp">&lt;acronym&gt;</a></td>
+                                        <td>Not supported in HTML5. Use &lt;abbr&gt; instead.<br>Defines an acronym</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_abbr.asp">&lt;abbr&gt;</a></td>
+                                        <td>Defines an abbreviation or an acronym</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_b.asp">&lt;b&gt;</a></td>
+                                        <td>Defines bold text</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_bdi.asp">&lt;bdi&gt;</a></td>
+                                        <td>Isolates a part of text that might be formatted differently from the rest of the document</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_bdo.asp">&lt;bdo&gt;</a></td>
+                                        <td>Overrides the current text direction</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_big.asp">&lt;big&gt;</a></td>
+                                        <td>Not supported in HTML5. Use CSS instead.<br>Defines big text</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_i.asp">&lt;i&gt;</a></td>
+                                        <td>Defines italic text</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_ksup.asp">&lt;ksup&gt;</a></td>
+                                        <td>Not supported in HTML5. Use CSS instead.<br>Defines text that should be displayed as superscripted</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_ksub.asp">&lt;ksub&gt;</a></td>
+                                        <td>Not supported in HTML5. Use CSS instead.<br>Defines text that should be displayed as subscripted</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_mark.asp">&lt;mark&gt;</a></td>
+                                        <td>Defines marked/highlighted text</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_small.asp">&lt;small&gt;</a></td>
+                                        <td>Defines smaller text</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_strong.asp">&lt;strong&gt;</a></td>
+                                        <td>Defines important text</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_sub.asp">&lt;sub&gt;</a></td>
+                                        <td>Defines subscripted text</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_sup.asp">&lt;sup&gt;</a></td>
+                                        <td>Defines superscripted text</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_time.asp">&lt;time&gt;</a></td>
+                                        <td>Defines a specific time (or datetime)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_u.asp">&lt;u&gt;</a></td>
+                                        <td>Defines text that should be underlined</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_wbr.asp">&lt;wbr&gt;</a></td>
+                                        <td>Defines a possible line-break</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Note:</strong> Some tags like &lt;font&gt;, &lt;center&gt;, and &lt;strike&gt; are not supported in HTML5. Use CSS for styling instead.</p>
+                        </div>
+
+                    </section>
+
+                    <section id="html-abbr" class="tutorial-section" aria-labelledby="html-abbr-title">
+                        <h2 id="html-abbr-title" class="section-title">HTML &lt;abbr&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>An abbreviation is marked up as follows:</p>
+                        <div class="code-block">
+                            The &lt;abbr title="World Health Organization"&gt;WHO&lt;/abbr&gt; was founded in 1948.
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;abbr&gt;</code> tag defines an abbreviation or an acronym, like "HTML", "CSS", "Mr.", "Dr.", "ASAP", "ATM".</p>
+
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Tip:</strong> Use the global <code><a href="https://www.w3schools.com/tags/att_global_title.asp">title</a></code> attribute to show the description for the abbreviation/acronym when you mouse over the element.</p>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">More Examples</h3>
+                        <div class="code-block">
+                            &lt;p&gt;The &lt;abbr title="Hyper Text Markup Language"&gt;HTML&lt;/abbr&gt; specification is maintained by the &lt;abbr title="World Wide Web Consortium"&gt;W3C&lt;/abbr&gt;.&lt;/p&gt;
+                        </div>
+                    </section>
+
+                    <section id="html-address" class="tutorial-section" aria-labelledby="html-address-title">
+                        <h2 id="html-address-title" class="section-title">HTML &lt;address&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Contact information for Example.com:</p>
+                        <div class="code-block">
+                            &lt;address&gt;
+                                Written by &lt;a href="mailto:webmaster@example.com"&gt;Jon Doe&lt;/a&gt;.&lt;br&gt;
+                                Visit us at:&lt;br&gt;
+                                Example.com&lt;br&gt;
+                                Box 564, Disneyland&lt;br&gt;
+                                USA
+                            &lt;/address&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;address&gt;</code> tag defines the contact information for the author/owner of a document or an article.</p>
+                        <p>The contact information can be an email address, URL, physical address, phone number, social media handle, etc.</p>
+                        
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Note:</strong> The text in the <code>&lt;address&gt;</code> element usually renders in <em>italic</em>, and browsers will always add a line break before and after the element.</p>
+                        </div>
+                    </section>
+
+                    <section id="html-b" class="tutorial-section" aria-labelledby="html-b-title">
+                        <h2 id="html-b-title" class="section-title">HTML &lt;b&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Make some text bold (without marking it as important):</p>
+                        <div class="code-block">
+                            &lt;p&gt;This is normal text - &lt;b&gt;and this is bold text&lt;/b&gt;.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;b&gt;</code> tag specifies bold text without any extra importance.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Tips and Notes</h3>
+                        <div class="alert alert-warning">
+                            <p class="mb-0"><strong>Note:</strong> According to the HTML5 specification, the <code>&lt;b&gt;</code> tag should be used as a LAST resort when no other tag is more appropriate.</p>
+                        </div>
+
+                        <p>The specification states that:</p>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item">Headings should use <code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> tags</li>
+                            <li class="list-group-item">Emphasized text should use <code>&lt;em&gt;</code> tag</li>
+                            <li class="list-group-item">Important text should use <code>&lt;strong&gt;</code> tag</li>
+                            <li class="list-group-item">Marked/highlighted text should use <code>&lt;mark&gt;</code> tag</li>
+                        </ul>
+
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Tip:</strong> You can also use CSS to set bold text: <code>font-weight: bold;</code></p>
+                        </div>
+                    </section>
+
+                    <section id="html-bdi" class="tutorial-section" aria-labelledby="html-bdi-title">
+                        <h2 id="html-bdi-title" class="section-title">HTML &lt;bdi&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Isolate the usernames from the surrounding text-direction settings:</p>
+                        <div class="code-block">
+                            &lt;ul&gt;<br />
+                            &nbsp;&nbsp;&lt;li&gt;User &lt;bdi&gt;hrefs&lt;/bdi&gt;: 60 points&lt;/li&gt;<br />
+                            &nbsp;&nbsp;&lt;li&gt;User &lt;bdi&gt;jdoe&lt;/bdi&gt;: 80 points&lt;/li&gt;<br />
+                            &nbsp;&nbsp;&lt;li&gt;User &lt;bdi&gt;إيان&lt;/bdi&gt;: 90 points&lt;/li&gt;<br />
+                            &lt;/ul&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">BDI stands for Bi-Directional Isolation.</p>
+                        <p>The <code>&lt;bdi&gt;</code> tag isolates a part of text that might be formatted in a different direction from other text outside it.</p>
+                        <p>This element is useful when embedding user-generated content with an unknown text direction.</p>
+                    </section>
+
+                    <section id="html-bdo" class="tutorial-section" aria-labelledby="html-bdo-title">
+                        <h2 id="html-bdo-title" class="section-title">HTML &lt;bdo&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Specify the text direction:</p>
+                        <div class="code-block">
+                            &lt;bdo dir="rtl"&gt;<br />
+                            &nbsp;&nbsp;This text will go right-to-left.<br />
+                            &lt;/bdo&gt;
+                        </div>
+                    </section>
+
+                    <section id="html-blockquote" class="tutorial-section" aria-labelledby="html-blockquote-title">
+                        <h2 id="html-blockquote-title" class="section-title">HTML &lt;blockquote&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>A section that is quoted from another source:</p>
+                        <div class="code-block">
+                            &lt;blockquote cite="http://www.worldwildlife.org/who/index.html"&gt;<br />
+                            &nbsp;&nbsp;For 50 years, WWF has been protecting the future of nature.<br />
+                            &nbsp;&nbsp;The world's leading conservation organization, WWF works in 100 countries<br />
+                            &nbsp;&nbsp;and is supported by 1.2 million members in the United States and close to 5 million globally.<br />
+                            &lt;/blockquote&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;blockquote&gt;</code> tag specifies a section that is quoted from another source.</p>
+                        <p>Browsers usually indent <code>&lt;blockquote&gt;</code> elements.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Tips and Notes</h3>
+                        <div class="alert alert-info">
+                            <p class="mb-0"><strong>Tip:</strong> Use <code>&lt;q&gt;</code> for inline (short) quotations.</p>
+                        </div>
+                    </section>
+
+                    <section id="html-cite" class="tutorial-section" aria-labelledby="html-cite-title">
+                        <h2 id="html-cite-title" class="section-title">HTML &lt;cite&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Define the title of a work with the &lt;cite&gt; tag:</p>
+                        <div class="code-block">
+                            &lt;p&gt;&lt;cite&gt;The Scream&lt;/cite&gt; by Edward Munch. Painted in 1893.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;cite&gt;</code> tag defines the title of a creative work (e.g., a book, a poem, a song, a movie, a painting, etc.).</p>
+                        <p><strong>Note:</strong> A person's name is not the title of a work.</p>
+                        <p>The text in the <code>&lt;cite&gt;</code> element usually renders in <em>italic</em>.</p>
+                    </section>
+
+                    <section id="html-code" class="tutorial-section" aria-labelledby="html-code-title">
+                        <h2 id="html-code-title" class="section-title">HTML &lt;code&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Define some text as computer code in a document:</p>
+                        <div class="code-block">
+                            &lt;p&gt;The HTML &lt;code&gt;button&lt;/code&gt; tag defines a clickable button.&lt;/p&gt;<br />
+                            &lt;p&gt;The CSS &lt;code&gt;background-color&lt;/code&gt; property defines the background color of an element.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;code&gt;</code> tag is used to define a piece of computer code. The content inside is displayed in the browser's default monospace font.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Related Tags</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <thead>
+                                    <tr>
+                                        <th>Tag</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_samp.asp">&lt;samp&gt;</a></td>
+                                        <td>Defines sample output from a computer program</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_kbd.asp">&lt;kbd&gt;</a></td>
+                                        <td>Defines keyboard input</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_var.asp">&lt;var&gt;</a></td>
+                                        <td>Defines a variable</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_pre.asp">&lt;pre&gt;</a></td>
+                                        <td>Defines preformatted text</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="html-del" class="tutorial-section" aria-labelledby="html-del-title">
+                        <h2 id="html-del-title" class="section-title">HTML &lt;del&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>A text with a deleted part, and a new, inserted part:</p>
+                        <div class="code-block">
+                            &lt;p&gt;My favorite color is &lt;del&gt;blue&lt;/del&gt; &lt;ins&gt;red&lt;/ins&gt;!&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;del&gt;</code> tag defines text that has been deleted from a document. Browsers will usually strike a line through deleted text.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Attributes</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <tbody>
+                                    <tr>
+                                        <th>Attribute</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_del_cite.asp">cite</a></td>
+                                        <td><em>URL</em></td>
+                                        <td>Specifies a URL to a document that explains the reason why the text was deleted/changed</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_del_datetime.asp">datetime</a></td>
+                                        <td><em>YYYY-MM-DDThh:mm:ssTZD</em></td>
+                                        <td>Specifies the date and time of when the text was deleted/changed</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="html-dfn" class="tutorial-section" aria-labelledby="html-dfn-title">
+                        <h2 id="html-dfn-title" class="section-title">HTML &lt;dfn&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Mark up a term with &lt;dfn&gt;:</p>
+                        <div class="code-block">
+                            &lt;p&gt;&lt;dfn&gt;HTML&lt;/dfn&gt; is the standard markup language for creating web pages.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;dfn&gt;</code> tag stands for "definition element", and it specifies a term that is going to be defined within the content.</p>
+                        <p>The nearest parent of the <code>&lt;dfn&gt;</code> tag must also contain the definition/explanation for the term.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Usage Examples</h3>
+                        <h4 class="h6 mt-4 mb-2">1. Basic Usage:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;&lt;dfn&gt;HTML&lt;/dfn&gt; is the standard markup language for creating web pages.&lt;/p&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">2. With title attribute:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;&lt;dfn title="HyperText Markup Language"&gt;HTML&lt;/dfn&gt; is the standard markup language for creating web pages.&lt;/p&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">3. With abbr tag:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;&lt;dfn&gt;&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;&lt;/dfn&gt; is the standard markup language for creating web pages.&lt;/p&gt;
+                        </div>
+
+                        <h4 class="h6 mt-4 mb-2">4. With id reference:</h4>
+                        <div class="code-block">
+                            &lt;p&gt;&lt;dfn id="html-def"&gt;HTML&lt;/dfn&gt; is the standard markup language for creating web pages.&lt;/p&gt;
+                            &lt;p&gt;Learn &lt;a href="#html-def"&gt;HTML&lt;/a&gt; now.&lt;/p&gt;
+                        </div>
+                    </section>
+
+                    <section id="html-em" class="tutorial-section" aria-labelledby="html-em-title">
+                        <h2 id="html-em-title" class="section-title">HTML &lt;em&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Mark up emphasized text in a document:</p>
+                        <div class="code-block">
+                            &lt;p&gt;You &lt;em&gt;have&lt;/em&gt; to hurry up!&lt;/p&gt;
+                            &lt;p&gt;We &lt;em&gt;cannot&lt;/em&gt; live like this.&lt;/p&gt;
+                        </div>
+                    </section>
+
+                    <section id="html-i" class="tutorial-section" aria-labelledby="html-i-title">
+                        <h2 id="html-i-title" class="section-title">HTML &lt;i&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Mark up text that is set off from the normal prose in a document:</p>
+                        <div class="code-block">
+                            &lt;p&gt;&lt;i&gt;Lorem ipsum&lt;/i&gt; is the most popular filler text in history.&lt;/p&gt;
+                            &lt;p&gt;The &lt;i&gt;RMS Titanic&lt;/i&gt;, a luxury steamship, sank on April 15, 1912 after striking an iceberg.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;i&gt;</code> tag defines a part of text in an alternate voice or mood. The content inside is typically displayed in <em>italic</em>.</p>
+                        <p>The <code>&lt;i&gt;</code> tag is often used to indicate a technical term, a phrase from another language, a thought, a ship name, etc.</p>
+
+                        <div class="alert alert-warning mt-4">
+                            <p class="mb-0"><strong>Note:</strong> Use the <code>&lt;i&gt;</code> element only when there is not a more appropriate semantic element.</p>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Alternative Tags</h3>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item"><code>&lt;em&gt;</code> - for emphasized text</li>
+                            <li class="list-group-item"><code>&lt;strong&gt;</code> - for important text</li>
+                            <li class="list-group-item"><code>&lt;mark&gt;</code> - for marked/highlighted text</li>
+                            <li class="list-group-item"><code>&lt;cite&gt;</code> - for titles of works</li>
+                            <li class="list-group-item"><code>&lt;dfn&gt;</code> - for definition terms</li>
+                        </ul>
+                    </section>
+
+                    <section id="html-ins" class="tutorial-section" aria-labelledby="html-ins-title">
+                        <h2 id="html-ins-title" class="section-title">HTML &lt;ins&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>A text with a deleted part, and a new, inserted part:</p>
+                        <div class="code-block">
+                            &lt;p&gt;My favorite color is &lt;del&gt;blue&lt;/del&gt; &lt;ins&gt;red&lt;/ins&gt;!&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;ins&gt;</code> tag defines text that has been inserted into a document. Browsers will usually underline inserted text.</p>
+
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Tip:</strong> Use with the <code>&lt;del&gt;</code> tag to show both deleted and inserted text.</p>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Attributes</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <tbody>
+                                    <tr>
+                                        <th>Attribute</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_ins_cite.asp">cite</a></td>
+                                        <td><em>URL</em></td>
+                                        <td>Specifies a URL to a document that explains the reason why the text was inserted/changed</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_ins_datetime.asp">datetime</a></td>
+                                        <td><em>YYYY-MM-DDThh:mm:ssTZD</em></td>
+                                        <td>Specifies the date and time when the text was inserted/changed</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="html-kbd" class="tutorial-section" aria-labelledby="html-kbd-title">
+                        <h2 id="html-kbd-title" class="section-title">HTML &lt;kbd&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Define some text as keyboard input in a document:</p>
+                        <div class="code-block">
+                            &lt;p&gt;Press &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; to copy text (Windows).&lt;/p&gt;
+                            &lt;p&gt;Press &lt;kbd&gt;Cmd&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; to copy text (Mac OS).&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;kbd&gt;</code> tag is used to define keyboard input. The content inside is displayed in the browser's default monospace font.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Related Tags</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <thead>
+                                    <tr>
+                                        <th>Tag</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_code.asp">&lt;code&gt;</a></td>
+                                        <td>Defines a piece of computer code</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_samp.asp">&lt;samp&gt;</a></td>
+                                        <td>Defines sample output from a computer program</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_var.asp">&lt;var&gt;</a></td>
+                                        <td>Defines a variable</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_pre.asp">&lt;pre&gt;</a></td>
+                                        <td>Defines preformatted text</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="html-mark" class="tutorial-section" aria-labelledby="html-mark-title">
+                        <h2 id="html-mark-title" class="section-title">HTML &lt;mark&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Highlight parts of a text:</p>
+                        <div class="code-block">
+                            &lt;p&gt;Do not forget to buy &lt;mark&gt;milk&lt;/mark&gt; today.&lt;/p&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;mark&gt;</code> tag defines text that should be marked or highlighted.</p>
+                    </section>
+
+                    <section id="html-meter" class="tutorial-section" aria-labelledby="html-meter-title">
+                        <h2 id="html-meter-title" class="section-title">HTML &lt;meter&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Use the meter element to display a scalar value within a given range (a gauge):</p>
+                        <div class="code-block">
+                            &lt;label for="disk_c"&gt;Disk usage C:&lt;/label&gt;
+                            &lt;meter id="disk_c" value="2" min="0" max="10"&gt;2 out of 10&lt;/meter&gt;&lt;br&gt;
+                            &lt;label for="disk_d"&gt;Disk usage D:&lt;/label&gt;
+                            &lt;meter id="disk_d" value="0.6"&gt;60%&lt;/meter&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;meter&gt;</code> tag defines a scalar measurement within a known range, or a fractional value. This is also known as a gauge.</p>
+                        <p>Examples: Disk usage, the relevance of a query result, etc.</p>
+
+                        <div class="alert alert-warning mt-4">
+                            <p class="mb-0"><strong>Note:</strong> The <code>&lt;meter&gt;</code> tag should not be used to indicate progress (as in a progress bar). For progress bars, use the <code>&lt;progress&gt;</code> tag.</p>
+                        </div>
+
+                        <div class="alert alert-info mt-4">
+                            <p class="mb-0"><strong>Tip:</strong> Always add the <code>&lt;label&gt;</code> tag for best accessibility practices!</p>
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Attributes</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <tbody>
+                                    <tr>
+                                        <th>Attribute</th>
+                                        <th>Value</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_meter_form.asp">form</a></td>
+                                        <td><em>form_id</em></td>
+                                        <td>Specifies which form the &lt;meter&gt; element belongs to</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_meter_high.asp">high</a></td>
+                                        <td><em>number</em></td>
+                                        <td>Specifies the range that is considered to be a high value</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_meter_low.asp">low</a></td>
+                                        <td><em>number</em></td>
+                                        <td>Specifies the range that is considered to be a low value</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_meter_max.asp">max</a></td>
+                                        <td><em>number</em></td>
+                                        <td>Specifies the maximum value of the range</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_meter_min.asp">min</a></td>
+                                        <td><em>number</em></td>
+                                        <td>Specifies the minimum value of the range. Default value is 0</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_meter_optimum.asp">optimum</a></td>
+                                        <td><em>number</em></td>
+                                        <td>Specifies what value is the optimal value for the gauge</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/att_meter_value.asp">value</a></td>
+                                        <td><em>number</em></td>
+                                        <td>Required. Specifies the current value of the gauge</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section id="html-pre" class="tutorial-section" aria-labelledby="html-pre-title">
+                        <h2 id="html-pre-title" class="section-title">HTML &lt;pre&gt; Tag</h2>
+                        
+                        <h3 class="h5 mt-4 mb-3">Example</h3>
+                        <p>Preformatted text:</p>
+                        <div class="code-block">
+&lt;pre&gt;
+Text in a pre element
+is displayed in a fixed-width
+font, and it preserves
+both      spaces and
+line breaks
+&lt;/pre&gt;
+                        </div>
+
+                        <h3 class="h5 mt-4 mb-3">Definition and Usage</h3>
+                        <p class="lead text-muted">The <code>&lt;pre&gt;</code> tag defines preformatted text.</p>
+                        <p>Text in a <code>&lt;pre&gt;</code> element is displayed in a fixed-width font, and the text preserves both spaces and line breaks. The text will be displayed exactly as written in the HTML source code.</p>
+
+                        <h3 class="h5 mt-4 mb-3">Related Tags</h3>
+                        <div class="table-responsive">
+                            <table class="table table-hover border">
+                                <thead>
+                                    <tr>
+                                        <th>Tag</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_code.asp">&lt;code&gt;</a></td>
+                                        <td>Defines a piece of computer code</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_samp.asp">&lt;samp&gt;</a></td>
+                                        <td>Defines sample output from a computer program</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_kbd.asp">&lt;kbd&gt;</a></td>
+                                        <td>Defines keyboard input</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="https://www.w3schools.com/tags/tag_var.asp">&lt;var&gt;</a></td>
+                                        <td>Defines a variable</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html" class="bg-white shadow-sm" role="contentinfo"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <!-- <script>includeHTML();</script> -->
+</body>
+
+</html>
+<script>includeHTML();</script>

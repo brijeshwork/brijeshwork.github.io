@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Designing a File Upload & Media Management System — System Design | Brijesh Patel</title>
+<meta name="description" content="Design patterns for file uploads and media management: resumable uploads, CDN integration, object storage, image processing and security.">
+<link rel="canonical" href="https://brijesh.work/system-design/file-upload/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing a File Upload and Media Management System</h1>
+        <p class="lead">Patterns for secure, reliable file uploads, object storage, CDN integration, processing pipelines, and cost-effective media delivery.</p>
+
+        <h2 id="requirements">Requirements</h2>
+        <ul>
+          <li>Support large files and resumable uploads</li>
+          <li>Process images/videos (thumbnails, transcoding) asynchronously</li>
+          <li>Deliver via CDN with cache invalidation support</li>
+          <li>Apply access controls and virus scanning</li>
+        </ul>
+
+        <h2 id="architecture">Architecture notes</h2>
+        <ul>
+          <li>Pre-signed upload URLs → direct-to-storage uploads (S3/GCS)</li>
+          <li>Use message queue to trigger processing workers</li>
+          <li>Store metadata in DB and objects in an object store</li>
+          <li>CDN in front for fast global delivery</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../file-upload/">File upload architecture</a></li><li><a href="../">System Design hub</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

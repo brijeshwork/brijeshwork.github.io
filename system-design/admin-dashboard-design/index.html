@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building an Internal Admin Dashboard System — System Design | Brijesh Patel</title>
+<meta name="description" content="Designing an internal admin dashboard: authentication, RBAC, audit trails, data views and performance considerations.">
+<link rel="canonical" href="https://brijesh.work/system-design/admin-dashboard-design/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Building an Internal Admin Dashboard System</h1>
+        <p class="lead">Guidance for building an internal admin dashboard: access controls, audit logging, data filtering and operational UX."></p>
+
+        <h2 id="requirements">Requirements</h2>
+        <ul>
+          <li>Strong authentication and RBAC</li>
+          <li>Audit trails and change histories</li>
+          <li>Efficient data querying with pagination and filters</li>
+          <li>Operational features: impersonation, bulk actions, and exports</li>
+        </ul>
+
+        <h2 id="security">Security</h2>
+        <p>Lock down admin endpoints, use multi-factor auth, and ensure every admin action is logged for later auditing.</p>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Design admin dashboards with safety-first defaults, least privilege, and clear auditability for all actions.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#requirements">Requirements</a></li><li><a href="#security">Security</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

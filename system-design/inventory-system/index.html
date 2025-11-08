@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">    
+<title>Inventory Management System — Design and Data Flow — System Design | Brijesh Patel</title>
+<meta name="description" content="Inventory system architecture: ERD, data flow, stock reconciliation, event sourcing and concurrency models for high-throughput inventory systems.">
+<link rel="canonical" href="https://brijesh.work/system-design/inventory-system/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Inventory Management System — Design and Data Flow</h1>
+        <p class="lead">Design patterns and ERD for inventory systems: stock keeping, reservations, reconciliation, and integrations with order systems.</p>
+
+        <h2 id="erd">ERD (example)</h2>
+        <p>Key entities: products, warehouses, stock_levels, stock_reservations, movements.</p>
+        <pre><code class="language-sql">-- Simplified ERD tables
+CREATE TABLE products (id UUID PRIMARY KEY, sku TEXT UNIQUE, name TEXT);
+CREATE TABLE warehouses (id UUID PRIMARY KEY, name TEXT);
+CREATE TABLE stock_levels (product_id UUID REFERENCES products(id), warehouse_id UUID REFERENCES warehouses(id), available INT, reserved INT, PRIMARY KEY(product_id, warehouse_id));
+CREATE TABLE stock_reservations (id UUID PRIMARY KEY, product_id UUID, warehouse_id UUID, quantity INT, status TEXT, created_at TIMESTAMP);
+</code></pre>
+
+        <h2 id="dataflow">Data flow & reconciliation</h2>
+        <ul>
+          <li>Event-driven updates for stock movements (message queue → consumers → update aggregate views)</li>
+          <li>Periodic reconciliation jobs to fix drift and expired reservations</li>
+          <li>Optimistic concurrency on reservations with compensation flows on conflicts</li>
+        </ul>
+
+      </div>
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#erd">ERD</a></li><li><a href="#dataflow">Data flow</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>

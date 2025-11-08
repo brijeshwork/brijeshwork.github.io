@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designing Backup and Disaster Recovery Systems — System Design | Brijesh Patel</title>
+<meta name="description" content="Backup and disaster recovery design: RPO/RTO, cross-region replication, backups, and runbooks for resilient systems.">
+<link rel="canonical" href="https://brijesh.work/system-design/backup-disaster-recovery/" />
+<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h1>Designing Backup and Disaster Recovery Systems</h1>
+        <p class="lead">A practical guide to backups, DR planning, RTO/RPO, failover strategies and runbooks for production systems.</p>
+
+        <h2 id="rpo-rto">RPO and RTO</h2>
+        <p>Define acceptable data loss (RPO) and restoration time (RTO), and design backup frequency and failover automation to meet those targets.</p>
+
+        <h3 id="strategies">Strategies</h3>
+        <ul>
+          <li>Cross-region replication</li>
+          <li>Point-in-time recovery (database snapshots)</li>
+          <li>Cold vs warm vs hot standby</li>
+          <li>Disaster recovery runbooks and regular drills</li>
+        </ul>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>Recovery is as much people and processes as it is technology; test your runbooks and automate failover where safe and possible.</p>
+      </div>
+
+      <aside class="col-12 col-lg-4">
+        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#rpo-rto">RPO/RTO</a></li><li><a href="#strategies">Strategies</a></li></ul></div></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<script>includeHTML();</script>
+</body>
+</html>
