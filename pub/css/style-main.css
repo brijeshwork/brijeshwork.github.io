@@ -7,8 +7,8 @@
 
 /* Use CSS custom properties for consistency */
 :root {
-    --primary-color: #007bff;
-    --text-color: #333;
+    --primary-color: #000000;
+    --text-color: #1a1a1a;
     --header-height: 70px;
     --font-family-primary: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-family-secondary: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -99,9 +99,9 @@ section {
    ============================================ */
 
 .hero-section {
-    padding: 60px 0;
+    /* padding: 60px 0; */
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    min-height: 600px;
+    /* min-height: 600px; */
     display: flex;
     align-items: center;
 }
@@ -185,15 +185,15 @@ section {
     right: -20px;
     width: 100px;
     height: 100px;
-    background: linear-gradient(45deg, #007bff, #6f42c1);
+    background: #000000;
     border-radius: 50%;
     opacity: 0.8;
     z-index: -1;
 }
 
 .hireme-btn {
-    background: linear-gradient(45deg, #007bff, #0056b3);
-    color: white;
+    background: #000000;
+    color: #ffffff;
     padding: 12px 30px;
     border-radius: 50px;
     text-decoration: none;
@@ -201,15 +201,19 @@ section {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: transform 0.2s ease;
-    border: none;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    border: 2px solid #000000;
 }
 
-.hireme-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0,123,255,0.3);
-    color: white;
-}
+
+  .hireme-btn:hover {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    text-decoration: none;
+  }
 
 @media (max-width: 768px) {
     .hireme-btn {
@@ -225,7 +229,7 @@ section {
     justify-content: center;
     width: 45px;
     height: 45px;
-    background: #343a40;
+    background: #000000;
     border-radius: 50%;
     color: white;
     text-decoration: none;
@@ -234,7 +238,7 @@ section {
 
 .social-icon:hover {
     transform: translateY(-2px);
-    background: #007bff;
+    background: #333333;
     color: white;
 }
 
@@ -270,13 +274,13 @@ section {
 .stat-number {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #007bff;
+    color: #000000;
     margin-bottom: 0.5rem;
 }
 
 .stat-label {
     font-size: 1rem;
-    color: #6c757d;
+    color: #4a4a4a;
     margin-bottom: 0;
 }
 
@@ -359,7 +363,7 @@ section {
 
 .tech-icon i {
     font-size: 24px;
-    color: #007bff;
+    color: #000000;
 }
 
 /* ============================================
@@ -497,10 +501,9 @@ img {
 
 .main {
     transform: rotate(-5deg);
-    /* position: relative; */
     position: absolute;
     top: 40px;
-    /* right: 10%; */
+    right: 0%;
     width: 320px;
     height: 440px;
     background-repeat: no-repeat;
@@ -510,7 +513,7 @@ img {
 }
 
 .shape {
-    background-color: #becbf1;
+    background-color: #e0e0e0;
     transform: rotate(2deg);
     /* position: relative; */
     position: absolute;
@@ -759,7 +762,7 @@ nav ul li a {
 }
 
 /* Footer small tweaks */
-.footer-email { color: var(--color-primary); }
+.footer-email { color: #000000; }
 
 /* Fiverr card and stats */
 .fiverr-card {
@@ -784,7 +787,7 @@ nav ul li a {
 }
 
 #site-footer .text-primary {
-  color: #0d6efd !important; /* link / heading color */
+  color: #000000 !important; /* link / heading color */
 }
 
 #site-footer a.link-dark {
@@ -793,13 +796,13 @@ nav ul li a {
 }
 
 #site-footer a.link-dark:hover {
-  color: #0b5ed7;
+  color: #333333;
   text-decoration: underline;
 }
 
 #site-footer .social-icon svg { display: block; }
-#site-footer .social-icon { color: #212529; }
-#site-footer .social-icon:hover { color: #0b5ed7; }
+#site-footer .social-icon { color: #000000; }
+#site-footer .social-icon:hover { color: #333333; }
 
 #site-footer h5, #site-footer h6 { margin-bottom: .5rem; }
 
@@ -890,14 +893,14 @@ nav ul li a {
 }
 
 .btn-primary {
-  background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+  background: #000000;
   color: #fff;
-  box-shadow: 0 12px 32px rgba(29,78,216,0.14);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 24px 48px rgba(29,78,216,0.16);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.15);
 }
 
 .btn-outline {
@@ -909,7 +912,7 @@ nav ul li a {
 
 .btn-outline:hover {
   transform: translateY(-3px);
-  border-color: rgba(29,78,216,0.14);
+  border-color: rgba(0,0,0,0.3);
 }
 
 .cta-actions {
@@ -923,7 +926,7 @@ nav ul li a {
 
 .cta-title--accent {
   display: inline-block;
-  background: linear-gradient(90deg, #7c3aed 0%, #2563eb 100%);
+  background: #000000;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -961,20 +964,20 @@ nav ul li a {
 }
 
 .stat-dot--green {
-  background: #10b981;
+  background: #000000;
 }
 
 .stat-dot--blue {
-  background: #2563eb;
+  background: #333333;
 }
 
 .stat-dot--purple {
-  background: #7c3aed;
+  background: #1a1a1a;
 }
 
 .stat-text {
   font-size: 0.875rem;
-  color: #64748b;
+  color: #4a4a4a;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -1035,10 +1038,6 @@ nav ul li a {
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 12px;
-  background: linear-gradient(135deg, #ffffff 0%, #3b82f6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .brand-tagline {
@@ -1092,7 +1091,7 @@ nav ul li a {
   left: 0;
   width: 30px;
   height: 2px;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: #ffffff;
   border-radius: 1px;
 }
 
@@ -1352,7 +1351,7 @@ nav ul li a {
 .hireme-btn svg path {fill: #ffffff;transition: fill 0.3s ease;}
 .hireme-btn:hover svg path {fill: #000000;}
 /* Hero Image & Layout */
-.hero-image-bg {background-image: url('/pub/media/img/brijesh-patel-pic.png');}
+.hero-image-bg {background-image: url('https://brijesh.work/pub/media/img/brijesh-patel-pic.png');}
 /* Utility Classes */
 .flex-center {display: flex;align-items: center;justify-content: center;}
 .flex-column {display: flex;flex-direction: column;}
@@ -1361,17 +1360,13 @@ nav ul li a {
 .interactive-hero {
   height: 800px;
   max-height: 800px;
-  width: 100vw;
+  width: 100%;
   background: #f8f9fa;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 50px 0;
+  padding: 50px 20px;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
   overflow: hidden;
 }
 
@@ -1873,7 +1868,7 @@ nav ul li a {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--btn-bg) 0%, #0066cc 100%);
+  background: #000000;
   color: #ffffff;
   border: none;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
@@ -1893,7 +1888,7 @@ nav ul li a {
 .btn-primary:hover {
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #0066cc 0%, var(--btn-bg) 100%);
+  background: #1a1a1a;
 }
 
 .btn-primary:hover::before {
@@ -1911,7 +1906,7 @@ nav ul li a {
   align-items: center;
   gap: 12px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(135deg, #000000 0%, #333333 100%);
+  background: #000000;
   color: #ffffff;
   border: 2px solid #000000;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
@@ -1933,9 +1928,10 @@ nav ul li a {
 
 .chrome-footer-btn:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   color: #ffffff;
   text-decoration: none;
+  background: #1a1a1a;
 }
 
 .chrome-footer-btn:hover::before {
@@ -2538,7 +2534,7 @@ nav ul li a {
           align-items: center;
           gap: 8px;
           padding: 10px 20px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: #000000;
           color: white;
           border-radius: 25px;
           font-size: 13px;
@@ -2546,19 +2542,15 @@ nav ul li a {
           text-transform: uppercase;
           letter-spacing: 1px;
           margin-bottom: 24px;
-          box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
         .services-header .section-title {
           font-size: 3.2rem;
           font-weight: 700;
-          color: #2d3748;
+          color: #000000;
           margin-bottom: 24px;
           line-height: 1.2;
-          background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
         }
 
         .services-header .section-description {
@@ -2627,7 +2619,7 @@ nav ul li a {
         .service-icon {
           width: 72px;
           height: 72px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: #000000;
           border-radius: 16px;
           display: flex;
           align-items: center;
@@ -2635,14 +2627,14 @@ nav ul li a {
           color: white;
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
-          box-shadow: 0 8px 25px -8px rgba(102, 126, 234, 0.4);
+          box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.3);
         }
 
         .service-icon::after {
           content: '';
           position: absolute;
           inset: -4px;
-          background: linear-gradient(135deg, #667eea, #764ba2);
+          background: #1a1a1a;
           border-radius: 20px;
           z-index: -1;
           opacity: 0;
@@ -2651,7 +2643,7 @@ nav ul li a {
 
         .service-card:hover .service-icon {
           transform: scale(1.05) rotate(2deg);
-          box-shadow: 0 12px 40px -8px rgba(102, 126, 234, 0.5);
+          box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.4);
         }
 
         .service-card:hover .service-icon::after {
@@ -2697,7 +2689,7 @@ nav ul li a {
         }
 
         .service-title a:hover {
-          color: #667eea;
+          color: #000000;
         }
 
         .service-title a:hover::after {
@@ -2742,7 +2734,7 @@ nav ul li a {
           transform: translateY(-50%);
           width: 16px;
           height: 16px;
-          background: linear-gradient(135deg, #48bb78, #38a169);
+          background: #000000;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -2791,7 +2783,7 @@ nav ul li a {
 
         .services-cta {
           text-align: center;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: #000000;
           border-radius: 24px;
           padding: 64px 48px;
           color: white;

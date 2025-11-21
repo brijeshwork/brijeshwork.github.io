@@ -1,0 +1,891 @@
+/* ============================================
+   RESPONSIVE DESIGN ENHANCEMENTS
+   Mobile, Tablet, and Desktop Fixes
+   ============================================ */
+
+/* ============================================
+   MOBILE FIRST BASE STYLES
+   ============================================ */
+
+/* Ensure proper box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Improve touch targets for mobile */
+a, button, .btn, .social-icon {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ============================================
+   HERO SECTION RESPONSIVE FIXES
+   ============================================ */
+
+/* Mobile-first hero styles */
+.hero-section {
+  padding: 40px 0;
+  min-height: auto;
+}
+
+.hero-content {
+  min-height: auto;
+  padding-top: 0;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.hero-description {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.hero-image-bg {
+  height: 300px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.hero-cta-container {
+  justify-content: center;
+}
+
+/* Tablet styles (768px and up) */
+@media (min-width: 768px) {
+  .hero-section {
+    padding: 60px 0;
+    min-height: 500px;
+  }
+
+  .hero-content {
+    padding-top: 50px;
+  }
+
+  .hero-cta-container {
+    justify-content: flex-start;
+  }
+
+  .hero-image-bg {
+    height: 400px;
+  }
+}
+
+/* Desktop styles (1024px and up) */
+@media (min-width: 1024px) {
+  .hero-section {
+    padding: 80px 0;
+    min-height: 600px;
+  }
+
+  .hero-content {
+    padding-top: 100px;
+  }
+}
+
+/* ============================================
+   STATS SECTION RESPONSIVE FIXES
+   ============================================ */
+
+.fiverr-stats-section {
+  padding: 30px 0;
+}
+
+.fiverr-stats-row {
+  gap: 1rem;
+}
+
+.stat-number {
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+}
+
+.stat-label {
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  line-height: 1.3;
+}
+
+.fiverr-badge {
+  min-width: 100px;
+  padding: 8px 12px;
+}
+
+.fiverr-title {
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+}
+
+.fiverr-rating {
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+}
+
+.stars-svg {
+  width: 70px;
+  height: auto;
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  .fiverr-stats-section {
+    padding: 45px 0;
+  }
+
+  .stars-svg {
+    width: 90px;
+  }
+}
+
+/* ============================================
+   INSTAGRAM SECTION RESPONSIVE FIXES
+   ============================================ */
+
+.interactive-hero {
+  padding: 20px;
+  min-height: auto;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-container {
+  margin: 0 auto;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  min-height: auto;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.hero-sidebar {
+  width: 100%;
+  border-radius: 12px 12px 0 0;
+  height: auto;
+  max-height: none;
+}
+
+.hero-content-area {
+  padding: 20px 16px;
+  min-height: 350px;
+  height: auto;
+}
+
+.tab-item {
+  min-height: 56px;
+  padding: 14px 16px;
+}
+
+.tab-content h4 {
+  font-size: clamp(13px, 2.5vw, 14px);
+}
+
+.tab-content p {
+  font-size: clamp(10px, 2vw, 11px);
+}
+
+.content-header h3 {
+  font-size: clamp(20px, 4vw, 28px);
+}
+
+.content-header .lead {
+  font-size: clamp(13px, 2.5vw, 16px);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .interactive-hero {
+    padding: 30px 0;
+  }
+
+  .hero-container {
+    margin: 0 20px;
+    width: calc(100% - 40px);
+    max-width: 1000px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .interactive-hero {
+    padding: 50px 0;
+    height: 800px;
+    max-height: 800px;
+  }
+
+  .hero-container {
+    grid-template-columns: 380px 1fr;
+    height: 700px;
+    max-height: 700px;
+    max-width: 1360px;
+  }
+
+  .hero-sidebar {
+    width: 380px;
+    border-radius: 16px 0 0 16px;
+    height: 436px;
+  }
+
+  .hero-content-area {
+    padding: 20px 30px;
+    height: 436px;
+  }
+}
+
+/* ============================================
+   ABOUT SECTION RESPONSIVE FIXES
+   ============================================ */
+
+.about-section {
+  padding: 60px 0;
+}
+
+.about-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.experience-counter {
+  text-align: center;
+  margin: 0 auto 2rem;
+  max-width: 300px;
+}
+
+.yearsofexperience {
+  font-size: clamp(60px, 15vw, 120px);
+}
+
+.experience-text {
+  font-size: clamp(18px, 4vw, 22px);
+}
+
+.section-title {
+  font-size: clamp(28px, 5vw, 35px);
+}
+
+.about-description {
+  font-size: clamp(16px, 3vw, 18px);
+  line-height: 1.7;
+}
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  .about-section {
+    padding: 80px 0;
+  }
+
+  .about-wrapper {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .experience-counter {
+    margin: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-section {
+    padding: 100px 0;
+  }
+}
+
+/* ============================================
+   SERVICES SECTION RESPONSIVE FIXES
+   ============================================ */
+
+.service-section {
+  padding: 60px 0;
+  min-height: auto;
+}
+
+.service-title {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.2;
+}
+
+.service-description {
+  font-size: clamp(1.1rem, 3vw, 1.35rem);
+  line-height: 1.6;
+}
+
+.service-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 30px;
+}
+
+.service-icon svg {
+  width: 50px;
+  height: 50px;
+}
+
+.service-features {
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.feature-item {
+  padding: 16px 20px;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .service-section {
+    padding: 80px 0;
+    min-height: 80vh;
+  }
+
+  .service-icon {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 40px;
+  }
+
+  .service-icon svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .service-features {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .feature-item {
+    padding: 20px 24px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .service-section {
+    padding: 120px 0;
+    min-height: 100vh;
+  }
+
+  .service-icon {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 50px;
+  }
+
+  .service-icon svg {
+    width: 70px;
+    height: 70px;
+  }
+
+  .service-features {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  .feature-item {
+    padding: 24px 30px;
+  }
+}
+
+/* ============================================
+   CLIENT LOGOS RESPONSIVE FIXES
+   ============================================ */
+
+.clients-section .row {
+  margin: 0 -10px;
+}
+
+.clients-section [class*="col-"] {
+  padding: 10px;
+}
+
+.clients-section img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ============================================
+   TECH SKILLS - MODERN CARD DESIGN
+   ============================================ */
+
+.tech-skills-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-skills-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.section-subtitle {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 15px;
+}
+
+.section-description {
+  font-size: 18px;
+  color: #4a4a4a;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.skill-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: #000000;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.skill-card:hover::before {
+  transform: scaleX(1);
+}
+
+.skill-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.skill-card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f1f3f5;
+}
+
+.skill-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.skill-card:hover .skill-icon-wrapper {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.skill-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.skill-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #f8f9fa;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.skill-tag:hover {
+  background: white;
+  border-color: #000000;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.skill-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+/* New compact grid for skill items (icon + label) */
+.skill-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  padding: 8px 10px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.03);
+}
+
+.skill-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  background: #f1f3f5;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.skill-name {
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* Slightly tone down the top accent bar to avoid visual clutter */
+.skill-card::before {
+  height: 4px;
+  opacity: 0.85;
+}
+
+/* Tablet Responsive */
+@media (max-width: 768px) {
+  .tech-skills-section {
+    padding: 60px 0;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .skill-card {
+    padding: 25px;
+  }
+
+  .skill-card-title {
+    font-size: 20px;
+  }
+
+  .skill-icon-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .skill-icon-wrapper svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .tech-skills-section {
+    padding: 40px 0;
+  }
+
+  .section-header {
+    margin-bottom: 30px;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
+  }
+
+  .section-description {
+    font-size: 16px;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .skill-card {
+    padding: 20px;
+  }
+
+  .skill-card-header {
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+  }
+
+  .skill-icon-wrapper {
+    width: 45px;
+    height: 45px;
+  }
+
+  .skill-icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .skill-card-title {
+    font-size: 18px;
+  }
+
+  .skill-tag {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .skill-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* ============================================
+   PORTFOLIO SLIDESHOW RESPONSIVE FIXES
+   ============================================ */
+
+.portfolio-section {
+  padding: 60px 0;
+}
+
+.slideshow-container {
+  max-width: 100%;
+  margin: 2rem auto;
+}
+
+.mySlides img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .portfolio-section {
+    padding: 80px 0;
+  }
+}
+
+/* ============================================
+   BUTTON RESPONSIVE FIXES
+   ============================================ */
+
+.hireme-btn {
+  padding: 12px 24px;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  white-space: nowrap;
+}
+
+.hireme-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 576px) {
+  .hireme-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .social-icons-container {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .hireme-btn {
+    padding: 14px 30px;
+  }
+
+  .hireme-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Ensure images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fix container overflow */
+.container {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================ */
+
+/* Focus visible for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+/* Improve link contrast */
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU acceleration for animations */
+.tab-item,
+.service-card,
+.portfolio-item,
+.hireme-btn {
+  will-change: transform;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
