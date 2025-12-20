@@ -3201,10 +3201,12 @@ class CaptchaSolver:
         if solution:
             # Inject solution into page
             await page.evaluate(f"""
-                () => {{
+                {% raw %}
+                {% raw %}document.getElementById('g-recaptcha-response').innerHTML = '{solution}';{% endraw %}
                     document.getElementById('g-recaptcha-response').innerHTML = '{solution}';
                     document.querySelector('form').submit();
-                }}
+                }}{% endraw %}
+                "
             """)
             return True
         
@@ -7214,10 +7216,12 @@ class CaptchaSolver:
         if solution:
             # Inject solution into page
             await page.evaluate(f"""
+                {% raw %}
                 () => {{
                     document.getElementById('g-recaptcha-response').innerHTML = '{solution}';
                     document.querySelector('form').submit();
-                }}
+                }}{% endraw %}
+                "
             """)
             return True
         
@@ -11227,10 +11231,12 @@ class CaptchaSolver:
         if solution:
             # Inject solution into page
             await page.evaluate(f"""
+                {% raw %}
                 () => {{
                     document.getElementById('g-recaptcha-response').innerHTML = '{solution}';
                     document.querySelector('form').submit();
-                }}
+                }}{% endraw %}
+                "
             """)
             return True
         
@@ -16280,10 +16286,12 @@ class CaptchaSolver:
         if solution:
             # Inject solution into page
             await page.evaluate(f"""
+                {% raw %}
                 () => {{
                     document.getElementById('g-recaptcha-response').innerHTML = '{solution}';
                     document.querySelector('form').submit();
-                }}
+                }}{% endraw %}
+                "
             """)
             return True
         
