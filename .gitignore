@@ -1,0 +1,2 @@
+# Skip all markdown files from being processed/uploaded
+*.md
