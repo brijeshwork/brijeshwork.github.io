@@ -1,220 +1,1113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Rate Limiting — System Design | Brijesh Patel</title>
-<meta name="description" content="System design for a scalable rate limiting service: token bucket, sliding window, Redis counters, API Gateway integration, and distributed coordination patterns.">
-<meta name="author" content="Brijesh Patel">
-<link rel="canonical" href="https://brijesh.work/system-design/rate-limiting/" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Rate Limiting — System Design" />
-<meta property="og:description" content="Design patterns and operational guidance for building a production-ready, scalable rate limiting system using token buckets, Redis, and API gateways." />
-<meta property="og:url" content="https://brijesh.work/system-design/rate-limiting/" />
-<meta property="og:site_name" content="Brijesh Patel - System Design" />
-<meta property="og:image" content="https://brijesh.work/system-design/rate-limiting/rate-limiting-architecture.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@brijeshwork" />
 
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rate Limiting in System Design: Complete Guide with Algorithms &amp; Implementation | Brijesh Patel</title>
+  <meta name="description"
+    content="Learn rate limiting system design with Token Bucket, Sliding Window, Leaky Bucket algorithms. Includes Python &amp; Redis implementation, real-world examples from Twitter, GitHub, Stripe.">
+  <meta name="author" content="Brijesh Patel">
+  <meta name="keywords"
+    content="rate limiting, system design, token bucket, sliding window, leaky bucket, redis, api gateway, rate limiter, throttling, api protection">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://brijesh.work/system-design/rate-limiting/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Rate Limiting in System Design: Complete Guide">
+  <meta property="og:description"
+    content="Master rate limiting with Token Bucket, Sliding Window algorithms. Python &amp; Redis implementation, real-world examples.">
+  <meta property="og:url" content="https://brijesh.work/system-design/rate-limiting/">
+  <meta property="og:site_name" content="Brijesh Patel - System Design">
+  <meta property="og:image" content="https://brijesh.work/system-design/rate-limiting/rate-limiting-og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2024-01-01T00:00:00+00:00">
+  <meta property="article:modified_time" content="2026-01-04T00:00:00+00:00">
+  <meta property="article:author" content="https://brijesh.work/about/">
+  <meta property="article:section" content="System Design">
+  <meta property="article:tag" content="Rate Limiting">
+  <meta property="article:tag" content="System Design">
+  <meta property="article:tag" content="Redis">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@brijeshwork">
+  <meta name="twitter:creator" content="@brijeshwork">
+  <meta name="twitter:title" content="Rate Limiting in System Design: Complete Guide">
+  <meta name="twitter:description"
+    content="Master rate limiting with Token Bucket, Sliding Window algorithms. Python &amp; Redis implementation.">
+  <meta name="twitter:image" content="https://brijesh.work/system-design/rate-limiting/rate-limiting-og.png">
+
+  <!-- Structured Data / JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Rate Limiting in System Design: Complete Guide with Algorithms & Implementation",
+    "description": "Learn rate limiting system design with Token Bucket, Sliding Window, Leaky Bucket algorithms. Includes Python & Redis implementation.",
+    "image": "https://brijesh.work/system-design/rate-limiting/rate-limiting-og.png",
+    "author": {
+      "@type": "Person",
+      "name": "Brijesh Patel",
+      "url": "https://brijesh.work/about/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Brijesh Patel"
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": "2026-01-04",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://brijesh.work/system-design/rate-limiting/"
+    },
+    "articleSection": "System Design",
+    "keywords": ["rate limiting", "system design", "token bucket", "sliding window", "redis", "api gateway"]
+  }
+  </script>
+
+  <!-- Breadcrumb Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://brijesh.work/"},
+      {"@type": "ListItem", "position": 2, "name": "System Design", "item": "https://brijesh.work/system-design/"},
+      {"@type": "ListItem", "position": 3, "name": "Rate Limiting", "item": "https://brijesh.work/system-design/rate-limiting/"}
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <!-- Prism.js for syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       Rate Limiting Blog - Custom Styles
+       Fix conflicts with style-main.css
+       ============================================= */
+
+    /* Hero Section */
+    .hero-gradient {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    }
+
+    /* Hero Badges - Fix visibility issue */
+    .hero-gradient .badge {
+      background-color: rgba(255, 255, 255, 0.15) !important;
+      color: #fff !important;
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    /* Breadcrumb - Fix active item background */
+    .breadcrumb {
+      background: transparent !important;
+    }
+
+    .breadcrumb-item.active {
+      background: transparent !important;
+      color: #6c757d !important;
+    }
+
+    .breadcrumb-item a {
+      color: #6366f1;
+      text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* Typography fixes */
+    .rate-limiting-content h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .rate-limiting-content h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #334155;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .rate-limiting-content p,
+    .rate-limiting-content li {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #475569;
+    }
+
+    /* Sidebar TOC - Fix list layout */
+    .sidebar-sticky {
+      position: sticky;
+      top: 90px;
+    }
+
+    .sidebar-sticky nav ul {
+      list-style: none !important;
+      padding-left: 0 !important;
+      margin: 0;
+    }
+
+    .sidebar-sticky nav ul li {
+      display: block !important;
+      float: none !important;
+      width: 100% !important;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-sticky nav ul li a {
+      display: block;
+      padding: 0.4rem 0;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-left: 2px solid transparent;
+      padding-left: 0.75rem;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-sticky nav ul li a:hover {
+      color: #6366f1;
+      border-left-color: #6366f1;
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    /* Resources list in sidebar */
+    .sidebar-sticky .card ul {
+      list-style: none !important;
+      padding-left: 0 !important;
+    }
+
+    .sidebar-sticky .card ul li {
+      display: block !important;
+      float: none !important;
+      width: 100% !important;
+    }
+
+    /* Alert/Callout boxes */
+    .bg-warning-subtle {
+      background-color: #fef3c7 !important;
+    }
+
+    .bg-info-subtle {
+      background-color: #eff6ff !important;
+    }
+
+    .bg-danger-subtle {
+      background-color: #fef2f2 !important;
+    }
+
+    .bg-success-subtle {
+      background-color: #f0fdf4 !important;
+    }
+
+    .bg-primary-subtle {
+      background-color: #e0e7ff !important;
+    }
+
+    .border-warning {
+      border-color: #f59e0b !important;
+    }
+
+    .border-primary {
+      border-color: #6366f1 !important;
+    }
+
+    .border-danger {
+      border-color: #ef4444 !important;
+    }
+
+    .text-warning-dark {
+      color: #92400e;
+    }
+
+    .text-primary-dark {
+      color: #1e40af;
+    }
+
+    .text-danger-dark {
+      color: #991b1b;
+    }
+
+    /* Cards */
+    .card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Tables */
+    .table-dark-header thead {
+      background: #1e293b !important;
+      color: white !important;
+    }
+
+    .table-dark-header thead th {
+      background: #1e293b !important;
+      color: white !important;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+    }
+
+    .table td,
+    .table th {
+      vertical-align: middle;
+    }
+
+    /* Code blocks */
+    .code-header {
+      background: #1e293b;
+    }
+
+    pre[class*="language-"] {
+      margin: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    /* Video responsive */
+    .video-responsive {
+      aspect-ratio: 16/9;
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+      .sidebar-sticky {
+        position: relative;
+        top: 0;
+        margin-bottom: 2rem;
+      }
+
+      /* On mobile: show content first, then sidebar */
+      .mobile-content-first {
+        flex-direction: column !important;
+      }
+
+      .mobile-content-first>article {
+        order: 1 !important;
+      }
+
+      .mobile-content-first>aside {
+        order: 2 !important;
+      }
+
+      /* Full width columns on mobile */
+      .mobile-content-first>.col-12,
+      .mobile-content-first>.col-lg-8,
+      .mobile-content-first>.col-lg-4 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-gradient h1 {
+        font-size: 1.75rem !important;
+      }
+
+      .hero-gradient .lead {
+        font-size: 1rem !important;
+      }
+
+      .hero-gradient .badge {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.6rem !important;
+      }
+    }
+  </style>
 
 </head>
+
 <body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Rate Limiting — System Design</h1>
-        <p class="lead">Building a production-ready, scalable rate limiting service that protects APIs and downstream systems from abuse while providing predictable experience for legitimate users.</p>
+  <!-- Breadcrumb -->
+  <nav class="bg-light border-bottom py-3" aria-label="breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item"><a href="/system-design/" class="text-decoration-none">System Design</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Rate Limiting</li>
+      </ol>
+    </div>
+  </nav>
 
-        <h2 id="overview">Overview</h2>
-        <p>Rate limiting enforces usage policies by throttling requests. Typical deployment points are API gateways, edge proxies, or application services. We'll cover requirements, patterns, and trade-offs for an internet-scale rate limiting system.</p>
+  <!-- Hero Section -->
+  <header class="hero-gradient text-white py-5">
+    <div class="container py-4">
+      <h1 class="display-4 fw-bold mb-3">🚦 Rate Limiting — System Design</h1>
+      <p class="lead opacity-75 mb-4" style="max-width: 700px;">Learn how to design a production-ready rate limiting
+        system that protects your APIs from abuse while keeping things smooth for real users. We'll break down the key
+        algorithms and show you how to implement them with Redis.</p>
 
-        <h3 id="requirements">Requirements</h3>
-        <ul>
-          <li>Enforce per-API-key and per-IP rate limits (e.g. 100 req/min per user, 1000 req/min per IP)</li>
-          <li>Low request-latency (target &lt;2ms extra for lookup)</li>
-          <li>Strong accuracy for small windows (short bursts) and eventual consistency for aggregated metrics</li>
-          <li>Highly available and horizontally scalable</li>
-          <li>Configurable policies and real-time updates</li>
-        </ul>
+      <div class="d-flex flex-wrap gap-3 mt-4">
+        <span class="badge bg-white bg-opacity-10 text-white px-3 py-2 rounded-pill d-flex align-items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z" />
+          </svg>
+          20 min read
+        </span>
+        <span class="badge bg-white bg-opacity-10 text-white px-3 py-2 rounded-pill d-flex align-items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
+          </svg>
+          Intermediate
+        </span>
+        <span class="badge bg-white bg-opacity-10 text-white px-3 py-2 rounded-pill d-flex align-items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
+          </svg>
+          Redis, Python, API Gateway
+        </span>
+      </div>
+    </div>
+  </header>
 
-        <h3 id="constraints">Constraints</h3>
-        <ul>
-          <li>High QPS at the edge (tens to hundreds of thousands per second)</li>
-          <li>Latency sensitivity — rate check must be in the request path</li>
-          <li>Limited memory per node, need for compact counters</li>
-        </ul>
+  <!-- Main Content -->
+  <main class="py-5 bg-white">
+    <div class="container">
+      <div class="row mobile-content-first flex-lg-row-reverse g-5">
 
-        <h2 id="high-level">High-level Design</h2>
-        <p>At a high level, an API Gateway / Edge will consult a distributed rate limiting store to decide whether to accept or reject requests. Common components:</p>
-        <ol>
-          <li>API Gateway / Edge Proxy (Nginx, Envoy)</li>
-          <li>Rate Limiter Service (stateless, optionally with local cache)</li>
-          <li>Shared datastore for counters (Redis cluster, consistent hashing)</li>
-          <li>Configuration service for policies</li>
-          <li>Telemetry pipeline (metrics, logging)</li>
-        </ol>
+        <!-- Article Content -->
+        <article class="col-12 col-lg-8">
 
-        <h3 id="algorithms">Algorithms</h3>
-        <h4>Token Bucket</h4>
-        <p>Token bucket supports bursts: tokens are added at fixed rate and consumed per request. Implemented using an atomic Lua script in Redis or in-process with periodic refill for local caches.</p>
+          <!-- What You'll Learn -->
+          <div class="bg-info-subtle border-start border-4 border-primary p-4 rounded-end mb-4">
+            <h2 class="h6 fw-bold text-primary-dark mb-3">📚 What You'll Learn</h2>
+            <ul class="mb-0 ps-3">
+              <li>Why rate limiting is essential for protecting APIs</li>
+              <li>How the 3 main algorithms work (with simple analogies!)</li>
+              <li>Which algorithm to pick for your use case</li>
+              <li>How to implement rate limiting with Redis &amp; Python</li>
+              <li>Production considerations for scale and reliability</li>
+            </ul>
+          </div>
 
-        <h4>Sliding Window Counter</h4>
-        <p>Sliding window maintains high accuracy for small windows by storing per-subwindow counters (e.g., per second). It is more accurate than fixed window but slightly more complex and memory intensive.</p>
+          <section id="what-is-rate-limiting">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">What is Rate Limiting?</h2>
+            <p class="text-secondary">Rate limiting is a technique to control how many requests a user (or client) can
+              make to your API within a specific time window. It's like a traffic cop for your servers — it makes sure
+              no single user hogs all the resources.</p>
 
-        <h4>Leaky Bucket</h4>
-        <p>Leaky bucket smooths bursts by queuing requests at a fixed drain rate. Use when you need strict smoothing behaviour.</p>
+            <div class="bg-warning-subtle border-start border-4 border-warning p-4 rounded-end my-4">
+              <p class="fw-bold text-warning-dark mb-2">💡 Think of it like this...</p>
+              <p class="text-warning-dark mb-0">Imagine a popular coffee shop that only has 2 baristas. If 100 customers
+                rush in at once, chaos ensues! Rate limiting is like having a queue system — maybe each customer can
+                only order 3 drinks per hour. This keeps things fair and prevents the shop from being overwhelmed.</p>
+            </div>
 
-        <h2 id="data-model">Data model & storage</h2>
-        <p>Use compact keys like <code>rl:u:{user_id}:{window_start}</code> and store integer counters. For token bucket store: last_refill_timestamp and tokens_remaining. Redis Hashes or single keys with Lua scripts work well.</p>
+            <h3 class="h5 fw-bold mt-4">Why Do We Need It?</h3>
+            <ul class="text-secondary">
+              <li><strong>Prevent abuse:</strong> Stop malicious users or bots from overloading your servers</li>
+              <li><strong>Ensure fairness:</strong> One user shouldn't consume all the resources meant for everyone</li>
+              <li><strong>Protect revenue:</strong> If you have paid tiers, rate limiting enforces usage quotas</li>
+              <li><strong>Manage costs:</strong> Every API call costs money (compute, bandwidth, etc.)</li>
+              <li><strong>Improve reliability:</strong> Prevents cascading failures during traffic spikes</li>
+            </ul>
+          </section>
 
-        <h3 id="redis-patterns">Redis patterns</h3>
-        <ul>
-          <li>Atomic increments via INCR/INCRBY for fixed window counters</li>
-          <li>Lua scripts for read-modify-write in token bucket (check refill, consume)</li>
-          <li>Use TTLs on keys to expire old windows automatically</li>
-          <li>Cluster with consistent hashing for sharding high-cardinality keys</li>
-        </ul>
+          <section id="use-cases">
+            <h3 class="h5 fw-bold mt-4">Common Use Cases</h3>
+            <p class="text-secondary">Rate limiting is used across many different scenarios:</p>
 
-        <h2 id="scaling">Scaling & performance</h2>
-        <ul>
-          <li>Local Cache: shadow counters in edge nodes for ultra-low latency with periodic flush to Redis (trade accuracy)</li>
-          <li>Sharding: shard keys by API token hash to distribute load across Redis nodes</li>
-          <li>Batching: batch counter writes where acceptable to reduce Redis write QPS</li>
-          <li>Use pipelining or Lua to minimize round-trips</li>
-        </ul>
+            <div class="row row-cols-1 row-cols-md-2 g-3 my-3">
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body">
+                    <div class="fs-2 mb-2">🔌</div>
+                    <h4 class="h6 fw-bold">API Rate Limiting</h4>
+                    <p class="small text-muted mb-0">Control volume of client requests, ensure fair access (Twitter,
+                      GitHub, Google Maps)</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body">
+                    <div class="fs-2 mb-2">🌐</div>
+                    <h4 class="h6 fw-bold">Web Server Protection</h4>
+                    <p class="small text-muted mb-0">Defend against DoS attacks, prevent server overload during traffic
+                      spikes</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body">
+                    <div class="fs-2 mb-2">🗄️</div>
+                    <h4 class="h6 fw-bold">Database Rate Limiting</h4>
+                    <p class="small text-muted mb-0">Limit queries per user to prevent resource exhaustion</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body">
+                    <div class="fs-2 mb-2">🔐</div>
+                    <h4 class="h6 fw-bold">Login Rate Limiting</h4>
+                    <p class="small text-muted mb-0">Stop brute-force attacks by limiting login attempts</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
-        <h3 id="availability">Availability and fault tolerance</h3>
-        <ul>
-          <li>Use Redis Cluster with replicas for read availability and fast failover</li>
-          <li>Fallback behaviors: if datastore is unavailable, either allow requests safely (fail-open) or reject (fail-closed) depending on safety requirements</li>
-          <li>Graceful degradation: relax limits or increase TTLs when under degraded mode</li>
-        </ul>
+          <section id="types-of-rate-limiting">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Types of Rate Limiting</h2>
+            <p class="text-secondary">There are several ways to identify and limit traffic. Each has its advantages and
+              limitations:</p>
 
-        <h2 id="policy-management">Policy Management</h2>
-        <p>Policies should be centrally managed and pushed to edge nodes via a configuration service or via a pub/sub channel. Use versioned policies and support hot reloads without restart.</p>
+            <h3 class="h5 fw-bold mt-4">1. IP-Based Rate Limiting</h3>
+            <p class="text-secondary">Limits the number of requests from a single IP address within a specified time
+              period.</p>
 
-        <h2 id="tradeoffs">Trade-offs</h2>
-        <ul>
-          <li>Accuracy vs latency: local caching reduces latency but increases chance of overshoot</li>
-          <li>Simplicity vs memory: sliding windows use more memory but are more precise</li>
-          <li>Consistency vs availability: stronger consistency requires synchronous coordination</li>
-        </ul>
+            <div class="table-responsive my-3">
+              <table class="table table-bordered table-dark-header">
+                <thead>
+                  <tr>
+                    <th>✅ Advantages</th>
+                    <th>⚠️ Limitations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Simple to implement at network level</td>
+                    <td>VPNs/proxies can spoof IPs</td>
+                  </tr>
+                  <tr>
+                    <td>Effective against single-source attacks</td>
+                    <td>Shared IPs may block legitimate users</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-        <h2 id="implementation">Implementation Example (Redis + Lua)</h2>
-        <pre><code class="language-lua">-- token bucket Lua sketch (simplified)
+            <h3 class="h5 fw-bold mt-4">2. Server-Based Rate Limiting</h3>
+            <p class="text-secondary">Controls the number of requests to a specific server within a time period.</p>
+
+            <h3 class="h5 fw-bold mt-4">3. Geography-Based Rate Limiting</h3>
+            <p class="text-secondary">Restricts traffic based on the geographic location of the IP address. Useful for
+              blocking malicious regions.</p>
+
+            <h3 class="h5 fw-bold mt-4">4. User/API Key-Based Rate Limiting</h3>
+            <p class="text-secondary">The most granular approach — limits requests per authenticated user or API key.
+              Essential for SaaS and paid API tiers.</p>
+
+            <div class="bg-info-subtle border-start border-4 border-primary p-4 rounded-end my-4">
+              <p class="fw-bold text-primary-dark mb-2">💡 Best Practice</p>
+              <p class="text-primary-dark mb-0">Combine multiple types! Use IP-based as a first line of defense, then
+                apply user-based limits for authenticated traffic.</p>
+            </div>
+          </section>
+
+          <section id="requirements">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Requirements &amp; Constraints</h2>
+
+            <h3 class="h5 fw-bold mt-4">What We Need to Build</h3>
+            <ul class="text-secondary">
+              <li><strong>Per-user limits:</strong> Limit each API key to X requests per minute/hour</li>
+              <li><strong>Per-IP limits:</strong> As a fallback for unauthenticated requests</li>
+              <li><strong>Low latency:</strong> The rate check should add minimal overhead (target: &lt;2ms)</li>
+              <li><strong>High availability:</strong> Rate limiting shouldn't become a single point of failure</li>
+              <li><strong>Real-time policy updates:</strong> Change limits without restarting services</li>
+            </ul>
+
+            <div class="bg-danger-subtle border-start border-4 border-danger p-4 rounded-end my-4">
+              <p class="fw-bold text-danger-dark mb-2">⚠️ Key Constraints to Consider</p>
+              <ul class="text-danger-dark mb-0 ps-3">
+                <li><strong>High throughput:</strong> Edge servers may handle 100K+ requests/second</li>
+                <li><strong>Latency sensitivity:</strong> Every millisecond counts in the request path</li>
+                <li><strong>Memory limits:</strong> Can't store unlimited counters per node</li>
+                <li><strong>Distributed nature:</strong> Multiple servers need a consistent view</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="high-level-design">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">High-Level Design</h2>
+            <p class="text-secondary">At a high level, when a request comes in, your API Gateway asks the Rate Limiter:
+              "Should I allow this request?" The Rate Limiter checks a shared datastore (usually Redis) and returns a
+              yes/no decision.</p>
+
+            <h3 class="h5 fw-bold mt-4">Key Components</h3>
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 my-3">
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body py-3">
+                    <div class="fs-3 mb-1">🚪</div>
+                    <h4 class="small fw-bold mb-0">API Gateway</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body py-3">
+                    <div class="fs-3 mb-1">⚡</div>
+                    <h4 class="small fw-bold mb-0">Rate Limiter</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body py-3">
+                    <div class="fs-3 mb-1">💾</div>
+                    <h4 class="small fw-bold mb-0">Redis Cluster</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body py-3">
+                    <div class="fs-3 mb-1">⚙️</div>
+                    <h4 class="small fw-bold mb-0">Config Service</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 text-center border-light shadow-sm">
+                  <div class="card-body py-3">
+                    <div class="fs-3 mb-1">📊</div>
+                    <h4 class="small fw-bold mb-0">Metrics</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="algorithms">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Rate Limiting Algorithms</h2>
+            <p class="text-secondary">There are three main algorithms for rate limiting. Each has its own trade-offs.
+            </p>
+
+            <div class="row row-cols-1 row-cols-lg-3 g-4 my-3">
+              <!-- Token Bucket -->
+              <div class="col">
+                <div class="card h-100 shadow-sm hover-lift transition">
+                  <div class="card-body">
+                    <div class="bg-primary text-white rounded-3 d-inline-flex p-3 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                      </svg>
+                    </div>
+                    <h3 class="h5 fw-bold">Token Bucket</h3>
+                    <p class="text-muted small">Imagine a bucket that holds tokens. Every second, new tokens are added.
+                      Each request costs one token. If empty — request denied!</p>
+                    <div class="bg-success-subtle p-2 rounded small mb-2"><strong class="text-success">✓ Pros:</strong>
+                      Allows bursts, simple to implement</div>
+                    <div class="bg-danger-subtle p-2 rounded small"><strong class="text-danger">✗ Cons:</strong>
+                      Slightly imprecise at boundaries</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sliding Window -->
+              <div class="col">
+                <div class="card h-100 shadow-sm hover-lift transition">
+                  <div class="card-body">
+                    <div class="bg-success text-white rounded-3 d-inline-flex p-3 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
+                      </svg>
+                    </div>
+                    <h3 class="h5 fw-bold">Sliding Window</h3>
+                    <p class="text-muted small">Instead of a fixed window, imagine a window that "slides" with time. At
+                      0:30, you look at requests from 23:30-0:30.</p>
+                    <div class="bg-success-subtle p-2 rounded small mb-2"><strong class="text-success">✓ Pros:</strong>
+                      More accurate, no boundary issues</div>
+                    <div class="bg-danger-subtle p-2 rounded small"><strong class="text-danger">✗ Cons:</strong> Uses
+                      more memory</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Leaky Bucket -->
+              <div class="col">
+                <div class="card h-100 shadow-sm hover-lift transition">
+                  <div class="card-body">
+                    <div class="bg-warning text-white rounded-3 d-inline-flex p-3 mb-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path
+                          d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+                      </svg>
+                    </div>
+                    <h3 class="h5 fw-bold">Leaky Bucket</h3>
+                    <p class="text-muted small">Picture a bucket with a small hole at the bottom. Water (requests) flows
+                      in and leaks out at a constant rate.</p>
+                    <div class="bg-success-subtle p-2 rounded small mb-2"><strong class="text-success">✓ Pros:</strong>
+                      Smooths traffic, protects downstream</div>
+                    <div class="bg-danger-subtle p-2 rounded small"><strong class="text-danger">✗ Cons:</strong> Doesn't
+                      allow bursts</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="h5 fw-bold mt-4">Which Algorithm Should You Use?</h3>
+            <div class="table-responsive my-3">
+              <table class="table table-bordered table-striped table-dark-header">
+                <thead>
+                  <tr>
+                    <th>Scenario</th>
+                    <th>Best Algorithm</th>
+                    <th>Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>General API rate limiting</td>
+                    <td><strong>Token Bucket</strong></td>
+                    <td>Allows healthy bursts</td>
+                  </tr>
+                  <tr>
+                    <td>Strict requests-per-minute</td>
+                    <td><strong>Sliding Window</strong></td>
+                    <td>Most accurate</td>
+                  </tr>
+                  <tr>
+                    <td>Protecting fragile service</td>
+                    <td><strong>Leaky Bucket</strong></td>
+                    <td>Smooths traffic</td>
+                  </tr>
+                  <tr>
+                    <td>Mix of bursty/steady clients</td>
+                    <td><strong>Token Bucket</strong></td>
+                    <td>Burst-friendly</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="implementation">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Implementation with Redis</h2>
+            <p class="text-secondary">Redis is the go-to choice for rate limiting because it's <strong>blazing
+                fast</strong>, supports <strong>atomic operations</strong>, and has built-in key expiration.</p>
+
+            <h3 class="h5 fw-bold mt-4">Data Model</h3>
+            <p class="text-secondary">For each user, we store: <code>tokens</code> (remaining) and <code>ts</code> (last
+              refill timestamp).</p>
+            <p class="text-secondary">Key format: <code>rl:user:{user_id}</code></p>
+
+            <h3 class="h5 fw-bold mt-4">Lua Script (Atomic Token Bucket)</h3>
+            <div class="card shadow-sm my-3 overflow-hidden">
+              <div class="code-header text-white-50 py-2 px-3 d-flex justify-content-between small">
+                <span>📄 token_bucket.lua</span>
+                <span>Lua</span>
+              </div>
+              <pre class="mb-0"><code class="language-lua">-- Token Bucket Rate Limiter (Redis + Lua)
 local key = KEYS[1]
-local rate = tonumber(ARGV[1]) -- tokens per second
-local capacity = tonumber(ARGV[2])
-local now = tonumber(ARGV[3])
-local requested = tonumber(ARGV[4])
+local rate = tonumber(ARGV[1])           -- tokens added per second
+local capacity = tonumber(ARGV[2])       -- max tokens in bucket
+local now = tonumber(ARGV[3])            -- current timestamp
+local requested = tonumber(ARGV[4])      -- tokens needed
 
 local data = redis.call('HMGET', key, 'tokens', 'ts')
 local tokens = tonumber(data[1]) or capacity
-local ts = tonumber(data[2]) or now
+local last_ts = tonumber(data[2]) or now
 
--- refill
-local delta = math.max(0, now - ts)
-local filled = math.min(capacity, tokens + delta * rate)
-if filled < requested then
-  return 0
+local elapsed = math.max(0, now - last_ts)
+local refill = math.min(capacity, tokens + elapsed * rate)
+
+if refill < requested then
+  return 0  -- REJECT
 else
-  filled = filled - requested
-  redis.call('HMSET', key, 'tokens', filled, 'ts', now)
+  local new_tokens = refill - requested
+  redis.call('HMSET', key, 'tokens', new_tokens, 'ts', now)
   redis.call('EXPIRE', key, 3600)
-  return 1
+  return 1  -- ALLOW
 end</code></pre>
+            </div>
+          </section>
 
-        <h2 id="monitoring">Monitoring & Metrics</h2>
-        <ul>
-          <li>Per-key request rate, rejection rate, and error rate</li>
-          <li>Redis latency and error metrics</li>
-          <li>Alerts for sudden increase in rejects or key spikes</li>
-        </ul>
+          <section id="python-implementation">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Python Implementation</h2>
+            <p class="text-secondary">Now let's implement rate limiting in Python with multiple approaches.</p>
 
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Rate limiting at scale requires balancing accuracy, latency, and availability. For most use-cases, Redis-based token bucket via Lua scripts offers a good balance. For extreme scale, combine edge caching with a strong centralized store and careful sharding.</p>
+            <h3 class="h5 fw-bold mt-4">1. Token Bucket (Python + Redis)</h3>
+            <div class="card shadow-sm my-3 overflow-hidden">
+              <div class="code-header text-white-50 py-2 px-3 d-flex justify-content-between small">
+                <span>📄 token_bucket.py</span>
+                <span>Python</span>
+              </div>
+              <pre class="mb-0"><code class="language-python">import time
+import redis
 
+class TokenBucketRateLimiter:
+    def __init__(self, redis_client, rate, capacity):
+        self.redis = redis_client
+        self.rate = rate
+        self.capacity = capacity
+        self.lua_script = self.redis.register_script("""
+            local key = KEYS[1]
+            local rate = tonumber(ARGV[1])
+            local capacity = tonumber(ARGV[2])
+            local now = tonumber(ARGV[3])
+            local requested = tonumber(ARGV[4])
+            
+            local data = redis.call('HMGET', key, 'tokens', 'ts')
+            local tokens = tonumber(data[1]) or capacity
+            local last_ts = tonumber(data[2]) or now
+            
+            local elapsed = math.max(0, now - last_ts)
+            local refill = math.min(capacity, tokens + elapsed * rate)
+            
+            if refill < requested then
+                return {0, refill}
+            else
+                redis.call('HMSET', key, 'tokens', refill - requested, 'ts', now)
+                redis.call('EXPIRE', key, 3600)
+                return {1, refill - requested}
+            end
+        """)
+    
+    def allow_request(self, user_id, tokens_requested=1):
+        key = f"rl:user:{user_id}"
+        result = self.lua_script(keys=[key], args=[self.rate, self.capacity, time.time(), tokens_requested])
+        return bool(result[0]), float(result[1])
+
+# Usage
+r = redis.Redis(host='localhost', port=6379)
+limiter = TokenBucketRateLimiter(r, rate=10, capacity=100)
+allowed, remaining = limiter.allow_request("user_123")
+print(f"Allowed: {allowed}, Remaining: {remaining}")</code></pre>
+            </div>
+
+            <h3 class="h5 fw-bold mt-4">2. Flask Decorator Example</h3>
+            <div class="card shadow-sm my-3 overflow-hidden">
+              <div class="code-header text-white-50 py-2 px-3 d-flex justify-content-between small">
+                <span>📄 flask_rate_limit.py</span>
+                <span>Python</span>
+              </div>
+              <pre class="mb-0"><code class="language-python">from functools import wraps
+from flask import Flask, request, jsonify
+import redis, time
+
+app = Flask(__name__)
+redis_client = redis.Redis(host='localhost', port=6379)
+
+def rate_limit(max_requests, window_seconds):
+    def decorator(f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            key = f"rl:{f.__name__}:{request.remote_addr}"
+            pipe = redis_client.pipeline()
+            now = time.time()
+            pipe.zremrangebyscore(key, 0, now - window_seconds)
+            pipe.zcard(key)
+            pipe.zadd(key, {str(now): now})
+            pipe.expire(key, window_seconds)
+            results = pipe.execute()
+            
+            if results[1] >= max_requests:
+                return jsonify({"error": "Rate limit exceeded"}), 429
+            return f(*args, **kwargs)
+        return wrapped
+    return decorator
+
+@app.route('/api/data')
+@rate_limit(max_requests=10, window_seconds=60)
+def get_data():
+    return jsonify({"data": "success"})</code></pre>
+            </div>
+          </section>
+
+          <section id="scaling">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Scaling &amp; Performance</h2>
+
+            <h3 class="h5 fw-bold mt-4">Edge Caching</h3>
+            <p class="text-secondary">Maintain <strong>local counters</strong> at each edge node. These sync with Redis
+              periodically. Trade-off: slight overshoot during sync delays.</p>
+
+            <h3 class="h5 fw-bold mt-4">Sharding</h3>
+            <p class="text-secondary">Use <strong>consistent hashing</strong> to distribute keys across multiple Redis
+              nodes.</p>
+
+            <h3 class="h5 fw-bold mt-4">Batching</h3>
+            <p class="text-secondary">Batch counter updates (10-50 requests at once) to reduce Redis write QPS.</p>
+          </section>
+
+          <section id="availability">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Availability &amp; Fault Tolerance</h2>
+
+            <div class="table-responsive my-3">
+              <table class="table table-bordered table-dark-header">
+                <thead>
+                  <tr>
+                    <th>Strategy</th>
+                    <th>When Redis is Down</th>
+                    <th>Trade-off</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Fail-Open</strong></td>
+                    <td>Allow all requests</td>
+                    <td>Risk of abuse</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Fail-Closed</strong></td>
+                    <td>Reject all requests</td>
+                    <td>Service degradation</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Graceful Degradation</strong></td>
+                    <td>Relax limits (10x)</td>
+                    <td>Balanced approach</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="tradeoffs">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Key Trade-offs</h2>
+
+            <div class="bg-danger-subtle border-start border-4 border-danger p-4 rounded-end my-4">
+              <p class="fw-bold text-danger-dark mb-2">⚖️ Design Trade-offs</p>
+              <ul class="text-danger-dark mb-0 ps-3">
+                <li><strong>Accuracy vs Latency:</strong> Local caching = fast but imprecise</li>
+                <li><strong>Simplicity vs Precision:</strong> Fixed window = simple; Sliding = more memory</li>
+                <li><strong>Consistency vs Availability:</strong> Strict counting needs sync</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="monitoring">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Monitoring &amp; Metrics</h2>
+            <ul class="text-secondary">
+              <li><strong>Request rate by key:</strong> Who's hitting your API and how much?</li>
+              <li><strong>Rejection rate:</strong> How often are limits being hit?</li>
+              <li><strong>Redis latency:</strong> Is the rate limiter adding too much overhead?</li>
+              <li><strong>Near-limit alerts:</strong> Warn when a customer is at 80% of their quota</li>
+            </ul>
+          </section>
+
+          <section id="rate-limiting-layers">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Rate Limiting in Different Layers</h2>
+
+            <div class="table-responsive my-3">
+              <table class="table table-bordered table-dark-header">
+                <thead>
+                  <tr>
+                    <th>Layer</th>
+                    <th>Where It Happens</th>
+                    <th>Best For</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>🌐 API Gateway</strong></td>
+                    <td>Before services (Kong, AWS)</td>
+                    <td>Global limits, DDoS protection</td>
+                  </tr>
+                  <tr>
+                    <td><strong>⚙️ Application</strong></td>
+                    <td>Inside app code</td>
+                    <td>Fine-grained business logic</td>
+                  </tr>
+                  <tr>
+                    <td><strong>🔧 Service</strong></td>
+                    <td>Within microservices</td>
+                    <td>Protecting downstream</td>
+                  </tr>
+                  <tr>
+                    <td><strong>🗄️ Database</strong></td>
+                    <td>Before DB queries</td>
+                    <td>Preventing query floods</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="bg-danger-subtle border-start border-4 border-danger p-4 rounded-end my-4">
+              <p class="fw-bold text-danger-dark mb-0">⚠️ Never rely solely on client-side rate limiting! Always enforce
+                on the server side.</p>
+            </div>
+          </section>
+
+          <section id="real-world-examples">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Real-World Examples</h2>
+
+            <div class="table-responsive my-3">
+              <table class="table table-bordered table-dark-header">
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>Rate Limiting Approach</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Twitter/X API</strong></td>
+                    <td>15-900 requests per 15-min window; OAuth token-based</td>
+                  </tr>
+                  <tr>
+                    <td><strong>GitHub API</strong></td>
+                    <td>5,000/hour authenticated; 60/hour unauthenticated</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Stripe API</strong></td>
+                    <td>100 reads/sec; 25 writes/sec with token bucket</td>
+                  </tr>
+                  <tr>
+                    <td><strong>AWS API Gateway</strong></td>
+                    <td>Token bucket with configurable rate &amp; burst</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cloudflare</strong></td>
+                    <td>Multi-layer edge limiting; geography-based rules</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="bg-info-subtle border-start border-4 border-primary p-4 rounded-end my-4">
+              <p class="fw-bold text-primary-dark mb-2">📚 Cloud Provider Rate Limiters</p>
+              <ul class="text-primary-dark mb-0 ps-3">
+                <li><strong>AWS:</strong> API Gateway Throttling, WAF Rate Rules</li>
+                <li><strong>Azure:</strong> API Management Rate Limiting &amp; Quota Policies</li>
+                <li><strong>GCP:</strong> API Gateway Quota Policies, Cloud Armor</li>
+              </ul>
+            </div>
+          </section>
+
+          <section id="videos">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Video Resources</h2>
+
+            <div class="row row-cols-1 row-cols-md-2 g-4 my-3">
+              <div class="col">
+                <div class="card shadow-sm overflow-hidden">
+                  <iframe class="video-responsive w-100" src="https://www.youtube.com/embed/CVItTb_jdkE"
+                    title="Rate Limiting Tutorial" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card shadow-sm overflow-hidden">
+                  <iframe class="video-responsive w-100" src="https://www.youtube.com/embed/eR66m7TaV5A"
+                    title="System Design Rate Limiter" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="conclusion">
+            <h2 class="h3 fw-bold border-top pt-4 mt-5">Conclusion</h2>
+
+            <div class="bg-primary-subtle rounded-4 p-4 p-md-5 text-center my-4">
+              <h3 class="h4 fw-bold" style="color: #312e81;">Key Takeaway</h3>
+              <p class="mb-0" style="color: #3730a3; max-width: 600px; margin: 0 auto;">For most use cases, a
+                <strong>Redis-based token bucket</strong> using Lua scripts provides the best balance of accuracy,
+                latency, and simplicity. For extreme scale, combine edge caching with centralized storage.
+              </p>
+            </div>
+
+            <p class="text-secondary">Rate limiting is a critical piece of any production API. It protects your
+              services, ensures fair usage, and gives you control over your system's resources.</p>
+          </section>
+
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="col-12 col-lg-4">
+          <div class="sidebar-sticky">
+            <nav class="bg-light rounded-3 p-4 mb-4" aria-label="Table of contents">
+              <h2 class="h6 fw-bold text-uppercase mb-3">📝 Table of Contents</h2>
+              <ul class="list-unstyled mb-0 small">
+                <li class="mb-2"><a href="#what-is-rate-limiting" class="text-decoration-none text-secondary">What is
+                    Rate Limiting?</a></li>
+                <li class="mb-2"><a href="#types-of-rate-limiting" class="text-decoration-none text-secondary">Types of
+                    Rate Limiting</a></li>
+                <li class="mb-2"><a href="#requirements" class="text-decoration-none text-secondary">Requirements &amp;
+                    Constraints</a></li>
+                <li class="mb-2"><a href="#high-level-design" class="text-decoration-none text-secondary">High-Level
+                    Design</a></li>
+                <li class="mb-2"><a href="#algorithms" class="text-decoration-none text-secondary">Algorithms</a></li>
+                <li class="mb-2"><a href="#implementation" class="text-decoration-none text-secondary">Redis
+                    Implementation</a></li>
+                <li class="mb-2"><a href="#python-implementation" class="text-decoration-none text-secondary">Python
+                    Implementation</a></li>
+                <li class="mb-2"><a href="#scaling" class="text-decoration-none text-secondary">Scaling &amp;
+                    Performance</a></li>
+                <li class="mb-2"><a href="#availability" class="text-decoration-none text-secondary">Availability</a>
+                </li>
+                <li class="mb-2"><a href="#monitoring" class="text-decoration-none text-secondary">Monitoring</a></li>
+                <li class="mb-2"><a href="#rate-limiting-layers" class="text-decoration-none text-secondary">Rate
+                    Limiting Layers</a></li>
+                <li class="mb-2"><a href="#real-world-examples" class="text-decoration-none text-secondary">Real-World
+                    Examples</a></li>
+                <li class="mb-2"><a href="#videos" class="text-decoration-none text-secondary">Videos</a></li>
+                <li><a href="#conclusion" class="text-decoration-none text-secondary">Conclusion</a></li>
+              </ul>
+            </nav>
+
+            <div class="card border-light shadow-sm">
+              <div class="card-body">
+                <h3 class="h6 fw-bold mb-3">📚 Resources</h3>
+                <ul class="list-unstyled mb-0 small">
+                  <li class="mb-2"><a href="https://redis.io/docs/" target="_blank" rel="noopener"
+                      class="text-decoration-none">→ Redis Documentation</a></li>
+                  <li class="mb-2"><a href="https://envoyproxy.io/docs/" target="_blank" rel="noopener"
+                      class="text-decoration-none">→ Envoy Proxy Docs</a></li>
+                  <li class="mb-2"><a href="https://cloud.google.com/architecture/rate-limiting-strategies-techniques"
+                      target="_blank" rel="noopener" class="text-decoration-none">→ Google Cloud - Rate Limiting</a>
+                  </li>
+                  <li><a href="https://stripe.com/blog/rate-limiters" target="_blank" rel="noopener"
+                      class="text-decoration-none">→ Stripe's Rate Limiter</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
-
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5>Quick links</h5>
-            <ul class="list-unstyled">
-              <li><a href="#overview">Overview</a></li>
-              <li><a href="#requirements">Requirements</a></li>
-              <li><a href="#high-level">High-level Design</a></li>
-              <li><a href="#algorithms">Algorithms</a></li>
-              <li><a href="#implementation">Implementation Example</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-body">
-            <h6>Resources</h6>
-            <ul class="list-unstyled">
-              <li><a href="https://redis.io/docs/" target="_blank" rel="noopener">Redis</a></li>
-              <li><a href="https://envoyproxy.io/docs/" target="_blank" rel="noopener">Envoy</a></li>
-              <li><a href="https://developer.akamai.com/" target="_blank" rel="noopener">Akamai Docs</a></li>
-            </ul>
-          </div>
-        </div>
-      </aside>
     </div>
-  </div>
-</section>
-https://www.youtube.com/watch?v=CVItTb_jdkE
-https://www.youtube.com/watch?v=eR66m7TaV5A
+  </main>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
 
-<!-- Prism.js for syntax highlighting -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <!-- Prism.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 
-<script>
-// Smooth scrolling and active link highlight (copied from notification page)
-document.addEventListener('DOMContentLoaded', function() {
+  <script>
+    // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
     });
+  </script>
 
-    window.addEventListener('scroll', function() {
-        let current = '';
-        const sections = document.querySelectorAll('section[id], h2[id], h3[id]');
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        document.querySelectorAll('#sidebar .nav-link').forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
-        });
-    });
-});
-</script>
-
-<script>includeHTML();</script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
