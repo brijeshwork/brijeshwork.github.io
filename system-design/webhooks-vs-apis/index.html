@@ -1,46 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Webhooks vs APIs — What’s the Difference and When to Use Each — System Design | Brijesh Patel</title>
-<meta name="description" content="Compare webhooks and APIs: event-driven architectures, delivery guarantees, retries, and when to choose each pattern in system design.">
-<link rel="canonical" href="https://brijesh.work/system-design/webhooks-vs-apis/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Webhooks vs APIs System Design | Event-Driven vs Polling, Security & HMAC</title>
+  <meta name="description"
+    content="Master Event-Driven Architecture: Webhooks vs Short/Long Polling. Learn to secure webhooks with HMAC-SHA256, handle Retries with Exponential Backoff, and ensure Idempotency.">
+  <meta name="keywords"
+    content="system design, webhooks, apis, polling, event-driven, hmac, security, exponential backoff, idempotency, python flask">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/webhooks-vs-apis/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #09090b 0%, #18181b 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #a1a1aa;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0d6efd;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+      padding: 0.5em 0.8em;
+    }
+
+    .step-number {
+      display: inline-block;
+      width: 1.5em;
+      height: 1.5em;
+      background: #0d6efd;
+      color: white;
+      text-align: center;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Webhooks vs APIs — What’s the Difference and When to Use Each</h1>
-        <p class="lead">Practical guide comparing event-driven webhooks and request-driven APIs, including delivery guarantees, idempotency, and retries.</p>
 
-        <h2 id="comparison">Comparison</h2>
-        <ul>
-          <li>APIs: client pulls data on demand, synchronous, request/response</li>
-          <li>Webhooks: server pushes events to clients, asynchronous, best-effort delivery</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="when-to-use">When to use which</h2>
-        <ul>
-          <li>Use webhooks for event notifications and near-real-time updates</li>
-          <li>Use APIs for on-demand reads/writes and deterministic responses</li>
-          <li>Combine both: webhook for events + API for backfill and retries</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-info bg-opacity-25 text-white border border-white border-opacity-25">Event
+            Driven</span>
+          <h1 class="display-4 fw-bold mb-3">Webhooks vs APIs: Event-Driven Architecture</h1>
+          <p class="hero-subtitle mb-4">Should you call us, or should we call you? Understanding Polling vs Webhooks,
+            Security with HMAC, and Delivery Guarantees.</p>
+          <div class="d-flex gap-3">
+            <a href="#implementation" class="btn btn-info text-dark fw-bold">Secure Receiver Code</a>
+            <a href="#comparison" class="btn btn-outline-light">Polling vs Webhooks</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../notification/">Notification System</a></li><li><a href="../">System Design hub</a></li></ul></div></div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content (Ordered 2nd on Desktop, 1st on Mobile) -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Intro -->
+        <section id="what-is" class="content-section">
+          <h2>The "Polling" vs "Push" Analogy</h2>
+          <p class="lead text-secondary">The classic "Don't call us, we'll call you."</p>
+          <p>Imagine you are waiting for a package to arrive.</p>
+          <div class="row mt-4">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🔄 API Polling</h5>
+                <p>You go to the post office every 5 minutes and ask, "Is it here yet?"</p>
+                <ul>
+                  <li><strong>Wasted Effort:</strong> 99% of requests say "No".</li>
+                  <li><strong>Latency:</strong> Package arrives at 1:00, you check at 1:05. Use old data for 5 mins.
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">⚡ Webhook (Push)</h5>
+                <p>The post office calls your phone <em>immediately</em> when the package arrives.</p>
+                <ul>
+                  <li><strong>Efficient:</strong> Zero wasted trips.</li>
+                  <li><strong>Real-time:</strong> You know the second it happens.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Comparison -->
+        <section id="comparison" class="content-section">
+          <h2>Comparison: Polling Strategies</h2>
+
+          <table class="table table-bordered comparison-table mt-3">
+            <thead>
+              <tr>
+                <th>Pattern</th>
+                <th>How it works</th>
+                <th>Pros</th>
+                <th>Cons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Short Polling</strong></td>
+                <td>Client requests every X seconds.</td>
+                <td>Simple to check. Standard HTTP.</td>
+                <td>Wastes resources. "Chatty". High Latency.</td>
+              </tr>
+              <tr>
+                <td><strong>Long Polling</strong></td>
+                <td>Client requests, Server <em>holds</em> connection open until data arrives (or timeout).</td>
+                <td>Near real-time. Less chatty.</td>
+                <td>Holds server threads open. Complex to scale.</td>
+              </tr>
+              <tr>
+                <td><strong>Webhooks</strong></td>
+                <td>Server sends POST to Client URL on event.</td>
+                <td>Real-time. Server efficient.</td>
+                <td>Client must have public URL. Security risks.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Security -->
+        <section id="security" class="content-section">
+          <h2>Securing Webhooks (HMAC)</h2>
+          <p>Since your webhook URL is public, how do you know the request actually came from Stripe/GitHub/Slack and
+            not a hacker?</p>
+
+          <h5 class="fw-bold mt-3">1. Shared Secret</h5>
+          <p>You and the provider share a secret key (never sent over network).</p>
+
+          <h5 class="fw-bold mt-3">2. Digital Signature</h5>
+          <p>The provider hashes the payload with the secret (using HMAC-SHA256) and sends the signature in a header:
+            `X-Hub-Signature-256`.</p>
+
+          <h5 class="fw-bold mt-3">3. Verification</h5>
+          <p>You re-calculate the hash of the received body + your secret. If `Calculated Hash == Header Hash`, it's
+            legitimate.</p>
+        </section>
+
+        <!-- Resilience -->
+        <section id="resilience" class="content-section">
+          <h2>Resilience & Best Practices</h2>
+          <div class="alert alert-warning border border-warning">
+            <strong>The Internet is Unreliable:</strong> Webhooks <em>will</em> fail. You must handle it.
+          </div>
+
+          <h5 class="fw-bold">🔁 Retries & Exponential Backoff</h5>
+          <p>If your server returns `500` or times out, the provider should retry.</p>
+          <ul>
+            <li><strong>Immediate Retry:</strong> 0s delay.</li>
+            <li><strong>Backoff 1:</strong> 5s delay.</li>
+            <li><strong>Backoff 2:</strong> 30s delay.</li>
+            <li><strong>Backoff 3:</strong> 5m delay.</li>
+          </ul>
+
+          <h5 class="fw-bold mt-4">🆔 Idempotency</h5>
+          <p>Retries mean you might receive the <em>same event twice</em> (e.g., "Payment Charged").</p>
+          <p><strong>Fix:</strong> Track `Event-ID` in a database. If you've seen ID `evt_123` before, ignore it (return
+            200 OK).</p>
+        </section>
+
+        <!-- Implementation -->
+        <section id="implementation" class="content-section">
+          <h2>Python Implementation: Secure Receiver</h2>
+          <p>A Flask example showing how to verify an HMAC signature (like GitHub/Stripe using SHA256).</p>
+
+          <pre><code class="language-python">import hmac
+import hashlib
+from flask import Flask, request, abort
+
+app = Flask(__name__)
+SECRET_KEY = b'my_super_secret_key_123'
+
+def verify_signature(payload_body, header_signature):
+    """
+    Verify that the payload was sent by us by checking SHA256 HMAC.
+    """
+    if not header_signature:
+        return False
+        
+    # Calculate HMAC signature of the payload using our secret
+    mac = hmac.new(SECRET_KEY, msg=payload_body, digestmod=hashlib.sha256)
+    expected_signature = 'sha256=' + mac.hexdigest()
+    
+    # Use compare_digest for timing-attack safe comparison
+    return hmac.compare_digest(expected_signature, header_signature)
+
+@app.route('/webhook', methods=['POST'])
+def handle_webhook():
+    signature = request.headers.get('X-Hub-Signature-256')
+    
+    # 1. SECURITY: Verify HMAC before processing!
+    if not verify_signature(request.data, signature):
+        abort(403, description="Invalid Signature")
+        
+    event = request.json
+    event_id = event.get('id')
+    
+    # 2. IDEMPOTENCY: Check if processed
+    # if db.exists(event_id): return "OK", 200
+    
+    # 3. Process Event
+    print(f"Received verified event: {event['type']}")
+    
+    # 4. ACKNOWLEDGE: Always return 200 OK quickly
+    return "Received", 200
+
+if __name__ == '__main__':
+    app.run(port=5000)
+</code></pre>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li>Use **APIs** for data fetching, **Webhooks** for asynchronous notifications.</li>
+            <li>Always verify **HMAC Signatures** to prevent spoofing.</li>
+            <li>Implement **Idempotency** to handle retries gracefully.</li>
+            <li>Return `200 OK` **immediately** (before processing heavy logic).</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar (Ordered 1st on Desktop, 2nd on Mobile) -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#what-is">"Push" Analogy</a>
+            <a class="nav-link" href="#comparison">Polling vs Webhooks</a>
+            <a class="nav-link" href="#security">Security (HMAC)</a>
+            <a class="nav-link" href="#resilience">Resilience</a>
+            <a class="nav-link ms-3" href="#resilience">• Retries</a>
+            <a class="nav-link ms-3" href="#resilience">• Idempotency</a>
+            <a class="nav-link" href="#implementation">Secure Code Example</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../load-balancing/" class="text-decoration-none text-muted">Load Balancing</a>
+            </li>
+            <li class="mb-2"><a href="../caching-layer/" class="text-decoration-none text-muted">Caching Strategies</a>
+            </li>
+            <li class="mb-2"><a href="../rate-limiting/" class="text-decoration-none text-muted">Rate Limiting</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
