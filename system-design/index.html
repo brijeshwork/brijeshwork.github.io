@@ -1,82 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>What Is System Design? A Beginner’s Guide for Developers — System Design | Brijesh Patel</title>
-<meta name="description" content="System design basics: an introductory hub for developers covering scalable architectures, patterns, and tutorials for building production systems.">
-<link rel="canonical" href="https://brijesh.work/system-design/" />
-<meta property="og:title" content="What Is System Design? A Beginner’s Guide for Developers" />
-<meta property="og:description" content="An approachable hub for system design fundamentals and tutorials on scalable architectures: notifications, RBAC, authentication, file upload, webhooks and more." />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>System Design Guide | Brijesh Patel</title>
+  <meta name="description"
+    content="A curated list of system design topics, architectures, and patterns. From Rate Limiting to Kubernetes.">
+  <link rel="canonical" href="https://brijesh.work/system-design/" />
 
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      color: #333;
+    }
+
+    .topic-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .topic-list li {
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .topic-list li:last-child {
+      border-bottom: none;
+    }
+
+    .topic-link {
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      color: #0d6efd;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .topic-link:hover {
+      text-decoration: underline;
+      color: #0a58ca;
+    }
+
+    .topic-desc {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .category-header {
+      font-weight: 700;
+      margin-top: 2.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #333;
+      font-size: 1.75rem;
+    }
+
+    /* Simple sidebar styling */
+    .sidebar-nav {
+      position: sticky;
+      top: 80px;
+    }
+
+    .nav-link {
+      color: #555;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link:hover {
+      color: #000;
+    }
+
+    .nav-link.active {
+      font-weight: bold;
+      color: #000;
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>What Is System Design? A Beginner’s Guide for Developers</h1>
-        <p class="lead">An introductory hub covering the fundamentals of system design and links to practical tutorials for building production-ready, scalable systems.</p>
+<body class="bg-white">
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <h2 id="why-system-design">Why system design?</h2>
-        <p>System design helps you make trade-offs between scalability, reliability, performance and cost. This hub collects practical guides and deep dives for developers who want to design systems that operate at scale.</p>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
 
-        <h2 id="featured-articles">Featured articles</h2>
-        <ul>
-          <li><a href="rate-limiting/">Rate Limiting — Design patterns and Redis + Lua examples</a></li>
-          <li><a href="notification/">How to Design a Scalable Notification System</a></li>
-          <li><a href="rbac/">Master Role-Based Access Control Patterns</a></li>
-          <li><a href="user-management/">Designing a Robust User Management System (Auth, Roles, Permissions)</a></li>
-          <li><a href="session-vs-token/">Understanding Session vs Token Authentication</a></li>
-          <li><a href="jwt-authentication/">Implementing JWT Authentication with Refresh Tokens</a></li>
-          <li><a href="file-upload/">Designing a File Upload and Media Management System</a></li>
-          <li><a href="webhooks-vs-apis/">Webhooks vs APIs — What’s the Difference and When to Use Each</a></li>
-        </ul>
+        <h1 class="display-4 fw-bold mb-4">System Design Guide</h1>
+        <p class="lead text-secondary mb-5">A comprehensive collection of guides, patterns, and real-world architecture
+          examples for building scalable systems.</p>
 
-        <h2 id="weekly-21-30">Weekly posts — Weeks 21–30</h2>
-        <ul>
-          <li><a href="cicd-pipeline-design/">CI/CD Pipeline Design for Scalable Deployments</a> — Building repeatable, safe deployment pipelines for microservices and monoliths.</li>
-          <li><a href="containerized-docker-kubernetes/">Designing a Containerized System with Docker &amp; Kubernetes</a> — Container images, orchestrator patterns, and production deployment considerations.</li>
-          <li><a href="cloud-storage-system-design/">How to Design a Cloud Storage System (AWS S3, GCP, Azure)</a> — Object storage architecture, consistency, and durability trade-offs.</li>
-          <li><a href="api-gateway-service-mesh/">API Gateway and Service Mesh Design in Microservices</a> — Gateway responsibilities and service mesh responsibilities compared.</li>
-          <li><a href="cdn-architecture/">CDN Architecture — How Content Delivery Works Globally</a> — Edge caching, TTLs, invalidation, and global performance.</li>
-          <li><a href="secure-api-gateway/">Designing a Secure API Gateway for Microservices</a> — Authentication, authorization, rate limiting and mTLS patterns.</li>
-          <li><a href="backup-disaster-recovery/">Designing Backup and Disaster Recovery Systems</a> — RPO, RTO, cross-region replication and runbooks.</li>
-          <li><a href="admin-dashboard-design/">Building an Internal Admin Dashboard System</a> — Access control, auditing, and data modeling for admin tools.</li>
-          <li><a href="monitoring-prometheus-grafana/">Designing a Monitoring System with Prometheus and Grafana</a> — Metrics collection, alerting, and dashboard design (links to Logging & Monitoring).</li>
-          <li><a href="infrastructure-as-code-terraform/">Infrastructure as Code (IaC) — Automating with Terraform</a> — Managing cloud infrastructure declaratively (final post in series).</li>
-        </ul>
+        <!-- Category 1: Core Concepts -->
+        <section id="core-concepts">
+          <h2 class="category-header">Core Concepts & Patterns</h2>
+          <ul class="topic-list">
+            <li>
+              <a href="rate-limiting/" class="topic-link">Rate Limiting</a>
+              <p class="topic-desc">Strategies to prevent abuse: Token Bucket, Sliding Window, and Redis
+                implementations.</p>
+            </li>
+            <li>
+              <a href="load-balancing/" class="topic-link">Load Balancing</a>
+              <p class="topic-desc">L4 vs L7 load balancing, algorithms, and high availability patterns.</p>
+            </li>
+            <li>
+              <a href="caching-layer/" class="topic-link">Caching Strategies</a>
+              <p class="topic-desc">Cache-aside, Write-through, and Eviction policies for performance.</p>
+            </li>
+            <li>
+              <a href="fault-tolerant-patterns/" class="topic-link">Fault Tolerance</a>
+              <p class="topic-desc">Building resilient systems with Circuit Breakers, Retries, and Bulkheads.</p>
+            </li>
+            <li>
+              <a href="webhooks-vs-apis/" class="topic-link">Webhooks vs APIs</a>
+              <p class="topic-desc">When to use Polling vs Event-driven callbacks.</p>
+            </li>
+            <li>
+              <a href="microservices-vs-monolith/" class="topic-link">Microservices vs Monolith</a>
+              <p class="topic-desc">Evaluating architectural styles and decomposition patterns.</p>
+            </li>
+            <li>
+              <a href="event-driven-architecture/" class="topic-link">Event-Driven Architecture</a>
+              <p class="topic-desc">Asynchronous communication using message brokers and event sourcing.</p>
+            </li>
+          </ul>
+        </section>
 
-        <h2 id="how-to-use">How to use this hub</h2>
-        <p>Start with the beginner's guide, then follow tutorials relevant to your project needs. Each tutorial links to implementation notes, diagrams, and code snippets.</p>
+        <!-- Category 2: Security & Identity -->
+        <section id="security">
+          <h2 class="category-header">Security & Identity</h2>
+          <ul class="topic-list">
+            <li>
+              <a href="rbac/" class="topic-link">Role-Based Access Control (RBAC)</a>
+              <p class="topic-desc">Designing scalable permission systems for enterprise applications.</p>
+            </li>
+            <li>
+              <a href="jwt-authentication/" class="topic-link">JWT Authentication</a>
+              <p class="topic-desc">Stateless authentication using JSON Web Tokens and refresh flows.</p>
+            </li>
+            <li>
+              <a href="user-management/" class="topic-link">User Management System</a>
+              <p class="topic-desc">Authentication, profile management, and account security.</p>
+            </li>
+            <li>
+              <a href="session-vs-token/" class="topic-link">Session vs Token Auth</a>
+              <p class="topic-desc">Comparing stateful sessions with stateless token-based auth.</p>
+            </li>
+            <li>
+              <a href="secure-api-gateway/" class="topic-link">Secure API Gateway</a>
+              <p class="topic-desc">Implementing rate limiting, SSL, and authentication at the edge.</p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Category 3: Real-World Systems -->
+        <section id="real-world">
+          <h2 class="category-header">Real-World Architectures</h2>
+          <ul class="topic-list">
+            <li>
+              <a href="notification/" class="topic-link">Notification System</a>
+              <p class="topic-desc">Scalable push, email, and SMS delivery service.</p>
+            </li>
+            <li>
+              <a href="chat-system/" class="topic-link">Chat Application</a>
+              <p class="topic-desc">Real-time messaging architecture using WebSockets.</p>
+            </li>
+            <li>
+              <a href="file-upload/" class="topic-link">File Upload System</a>
+              <p class="topic-desc">Handling large file uploads, processing, and CDN delivery.</p>
+            </li>
+            <li>
+              <a href="search-engine/" class="topic-link">Search Engine</a>
+              <p class="topic-desc">Web crawling, indexing strategy, and ranking algorithms.</p>
+            </li>
+            <li>
+              <a href="location-tracking/" class="topic-link">Location Tracking</a>
+              <p class="topic-desc">Real-time geospatial tracking for ride-sharing or delivery.</p>
+            </li>
+            <li>
+              <a href="booking-management/" class="topic-link">Booking Management</a>
+              <p class="topic-desc">Handling reservations, concurrency, and double-booking prevention.</p>
+            </li>
+            <li>
+              <a href="order-payment/" class="topic-link">Order & Payment System</a>
+              <p class="topic-desc">Idempotency, payment state machines, and transaction safety.</p>
+            </li>
+            <li>
+              <a href="recommendation-system/" class="topic-link">Recommendation System</a>
+              <p class="topic-desc">Personalized feeds using collaborative filtering and ML.</p>
+            </li>
+            <li>
+              <a href="subscription-billing/" class="topic-link">Subscription Billing</a>
+              <p class="topic-desc">Recurring payments, dunning, and prorated billing logic.</p>
+            </li>
+            <li>
+              <a href="inventory-system/" class="topic-link">Inventory Management</a>
+              <p class="topic-desc">High-consistency stock tracking for e-commerce.</p>
+            </li>
+            <li>
+              <a href="referral-affiliate/" class="topic-link">Referral & Affiliate</a>
+              <p class="topic-desc">Tracking and attributing user referrals at scale.</p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Category 4: Infrastructure -->
+        <section id="infrastructure">
+          <h2 class="category-header">DevOps & Infrastructure</h2>
+          <ul class="topic-list">
+            <li>
+              <a href="structure-as-code-terraform/" class="topic-link">Infrastructure as Code (Terraform)</a>
+              <p class="topic-desc">Managing cloud resources declaratively.</p>
+            </li>
+            <li>
+              <a href="cicd-pipeline-design/" class="topic-link">CI/CD Pipeline Design</a>
+              <p class="topic-desc">Automating build, test, and deployment workflows.</p>
+            </li>
+            <li>
+              <a href="containerized-docker-kubernetes/" class="topic-link">Docker & Kubernetes</a>
+              <p class="topic-desc">Container orchestration and production deployment patterns.</p>
+            </li>
+            <li>
+              <a href="monitoring-prometheus-grafana/" class="topic-link">Monitoring System</a>
+              <p class="topic-desc">Metrics collection, alerting, and dashboard visualization.</p>
+            </li>
+            <li>
+              <a href="logging-monitoring/" class="topic-link">Logging Architecture</a>
+              <p class="topic-desc">Centralized log aggregation (ELK/EFK stacks).</p>
+            </li>
+            <li>
+              <a href="backup-disaster-recovery/" class="topic-link">Backup & Disaster Recovery</a>
+              <p class="topic-desc">Strategies for data durability and business continuity.</p>
+            </li>
+            <li>
+              <a href="cdn-architecture/" class="topic-link">CDN Architecture</a>
+              <p class="topic-desc">Global content delivery and edge caching.</p>
+            </li>
+            <li>
+              <a href="cloud-storage-system-design/" class="topic-link">Cloud Storage (S3)</a>
+              <p class="topic-desc">Designing scalable object storage systems.</p>
+            </li>
+            <li>
+              <a href="api-gateway-service-mesh/" class="topic-link">API Gateway & Service Mesh</a>
+              <p class="topic-desc">Managing microservices traffic and observability.</p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Category 5: Tools & Dashboards -->
+        <section id="tools">
+          <h2 class="category-header">Tools & Dashboards</h2>
+          <ul class="topic-list">
+            <li>
+              <a href="admin-dashboard-design/" class="topic-link">Admin Dashboard Design</a>
+              <p class="topic-desc">Building internal tools for operations and support.</p>
+            </li>
+            <li>
+              <a href="analytics-dashboard/" class="topic-link">Analytics Dashboard</a>
+              <p class="topic-desc">Visualizing real-time data and business intelligence.</p>
+            </li>
+            <li>
+              <a href="multi-tenant-saas/" class="topic-link">Multi-Tenant SaaS</a>
+              <p class="topic-desc">Architecture for serving multiple customers from a single instance.</p>
+            </li>
+            <li>
+              <a href="notification-queue/" class="topic-link">Notification Queue</a>
+              <p class="topic-desc">Async processing for high-volume notification delivery.</p>
+            </li>
+          </ul>
+        </section>
 
       </div>
 
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5>System Design Roadmap</h5>
-            <ol>
-              <li>Basics & trade-offs</li>
-              <li>Authentication & Authorization</li>
-              <li>Data storage & caching</li>
-              <li>Messaging & async processing</li>
-              <li>Observability & SRE</li>
-            </ol>
-          </div>
-        </div>
-      </aside>
+      <!-- Quick Nav Sidebar -->
     </div>
   </div>
-</section>
+  </div>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
