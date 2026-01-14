@@ -1,47 +1,655 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Implementing JWT Authentication with Refresh Tokens — System Design | Brijesh Patel</title>
-<meta name="description" content="Design patterns for JWT authentication: secure storage, refresh token rotations, revocation, and how to implement refresh flows at scale.">
-<link rel="canonical" href="https://brijesh.work/system-design/jwt-authentication/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JWT Authentication Complete Guide | Structure, Security, Vulnerabilities & Best Practices</title>
+  <meta name="description"
+    content="Complete guide to JWT authentication: token structure, signing algorithms (HS256 vs RS256), claims, storage best practices, common vulnerabilities, JWK/JWKS, and Python implementation examples.">
+  <meta name="keywords"
+    content="JWT, JSON Web Token, authentication, HS256, RS256, token security, refresh tokens, JWK, JWKS, PyJWT">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/jwt-authentication/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Match the design of other system design pages */
+    .hero-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #94a3b8;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0d6efd;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+      padding: 0.5em 0.8em;
+    }
+
+    .vulnerability-card {
+      border-left: 4px solid #dc3545;
+      background: #fff5f5;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.5rem;
+    }
+
+    .vulnerability-card h4 {
+      color: #dc3545;
+    }
+
+    .jwt-structure {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Implementing JWT Authentication with Refresh Tokens</h1>
-        <p class="lead">How to design secure JWT flows with refresh token rotation, secure storage, and revocation strategies for scalable APIs.</p>
 
-        <h2 id="flow">High-level flow</h2>
-        <ol>
-          <li>User authenticates → receives access token (short-lived) and refresh token (longer-lived)</li>
-          <li>Client uses access token for API calls; when expired, exchanges refresh token for new access token</li>
-          <li>Rotate refresh tokens and maintain revocation list for immediate invalidation</li>
-        </ol>
+<body class="bg-white">
 
-        <h2 id="security">Security considerations</h2>
-        <ul>
-          <li>Store refresh tokens in secure, httpOnly cookies or secure storage</li>
-          <li>Use refresh token rotation to prevent reuse after theft</li>
-          <li>Monitor anomalous refresh patterns and revoke tokens when malicious behavior detected</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-primary bg-opacity-25 text-white border border-white border-opacity-25">Authentication
+            Security</span>
+          <h1 class="display-4 fw-bold mb-3">JWT Authentication</h1>
+          <p class="hero-subtitle mb-4">Master JSON Web Tokens: structure, signing algorithms, secure storage, common
+            vulnerabilities, and production best practices for stateless authentication.</p>
+          <div class="d-flex gap-3">
+            <a href="#implementation" class="btn btn-primary">Python Implementation</a>
+            <a href="#vulnerabilities" class="btn btn-outline-light">Security Vulnerabilities</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../session-vs-token/">Session vs Token</a></li><li><a href="../user-management/">User Management</a></li></ul></div></div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Introduction -->
+        <section id="introduction" class="content-section">
+          <h2>What is a JWT?</h2>
+          <p class="lead text-secondary">JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be
+            transferred between two parties.</p>
+          <p>JWTs enable stateless authentication—no server-side session storage required. The token itself contains all
+            the information needed to verify the user's identity and permissions.</p>
+
+          <h4 class="mt-4">JWT Structure</h4>
+          <p>A JWT consists of three parts separated by dots (<code>.</code>):</p>
+
+          <div class="jwt-structure mb-3">
+            <strong>Format:</strong> HEADER.PAYLOAD.SIGNATURE<br><br>
+            <strong>Example:</strong><br>
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9<span class="text-primary">....</span><br>
+            eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkJyaWplc2giLCJpYXQiOjE1MTYyMzkwMjJ9<span
+              class="text-primary">..</span><br>
+            SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold text-primary">1. Header</h6>
+                <p class="small">Algorithm and token type</p>
+                <pre class="small mb-0"><code class="language-json">{
+  "alg": "HS256",
+  "typ": "JWT"
+}</code></pre>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold text-primary">2. Payload</h6>
+                <p class="small">Claims (user data)</p>
+                <pre class="small mb-0"><code class="language-json">{
+  "sub": "1234567890",
+  "name": "Brijesh",
+  "iat": 1516239022
+}</code></pre>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold text-primary">3. Signature</h6>
+                <p class="small">Verifies integrity</p>
+                <pre class="small mb-0"><code class="language-javascript">HMACSHA256(
+  base64(header) + "." +
+  base64(payload),
+  secret
+)</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- JWT Claims -->
+        <section id="claims" class="content-section">
+          <h2>JWT Claims</h2>
+          <p>Claims are statements about an entity (typically the user) and additional metadata.</p>
+
+          <h4 class="mt-4">Standard Claims (Registered)</h4>
+          <div class="table-responsive">
+            <table class="table table-bordered comparison-table">
+              <thead>
+                <tr>
+                  <th style="width: 15%">Claim</th>
+                  <th style="width: 25%">Name</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>sub</code></td>
+                  <td>Subject</td>
+                  <td>User ID or entity the token represents</td>
+                </tr>
+                <tr>
+                  <td><code>iss</code></td>
+                  <td>Issuer</td>
+                  <td>Who issued the token (e.g., "https://auth.example.com")</td>
+                </tr>
+                <tr>
+                  <td><code>aud</code></td>
+                  <td>Audience</td>
+                  <td>Who the token is intended for (e.g., "api.example.com")</td>
+                </tr>
+                <tr>
+                  <td><code>exp</code></td>
+                  <td>Expiration Time</td>
+                  <td>When the token expires (Unix timestamp)</td>
+                </tr>
+                <tr>
+                  <td><code>iat</code></td>
+                  <td>Issued At</td>
+                  <td>When the token was issued (Unix timestamp)</td>
+                </tr>
+                <tr>
+                  <td><code>nbf</code></td>
+                  <td>Not Before</td>
+                  <td>Token not valid before this time (Unix timestamp)</td>
+                </tr>
+                <tr>
+                  <td><code>jti</code></td>
+                  <td>JWT ID</td>
+                  <td>Unique identifier for the token (prevents replay attacks)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="mt-4">Custom Claims (Private)</h4>
+          <p>You can add your own claims for application-specific data:</p>
+          <pre><code class="language-json">{
+  "sub": "user_123",
+  "email": "user@example.com",
+  "role": "admin",
+  "permissions": ["read:users", "write:posts"],
+  "organization_id": "org_456"
+}</code></pre>
+
+          <div class="alert alert-warning border mt-3">
+            <strong>⚠️ Security Warning:</strong> Keep payloads small and avoid sensitive data. JWTs are
+            <strong>encoded, not encrypted</strong>. Anyone can decode and read the payload!
+          </div>
+        </section>
+
+        <!-- Signing Algorithms -->
+        <section id="algorithms" class="content-section">
+          <h2>Signing Algorithms</h2>
+          <p>The algorithm determines how the signature is generated and verified.</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🔑 HS256 (Symmetric)</h5>
+                <p><strong>HMAC with SHA-256</strong></p>
+                <p>Uses a <strong>single secret key</strong> for both signing and verification.</p>
+                <ul class="small">
+                  <li><strong>Pros:</strong> Fast, small key size, simple</li>
+                  <li><strong>Cons:</strong> Secret must be shared with every service that verifies tokens (security
+                    risk)
+                  </li>
+                  <li><strong>Use Case:</strong> Single monolithic application, internal services</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🔐 RS256 (Asymmetric)</h5>
+                <p><strong>RSA Signature with SHA-256</strong></p>
+                <p>Uses a <strong>private key</strong> to sign and a <strong>public key</strong> to verify.</p>
+                <ul class="small">
+                  <li><strong>Pros:</strong> Public key can be shared openly, services can verify without signing power
+                  </li>
+                  <li><strong>Cons:</strong> Slower, larger key size</li>
+                  <li><strong>Use Case:</strong> Microservices, third-party integrations, Auth0, AWS Cognito</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Recommendation:</strong> Use <strong>RS256</strong> for distributed systems where multiple services
+            need to verify tokens but should not have signing power.
+          </div>
+        </section>
+
+        <!-- Storage -->
+        <section id="storage" class="content-section">
+          <h2>Where to Store JWTs?</h2>
+          <p>Storage location has critical security implications.</p>
+
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered comparison-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%">Storage</th>
+                  <th style="width: 15%">XSS Vulnerable?</th>
+                  <th style="width: 15%">CSRF Vulnerable?</th>
+                  <th>Recommendation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>localStorage</strong></td>
+                  <td><span class="badge bg-danger">YES</span></td>
+                  <td><span class="badge bg-success">NO</span></td>
+                  <td>❌ Avoid. Accessible by any JavaScript (XSS = token theft)</td>
+                </tr>
+                <tr>
+                  <td><strong>sessionStorage</strong></td>
+                  <td><span class="badge bg-danger">YES</span></td>
+                  <td><span class="badge bg-success">NO</span></td>
+                  <td>❌ Avoid. Same XSS vulnerability as localStorage</td>
+                </tr>
+                <tr>
+                  <td><strong>HttpOnly Cookie</strong></td>
+                  <td><span class="badge bg-success">NO</span></td>
+                  <td><span class="badge bg-warning">YES</span></td>
+                  <td>✅ <strong>Recommended.</strong> Use with <code>SameSite=Strict</code> and CSRF tokens</td>
+                </tr>
+                <tr>
+                  <td><strong>In-Memory (JS variable)</strong></td>
+                  <td><span class="badge bg-warning">Partial</span></td>
+                  <td><span class="badge bg-success">NO</span></td>
+                  <td>✅ Secure but lost on page refresh (need silent refresh flow)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="mt-4">Best Practice: HttpOnly Cookie with CSRF Protection</h4>
+          <pre><code class="language-python">from flask import make_response
+
+response = make_response(jsonify({"message": "Login successful"}))
+response.set_cookie(
+    'access_token',
+    value=token,
+    httponly=True,      # Prevents JavaScript access (XSS protection)
+    secure=True,        # HTTPS only
+    samesite='Strict',  # CSRF protection
+    max_age=900         # 15 minutes
+)
+</code></pre>
+        </section>
+
+        <!-- Refresh Tokens -->
+        <section id="rotation" class="content-section">
+          <h2>Refresh Token Rotation</h2>
+          <p>Short-lived access tokens + refresh token rotation prevent long-term token theft.</p>
+
+          <h4 class="mt-4">How It Works</h4>
+          <ol>
+            <li><strong>Issue:</strong> Access token (15 min) + Refresh token (7 days)</li>
+            <li><strong>Access Expires:</strong> Client uses refresh token to get new access token</li>
+            <li><strong>Rotation:</strong> On refresh, invalidate old refresh token and issue new one</li>
+            <li><strong>Theft Detection:</strong> If old (invalidated) refresh token is reused → revoke all tokens for
+              that
+              user</li>
+          </ol>
+
+          <h5 class="mt-4">Python Implementation</h5>
+          <pre><code class="language-python">import uuid
+from datetime import datetime, timedelta
+
+# Store refresh tokens in database
+refresh_tokens_db = {}  # In production: use Redis or database
+
+def create_tokens(user_id):
+    """Create access and refresh tokens"""
+    # Short-lived access token (15 minutes)
+    access_payload = {
+        "sub": user_id,
+        "type": "access",
+        "exp": datetime.utcnow() + timedelta(minutes=15)
+    }
+    access_token = jwt.encode(access_payload, SECRET_KEY, algorithm="HS256")
+    
+    # Long-lived refresh token (stored server-side)
+    refresh_token_id = str(uuid.uuid4())
+    refresh_tokens_db[refresh_token_id] = {
+        "user_id": user_id,
+        "expires_at": datetime.utcnow() + timedelta(days=7),
+        "family_id": str(uuid.uuid4())  # For detecting reuse
+    }
+    
+    return access_token, refresh_token_id
+
+def refresh_access_token(refresh_token_id):
+    """Exchange refresh token for new access token (with rotation)"""
+    token_data = refresh_tokens_db.get(refresh_token_id)
+    
+    if not token_data:
+        raise Exception("Invalid refresh token")
+    
+    if datetime.utcnow() > token_data['expires_at']:
+        del refresh_tokens_db[refresh_token_id]
+        raise Exception("Refresh token expired")
+    
+    # ROTATION: Invalidate old refresh token
+    family_id = token_data['family_id']
+    user_id = token_data['user_id']
+    del refresh_tokens_db[refresh_token_id]
+    
+    # Issue new tokens
+    new_access_token, new_refresh_token = create_tokens(user_id)
+    
+    # Preserve family ID for reuse detection
+    refresh_tokens_db[new_refresh_token]['family_id'] = family_id
+    
+    return new_access_token, new_refresh_token
+</code></pre>
+
+          <div class="alert alert-danger border mt-3">
+            <strong>🚨 Reuse Detection:</strong> If an invalidated refresh token is used again, it means either the
+            attacker or the legitimate user has the old token. <strong>Revoke all tokens</strong> in that family to
+            force
+            re-login.
+          </div>
+        </section>
+
+        <!-- Vulnerabilities -->
+        <section id="vulnerabilities" class="content-section">
+          <h2>Common JWT Vulnerabilities</h2>
+          <p>Security pitfalls to avoid when implementing JWT authentication.</p>
+
+          <div class="vulnerability-card">
+            <h4>🔴 1. Algorithm Confusion Attack</h4>
+            <p><strong>Attack:</strong> Attacker changes algorithm from RS256 to HS256, using the public key as the HMAC
+              secret.</p>
+            <p><strong>Impact:</strong> Attacker can forge valid tokens.</p>
+            <p><strong>Defense:</strong></p>
+            <pre><code class="language-python"># BAD: Accepts any algorithm
+payload = jwt.decode(token, public_key, algorithms=["RS256", "HS256"])
+
+# GOOD: Explicitly specify expected algorithm
+payload = jwt.decode(token, public_key, algorithms=["RS256"])  # Only RS256
+</code></pre>
+          </div>
+
+          <div class="vulnerability-card">
+            <h4>🔴 2. "none" Algorithm Attack</h4>
+            <p><strong>Attack:</strong> Set <code>alg</code> to <code>none</code> in header, remove signature.</p>
+            <p><strong>Defense:</strong> Never accept <code>none</code> algorithm.</p>
+            <pre><code class="language-python"># GOOD: Reject unsigned tokens
+if token_header.get('alg') == 'none':
+    raise Exception("Unsigned tokens not allowed")
+</code></pre>
+          </div>
+
+          <div class="vulnerability-card">
+            <h4>🔴 3. Weak Secret Key (HS256)</h4>
+            <p><strong>Issue:</strong> Dictionary attack on weak HMAC secrets.</p>
+            <p><strong>Defense:</strong> Use strong, random secrets (256+ bits).</p>
+            <pre><code class="language-python">import secrets
+
+# GOOD: Cryptographically secure random secret
+SECRET_KEY = secrets.token_urlsafe(32)  # 256 bits
+</code></pre>
+          </div>
+
+          <div class="vulnerability-card">
+            <h4>🔴 4. Missing Expiration Validation</h4>
+            <p><strong>Issue:</strong> Token valid forever if <code>exp</code> claim not checked.</p>
+            <p><strong>Defense:</strong> Always set and validate <code>exp</code>.</p>
+            <pre><code class="language-python"># PyJWT automatically validates exp if present
+payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+# Raises jwt.ExpiredSignatureError if exp has passed
+</code></pre>
+          </div>
+
+          <div class="vulnerability-card">
+            <h4>🔴 5. Cross-Site Request Forgery (CSRF)</h4>
+            <p><strong>Issue:</strong> If JWT is in a cookie, vulnerable to CSRF attacks.</p>
+            <p><strong>Defense:</strong> Use <code>SameSite=Strict</code> + CSRF tokens.</p>
+            <pre><code class="language-python"># Set SameSite cookie attribute
+response.set_cookie('jwt', token, samesite='Strict', httponly=True, secure=True)
+
+# Verify CSRF token on state-changing requests
+@app.route('/api/delete', methods=['DELETE'])
+def delete_resource():
+    csrf_token = request.headers.get('X-CSRF-Token')
+    if not verify_csrf_token(csrf_token):
+        return jsonify({"error": "Invalid CSRF token"}), 403
+</code></pre>
+          </div>
+        </section>
+
+        <!-- JWK/JWKS -->
+        <section id="jwk" class="content-section">
+          <h2>JWK & JWKS (JSON Web Keys)</h2>
+          <p>For RS256, services need the public key. JWK/JWKS provides a standard way to distribute public keys.</p>
+
+          <h4 class="MT-4">What is JWKS?</h4>
+          <p><strong>JWKS (JSON Web Key Set)</strong> is a JSON object containing an array of JWK (JSON Web Key)
+            objects.
+          </p>
+          <p>Auth providers (Auth0, AWS Cognito, Okta) expose a JWKS endpoint with their public keys.</p>
+
+          <h5 class="mt-4">Example JWKS Endpoint</h5>
+          <pre><code class="language-bash"># Fetch JWKS from Auth0
+curl https://YOUR_DOMAIN/.well-known/jwks.json
+</code></pre>
+
+          <pre><code class="language-json">{
+  "keys": [
+    {
+      "kty": "RSA",
+      "kid": "abc123",
+      "use": "sig",
+      "n": "0vx7agoebGcQSuuPiLJXZptN9nndrQmbXEps2aiAFbWhM78LhWx...",
+      "e": "AQAB"
+    }
+  ]
+}</code></pre>
+
+          <h5 class="mt-4">Verifying with JWKS (Python)</h5>
+          <pre><code class="language-python">import jwt
+from jwt import PyJWKClient
+
+# Fetch public keys from JWKS endpoint
+jwks_url = "https://your-auth-domain/.well-known/jwks.json"
+jwks_client = PyJWKClient(jwks_url)
+
+def verify_token_with_jwks(token):
+    """Verify JWT using public key from JWKS"""
+    # Get signing key from JWKS (automatically fetches and caches)
+    signing_key = jwks_client.get_signing_key_from_jwt(token)
+    
+    # Verify signature and decode
+    payload = jwt.decode(
+        token,
+        signing_key.key,
+        algorithms=["RS256"],
+        audience="your-api-audience",
+        issuer="https://your-auth-domain/"
+    )
+    return payload
+</code></pre>
+        </section>
+
+        <!-- Best Practices -->
+        <section id="best-practices" class="content-section">
+          <h2>Best Practices</h2>
+
+          <h4 class="mt-4">Token Lifecycle</h4>
+          <ul>
+            <li>Keep access tokens <strong>short-lived</strong> (5-15 minutes)</li>
+            <li>Use <strong>refresh token rotation</strong> to detect theft</li>
+            <li>Always validate <code>exp</code>, <code>iss</code>, and <code>aud</code> claims</li>
+            <li>Include <code>jti</code> (JWT ID) for one-time use tokens (e.g., password reset)</li>
+          </ul>
+
+          <h4 class="mt-4">Security</h4>
+          <ul>
+            <li>Use <strong>RS256</strong> for distributed systems, <strong>HS256</strong> only for single monoliths
+            </li>
+            <li>Store tokens in <strong>HttpOnly cookies</strong> (not localStorage)</li>
+            <li>Explicitly specify algorithms during verification (prevent algorithm confusion)</li>
+            <li>Use strong, random secrets (256+ bits for HS256)</li>
+            <li>Enable HTTPS only (<code>secure=True</code> cookie attribute)</li>
+            <li>Implement rate limiting on authentication endpoints</li>
+          </ul>
+
+          <h4 class="mt-4">Payload Management</h4>
+          <ul>
+            <li>Keep payloads <strong>small</strong> (tokens sent on every request)</li>
+            <li>Never include passwords or sensitive data (tokens are encoded, not encrypted)</li>
+            <li>Use standard claims (<code>sub</code>, <code>iss</code>, <code>aud</code>) for interoperability</li>
+          </ul>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>JWT</strong> enables stateless authentication with Header, Payload, and Signature.</li>
+            <li>Use <strong>RS256</strong> for microservices (public/private keys), <strong>HS256</strong> for monoliths
+              (shared secret).</li>
+            <li>Store JWTs in <strong>HttpOnly cookies</strong> to prevent XSS attacks.</li>
+            <li>Implement <strong>refresh token rotation</strong> to detect and mitigate stolen tokens.</li>
+            <li>Validate <strong>exp, iss, aud</strong> claims on every request.</li>
+            <li>Prevent <strong>algorithm confusion</strong> by explicitly specifying allowed algorithms.</li>
+            <li>Use <strong>JWKS</strong> for distributing public keys in RS256 implementations.</li>
+            <li>Keep access tokens short-lived (5-15 min), use refresh tokens for long sessions.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar (Left) -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#introduction">Introduction</a>
+            <a class="nav-link" href="#claims">JWT Claims</a>
+            <a class="nav-link" href="#algorithms">Signing Algorithms</a>
+            <a class="nav-link" href="#storage">Storage Best Practices</a>
+            <a class="nav-link" href="#rotation">Refresh Token Rotation</a>
+            <a class="nav-link" href="#vulnerabilities">Common Vulnerabilities</a>
+            <a class="nav-link" href="#jwk">JWK & JWKS</a>
+            <a class="nav-link" href="#best-practices">Best Practices</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../session-vs-token/" class="text-decoration-none text-muted">Session vs Token</a>
+            </li>
+            <li class="mb-2"><a href="../secure-api-gateway/" class="text-decoration-none text-muted">Secure API
+                Gateway</a></li>
+            <li class="mb-2"><a href="../rbac/" class="text-decoration-none text-muted">RBAC</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
