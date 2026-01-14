@@ -1,49 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Designing a File Upload & Media Management System — System Design | Brijesh Patel</title>
-<meta name="description" content="Design patterns for file uploads and media management: resumable uploads, CDN integration, object storage, image processing and security.">
-<link rel="canonical" href="https://brijesh.work/system-design/file-upload/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>File Upload System Design | Presigned URLs, S3, Multipart & CDN</title>
+  <meta name="description"
+    content="Production-ready file upload system design: S3 Presigned URLs, multipart/chunked uploads for large files, resumable uploads, virus scanning, and CDN delivery.">
+  <meta name="keywords"
+    content="system design, file upload, s3, presigned url, multipart upload, cdn, cloudfront, image processing, virus scanning, python boto3">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/file-upload/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #ddd6fe;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #7c3aed;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(124, 58, 237, 0.1);
+      color: #7c3aed;
+      padding: 0.5em 0.8em;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+    }
+
+    .step-number {
+      background: #7c3aed;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a File Upload and Media Management System</h1>
-        <p class="lead">Patterns for secure, reliable file uploads, object storage, CDN integration, processing pipelines, and cost-effective media delivery.</p>
 
-        <h2 id="requirements">Requirements</h2>
-        <ul>
-          <li>Support large files and resumable uploads</li>
-          <li>Process images/videos (thumbnails, transcoding) asynchronously</li>
-          <li>Deliver via CDN with cache invalidation support</li>
-          <li>Apply access controls and virus scanning</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="architecture">Architecture notes</h2>
-        <ul>
-          <li>Pre-signed upload URLs → direct-to-storage uploads (S3/GCS)</li>
-          <li>Use message queue to trigger processing workers</li>
-          <li>Store metadata in DB and objects in an object store</li>
-          <li>CDN in front for fast global delivery</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-25 text-white border border-white border-opacity-25">Scalable
+            Storage</span>
+          <h1 class="display-4 fw-bold mb-3">File Upload & Media Management</h1>
+          <p class="hero-subtitle mb-4">Designing robust upload pipelines: S3 Presigned URLs, chunked multipart uploads,
+            virus scanning, and global CDN delivery.</p>
+          <div class="d-flex gap-3">
+            <a href="#presigned" class="btn btn-light text-primary fw-bold" style="color: #7c3aed !important;">Presigned
+              URLs</a>
+            <a href="#multipart" class="btn btn-outline-light">Multipart Uploads</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../file-upload/">File upload architecture</a></li><li><a href="../">System Design hub</a></li></ul></div></div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Architecture Flow -->
+        <section id="flow" class="content-section">
+          <h2>High-Level Architecture (Direct Upload)</h2>
+          <p class="lead text-secondary">Avoid uploading files to your backend API servers. It wastes bandwidth and
+            blocks threads. Upload directly to Object Storage (S3).</p>
+
+          <div class="mt-4">
+            <div class="flow-step">
+              <div class="step-number">1</div>
+              <div><strong>Client Request:</strong> App requests an upload URL from API (GET /api/upload-url).</div>
+            </div>
+            <div class="flow-step">
+              <div class="step-number">2</div>
+              <div><strong>Generate URL:</strong> API validates permissions and generates a temporary <strong>S3
+                  Presigned URL</strong>.</div>
+            </div>
+            <div class="flow-step">
+              <div class="step-number">3</div>
+              <div><strong>Direct Upload:</strong> Client uploads file directly to S3 using the Presigned URL (PUT
+                request).</div>
+            </div>
+            <div class="flow-step">
+              <div class="step-number">4</div>
+              <div><strong>Processing:</strong> S3 event triggers a Lambda function (Virus Scan, Thumbnail generation).
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="step-number">5</div>
+              <div><strong>CDN Delivery:</strong> Processed files are served globally via CloudFront.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Presigned URLs -->
+        <section id="presigned" class="content-section">
+          <h2>S3 Presigned URLs</h2>
+          <p>A secure way to grant temporary upload access without exposing AWS credentials.</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">✅ Benefits</h5>
+                <ul class="text-secondary small">
+                  <li><strong>Scalability:</strong> Your servers don't handle file data.</li>
+                  <li><strong>Security:</strong> URL expires quickly (e.g., 5 mins).</li>
+                  <li><strong>Access Control:</strong> You can restrict file type (MIME) and max size.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">❌ Limitations</h5>
+                <ul class="text-secondary small">
+                  <li><strong>Complexity:</strong> Client needs to make 2 requests (Get URL + Upload).</li>
+                  <li><strong>CORS:</strong> Need to configure S3 CORS correctly.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h5 class="mt-4">Python (Boto3) Implementation</h5>
+          <pre><code class="language-python">import boto3
+from botocore.exceptions import ClientError
+
+def generate_presigned_url(bucket_name, object_name, expiration=300):
+    """Generate a presigned URL to share an S3 object"""
+    s3_client = boto3.client('s3')
+    try:
+        response = s3_client.generate_presigned_url('put_object',
+                                                    Params={'Bucket': bucket_name,
+                                                            'Key': object_name,
+                                                            'ContentType': 'image/jpeg'},
+                                                    ExpiresIn=expiration)
+    except ClientError as e:
+        print(e)
+        return None
+    return response
+
+# Usage
+url = generate_presigned_url('my-bucket', 'uploads/user1/avatar.jpg')
+print(f"Upload here: {url}")</code></pre>
+        </section>
+
+        <!-- Multipart Upload -->
+        <section id="multipart" class="content-section">
+          <h2>Large Files: Multipart Upload</h2>
+          <p>For files > 100MB, standard upload fails if connection drops. Use Multipart Upload.</p>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Standard Upload</th>
+                <th>Multipart Upload</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Method</strong></td>
+                <td>Single PUT request</td>
+                <td>Split into chunks (e.g., 5MB parts)</td>
+              </tr>
+              <tr>
+                <td><strong>Failure Recovery</strong></td>
+                <td>Restart from 0%</td>
+                <td>Retry only failed chunks</td>
+              </tr>
+              <tr>
+                <td><strong>Speed</strong></td>
+                <td>Linear</td>
+                <td>Parallel uploads (faster)</td>
+              </tr>
+              <tr>
+                <td><strong>Use Case</strong></td>
+                <td>Avatars, Documents (&lt;100MB)</td>
+                <td>Videos, Large Archives (&gt;100MB)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="alert alert-info border border-info mt-3">
+            <strong>Resumable Uploads:</strong> Combine Multipart Upload with a backend (Redis) tracking uploaded
+            "Parts". If connection breaks, client asks "which parts do you have?" and sends missing ones.
+          </div>
+        </section>
+
+        <!-- Security -->
+        <section id="security" class="content-section">
+          <h2>Security Best Practices</h2>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="tech-card border-start border-4 border-danger">
+                <h5 class="fw-bold">Virus Scanning</h5>
+                <p class="small">Trigger a Lambda function on S3 upload to scan with <strong>ClamAV</strong>. Quarantine
+                  malicious files immediately.</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="tech-card border-start border-4 border-warning">
+                <h5 class="fw-bold">Validate MIME Types</h5>
+                <p class="small">Don't trust the file extension. Inspect the "Magic Bytes" (file signature) to ensure
+                  it's a valid image/pdf.</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="tech-card border-start border-4 border-primary">
+                <h5 class="fw-bold">Private Bucket</h5>
+                <p class="small">Keep the S3 bucket <strong>Private</strong>. Only serve public content via CloudFront
+                  (CDN) or Signed URLs for private files.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Image Processing -->
+        <section id="processing" class="content-section">
+          <h2>Media Processing Pipeline</h2>
+          <p>Never serve raw user uploads. They are usually unoptimized (5MB 4K image for a 50px avatar).</p>
+
+          <ol>
+            <li><strong>Trigger:</strong> S3 <code>ObjectCreated</code> event sends message to SQS.</li>
+            <li><strong>Worker:</strong> Consumes SQS, downloads image.</li>
+            <li><strong>Process:</strong> Resizes (thumbnails), optimizes (WebP/AVIF), strips metadata (EXIF).</li>
+            <li><strong>Save:</strong> Uploads processed versions to a "Public/Processed" bucket.</li>
+            <li><strong>Serve:</strong> Application uses URL of processed version.</li>
+          </ol>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li>Use <strong>Presigned URLs</strong> for direct client-to-S3 uploads (scalable).</li>
+            <li>Implement <strong>Multipart Uploads</strong> for large files to support retries and parallel chunks.
+            </li>
+            <li>Scan every file for <strong>Viruses</strong> asynchronously.</li>
+            <li>Serve content via <strong>CDN</strong> (CloudFront/Cloudflare) for speed and caching.</li>
+            <li>Never override the original file; store processed versions separately.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#flow">Architecture Flow</a>
+            <a class="nav-link" href="#presigned">Presigned URLs</a>
+            <a class="nav-link" href="#multipart">Multipart Uploads</a>
+            <a class="nav-link" href="#security">Security</a>
+            <a class="nav-link" href="#processing">Media Processing</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../caching-layer/" class="text-decoration-none text-muted">CDN & Caching</a></li>
+            <li class="mb-2"><a href="../notification/" class="text-decoration-none text-muted">Notification System</a>
+            </li>
+            <li class="mb-2"><a href="../secure-api-gateway/" class="text-decoration-none text-muted">API Security</a>
+            </li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
