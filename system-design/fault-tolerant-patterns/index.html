@@ -1,39 +1,755 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Fault-Tolerant System Design Patterns — Circuit Breakers, Retries — System Design | Brijesh Patel</title>
-<meta name="description" content="Common fault-tolerant patterns: circuit breakers, backoff, retries, bulkheads, and design practices for resilient systems.">
-<link rel="canonical" href="https://brijesh.work/system-design/fault-tolerant-patterns/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fault-Tolerant Patterns Guide | Circuit Breaker, Retry, Bulkhead & More</title>
+  <meta name="description"
+    content="Complete guide to fault-tolerant patterns: Circuit Breaker, Retry with exponential backoff, Bulkhead, Timeout, Fallback, and Health Checks with Python implementations.">
+  <meta name="keywords"
+    content="fault tolerance, circuit breaker, retry pattern, bulkhead, timeout, fallback, resilience, error handling, distributed systems">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/fault-tolerant-patterns/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Custom styles matching other system design pages */
+    .hero-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #94a3b8;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0d6efd;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+      padding: 0.5em 0.8em;
+    }
+
+    .pattern-card {
+      border-left: 4px solid #0d6efd;
+      background: #f8fafc;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.5rem;
+    }
+
+    .pattern-card h3 {
+      color: #0f172a;
+      margin-bottom: 1rem;
+    }
+
+    .state-diagram {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      font-family: monospace;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Fault-Tolerant System Design Patterns</h1>
-        <p class="lead">Patterns like circuit breakers, retries with exponential backoff, bulkheads, and graceful degradation for building resilient services.</p>
 
-        <h2 id="patterns">Patterns</h2>
-        <ul>
-          <li>Circuit Breaker: stop calling unhealthy services and fallback gracefully</li>
-          <li>Retries with exponential backoff and jitter to avoid thundering herds</li>
-          <li>Bulkheads to isolate failures to subsets of resources</li>
-          <li>Graceful degradation and feature toggles for emergency modes</li>
-        </ul>
+<body class="bg-white">
 
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-primary bg-opacity-25 text-white border border-white border-opacity-25">Resilience
+            Patterns</span>
+          <h1 class="display-4 fw-bold mb-3">Fault-Tolerant Patterns</h1>
+          <p class="hero-subtitle mb-4">Build resilient distributed systems that gracefully handle failures. Master
+            Circuit Breakers, Retries, Bulkheads, Timeouts, and Fallbacks.</p>
+          <div class="d-flex gap-3">
+            <a href="#circuit-breaker" class="btn btn-primary">Circuit Breaker Pattern</a>
+            <a href="#patterns-comparison" class="btn btn-outline-light">Compare Patterns</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#patterns">Patterns</a></li></ul></div></div></aside>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Introduction -->
+        <section id="introduction" class="content-section">
+          <h2>What is Fault Tolerance?</h2>
+          <p class="lead text-secondary">The ability of a system to continue operating correctly even when components
+            fail.</p>
+          <p>In distributed systems, failures are inevitable. Networks partition, services crash, databases become
+            unavailable, and dependencies timeout. A fault-tolerant system anticipates these failures and handles them
+            gracefully instead of cascading them to users.</p>
+
+          <p><strong>Fault-tolerant patterns</strong> are proven strategies for building resilient systems. They help
+            you:</p>
+          <ul>
+            <li>Prevent cascading failures (one service failure bringing down the entire system)</li>
+            <li>Isolate failures to specific components (blast radius containment)</li>
+            <li>Recover automatically from transient failures</li>
+            <li>Fail gracefully when recovery isn't possible (degraded mode vs total outage)</li>
+          </ul>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Key Principle:</strong> Assume everything will fail. Design for failure, not for success.
+          </div>
+        </section>
+
+        <!-- Circuit Breaker -->
+        <section id="circuit-breaker" class="content-section">
+          <h2>Circuit Breaker Pattern</h2>
+          <p>The most important pattern for preventing cascading failures. A Circuit Breaker acts like an electrical
+            circuit breaker—it "trips" (opens) when a service is failing, preventing further calls until it recovers.
+          </p>
+
+          <h4 class="mt-4">How It Works</h4>
+          <p>The Circuit Breaker monitors calls to a dependency and tracks failures. It has three states:</p>
+
+          <div class="state-diagram">
+            <div style="margin: 1rem 0;">
+              <strong>CLOSED</strong> → Requests flow normally<br>
+              ↓ (failure threshold exceeded)<br>
+              <strong>OPEN</strong> → Requests fail immediately (no calls to dependency)<br>
+              ↓ (timeout expires)<br>
+              <strong>HALF-OPEN</strong> → Allow limited test requests<br>
+              ↓ (success) → Back to CLOSED<br>
+              ↓ (failure) → Back to OPEN
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">🟢 CLOSED</h6>
+                <p class="small mb-0">Normal operation. Requests pass through. Failures are counted.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">🔴 OPEN</h6>
+                <p class="small mb-0">Circuit is "tripped". All requests fail fast without hitting the dependency.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">🟡 HALF-OPEN</h6>
+                <p class="small mb-0">Testing recovery. A few requests are allowed to check if the service is healthy.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-4">Configuration Parameters</h4>
+          <ul>
+            <li><strong>Failure Threshold:</strong> Number/percentage of failures before opening (e.g., 50% failures in
+              10s)</li>
+            <li><strong>Timeout:</strong> How long the circuit stays open before testing recovery (e.g., 30 seconds)
+            </li>
+            <li><strong>Success Threshold:</strong> Number of successful tests needed to close the circuit (e.g., 3
+              successes)</li>
+          </ul>
+
+          <h4 class="mt-4">Python Implementation</h4>
+          <pre><code class="language-python">import time
+from enum import Enum
+from datetime import datetime, timedelta
+
+class CircuitState(Enum):
+    CLOSED = "closed"
+    OPEN = "open"
+    HALF_OPEN = "half_open"
+
+class CircuitBreaker:
+    def __init__(self, failure_threshold=5, timeout=60, success_threshold=2):
+        self.failure_threshold = failure_threshold
+        self.timeout = timeout  # seconds
+        self.success_threshold = success_threshold
+        
+        self.failure_count = 0
+        self.success_count = 0
+        self.last_failure_time = None
+        self.state = CircuitState.CLOSED
+    
+    def call(self, func, *args, **kwargs):
+        """Execute a function through the circuit breaker"""
+        if self.state == CircuitState.OPEN:
+            if self._should_attempt_reset():
+                self.state = CircuitState.HALF_OPEN
+            else:
+                raise Exception("Circuit breaker is OPEN")
+        
+        try:
+            result = func(*args, **kwargs)
+            self._on_success()
+            return result
+        except Exception as e:
+            self._on_failure()
+            raise e
+    
+    def _on_success(self):
+        self.failure_count = 0
+        if self.state == CircuitState.HALF_OPEN:
+            self.success_count += 1
+            if self.success_count >= self.success_threshold:
+                self.state = CircuitState.CLOSED
+                self.success_count = 0
+    
+    def _on_failure(self):
+        self.failure_count += 1
+        self.last_failure_time = datetime.now()
+        
+        if self.state == CircuitState.HALF_OPEN:
+            self.state = CircuitState.OPEN
+            self.success_count = 0
+        elif self.failure_count >= self.failure_threshold:
+            self.state = CircuitState.OPEN
+    
+    def _should_attempt_reset(self):
+        return (self.last_failure_time and 
+                datetime.now() - self.last_failure_time > timedelta(seconds=self.timeout))
+
+# Usage Example
+def unreliable_api_call():
+    """Simulates an API that sometimes fails"""
+    import random
+    if random.random() < 0.3:  # 30% failure rate
+        raise Exception("API error")
+    return {"status": "success"}
+
+cb = CircuitBreaker(failure_threshold=3, timeout=10)
+
+for i in range(10):
+    try:
+        result = cb.call(unreliable_api_call)
+        print(f"Call {i+1}: {result} | State: {cb.state.value}")
+    except Exception as e:
+        print(f"Call {i+1}: FAILED | State: {cb.state.value}")
+    time.sleep(1)
+</code></pre>
+
+          <div class="alert alert-light border mt-3">
+            <strong>When to Use:</strong> Protect your system from slow or failing dependencies (external APIs,
+            databases,
+            microservices). Prevents cascading failures and resource exhaustion.
+          </div>
+        </section>
+
+        <!-- Retry Pattern -->
+        <section id="retry-pattern" class="content-section">
+          <h2>Retry Pattern with Exponential Backoff</h2>
+          <p>Automatically retry failed operations, with increasing delays between attempts to avoid overwhelming the
+            failing service.</p>
+
+          <h4 class="mt-4">Why Exponential Backoff?</h4>
+          <p>If 1000 clients all retry immediately when a service fails, they create a "thundering herd" that can
+            prevent the service from recovering. <strong>Exponential backoff</strong> spaces out retries:</p>
+          <ul>
+            <li>1st retry: wait 1 second</li>
+            <li>2nd retry: wait 2 seconds</li>
+            <li>3rd retry: wait 4 seconds</li>
+            <li>4th retry: wait 8 seconds</li>
+            <li>And so on (with a maximum cap)</li>
+          </ul>
+
+          <h4 class="mt-4">Adding Jitter</h4>
+          <p><strong>Jitter</strong> (random delay) further reduces synchronized retries. Instead of waiting exactly 2s,
+            wait 1.5-2.5s (randomized).</p>
+
+          <h4 class="mt-4">Python Implementation</h4>
+          <pre><code class="language-python">import time
+import random
+from functools import wraps
+
+def retry_with_backoff(max_retries=5, base_delay=1, max_delay=60, jitter=True):
+    """
+    Decorator for retrying a function with exponential backoff.
+    
+    Args:
+        max_retries: Maximum number of retry attempts
+        base_delay: Initial delay in seconds
+        max_delay: Maximum delay cap in seconds
+        jitter: Add random jitter to prevent thundering herd
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            retries = 0
+            while retries < max_retries:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    retries += 1
+                    if retries >= max_retries:
+                        print(f"❌ Max retries ({max_retries}) exceeded")
+                        raise e
+                    
+                    # Calculate exponential backoff: 2^retries * base_delay
+                    delay = min(base_delay * (2 ** (retries - 1)), max_delay)
+                    
+                    # Add jitter (randomize ±25%)
+                    if jitter:
+                        delay = delay * (0.75 + random.random() * 0.5)
+                    
+                    print(f"⚠️  Retry {retries}/{max_retries} after {delay:.2f}s: {e}")
+                    time.sleep(delay)
+            
+        return wrapper
+    return decorator
+
+# Usage Example
+@retry_with_backoff(max_retries=4, base_delay=1, jitter=True)
+def flaky_database_query():
+    """Simulates a database query that sometimes fails"""
+    import random
+    if random.random() < 0.6:  # 60% failure rate
+        raise Exception("Database connection timeout")
+    return {"data": "query result"}
+
+# Test the retry logic
+try:
+    result = flaky_database_query()
+    print(f"✅ Success: {result}")
+except Exception as e:
+    print(f"❌ Final failure: {e}")
+</code></pre>
+
+          <div class="alert alert-warning border mt-3">
+            <strong>⚠️ Idempotency Required:</strong> Only retry operations that are safe to execute multiple times
+            (idempotent). Charging a credit card multiple times is NOT idempotent—use idempotency keys!
+          </div>
+        </section>
+
+        <!-- Bulkhead Pattern -->
+        <section id="bulkhead" class="content-section">
+          <h2>Bulkhead Pattern</h2>
+          <p>Isolate resources to prevent a failure in one area from exhausting resources needed by other areas. The
+            name comes from ship bulkheads—watertight compartments that prevent the entire ship from sinking if one
+            compartment floods.</p>
+
+          <h4 class="mt-4">Resource Isolation Strategies</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">Thread Pool Isolation</h6>
+                <p class="small">Assign separate thread pools to different dependencies. If one pool is exhausted
+                  (dependency is slow), other services remain unaffected.</p>
+                <p class="small text-muted mb-0">Example: Payment API uses 10 threads, User API uses 10 threads.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">Connection Pool Isolation</h6>
+                <p class="small">Separate database connection pools for read-heavy vs write-heavy operations.</p>
+                <p class="small text-muted mb-0">Example: 50 connections for writes, 200 for reads.</p>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-4">Python Example: Thread Pool Bulkhead</h4>
+          <pre><code class="language-python">from concurrent.futures import ThreadPoolExecutor
+import time
+
+# Separate thread pools for different services
+payment_pool = ThreadPoolExecutor(max_workers=5, thread_name_prefix="payment")
+user_pool = ThreadPoolExecutor(max_workers=5, thread_name_prefix="user")
+
+def slow_payment_api():
+    """Simulates a slow payment service"""
+    time.sleep(5)  # Takes 5 seconds
+    return "Payment processed"
+
+def fast_user_api():
+    """Simulates a fast user service"""
+    time.sleep(0.1)  # Takes 100ms
+    return "User data fetched"
+
+# Submit 10 slow payment tasks
+for i in range(10):
+    payment_pool.submit(slow_payment_api)
+
+# User API remains fast despite payment API being overwhelmed
+start = time.time()
+future = user_pool.submit(fast_user_api)
+result = future.result()
+elapsed = time.time() - start
+
+print(f"✅ User API response: {result} in {elapsed:.2f}s")
+# Output: ✅ User API response: User data fetched in 0.10s
+# (Payment API slowness doesn't affect User API)
+</code></pre>
+
+          <div class="alert alert-light border mt-3">
+            <strong>When to Use:</strong> When you have multiple dependencies with different performance
+            characteristics.
+            Prevents a slow dependency from starving resources needed by fast dependencies.
+          </div>
+        </section>
+
+        <!-- Timeout Pattern -->
+        <section id="timeout" class="content-section">
+          <h2>Timeout Pattern</h2>
+          <p>Set maximum wait times for operations to prevent infinite hangs. A well-configured timeout prevents slow
+            dependencies from tying up resources indefinitely.</p>
+
+          <h4 class="mt-4">Timeout Guidelines</h4>
+          <ul>
+            <li><strong>Connect Timeout:</strong> Max time to establish a connection (typically 1-5 seconds)</li>
+            <li><strong>Read Timeout:</strong> Max time to receive a response after connection (5-30 seconds depending
+              on
+              operation)</li>
+            <li><strong>Total Timeout:</strong> Overall time budget for the entire operation (connect + read + retries)
+            </li>
+          </ul>
+
+          <h4 class="mt-4">Python Example: HTTP Timeouts</h4>
+          <pre><code class="language-python">import requests
+from requests.exceptions import Timeout
+
+def call_api_with_timeout():
+    """Call external API with proper timeouts"""
+    try:
+        # Tuple (connect_timeout, read_timeout)
+        response = requests.get(
+            "https://api.example.com/data",
+            timeout=(3, 10)  # 3s to connect, 10s to read
+        )
+        return response.json()
+    except Timeout as e:
+        print(f"⏱️ Timeout error: {e}")
+        # Fallback to cached data or return error
+        return {"error": "Service temporarily unavailable"}
+
+# You can also use a single timeout for both
+response = requests.get("https://api.example.com", timeout=5)  # Total 5 seconds
+</code></pre>
+
+          <div class="alert alert-warning border mt-3">
+            <strong>⚠️ Cascading Timeouts:</strong> Set timeouts for the full call chain. If Service A calls Service B
+            calls Service C, ensure timeouts decrease down the chain (A: 10s, B: 7s, C: 4s) to prevent deadlocks.
+          </div>
+        </section>
+
+        <!-- Fallback Pattern -->
+        <section id="fallback" class="content-section">
+          <h2>Fallback Pattern</h2>
+          <p>Provide alternative responses when primary operations fail. Instead of showing an error, degrade gracefully
+            with cached data or simplified functionality.</p>
+
+          <h4 class="mt-4">Fallback Strategies</h4>
+          <div class="pattern-card">
+            <h5>1. Cache Fallback</h5>
+            <p>Return stale cached data when the primary data source is unavailable.</p>
+            <p class="small text-muted mb-0">Example: Show last known product prices if the pricing service is down.</p>
+          </div>
+
+          <div class="pattern-card">
+            <h5>2. Default Value Fallback</h5>
+            <p>Return sensible defaults when computation fails.</p>
+            <p class="small text-muted mb-0">Example: Show "Recommendations unavailable" instead of crashing the page.
+            </p>
+          </div>
+
+          <div class="pattern-card">
+            <h5>3. Feature Toggle Fallback</h5>
+            <p>Disable non-critical features during outages.</p>
+            <p class="small text-muted mb-0">Example: Disable personalized recommendations, keep core checkout working.
+            </p>
+          </div>
+
+          <h4 class="mt-4">Python Example: Multi-Level Fallback</h4>
+          <pre><code class="language-python">import requests
+import json
+
+def get_user_recommendations(user_id):
+    """Get personalized recommendations with multiple fallback levels"""
+    
+    # Level 1: Try primary recommendation service
+    try:
+        response = requests.get(
+            f"https://api.example.com/recommendations/{user_id}",
+            timeout=2
+        )
+        if response.status_code == 200:
+            return response.json()
+    except Exception as e:
+        print(f"⚠️ Primary service failed: {e}")
+    
+    # Level 2: Try cache
+    try:
+        cache_key = f"recommendations:{user_id}"
+        cached = get_from_cache(cache_key)  # Your cache implementation
+        if cached:
+            print("📦 Returning cached recommendations")
+            return json.loads(cached)
+    except Exception as e:
+        print(f"⚠️ Cache failed: {e}")
+    
+    # Level 3: Return generic popular items
+    print("🔄 Returning default recommendations")
+    return {
+        "items": ["popular_item_1", "popular_item_2", "popular_item_3"],
+        "source": "default"
+    }
+
+def get_from_cache(key):
+    # Placeholder for cache implementation
+    return None
+</code></pre>
+        </section>
+
+        <!-- Health Checks -->
+        <section id="health-checks" class="content-section">
+          <h2>Health Checks & Monitoring</h2>
+          <p>Continuously monitor service health to detect failures early and trigger automated recovery.</p>
+
+          <h4 class="mt-4">Types of Health Checks</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">Liveness Probe</h6>
+                <p class="small">Is the service running?</p>
+                <p class="small mb-0">If fails: Restart the service.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">Readiness Probe</h6>
+                <p class="small">Is the service ready to handle requests?</p>
+                <p class="small mb-0">If fails: Remove from load balancer.</p>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-4">Python Health Check Endpoint</h4>
+          <pre><code class="language-python">from flask import Flask, jsonify
+import psycopg2
+
+app = Flask(__name__)
+
+@app.route('/health/liveness')
+def liveness():
+    """Simple check: is the app running?"""
+    return jsonify({"status": "ok"}), 200
+
+@app.route('/health/readiness')
+def readiness():
+    """Deep check: can the app handle requests?"""
+    health = {"status": "ok", "checks": {}}
+    
+    # Check database connection
+    try:
+        conn = psycopg2.connect("dbname=mydb user=postgres")
+        conn.close()
+        health["checks"]["database"] = "healthy"
+    except Exception as e:
+        health["status"] = "degraded"
+        health["checks"]["database"] = f"unhealthy: {e}"
+    
+    # Check external API dependency
+    try:
+        response = requests.get("https://api.example.com/health", timeout=2)
+        health["checks"]["external_api"] = "healthy" if response.ok else "unhealthy"
+    except Exception:
+        health["status"] = "degraded"
+        health["checks"]["external_api"] = "unreachable"
+    
+    status_code = 200 if health["status"] == "ok" else 503
+    return jsonify(health), status_code
+</code></pre>
+        </section>
+
+        <!-- Patterns Comparison -->
+        <section id="patterns-comparison" class="content-section">
+          <h2>Patterns Comparison</h2>
+          <p>Each pattern solves different failure scenarios. Often, you'll combine multiple patterns for defense in
+            depth.</p>
+
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered comparison-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%">Pattern</th>
+                  <th style="width: 30%">Problem Solved</th>
+                  <th style="width: 30%">When to Use</th>
+                  <th style="width: 20%">Combine With</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Circuit Breaker</strong></td>
+                  <td>Prevent cascading failures from slow/failing dependencies</td>
+                  <td>Calling external services, databases, microservices</td>
+                  <td>Fallback, Timeout</td>
+                </tr>
+                <tr>
+                  <td><strong>Retry</strong></td>
+                  <td>Recover from transient failures automatically</td>
+                  <td>Network blips, temporary service unavailability</td>
+                  <td>Timeout, Exponential Backoff</td>
+                </tr>
+                <tr>
+                  <td><strong>Bulkhead</strong></td>
+                  <td>Isolate failures to prevent resource exhaustion</td>
+                  <td>Multiple dependencies with different performance profiles</td>
+                  <td>Circuit Breaker</td>
+                </tr>
+                <tr>
+                  <td><strong>Timeout</strong></td>
+                  <td>Prevent infinite hangs from slow operations</td>
+                  <td>Every external call (API, database, file I/O)</td>
+                  <td>Retry, Fallback</td>
+                </tr>
+                <tr>
+                  <td><strong>Fallback</strong></td>
+                  <td>Provide alternative when primary operation fails</td>
+                  <td>Non-critical features, user-facing services</td>
+                  <td>Circuit Breaker, Cache</td>
+                </tr>
+                <tr>
+                  <td><strong>Health Checks</strong></td>
+                  <td>Detect failures early and trigger recovery</td>
+                  <td>All services in production</td>
+                  <td>Load Balancer, Auto-scaling</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Circuit Breaker</strong> prevents cascading failures by stopping calls to failing services.</li>
+            <li><strong>Retry with Exponential Backoff</strong> recovers from transient failures without overwhelming
+              services.</li>
+            <li><strong>Bulkhead</strong> isolates resources to prevent one failure from affecting the entire system.
+            </li>
+            <li><strong>Timeout</strong> prevents infinite hangs and resource leaks.</li>
+            <li><strong>Fallback</strong> provides graceful degradation instead of total failure.</li>
+            <li><strong>Health Checks</strong> enable early detection and automated recovery.</li>
+            <li>Combine multiple patterns for defense in depth—no single pattern is sufficient.</li>
+            <li>Always tune parameters (thresholds, timeouts, retries) based on real production metrics.</li>
+          </ul>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Golden Rule:</strong> Design for failure. Test failure scenarios regularly (chaos engineering).
+            Monitor
+            constantly. Fail fast, recover fast.
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Sidebar (Left) -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#introduction">Introduction</a>
+            <a class="nav-link" href="#circuit-breaker">Circuit Breaker</a>
+            <a class="nav-link" href="#retry-pattern">Retry Pattern</a>
+            <a class="nav-link" href="#bulkhead">Bulkhead Pattern</a>
+            <a class="nav-link" href="#timeout">Timeout Pattern</a>
+            <a class="nav-link" href="#fallback">Fallback Pattern</a>
+            <a class="nav-link" href="#health-checks">Health Checks</a>
+            <a class="nav-link" href="#patterns-comparison">Patterns Comparison</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../microservices-vs-monolith/"
+                class="text-decoration-none text-muted">Microservices
+                Architecture</a></li>
+            <li class="mb-2"><a href="../event-driven-architecture/"
+                class="text-decoration-none text-muted">Event-Driven
+                Architecture</a></li>
+            <li class="mb-2"><a href="../load-balancing/" class="text-decoration-none text-muted">Load Balancing</a>
+            </li>
+            <li class="mb-2"><a href="../rate-limiting/" class="text-decoration-none text-muted">Rate Limiting</a></li>
+          </ul>
+        </div>
+      </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
