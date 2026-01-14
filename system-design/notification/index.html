@@ -1,89 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Production-Ready Scalable Notification System - System Design | Brijesh Patel</title>
-<meta name="description" content="Complete system design for a production-ready scalable notification system handling millions of notifications daily across Email, SMS, Push, WhatsApp channels with high availability and fault tolerance.">
-<meta name="author" content="Brijesh Patel">
-<meta name="keywords" content="notification system, system design, microservices, scalable architecture, kafka, postgresql, redis, email notifications, sms notifications, push notifications">
-<link rel="canonical" href="https://brijesh.work/system-design/notification/" />
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Production-Ready Scalable Notification System - Complete Design" />
-<meta property="og:description" content="Comprehensive system design for handling millions of notifications daily with multi-channel delivery, fault tolerance, and horizontal scaling capabilities." />
-<meta property="og:url" content="https://brijesh.work/system-design/notification/" />
-<meta property="og:site_name" content="Brijesh Patel - System Design" />
-<meta property="article:published_time" content="2025-10-02T14:21:15+00:00" />
-<meta property="article:modified_time" content="2025-10-02T14:21:15+00:00" />
-<meta property="og:image" content="https://brijesh.work/system-design/notification/notification-system-architecture.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:type" content="image/png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@brijeshwork" />
-<meta name="twitter:label1" content="Written by" />
-<meta name="twitter:data1" content="Brijesh Patel" />
-<meta name="twitter:label2" content="Est. reading time" />
-<meta name="twitter:data2" content="45 minutes" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notification System Design | Architecture, Rate Limiting, Prioritization & Deduplication</title>
+    <meta name="description"
+        content="Production-ready system design for a scalable notification service: High-level architecture, message queues (Kafka/RabbitMQ), rate limiting, deductive, priority queues (OTP vs Marketing), and database schema.">
+    <meta name="keywords"
+        content="notification system, system design, kafka, rabbitmq, rate limiting, prioritization, deduplication, celery, python, scalability">
+    <meta name="author" content="Brijesh Patel">
+    <link rel="canonical" href="https://brijesh.work/system-design/notification/" />
 
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Shared System Design Theme */
+        .hero-section {
+            background: linear-gradient(135deg, #be185d 0%, #881337 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .hero-subtitle {
+            color: #fbcfe8;
+            font-size: 1.25rem;
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .sidebar-toc .nav-link {
+            color: #64748b;
+            padding: 0.25rem 0;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-toc .nav-link:hover,
+        .sidebar-toc .nav-link.active {
+            color: #be185d;
+            font-weight: 500;
+        }
+
+        .content-section {
+            margin-bottom: 3rem;
+        }
+
+        .tech-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            height: 100%;
+            background: #f8fafc;
+            transition: transform 0.2s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background-color: #f1f5f9;
+        }
+
+        .badge-soft {
+            background-color: rgba(190, 24, 93, 0.1);
+            color: #be185d;
+            padding: 0.5em 0.8em;
+        }
+
+        .architecture-diagram {
+            background: #fff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .arch-step {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.25rem;
+            margin: 0.5rem;
+            font-weight: bold;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 991px) {
+            .order-lg-1 {
+                order: 2;
+            }
+
+            .order-lg-2 {
+                order: 1;
+            }
+        }
+    </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
+<body class="bg-white">
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-<!-- Prism.js for syntax highlighting -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <span
+                        class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-25 text-white border border-white border-opacity-25">Scalable
+                        Architecture</span>
+                    <h1 class="display-4 fw-bold mb-3">Notification System Design</h1>
+                    <p class="hero-subtitle mb-4">Designing a multi-channel notification service engine: Priority
+                        queues, rate limiting, deduplication, and reliable delivery at scale.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#architecture" class="btn btn-light text-pink fw-bold" style="color: #be185d;">See
+                            Architecture</a>
+                        <a href="#prioritization" class="btn btn-outline-light">Prioritization Strategy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Custom JavaScript for navigation -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
+    <div class="container pb-5">
+        <div class="row">
+
+            <!-- Main Content -->
+            <main class="col-lg-9 order-lg-2">
+
+                <!-- Architecture -->
+                <section id="architecture" class="content-section">
+                    <h2>High-Level Architecture</h2>
+                    <p class="lead text-secondary">A decoupled architecture using Message Queues is essential to
+                        separate the API (ingestion) from the Workers (delivery).</p>
+
+                    <div class="architecture-diagram d-none d-md-block">
+                        <div class="arch-step">Service A</div>
+                        <span class="arrow">→</span>
+                        <div class="arch-step bg-white border-primary text-primary">Notification<br>Service API</div>
+                        <span class="arrow">→</span>
+                        <div class="arch-step bg-dark text-white">Kafka / RabbitMQ</div>
+                        <span class="arrow">→</span>
+                        <div class="arch-step bg-success text-white">Workers</div>
+                        <span class="arrow">→</span>
+                        <div class="arch-step">3rd Party<br>(SES/Twilio/FCM)</div>
+                    </div>
+
+                    <h4 class="mt-4">Component Breakdown</h4>
+                    <div class="row mt-3">
+                        <div class="col-md-6 mb-3">
+                            <div class="tech-card">
+                                <h5 class="fw-bold mb-2">1. Notification Service (API)</h5>
+                                <p class="small text-secondary">Entry point. Validates inputs, checks user preferences
+                                    (Opt-in/out), performs rate limiting, and publishes to the message queue.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="tech-card">
+                                <h5 class="fw-bold mb-2">2. Message Queue</h5>
+                                <p class="small text-secondary">Buffers bursts of traffic. Provides reliable
+                                    persistence. Examples: RabbitMQ (for complex routing) or Kafka (for high
+                                    throughput).</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="tech-card">
+                                <h5 class="fw-bold mb-2">3. Workers</h5>
+                                <p class="small text-secondary">Consume messages. Render templates. Call external
+                                    providers (SendGrid, Twilio, FCM). Handle retry logic.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="tech-card">
+                                <h5 class="fw-bold mb-2">4. Database & Cache</h5>
+                                <p class="small text-secondary"><strong>Postgres:</strong> Stores notification logs,
+                                    templates, user settings.<br><strong>Redis:</strong> Stores deduplication keys and
+                                    rate limit counters.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Prioritization -->
+                <section id="prioritization" class="content-section">
+                    <h2>Prioritization Strategy</h2>
+                    <p>Not all notifications are equal. OTPs must arrive within seconds; marketing emails can wait
+                        hours.</p>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Priority Level</th>
+                                    <th>Examples</th>
+                                    <th>SLA Latency</th>
+                                    <th>Queue Implementation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge bg-danger">CRITICAL</span></td>
+                                    <td>OTP, Password Reset, Fraud Alert</td>
+                                    <td>&lt; 5 seconds</td>
+                                    <td>Dedicated <strong>High Priority Queue</strong> requiring low latency consumers.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-primary">NORMAL</span></td>
+                                    <td>Order Confirmation, Friend Request</td>
+                                    <td>&lt; 1 minute</td>
+                                    <td>Standard Queue.</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge bg-secondary">LOW</span></td>
+                                    <td>Weekly Newsletter, Promotional Offers</td>
+                                    <td>Hours</td>
+                                    <td>Bulk Queue (processed only when idle or at night).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Deduplication -->
+                <section id="deduplication" class="content-section">
+                    <h2>Deduplication Logic</h2>
+                    <p>Prevents spamming the user if a service erroneously retries the same event multiple times.</p>
+
+                    <h5 class="mt-4">How it works (Redis Cache-Aside)</h5>
+                    <ol>
+                        <li>Generate a unique <strong>deduplication key</strong>:
+                            <code>hash(user_id + event_type + content_id)</code>.</li>
+                        <li>Check if key exists in Redis.</li>
+                        <li>If exists → <strong>Discard</strong> (Duplicate).</li>
+                        <li>If checks pass → <strong>Store</strong> key in Redis with TTL (e.g., 5 mins) and proceed.
+                        </li>
+                    </ol>
+
+                    <pre><code class="language-python"># Python Example: Start Deduplication
+import hashlib
+
+def should_send_notification(user_id, event_type, content_id):
+    # Create unique key
+    raw_key = f"{user_id}:{event_type}:{content_id}"
+    dedup_key = hashlib.sha256(raw_key.encode()).hexdigest()
     
-    // Update active navigation on scroll
-    window.addEventListener('scroll', function() {
-        let current = '';
-        const sections = document.querySelectorAll('section[id]');
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (scrollY >= (sectionTop - 200)) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        // Update sidebar navigation
-        document.querySelectorAll('#sidebar .nav-link').forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
-        });
-    });
-});
-</script>
+    # Check Redis (SETNX returns 1 if set, 0 if already exists)
+    is_new = redis_client.set(dedup_key, "1", ex=300, nx=True)
+    
+    return bool(is_new)</code></pre>
+                </section>
 
-<script>includeHTML();</script>
+                <!-- Scalability & Reliability -->
+                <section id="reliability" class="content-section">
+                    <h2>Reliability & Retry Mechanism</h2>
+                    <p>External providers (Twilio, SendGrid) can fail. We need a robust retry strategy.</p>
+
+                    <h4 class="mt-4">Architecture for Retries</h4>
+                    <ul>
+                        <li><strong>Retry Queue:</strong> If a worker fails to send, push the message to a "Retry Queue"
+                            with a delay.</li>
+                        <li><strong>Exponential Backoff:</strong> Wait 1s, 2s, 4s, 8s... to avoid thundering herd on
+                            recovery.</li>
+                        <li><strong>Dead Letter Queue (DLQ):</strong> After Max Retries (e.g., 5), move to DLQ for
+                            manual inspection.</li>
+                    </ul>
+
+                    <div class="alert alert-warning border border-warning mt-3">
+                        <strong>Rate Limiting:</strong> Use Token Bucket algorithm. Example: Max 5 SMS per user per hour
+                        in `Redis` to prevent abuse/cost spikes.
+                    </div>
+                </section>
+
+                <!-- DB Design -->
+                <section id="schema" class="content-section">
+                    <h2>Database Schema</h2>
+                    <pre><code class="language-sql">-- User Preferences (Opt-in/out)
+CREATE TABLE notification_settings (
+  user_id UUID PRIMARY KEY,
+  email_enabled BOOLEAN DEFAULT TRUE,
+  sms_enabled BOOLEAN DEFAULT FALSE,
+  push_enabled BOOLEAN DEFAULT TRUE,
+  dnd_start_time TIME, -- Do Not Disturb
+  dnd_end_time TIME
+);
+
+-- Notification Logs (For audit & history)
+CREATE TABLE notification_logs (
+  id UUID PRIMARY KEY,
+  user_id UUID,
+  type VARCHAR(20), -- 'email', 'sms'
+  status VARCHAR(20), -- 'sent', 'failed', 'queued'
+  content TEXT,
+  provider_response JSONB, -- Store external ID
+  created_at TIMESTAMP DEFAULT NOW()
+);</code></pre>
+                </section>
+
+                <section class="content-section border-top pt-5">
+                    <h2>Summary</h2>
+                    <ul>
+                        <li>Use <strong>Message Queues</strong> to decouple intake from delivery.</li>
+                        <li>Implement <strong>Priority Queues</strong> to ensure OTPs aren't blocked by newsletters.
+                        </li>
+                        <li>Use <strong>Deduplication</strong> logic with Redis to prevent spam.</li>
+                        <li>Handle <strong>Retries</strong> with exponential backoff and Dead Letter Queues.</li>
+                        <li>Respect <strong>User Preferences</strong> and Rate Limits at the API level.</li>
+                    </ul>
+                </section>
+
+            </main>
+
+            <!-- Sidebar -->
+            <aside class="col-lg-3 order-lg-1 mb-4">
+                <div class="sidebar-sticky">
+                    <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+                    <nav class="nav flex-column sidebar-toc">
+                        <a class="nav-link" href="#architecture">High-Level Architecture</a>
+                        <a class="nav-link" href="#prioritization">Prioritization</a>
+                        <a class="nav-link" href="#deduplication">Deduplication Logic</a>
+                        <a class="nav-link" href="#reliability">Reliability & Retries</a>
+                        <a class="nav-link" href="#schema">Database Schema</a>
+                    </nav>
+
+                    <hr class="my-4">
+                    <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="../fault-tolerant-patterns/"
+                                class="text-decoration-none text-muted">Fault-Tolerant Patterns</a></li>
+                        <li class="mb-2"><a href="../event-driven-architecture/"
+                                class="text-decoration-none text-muted">Event-Driven Architecture</a></li>
+                        <li class="mb-2"><a href="../microservices-vs-monolith/"
+                                class="text-decoration-none text-muted">Microservices</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script>includeHTML();</script>
 </body>
+
 </html>
