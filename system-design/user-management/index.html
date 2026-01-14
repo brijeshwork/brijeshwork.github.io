@@ -1,49 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Designing a Robust User Management System — System Design | Brijesh Patel</title>
-<meta name="description" content="Design patterns for building user management systems: authentication, roles, permissions, onboarding, and secure user lifecycle management.">
-<link rel="canonical" href="https://brijesh.work/system-design/user-management/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Management System Design | Data Models, API, Security & Privacy</title>
+  <meta name="description"
+    content="Comprehensive guide to designing user management systems: SQL data modeling, secure password hashing (Argon2), RESTful API design, GDPR/PII protection, and handling auth providers.">
+  <meta name="keywords"
+    content="user management, system design, data modeling, database schema, password hashing, argon2, pii, gdpr, api design, authentication">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/user-management/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #cbd5e1;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0ea5e9;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(14, 165, 233, 0.1);
+      color: #0ea5e9;
+      padding: 0.5em 0.8em;
+    }
+
+    .security-note {
+      border-left: 4px solid #f59e0b;
+      background: #fffbeb;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+
+    .db-schema {
+      background: #282c34;
+      color: #abb2bf;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      font-family: monospace;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a Robust User Management System</h1>
-        <p class="lead">Auth, account lifecycle, roles & permissions, password policies, and secure onboarding for large applications.</p>
 
-        <h2 id="core-components">Core components</h2>
-        <ul>
-          <li>Identity store (users, credentials, metadata)</li>
-          <li>Authentication service (session, token, MFA)</li>
-          <li>Authorization service (RBAC / ABAC)</li>
-          <li>Account management (password reset, email verification)</li>
-          <li>Audit & compliance logging</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="links">Related articles</h2>
-        <ul>
-          <li><a href="../rbac/">RBAC Patterns</a></li>
-          <li><a href="../jwt-authentication/">JWT Authentication</a></li>
-          <li><a href="../session-vs-token/">Session vs Token</a></li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-info bg-opacity-25 text-white border border-white border-opacity-25">Core
+            Infrastructure</span>
+          <h1 class="display-4 fw-bold mb-3">User Management System Design</h1>
+          <p class="hero-subtitle mb-4">Designing robust account systems: Data modeling, secure password storage
+            (Argon2), API design, and privacy compliance (GDPR/PII).</p>
+          <div class="d-flex gap-3">
+            <a href="#schema" class="btn btn-info text-white fw-bold">View SQL Schema</a>
+            <a href="#security" class="btn btn-outline-light">Security & Hashing</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#core-components">Core components</a></li><li><a href="#links">Related articles</a></li></ul></div></div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Core Components -->
+        <section id="components" class="content-section">
+          <h2>Core Components</h2>
+          <p class="lead text-secondary">A modern user management system isn't just a "users" table. It requires
+            separation of concerns for security, scalability, and compliance.</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🆔 Identity Service</h5>
+                <p>Handles core authentication credentials (email/password, OAuth links). Optimized for fast lookups
+                  during login.</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">👤 Profile Service</h5>
+                <p>Stores non-essential user data (avatar, bio, preferences). Can scale independently and use different
+                  storage (e.g., NoSQL).</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🛡️ Auth Service</h5>
+                <p>Issues and validates tokens (JWT/Session). Coordinates with Identity Service to verify credentials.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">⚖️ Compliance / Audit</h5>
+                <p>Tracks user activities (login IPs, changes) and handles GDPR/CCPA requests (Right to be Forgotten).
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Data Modeling -->
+        <section id="schema" class="content-section">
+          <h2>Data Modeling & SQL Schema</h2>
+          <p>Proper normalization and separation of credentials from profile data is crucial.</p>
+
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="db-schema">
+                <span style="color:#c678dd">CREATE TABLE</span> users (<br>
+                &nbsp;&nbsp;id <span style="color:#e5c07b">UUID</span> <span style="color:#56b6c2">PRIMARY KEY
+                  DEFAULT</span> gen_random_uuid(),<br>
+                &nbsp;&nbsp;email <span style="color:#e5c07b">VARCHAR(255)</span> <span style="color:#56b6c2">UNIQUE NOT
+                  NULL</span>,<br>
+                &nbsp;&nbsp;password_hash <span style="color:#e5c07b">VARCHAR(255)</span>, <span
+                  style="color:#7f848e">-- Nullable for OAuth users</span><br>
+                &nbsp;&nbsp;is_verified <span style="color:#e5c07b">BOOLEAN DEFAULT FALSE</span>,<br>
+                &nbsp;&nbsp;status <span style="color:#e5c07b">VARCHAR(20) DEFAULT</span> <span
+                  style="color:#98c379">'active'</span>, <span style="color:#7f848e">-- active, suspended,
+                  deleted</span><br>
+                &nbsp;&nbsp;created_at <span style="color:#e5c07b">TIMESTAMP DEFAULT NOW()</span>,<br>
+                &nbsp;&nbsp;last_login_at <span style="color:#e5c07b">TIMESTAMP</span><br>
+                );<br>
+                <br>
+                <span style="color:#c678dd">CREATE TABLE</span> user_profiles (<br>
+                &nbsp;&nbsp;user_id <span style="color:#e5c07b">UUID REFERENCES</span> users(id) <span
+                  style="color:#56b6c2">ON DELETE CASCADE</span>,<br>
+                &nbsp;&nbsp;full_name <span style="color:#e5c07b">VARCHAR(100)</span>,<br>
+                &nbsp;&nbsp;avatar_url <span style="color:#e5c07b">TEXT</span>,<br>
+                &nbsp;&nbsp;phone_number <span style="color:#e5c07b">VARCHAR(20)</span>, <span style="color:#7f848e">--
+                  Encrypt this if PII sensitive</span><br>
+                &nbsp;&nbsp;preferences <span style="color:#e5c07b">JSONB DEFAULT</span> <span
+                  style="color:#98c379">'{}'</span><br>
+                );<br>
+                <br>
+                <span style="color:#c678dd">CREATE TABLE</span> social_logins (<br>
+                &nbsp;&nbsp;id <span style="color:#e5c07b">UUID PRIMARY KEY</span>,<br>
+                &nbsp;&nbsp;user_id <span style="color:#e5c07b">UUID REFERENCES</span> users(id),<br>
+                &nbsp;&nbsp;provider <span style="color:#e5c07b">VARCHAR(50)</span>, <span style="color:#7f848e">--
+                  'google', 'github'</span><br>
+                &nbsp;&nbsp;provider_id <span style="color:#e5c07b">VARCHAR(255)</span>,<br>
+                &nbsp;&nbsp;<span style="color:#56b6c2">UNIQUE</span>(provider, provider_id)<br>
+                );
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- API Design -->
+        <section id="api" class="content-section">
+          <h2>REST Implementation</h2>
+          <p>Clean, resource-oriented API endpoints for user lifecycle management.</p>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Description</th>
+                <th>Auth Required</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge bg-success">POST</span></td>
+                <td><code>/api/v1/auth/register</code></td>
+                <td>Create new user account</td>
+                <td>❌ No</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-success">POST</span></td>
+                <td><code>/api/v1/auth/login</code></td>
+                <td>Authenticate and receive tokens</td>
+                <td>❌ No</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-primary">GET</span></td>
+                <td><code>/api/v1/users/me</code></td>
+                <td>Get current user profile</td>
+                <td>✅ Yes</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-warning text-dark">PUT</span></td>
+                <td><code>/api/v1/users/me</code></td>
+                <td>Update profile details</td>
+                <td>✅ Yes</td>
+              </tr>
+              <tr>
+                <td><span class="badge bg-success">POST</span></td>
+                <td><code>/api/v1/auth/reset-password</code></td>
+                <td>Request password reset email</td>
+                <td>❌ No</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="mt-4">
+            <h5>Python Registration Example (Flask)</h5>
+            <pre><code class="language-python">from flask import Flask, request, jsonify
+from argon2 import PasswordHasher
+from sqlalchemy.exc import IntegrityError
+import uuid
+
+app = Flask(__name__)
+ph = PasswordHasher()
+
+@app.route('/api/v1/auth/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    full_name = data.get('full_name')
+
+    # Security: Hash password using Argon2id (Slow hashing)
+    try:
+        password_hash = ph.hash(password)
+    except Exception:
+        return jsonify({"error": "Password processing failed"}), 500
+
+    try:
+        # Create User Transaction
+        user_id = str(uuid.uuid4())
+        # db.execute("INSERT INTO users (id, email, password_hash) VALUES ...", ...)
+        # db.execute("INSERT INTO user_profiles (user_id, full_name) VALUES ...", ...)
+        
+        return jsonify({
+            "id": user_id, 
+            "message": "User registered successfully."
+        }), 201
+    except IntegrityError:
+        return jsonify({"error": "Email already exists"}), 409</code></pre>
+          </div>
+        </section>
+
+        <!-- Security -->
+        <section id="security" class="content-section">
+          <h2>Security & Password Hashing</h2>
+
+          <div class="alert alert-warning border border-warning">
+            <strong>⛔ DO NOT Use:</strong> MD5, SHA1, SHA256, or plain text. Fast hashes are vulnerable to brute-force
+            attacks.
+          </div>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Type</th>
+                <th>Recommendation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Argon2id</strong></td>
+                <td>Memory-hard</td>
+                <td><span class="badge bg-success">✅ Gold Standard</span> Winner of Password Hashing Competition.</td>
+              </tr>
+              <tr>
+                <td><strong>bcrypt</strong></td>
+                <td>CPU-hard</td>
+                <td><span class="badge bg-success">✅ Excellent</span> Trusted, widely supported (Work factor > 12).</td>
+              </tr>
+              <tr>
+                <td><strong>scrypt</strong></td>
+                <td>Memory-hard</td>
+                <td><span class="badge bg-warning text-dark">⚠️ Good</span> Better than bcrypt, but Argon2 is preferred.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>PBKDF2</strong></td>
+                <td>CPU-hard</td>
+                <td><span class="badge bg-secondary">🆗 Acceptable</span> NIST approved, but less resistant to
+                  FPGA/ASIC.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h5 class="mt-4">Salting & Peppering</h5>
+          <ul>
+            <li><strong>Salt:</strong> Unique random string per user, stored with hash. Prevents Rainbow Table attacks.
+              (Handled automatically by libraries like Argon2/bcrypt).</li>
+            <li><strong>Pepper:</strong> Secret key stored <em>separate</em> from DB (e.g., config file or KMS). Added
+              to password before hashing. Protects hashes if DB is dumped.</li>
+          </ul>
+        </section>
+
+        <!-- Privacy & PII -->
+        <section id="privacy" class="content-section">
+          <h2>Privacy, GDPR & PII</h2>
+          <p>Handling Personally Identifiable Information requires strict governance.</p>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="tech-card border-start border-4 border-danger">
+                <h5 class="fw-bold">Encryption at Rest</h5>
+                <p class="small">Encrypt sensitive columns (phone, address, SSN) using AES-256 before writing to DB. Use
+                  database-level function or application-level encryption.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card border-start border-4 border-primary">
+                <h5 class="fw-bold">Right to be Forgotten</h5>
+                <p class="small">Design a "Soft Delete" vs "Hard Delete" strategy. Hard delete PII upon request, but
+                  maybe keep anonymized IDs for logs.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card border-start border-4 border-info">
+                <h5 class="fw-bold">Data Minimization</h5>
+                <p class="small">Don't store what you don't need. Do you really need their birth date? If not, don't
+                  ask.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li>Separate <strong>Identity</strong> (Auth) from <strong>Profile</strong> (Data) tables.</li>
+            <li>Use <strong>Argon2id</strong> for password hashing; it resists GPU/ASIC cracking better than bcrypt.
+            </li>
+            <li>Use <strong>UUIDs</strong> for user IDs instead of auto-incrementing integers (unpredictable,
+              merge-friendly).</li>
+            <li>Encrypt <strong>PII</strong> fields at rest to comply with GDPR/CCPA.</li>
+            <li>Implement <strong>Soft Delete</strong> (`deleted_at` column) for data recovery, but support Hard Delete
+              for compliance.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#components">Core Components</a>
+            <a class="nav-link" href="#schema">DB Schema</a>
+            <a class="nav-link" href="#api">API Design</a>
+            <a class="nav-link" href="#security">Security & Hashing</a>
+            <a class="nav-link" href="#privacy">GDPR & PII</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../jwt-authentication/" class="text-decoration-none text-muted">JWT
+                Authentication</a></li>
+            <li class="mb-2"><a href="../rbac/" class="text-decoration-none text-muted">RBAC Systems</a></li>
+            <li class="mb-2"><a href="../session-vs-token/" class="text-decoration-none text-muted">Session vs Token</a>
+            </li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
