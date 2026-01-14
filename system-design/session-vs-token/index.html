@@ -1,50 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Session vs Token Authentication — System Design | Brijesh Patel</title>
-<meta name="description" content="Compare session-based authentication vs token-based (JWT) authentication: trade-offs, revocation, scaling and best practices.">
-<link rel="canonical" href="https://brijesh.work/system-design/session-vs-token/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Session vs Token Authentication Guide | Complete Comparison & Best Practices</title>
+  <meta name="description"
+    content="Complete guide to Session vs Token authentication: detailed comparison, implementation examples, security considerations, scalability analysis, and when to use each approach.">
+  <meta name="keywords"
+    content="session authentication, token authentication, JWT, cookies, stateful vs stateless, refresh tokens, authentication comparison">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/session-vs-token/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Custom styles matching other system design pages */
+    .hero-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #94a3b8;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0d6efd;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+      padding: 0.5em 0.8em;
+    }
+
+    .flow-diagram {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      font-family: monospace;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Session vs Token Authentication</h1>
-        <p class="lead">A practical comparison of session-based and token-based authentication with implementation recommendations for scalable systems.</p>
 
-        <h2 id="comparison">Comparison</h2>
-        <table class="table">
-          <thead><tr><th>Aspect</th><th>Session</th><th>Token (JWT)</th></tr></thead>
-          <tbody>
-            <tr><td>State</td><td>Server-side state (session store)</td><td>Stateless tokens (JWT)</td></tr>
-            <tr><td>Revocation</td><td>Easy (invalidate session)</td><td>Hard (requires revocation list / short TTL)</td></tr>
-            <tr><td>Scaling</td><td>Session store needed</td><td>Scales with CDN / edge</td></tr>
-          </tbody>
-        </table>
+<body class="bg-white">
 
-        <h2 id="recommendations">Recommendations</h2>
-        <ul>
-          <li>Use short-lived JWT with refresh tokens for public APIs</li>
-          <li>Use session-store for highly-sensitive admin flows with server-side revocation</li>
-          <li>Consider hybrid approaches: JWT for edge, session for critical operations</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-primary bg-opacity-25 text-white border border-white border-opacity-25">Authentication
+            Strategy</span>
+          <h1 class="display-4 fw-bold mb-3">Session vs Token Authentication</h1>
+          <p class="hero-subtitle mb-4">Understand the trade-offs between session-based and token-based authentication.
+            Choose the right approach for your application's security and scalability needs.</p>
+          <div class="d-flex gap-3">
+            <a href="#comparison" class="btn btn-primary">Compare Approaches</a>
+            <a href="#decision-guide" class="btn btn-outline-light">Decision Guide</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../jwt-authentication/">JWT Authentication</a></li><li><a href="../user-management/">User Management</a></li></ul></div></div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Introduction -->
+        <section id="introduction" class="content-section">
+          <h2>Authentication Fundamentals</h2>
+          <p class="lead text-secondary">Authentication verifies user identity. The question is: where do you store the
+            authentication state?</p>
+          <p>Every web application needs to authenticate users. Once a user logs in, subsequent requests must prove they
+            are who they claim to be. There are two fundamentally different approaches:</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🍪 Session-Based (Stateful)</h5>
+                <p class="small mb-2">Server stores session data. Client receives a session ID cookie. Server looks up
+                  session data on every request.</p>
+                <p class="small text-muted mb-0"><strong>Storage:</strong> Server-side (Redis, database)</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🎫 Token-Based (Stateless)</h5>
+                <p class="small mb-2">Server signs a token (JWT) containing user data. Client stores token
+                  (localStorage,
+                  cookie). Server verifies signature on every request.</p>
+                <p class="small text-muted mb-0"><strong>Storage:</strong> Client-side (browser)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Key Insight:</strong> Sessions require server-side state, tokens are stateless. This fundamental
+            difference drives all the trade-offs discussed below.
+          </div>
+        </section>
+
+        <!-- Session-Based Authentication -->
+        <section id="session-based" class="content-section">
+          <h2>Session-Based Authentication</h2>
+          <p>The traditional approach used by monolithic web applications. The server maintains a session store
+            (in-memory,
+            Redis, database) that maps session IDs to user data.</p>
+
+          <h4 class="mt-4">How It Works</h4>
+          <div class="flow-diagram">
+            <strong>Login Flow:</strong><br>
+            1. User submits credentials (username/password)<br>
+            2. Server validates credentials<br>
+            3. Server creates session object: { userId: 123, email: "user@example.com", createdAt: ... }<br>
+            4. Server stores session in Redis/DB with key: "session:abc123"<br>
+            5. Server sends session ID as HTTP-only cookie: Set-Cookie: sessionId=abc123<br>
+            <br>
+            <strong>Subsequent Requests:</strong><br>
+            1. Browser automatically sends cookie: Cookie: sessionId=abc123<br>
+            2. Server retrieves session from store: GET session:abc123<br>
+            3. Server validates session (not expired, user exists)<br>
+            4. Server attaches user data to request context<br>
+            5. Request proceeds
+          </div>
+
+          <h4 class="mt-4">Implementation Example (Python/Flask)</h4>
+          <pre><code class="language-python">from flask import Flask, request, jsonify, session
+from flask_session import Session
+import redis
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your-secret-key'
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = redis.StrictRedis(host='localhost', port=6379)
+Session(app)
+
+@app.route('/login', methods=['POST'])
+def login():
+    """Login endpoint - create session"""
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    
+    # Validate credentials (check database)
+    user = validate_user(username, password)  # Your validation logic
+    if not user:
+        return jsonify({"error": "Invalid credentials"}), 401
+    
+    # Create session (stored in Redis automatically by flask-session)
+    session['user_id'] = user['id']
+    session['email'] = user['email']
+    session['role'] = user['role']
+    
+    return jsonify({"message": "Login successful"}), 200
+
+@app.route('/profile')
+def profile():
+    """Protected route - requires session"""
+    if 'user_id' not in session:
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    user_id = session['user_id']
+    # Fetch user data from database
+    return jsonify({"user_id": user_id, "email": session['email']})
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    """Logout - destroy session"""
+    session.clear()  # Removes session from Redis
+    return jsonify({"message": "Logged out"}), 200
+
+def validate_user(username, password):
+    # Placeholder for database validation
+    return {"id": 123, "email": "user@example.com", "role": "user"}
+</code></pre>
+
+          <h4 class="mt-4">Benefits</h4>
+          <ul>
+            <li><strong>Easy Revocation:</strong> Logout is immediate—just delete the session from the store.</li>
+            <li><strong>Server Control:</strong> Can update session data without client involvement (e.g., change user
+              roles
+              mid-session).</li>
+            <li><strong>Security:</strong> Session ID in HTTP-only cookie prevents XSS attacks (JavaScript can't access
+              it).
+            </li>
+            <li><strong>Auditing:</strong> Easy to track active sessions, concurrent logins, and user activity.</li>
+          </ul>
+
+          <h4 class="mt-4">Drawbacks</h4>
+          <ul>
+            <li><strong>Server-Side Storage Required:</strong> Need Redis, Memcached, or database for session store.
+            </li>
+            <li><strong>Horizontal Scaling Complexity:</strong> All servers must access the same session store (sticky
+              sessions or shared store).</li>
+            <li><strong>Database Dependency:</strong> Every authenticated request queries the session store.</li>
+            <li><strong>CORS Complexity:</strong> Cookies don't work well with cross-origin requests from different
+              domains.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Token-Based Authentication -->
+        <section id="token-based" class="content-section">
+          <h2>Token-Based Authentication (JWT)</h2>
+          <p>Modern approach favored by APIs and mobile apps. The server signs a JWT containing user data and sends it
+            to
+            the client. The client includes the token in every request.</p>
+
+          <h4 class="mt-4">What is JWT?</h4>
+          <p>JSON Web Token (JWT) is a compact, self-contained token with three parts:</p>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">Header</h6>
+                <p class="small mb-0">Algorithm and token type<br><code>{"alg": "RS256", "typ": "JWT"}</code></p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">Payload</h6>
+                <p class="small mb-0">User claims (ID, roles,
+                  expiration)<br><code>{"sub": "123", "exp": 1234567890}</code>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">Signature</h6>
+                <p class="small mb-0">Cryptographic signature to verify authenticity</p>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-4">How It Works</h4>
+          <div class="flow-diagram">
+            <strong>Login Flow:</strong><br>
+            1. User submits credentials<br>
+            2. Server validates credentials<br>
+            3. Server creates JWT payload: { sub: "123", email: "user@example.com", exp: 1h }<br>
+            4. Server signs JWT with private key: token = sign(payload, privateKey)<br>
+            5. Server sends JWT to client: { "access_token": "eyJhbGciOi..." }<br>
+            6. Client stores token (localStorage, cookie, memory)<br>
+            <br>
+            <strong>Subsequent Requests:</strong><br>
+            1. Client sends token in header: Authorization: Bearer eyJhbGciOi...<br>
+            2. Server extracts token from header<br>
+            3. Server verifies signature with public key<br>
+            4. Server checks expiration (exp claim)<br>
+            5. Server extracts user data from payload<br>
+            6. Request proceeds (no database lookup needed!)
+          </div>
+
+          <h4 class="mt-4">Implementation Example (Python)</h4>
+          <pre><code class="language-python">import jwt
+from datetime import datetime, timedelta
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+SECRET_KEY = "your-secret-key"  # Use RS256 with public/private keys in production
+
+@app.route('/login', methods=['POST'])
+def login():
+    """Login endpoint - issue JWT"""
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+    
+    # Validate credentials
+    user = validate_user(username, password)
+    if not user:
+        return jsonify({"error": "Invalid credentials"}), 401
+    
+    # Create JWT payload
+    payload = {
+        "sub": user['id'],  # Subject (user ID)
+        "email": user['email'],
+        "role": user['role'],
+        "exp": datetime.utcnow() + timedelta(hours=1),  # Expires in 1 hour
+        "iat": datetime.utcnow()  # Issued at
+    }
+    
+    # Sign JWT
+    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+    
+    return jsonify({
+        "access_token": token,
+        "token_type": "Bearer",
+        "expires_in": 3600
+    }), 200
+
+@app.route('/profile')
+def profile():
+    """Protected route - requires JWT"""
+    auth_header = request.headers.get('Authorization')
+    if not auth_header or not auth_header.startswith('Bearer '):
+        return jsonify({"error": "Missing or invalid Authorization header"}), 401
+    
+    token = auth_header.split(' ')[1]
+    
+    try:
+        # Verify signature and decode payload
+        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        user_id = payload['sub']
+        email = payload['email']
+        
+        return jsonify({"user_id": user_id, "email": email})
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token has expired"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid token"}), 401
+
+def validate_user(username, password):
+    return {"id": 123, "email": "user@example.com", "role": "user"}
+</code></pre>
+
+          <h4 class="mt-4">Benefits</h4>
+          <ul>
+            <li><strong>Stateless & Scalable:</strong> No server-side session store needed. Servers don't share state.
+            </li>
+            <li><strong>Horizontal Scaling:</strong> Any server can validate any token (just needs the public key).</li>
+            <li><strong>Cross-Domain Friendly:</strong> Works seamlessly with CORS and different domains.</li>
+            <li><strong>Mobile-Friendly:</strong> Perfect for native mobile apps (no cookie support needed).</li>
+            <li><strong>Performance:</strong> No database lookup on every request.</li>
+          </ul>
+
+          <h4 class="mt-4">Drawbacks</h4>
+          <ul>
+            <li><strong>Difficult Revocation:</strong> Can't invalidate a token before expiration (need blacklist or
+              short
+              TTL).</li>
+            <li><strong>Token Size:</strong> JWTs are larger than session IDs (100-500 bytes vs 16-32 bytes).</li>
+            <li><strong>No Server Control:</strong> Can't update token claims mid-session (user must re-login).</li>
+            <li><strong>Storage Security:</strong> If stored in localStorage, vulnerable to XSS. If in cookies, need
+              CSRF
+              protection.</li>
+          </ul>
+        </section>
+
+        <!-- Comparison Table -->
+        <section id="comparison" class="content-section">
+          <h2>Detailed Comparison</h2>
+          <p>A comprehensive comparison across key dimensions to guide your authentication strategy.</p>
+
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered comparison-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%">Dimension</th>
+                  <th style="width: 40%">Session-Based</th>
+                  <th style="width: 40%">Token-Based (JWT)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>State Management</strong></td>
+                  <td>Stateful. Server stores session data in memory/Redis/DB.</td>
+                  <td>Stateless. All data encoded in the token itself.</td>
+                </tr>
+                <tr>
+                  <td><strong>Scalability</strong></td>
+                  <td>Requires shared session store (Redis) or sticky sessions. More complex horizontal scaling.</td>
+                  <td>Trivially scalable. Any server can validate any token with just the public key.</td>
+                </tr>
+                <tr>
+                  <td><strong>Revocation</strong></td>
+                  <td>Easy. Delete session from store = instant logout.</td>
+                  <td>Hard. Token valid until expiration. Requires blacklist or very short TTL (5-15 min) + refresh
+                    tokens.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Performance</strong></td>
+                  <td>Database/cache lookup on every request.</td>
+                  <td>No database lookup. Signature verification only (fast).</td>
+                </tr>
+                <tr>
+                  <td><strong>Payload Size</strong></td>
+                  <td>Small session ID (16-32 bytes) sent in cookie.</td>
+                  <td>Larger JWT (100-500 bytes) sent in header or cookie.</td>
+                </tr>
+                <tr>
+                  <td><strong>Security</strong></td>
+                  <td>Session ID in HTTP-only cookie (XSS-safe). CSRF protection needed.</td>
+                  <td>If in localStorage: XSS vulnerable. If in HTTP-only cookie: CSRF vulnerable.</td>
+                </tr>
+                <tr>
+                  <td><strong>Cross-Domain</strong></td>
+                  <td>Complex with cookies (SameSite restrictions, CORS preflight).</td>
+                  <td>Easy. Token in Authorization header works across domains.</td>
+                </tr>
+                <tr>
+                  <td><strong>Mobile Apps</strong></td>
+                  <td>Requires custom cookie handling in native apps.</td>
+                  <td>Native support. Store token in secure storage (Keychain, Keystore).</td>
+                </tr>
+                <tr>
+                  <td><strong>Updates Mid-Session</strong></td>
+                  <td>Easy. Update session data in store = immediate effect.</td>
+                  <td>Impossible. User must re-login to get new token with updated claims.</td>
+                </tr>
+                <tr>
+                  <td><strong>Infrastructure</strong></td>
+                  <td>Requires Redis/Memcached/database for session store.</td>
+                  <td>Minimal. Just need public/private key pair for signing.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Refresh Tokens -->
+        <section id="refresh-tokens" class="content-section">
+          <h2>Refresh Tokens (Hybrid Approach)</h2>
+          <p>The best of both worlds: short-lived access tokens + long-lived refresh tokens.</p>
+
+          <h4 class="mt-4">How It Works</h4>
+          <p>To mitigate JWT revocation issues, use a dual-token system:</p>
+          <ul>
+            <li><strong>Access Token (JWT):</strong> Short TTL (5-15 minutes). Used for API requests. Stateless
+              validation.
+            </li>
+            <li><strong>Refresh Token:</strong> Long TTL (days/weeks). Stored server-side. Used to issue new access
+              tokens.
+            </li>
+          </ul>
+
+          <div class="flow-diagram">
+            <strong>Login:</strong><br>
+            - Issue access token (exp: 15 min) + refresh token (exp: 7 days)<br>
+            - Store refresh token in database with user ID<br>
+            <br>
+            <strong>API Requests:</strong><br>
+            - Client sends access token: Authorization: Bearer \u003cshort-lived-jwt\u003e<br>
+            - Server validates token (no DB lookup)<br>
+            <br>
+            <strong>Access Token Expired:</strong><br>
+            1. Client sends refresh token to /refresh endpoint<br>
+            2. Server validates refresh token (DB lookup)<br>
+            3. Server issues new access token (exp: 15 min)<br>
+            4. Optionally rotate refresh token for security<br>
+            <br>
+            <strong>Logout:</strong><br>
+            - Delete refresh token from database = user must re-login
+          </div>
+
+          <h5 class="mt-4">Refresh Token Implementation</h5>
+          <pre><code class="language-python">import uuid
+from datetime import datetime, timedelta
+
+# Store refresh tokens in database
+refresh_tokens_db = {}  # In production: use Redis or database
+
+@app.route('/login', methods=['POST'])
+def login():
+    user = validate_user(request.json['username'], request.json['password'])
+    if not user:
+        return jsonify({"error": "Invalid credentials"}), 401
+    
+    # Short-lived access token (15 minutes)
+    access_payload = {
+        "sub": user['id'],
+        "email": user['email'],
+        "exp": datetime.utcnow() + timedelta(minutes=15)
+    }
+    access_token = jwt.encode(access_payload, SECRET_KEY, algorithm="HS256")
+    
+    # Long-lived refresh token (7 days)
+    refresh_token_id = str(uuid.uuid4())
+    refresh_tokens_db[refresh_token_id] = {
+        "user_id": user['id'],
+        "expires_at": datetime.utcnow() + timedelta(days=7)
+    }
+    
+    return jsonify({
+        "access_token": access_token,
+        "refresh_token": refresh_token_id,
+        "expires_in": 900  # 15 minutes in seconds
+    })
+
+@app.route('/refresh', methods=['POST'])
+def refresh():
+    """Issue new access token using refresh token"""
+    refresh_token = request.json.get('refresh_token')
+    
+    # Validate refresh token
+    token_data = refresh_tokens_db.get(refresh_token)
+    if not token_data:
+        return jsonify({"error": "Invalid refresh token"}), 401
+    
+    if datetime.utcnow() > token_data['expires_at']:
+        del refresh_tokens_db[refresh_token]  # Clean up expired token
+        return jsonify({"error": "Refresh token expired"}), 401
+    
+    # Issue new access token
+    user_id = token_data['user_id']
+    access_payload = {
+        "sub": user_id,
+        "exp": datetime.utcnow() + timedelta(minutes=15)
+    }
+    access_token = jwt.encode(access_payload, SECRET_KEY, algorithm="HS256")
+    
+    return jsonify({
+        "access_token": access_token,
+        "expires_in": 900
+    })
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    """Revoke refresh token"""
+    refresh_token = request.json.get('refresh_token')
+    if refresh_token in refresh_tokens_db:
+        del refresh_tokens_db[refresh_token]
+    return jsonify({"message": "Logged out"})
+</code></pre>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Best Practice:</strong> Use refresh tokens for most applications. Combine the scalability of JWTs
+            with
+            the revocation control of sessions.
+          </div>
+        </section>
+
+        <!-- Decision Guide -->
+        <section id="decision-guide" class="content-section">
+          <h2>Decision Guide: When to Use Each</h2>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">✅ Use Sessions When...</h5>
+                <ul class="small mb-0">
+                  <li>Building a monolithic web app (not API-first)</li>
+                  <li>You need instant revocation (admin panels, banking)</li>
+                  <li>Users are on a single domain (no cross-origin issues)</li>
+                  <li>You want to update user roles/permissions mid-session</li>
+                  <li>You already have Redis/session store infrastructure</li>
+                  <li>Security is paramount over scalability</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">✅ Use Tokens When...</h5>
+                <ul class="small mb-0">
+                  <li>Building a REST API or microservices</li>
+                  <li>You need to scale horizontally (stateless servers)</li>
+                  <li>Supporting mobile apps or SPAs</li>
+                  <li>Cross-domain authentication required</li>
+                  <li>You want to avoid session store infrastructure</li>
+                  <li>Performance and scalability are priorities</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-4">Hybrid Approach (Recommended)</h4>
+          <p>For most modern applications, use <strong>JWT access tokens (short TTL) + refresh tokens (server-side
+              stored)</strong>:</p>
+          <ul>
+            <li>Combines stateless scalability of JWTs for most requests</li>
+            <li>Maintains server control via refresh token revocation</li>
+            <li>Balances performance, security, and user experience</li>
+          </ul>
+
+          <div class="alert alert-warning border mt-3">
+            <strong>Anti-Pattern:</strong> Never use long-lived JWTs (hours/days) without refresh tokens. You lose
+            revocation ability and create security risks.
+          </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Sessions</strong> are stateful, require server-side storage, easy to revoke, best for monolithic
+              apps.</li>
+            <li><strong>Tokens (JWT)</strong> are stateless, scalable, hard to revoke, best for APIs and microservices.
+            </li>
+            <li>Sessions excel at <strong>instant revocation</strong> and mid-session updates.</li>
+            <li>Tokens excel at <strong>horizontal scalability</strong> and cross-domain authentication.</li>
+            <li>Use <strong>refresh tokens</strong> to combine the best of both approaches (short-lived access token +
+              long-lived revocable refresh token).</li>
+            <li>Store JWTs in <strong>HTTP-only cookies</strong> (with CSRF protection) or <strong>Authorization
+                header</strong> (if not on same domain).</li>
+            <li>For most modern apps: <strong>JWT + Refresh Token</strong> hybrid is the recommended approach.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar (Left) -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#introduction">Introduction</a>
+            <a class="nav-link" href="#session-based">Session-Based Auth</a>
+            <a class="nav-link" href="#token-based">Token-Based Auth (JWT)</a>
+            <a class="nav-link" href="#comparison">Detailed Comparison</a>
+            <a class="nav-link" href="#refresh-tokens">Refresh Tokens</a>
+            <a class="nav-link" href="#decision-guide">Decision Guide</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../jwt-authentication/" class="text-decoration-none text-muted">JWT
+                Authentication</a></li>
+            <li class="mb-2"><a href="../secure-api-gateway/" class="text-decoration-none text-muted">Secure API
+                Gateway</a></li>
+            <li class="mb-2"><a href="../user-management/" class="text-decoration-none text-muted">User Management</a>
+            </li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
