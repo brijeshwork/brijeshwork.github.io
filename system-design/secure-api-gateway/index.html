@@ -1,182 +1,630 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Designing a Secure API Gateway for Microservices — System Design | Brijesh Patel</title>
-<meta name="description" content="Tutorial: designing a secure API gateway—authentication, authorization, rate-limiting, and mTLS for microservices.">
-<link rel="canonical" href="https://brijesh.work/system-design/secure-api-gateway/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Designing a Secure API Gateway for Microservices",
-  "description": "Patterns for securing API gateways: auth, authorization, rate limiting, and mutual TLS.",
-  "author": {
-    "@type": "Person",
-    "name": "Brijesh Patel"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://brijesh.work/system-design/secure-api-gateway/"
-  },
-  "url": "https://brijesh.work/system-design/secure-api-gateway/"
-}
-</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure API Gateway Guide | Authentication, Authorization & Threat Protection</title>
+  <meta name="description"
+    content="Complete guide to securing API Gateways: OAuth 2.0, JWT validation, RBAC, rate limiting, DDoS protection, TLS/mTLS, and threat mitigation strategies.">
+  <meta name="keywords"
+    content="API Gateway, OAuth, JWT, authentication, authorization, RBAC, rate limiting, API security, mTLS, threat protection">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/secure-api-gateway/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Custom styles matching other system design pages */
+    .hero-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #94a3b8;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0d6efd;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+      padding: 0.5em 0.8em;
+    }
+
+    .security-card {
+      border-left: 4px solid #dc3545;
+      background: #fff5f5;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 0.5rem;
+    }
+
+    .security-card h4 {
+      color: #dc3545;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<section>
-  <div class="container">
+<body class="bg-white">
+
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-primary bg-opacity-25 text-white border border-white border-opacity-25">Security
+            Pattern</span>
+          <h1 class="display-4 fw-bold mb-3">Secure API Gateway</h1>
+          <p class="hero-subtitle mb-4">Design secure API Gateways that enforce authentication, authorization, rate
+            limiting, and protect against common threats.</p>
+          <div class="d-flex gap-3">
+            <a href="#authentication" class="btn btn-primary">Authentication Patterns</a>
+            <a href="#threat-protection" class="btn btn-outline-light">Threat Protection</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
     <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a Secure API Gateway for Microservices</h1>
-        <p class="lead">Patterns for securing API gateways: auth, authorization, token validation, rate limiting and mutual TLS.</p>
 
-        <h2 id="threat-model">Threat model</h2>
-        <p>Consider unauthorized access, API abuse, injection, and lateral movement. Gateways enforce perimeter checks and reduce risks for downstream services.</p>
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
 
-        <h3 id="features">Important features</h3>
-        <ul>
-          <li>Authentication (JWT, OAuth2) and token validation</li>
-          <li>Authorization (ACLs, RBAC integration)</li>
-          <li>Rate limiting and circuit breakers</li>
-          <li>mTLS for service-to-service communication</li>
-        </ul>
+        <!-- Introduction -->
+        <section id="introduction" class="content-section">
+          <h2>What is an API Gateway?</h2>
+          <p class="lead text-secondary">A single entry point that sits between clients and backend microservices,
+            enforcing security policies.</p>
+          <p>In a microservices architecture, an <strong>API Gateway</strong> acts as a reverse proxy that routes
+            requests to the appropriate backend service. Beyond routing, it's the <em>first line of defense</em> for
+            security, handling:</p>
 
-        <h2 id="architecture">Architecture diagram</h2>
-        <figure>
-          <svg width="100%" height="220" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="API Gateway architecture">
-            <rect x="20" y="20" width="160" height="60" fill="#f8f9fa" stroke="#6c757d"/>
-            <text x="100" y="55" font-size="13" text-anchor="middle" fill="#343a40">Client</text>
-            <rect x="220" y="10" width="200" height="80" fill="#e9ecef" stroke="#6c757d"/>
-            <text x="320" y="55" font-size="13" text-anchor="middle" fill="#343a40">API Gateway (auth, rate-limit, TLS)</text>
-            <rect x="460" y="10" width="120" height="60" fill="#fff3cd" stroke="#6c757d"/>
-            <text x="520" y="45" font-size="13" text-anchor="middle" fill="#343a40">Auth Service</text>
-            <rect x="220" y="110" width="120" height="60" fill="#d4edda" stroke="#6c757d"/>
-            <text x="280" y="145" font-size="13" text-anchor="middle" fill="#343a40">Service A</text>
-            <rect x="360" y="110" width="120" height="60" fill="#d4edda" stroke="#6c757d"/>
-            <text x="420" y="145" font-size="13" text-anchor="middle" fill="#343a40">Service B</text>
-            <line x1="180" y1="50" x2="220" y2="50" stroke="#6c757d" marker-end="url(#arrow)"/>
-            <line x1="420" y1="50" x2="460" y2="50" stroke="#6c757d" marker-end="url(#arrow)"/>
-            <line x1="320" y1="90" x2="320" y2="110" stroke="#6c757d" marker-end="url(#arrow)"/>
-            <line x1="280" y1="110" x2="280" y2="110" stroke="transparent"/>
-            <defs>
-              <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L6,3 z" fill="#6c757d" />
-              </marker>
-            </defs>
-          </svg>
-          <figcaption>Client traffic passes through the API Gateway where auth, rate limiting, and TLS termination happen before requests reach backend services.</figcaption>
-        </figure>
+          <ul>
+            <li><strong>Authentication:</strong> Who are you? (Verify identity)</li>
+            <li><strong>Authorization:</strong> What can you do? (Check permissions)</li>
+            <li><strong>Rate Limiting:</strong> Prevent API abuse and DDoS attacks</li>
+            <li><strong>Request Validation:</strong> Block malicious payloads (SQL injection, XSS)</li>
+            <li><strong>TLS Termination:</strong> Encrypt traffic between client and gateway</li>
+            <li><strong>Observability:</strong> Centralized logging, metrics, and tracing</li>
+          </ul>
 
-        <h2 id="examples">Patterns & examples</h2>
-        <h3 id="jwt-validation">JWT validation (Node/Express)</h3>
-        <pre><code class="language-javascript">const jwt = require('jsonwebtoken');
-module.exports = function (req, res, next) {
-  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-  if (!token) return res.status(401).send('Missing token');
-  try {
-    const payload = jwt.verify(token, process.env.JWT_PUBLIC_KEY, { algorithms: ['RS256'] });
-    req.user = payload;
-    next();
-  } catch (err) {
-    return res.status(401).send('Invalid token');
-  }
-};</code></pre>
+          <div class="alert alert-light border mt-3">
+            <strong>Key Benefit:</strong> Centralizing security at the gateway means backend services can focus on
+            business logic instead of implementing authentication/authorization individually.
+          </div>
+        </section>
 
-        <h3 id="envoy">Envoy (JWT + route example)</h3>
-        <pre><code class="language-yaml">static_resources:
-  listeners:
-  - name: listener_http
-    address:
-      socket_address: { address: 0.0.0.0, port_value: 8080 }
-    filter_chains:
-    - filters:
-      - name: envoy.filters.network.http_connection_manager
-        typed_config:
-          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-          stat_prefix: ingress_http
-          route_config:
-            virtual_hosts:
-            - name: backend
-              domains: ["*"]
-              routes:
-              - match: { prefix: "/api/" }
-                route: { cluster: "backend" }</code></pre>
+        <!-- Authentication -->
+        <section id="authentication" class="content-section">
+          <h2>Authentication Mechanisms</h2>
+          <p>Authentication verifies the identity of the user or service making the request. The gateway validates
+            credentials and rejects unauthorized requests.</p>
 
-        <h3 id="istio">Istio VirtualService (canary routing)</h3>
-        <pre><code class="language-yaml">apiVersion: networking.istio.io/v1beta1
-kind: VirtualService
-metadata:
-  name: myservice
-spec:
-  hosts:
-  - myservice.default.svc.cluster.local
-  http:
-  - route:
-    - destination:
-        host: myservice
-        subset: v1
-      weight: 90
-    - destination:
-        host: myservice
-        subset: v2
-      weight: 10</code></pre>
+          <h4 class="mt-4" id="api-keys">1. API Keys</h4>
+          <p><strong>How it works:</strong> Clients include a secret key in request headers
+            (<code>X-API-Key: abc123</code>). The gateway validates the key against a database or cache.</p>
+          <p><strong>Pros:</strong> Simple, fast, stateless.</p>
+          <p><strong>Cons:</strong> No user identity (all clients with same key look identical), keys can leak and be
+            abused.</p>
+          <div class="alert alert-light border">
+            <strong>Best for:</strong> Server-to-server communication, internal services, rate limiting by tenant.
+          </div>
 
-        <h3 id="rate-limiting">Rate limiting (Redis + Lua token bucket)</h3>
-        <pre><code class="language-lua">-- KEYS[1] = bucket key, ARGV[1]=capacity, ARGV[2]=tokens, ARGV[3]=refill_per_sec
-local capacity = tonumber(ARGV[1])
-local tokens = tonumber(ARGV[2])
-local refill = tonumber(ARGV[3])
-local now = redis.call('TIME')
-local last = tonumber(redis.call('HGET', KEYS[1], 'ts') or 0)
-local stored = tonumber(redis.call('HGET', KEYS[1], 'tokens') or capacity)
-local delta = (now[1] - last) * 1 + (now[2] - 0) / 1000000
-stored = math.min(capacity, stored + delta * refill)
-if stored < tokens then
-  return 0
-else
-  stored = stored - tokens
-  redis.call('HSET', KEYS[1], 'tokens', stored, 'ts', now[1])
-  return 1
-end</code></pre>
+          <h4 class="mt-4 pt-3" id="jwt">2. JWT (JSON Web Tokens)</h4>
+          <p><strong>How it works:</strong> Client authenticates with an auth service and receives a signed JWT. The
+            gateway validates the JWT signature and extracts claims (user ID, roles, expiration).</p>
+          <p><strong>Pros:</strong> Stateless, contains user identity and claims, can be verified without calling auth
+            service.</p>
+          <p><strong>Cons:</strong> Tokens can't be revoked (until expiration), larger payload size.</p>
 
-        <h3 id="mtls">mTLS (dev/test quick-start)</h3>
-        <pre><code class="language-bash"># generate CA
+          <h5 class="mt-3">JWT Validation Example (Python)</h5>
+          <pre><code class="language-python">import jwt
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+PUBLIC_KEY = """-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA...
+-----END PUBLIC KEY-----"""
+
+def verify_jwt(token):
+    """Validate JWT signature and extract claims"""
+    try:
+        payload = jwt.decode(
+            token,
+            PUBLIC_KEY,
+            algorithms=["RS256"],
+            audience="my-api",
+            issuer="https://auth.example.com"
+        )
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise Exception("Token has expired")
+    except jwt.InvalidTokenError:
+        raise Exception("Invalid token")
+
+@app.before_request
+def authenticate():
+    """Middleware to validate JWT on every request"""
+    auth_header = request.headers.get('Authorization')
+    if not auth_header or not auth_header.startswith('Bearer '):
+        return jsonify({"error": "Missing or invalid Authorization header"}), 401
+    
+    token = auth_header.split(' ')[1]
+    try:
+        user = verify_jwt(token)
+        request.user = user  # Attach user to request context
+    except Exception as e:
+        return jsonify({"error": str(e)}), 401
+
+@app.route('/api/protected')
+def protected_route():
+    return jsonify({"message": f"Hello, {request.user['sub']}!"})
+</code></pre>
+
+          <h4 class="mt-4 pt-3" id="oauth">3. OAuth 2.0</h4>
+          <p><strong>How it works:</strong> Delegated authorization protocol. Users authorize third-party apps to
+            access their resources without sharing passwords. Gateway validates OAuth access tokens.</p>
+          <p><strong>Flows:</strong></p>
+          <ul>
+            <li><strong>Authorization Code:</strong> For web apps (most secure)</li>
+            <li><strong>Client Credentials:</strong> For machine-to-machine communication</li>
+            <li><strong>Implicit/PKCE:</strong> For single-page apps (SPAs)</li>
+          </ul>
+          <div class="alert alert-light border">
+            <strong>Best for:</strong> Third-party integrations, user-facing applications, delegated access.
+          </div>
+        </section>
+
+        <!-- Authorization -->
+        <section id="authorization" class="content-section">
+          <h2>Authorization Patterns</h2>
+          <p>After authentication, <strong>authorization</strong> determines what the authenticated user is allowed to
+            do.</p>
+
+          <h4 class="mt-4" id="rbac">1. Role-Based Access Control (RBAC)</h4>
+          <p>Users are assigned <strong>roles</strong> (e.g., Admin, Editor, Viewer), and roles have
+            <strong>permissions</strong>. The gateway checks if the user's role allows the requested action.
+          </p>
+
+          <h5 class="mt-3">RBAC Example</h5>
+          <pre><code class="language-python">from functools import wraps
+from flask import request, jsonify
+
+# Define role permissions
+ROLE_PERMISSIONS = {
+    "admin": ["read", "write", "delete"],
+    "editor": ["read", "write"],
+    "viewer": ["read"]
+}
+
+def require_permission(required_permission):
+    """Decorator to enforce permission checks"""
+    def decorator(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            user_role = request.user.get('role')  # From JWT claims
+            allowed_permissions = ROLE_PERMISSIONS.get(user_role, [])
+            
+            if required_permission not in allowed_permissions:
+                return jsonify({"error": "Forbidden: insufficient permissions"}), 403
+            
+            return f(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@app.route('/api/users', methods=['GET'])
+@require_permission('read')
+def list_users():
+    return jsonify({"users": ["alice", "bob"]})
+
+@app.route('/api/users', methods=['DELETE'])
+@require_permission('delete')
+def delete_user():
+    return jsonify({"message": "User deleted"})
+</code></pre>
+
+          <h4 class="mt-4 pt-3" id="abac">2. Attribute-Based Access Control (ABAC)</h4>
+          <p>More granular than RBAC. Decisions based on <strong>attributes</strong>: user attributes (department, job
+            title), resource attributes (owner, sensitivity), and context (time, location).</p>
+          <p><strong>Example:</strong> "Allow if user.department == resource.owner_department AND time.hour between 9
+            and 17"</p>
+          <div class="alert alert-light border">
+            <strong>Best for:</strong> Complex authorization rules, multi-tenant systems, dynamic policies.
+          </div>
+        </section>
+
+        <!-- Rate Limiting -->
+        <section id="rate-limiting" class="content-section">
+          <h2>Rate Limiting & Throttling</h2>
+          <p>Prevent API abuse by limiting the number of requests a client can make within a time window.</p>
+
+          <h4 class="mt-4">Common Algorithms</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">Token Bucket</h6>
+                <p class="small">Tokens are added to a bucket at a fixed rate. Each request consumes a token. Allows
+                  bursts up to bucket capacity.</p>
+                <p class="small text-muted mb-0">Use for: Allowing short bursts while maintaining average rate.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">Sliding Window</h6>
+                <p class="small">Track requests in a rolling time window. More accurate than fixed windows (avoids
+                  edge-case bursts).</p>
+                <p class="small text-muted mb-0">Use for: Strict rate enforcement.</p>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="mt-4">Rate Limiting Strategies</h4>
+          <ul>
+            <li><strong>Per-IP:</strong> Limit requests by client IP address</li>
+            <li><strong>Per-User:</strong> Limit requests by authenticated user ID</li>
+            <li><strong>Per-API Key:</strong> Different limits for different tiers (free vs paid)</li>
+            <li><strong>Global:</strong> Protect backend from total overload</li>
+          </ul>
+
+          <h5 class="mt-4">Token Bucket Implementation (Redis + Python)</h5>
+          <pre><code class="language-python">import redis
+import time
+
+redis_client = redis.StrictRedis(host='localhost', decode_responses=True)
+
+def token_bucket_allow(key, capacity=100, refill_rate=10):
+    """
+    Token bucket rate limiter using Redis.
+    
+    Args:
+        key: Unique identifier (IP, user ID, API key)
+        capacity: Max tokens in bucket
+        refill_rate: Tokens added per second
+    
+    Returns:
+        True if request allowed, False if rate limited
+    """
+    now = time.time()
+    bucket_key = f"rate_limit:{key}"
+    
+    # Get last update time and current tokens
+    last_update = float(redis_client.hget(bucket_key, 'last_update') or now)
+    tokens = float(redis_client.hget(bucket_key, 'tokens') or capacity)
+    
+    # Calculate tokens to add based on time elapsed
+    elapsed = now - last_update
+    tokens = min(capacity, tokens + elapsed * refill_rate)
+    
+    # Try to consume one token
+    if tokens >= 1:
+        tokens -= 1
+        redis_client.hset(bucket_key, 'tokens', tokens)
+        redis_client.hset(bucket_key, 'last_update', now)
+        redis_client.expire(bucket_key, 3600)  # TTL: 1 hour
+        return True
+    else:
+        return False
+
+# Usage in Flask middleware
+@app.before_request
+def rate_limit():
+    client_id = request.headers.get('X-API-Key') or request.remote_addr
+    if not token_bucket_allow(client_id, capacity=100, refill_rate=10):
+        return jsonify({"error": "Rate limit exceeded. Try again later."}), 429
+</code></pre>
+
+          <div class="alert alert-warning border mt-3">
+            <strong>⚠️ Return Proper Headers:</strong> Include <code>X-RateLimit-Limit</code>,
+            <code>X-RateLimit-Remaining</code>, and <code>Retry-After</code> in responses so clients know their limits.
+          </div>
+        </section>
+
+        <!-- Threat Protection -->
+        <section id="threat-protection" class="content-section">
+          <h2>Threat Protection</h2>
+          <p>API Gateways must defend against common attack vectors.</p>
+
+          <div class="security-card">
+            <h4>🛡️ 1. SQL Injection Prevention</h4>
+            <p><strong>Threat:</strong> Attackers inject SQL code via input fields to manipulate database queries.</p>
+            <p><strong>Defense:</strong></p>
+            <ul>
+              <li>Validate and sanitize all input at the gateway</li>
+              <li>Use parameterized queries in backend services</li>
+              <li>Implement input length limits</li>
+              <li>Block suspicious patterns (e.g., <code>' OR 1=1--</code>)</li>
+            </ul>
+          </div>
+
+          <div class="security-card">
+            <h4>🛡️ 2. Cross-Site Scripting (XSS) Protection</h4>
+            <p><strong>Threat:</strong> Inject malicious JavaScript into API responses that gets executed in victim's
+              browser.</p>
+            <p><strong>Defense:</strong></p>
+            <ul>
+              <li>Set <code>Content-Security-Policy</code> headers</li>
+              <li>Escape output in responses</li>
+              <li>Use <code>X-Content-Type-Options: nosniff</code></li>
+              <li>Validate and sanitize user-generated content</li>
+            </ul>
+          </div>
+
+          <div class="security-card">
+            <h4>🛡️ 3. DDoS & Brute Force Protection</h4>
+            <p><strong>Threat:</strong> Overwhelm the API with massive request volume or credential stuffing attacks.
+            </p>
+            <p><strong>Defense:</strong></p>
+            <ul>
+              <li>Rate limiting (per IP, per user)</li>
+              <li>CAPTCHA for sensitive endpoints (login, registration)</li>
+              <li>Web Application Firewall (WAF) to block malicious IPs</li>
+              <li>Connection limits and timeout enforcement</li>
+              <li>Exponential backoff for failed auth attempts</li>
+            </ul>
+          </div>
+
+          <div class="security-card">
+            <h4>🛡️ 4. API Abuse & Scraping</h4>
+            <p><strong>Threat:</strong> Automated bots scrape data, enumerate resources, or abuse free tiers.</p>
+            <p><strong>Defense:</strong></p>
+            <ul>
+              <li>Require API keys for all requests</li>
+              <li>Implement usage quotas and billing tiers</li>
+              <li>Bot detection (user-agent analysis, behavioral patterns)</li>
+              <li>Honeypot endpoints to detect scrapers</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- TLS/mTLS -->
+        <section id="tls-mtls" class="content-section">
+          <h2>TLS & Mutual TLS (mTLS)</h2>
+          <p>Encrypt traffic between clients and the gateway, and between gateway and backend services.</p>
+
+          <h4 class="mt-4">TLS Termination at Gateway</h4>
+          <p>The gateway handles TLS encryption/decryption, communicating with backend services over plain HTTP (within
+            a secure internal network) or re-encrypting with TLS.</p>
+          <p><strong>Benefits:</strong></p>
+          <ul>
+            <li>Offload CPU-intensive encryption from backend services</li>
+            <li>Centralize certificate management</li>
+            <li>Inspect and modify requests (logging, transformation)</li>
+          </ul>
+
+          <h4 class="mt-4">Mutual TLS (mTLS) for Service-to-Service</h4>
+          <p><strong>What is mTLS?</strong> Both client and server verify each other's certificates. Ensures only
+            authorized services can communicate.</p>
+          <p><strong>Use Case:</strong> Gateway-to-backend communication, microservices mesh.</p>
+
+          <h5 class="mt-3">Generating mTLS Certificates (Dev/Test)</h5>
+          <pre><code class="language-bash"># 1. Generate Certificate Authority (CA)
 openssl genrsa -out ca.key 2048
-openssl req -x509 -new -nodes -key ca.key -subj "/CN=local-ca" -days 3650 -out ca.crt
-# server cert
+openssl req -x509 -new -nodes -key ca.key -subj "/CN=MyCA" -days 3650 -out ca.crt
+
+# 2. Generate Server Certificate
 openssl genrsa -out server.key 2048
 openssl req -new -key server.key -subj "/CN=api-gateway.local" -out server.csr
-openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 365</code></pre>
+openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 365
 
-        <h3 id="observability">Observability & ops</h3>
-        <ul>
-          <li>Emit structured access logs from the gateway (request id, auth subject, latency, status).</li>
-          <li>Export metrics for requests, rejected-by-policy, rate-limit hits, and upstream latency.</li>
-          <li>Correlate traces through W3C TraceContext or OpenTelemetry to trace requests across gateway and services.</li>
-        </ul>
+# 3. Generate Client Certificate
+openssl genrsa -out client.key 2048
+openssl req -new -key client.key -subj "/CN=backend-service" -out client.csr
+openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out client.crt -days 365
 
-        <p>Related: <a href="https://brijesh.work/system-design/cicd-pipeline-design/">CI/CD pipelines</a>, <a href="https://brijesh.work/system-design/containerized-docker-kubernetes/">Docker & Kubernetes</a>, <a href="https://brijesh.work/system-design/monitoring-prometheus-grafana/">Monitoring</a>, <a href="https://brijesh.work/system-design/rbac/">RBAC patterns</a>.</p>
+# Now configure gateway to require client.crt for mTLS verification
+</code></pre>
 
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Design gateways to enforce security consistently and push complex policies out of individual services. Pair with observability to detect misuse early.</p>
-      </div>
+          <div class="alert alert-light border mt-3">
+            <strong>Production Tip:</strong> Use a managed service like AWS Certificate Manager or Let's Encrypt for
+            certificate issuance and rotation.
+          </div>
+        </section>
 
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#threat-model">Threat model</a></li><li><a href="#features">Features</a></li></ul></div></div>
+        <!-- Observability -->
+        <section id="observability" class="content-section">
+          <h2>Observability & Monitoring</h2>
+          <p>Comprehensive logging and metrics are essential for detecting security incidents and performance issues.
+          </p>
+
+          <h4 class="mt-4">What to Log</h4>
+          <ul>
+            <li><strong>Access Logs:</strong> Request ID, timestamp, client IP, user ID, endpoint, HTTP status, latency
+            </li>
+            <li><strong>Auth Failures:</strong> Failed login attempts, invalid tokens, permission denials</li>
+            <li><strong>Rate Limit Events:</strong> Which clients are being throttled</li>
+            <li><strong>Anomalies:</strong> Unusual traffic patterns, suspicious IPs</li>
+          </ul>
+
+          <h4 class="mt-4">Key Metrics</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">Security Metrics</h6>
+                <ul class="small mb-0">
+                  <li>Authentication failure rate</li>
+                  <li>Authorization denial rate</li>
+                  <li>Rate limit hits</li>
+                  <li>Suspicious request patterns</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">Performance Metrics</h6>
+                <ul class="small mb-0">
+                  <li>Request throughput (req/sec)</li>
+                  <li>Latency (P50, P95, P99)</li>
+                  <li>Error rates (4xx, 5xx)</li>
+                  <li>Upstream service latency</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <h5 class="mt-4">Structured Logging Example</h5>
+          <pre><code class="language-python">import json
+import logging
+from datetime import datetime
+
+logger = logging.getLogger(__name__)
+
+def log_request(request, response, user=None, duration=None):
+    """Log request with structured JSON format"""
+    log_entry = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "request_id": request.headers.get('X-Request-ID'),
+        "client_ip": request.remote_addr,
+        "user_id": user.get('sub') if user else None,
+        "method": request.method,
+        "path": request.path,
+        "query": request.query_string.decode(),
+        "status_code": response.status_code,
+        "duration_ms": duration * 1000 if duration else None,
+        "user_agent": request.headers.get('User-Agent')
+    }
+    logger.info(json.dumps(log_entry))
+
+# Usage in Flask
+@app.after_request
+def after_request(response):
+    duration = time.time() - g.start_time  # Set in before_request
+    log_request(request, response, request.user, duration)
+    return response
+</code></pre>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Tracing:</strong> Use distributed tracing (OpenTelemetry, Jaeger) to follow requests across
+            gateway and backend services. Correlate logs with trace IDs.
+          </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>API Gateway</strong> is the first line of defense for microservices security.</li>
+            <li>Implement <strong>authentication</strong> (API Keys, JWT, OAuth) to verify identity.</li>
+            <li>Use <strong>authorization</strong> (RBAC, ABAC) to enforce permissions.</li>
+            <li>Apply <strong>rate limiting</strong> to prevent abuse and DDoS attacks.</li>
+            <li>Protect against <strong>common threats</strong> (SQL injection, XSS, brute force).</li>
+            <li>Use <strong>TLS/mTLS</strong> for encryption in transit.</li>
+            <li>Maintain <strong>comprehensive logging and monitoring</strong> for security incident detection.</li>
+            <li>Centralize security policies at the gateway to simplify backend services.</li>
+          </ul>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Defense in Depth:</strong> Layering multiple security mechanisms (authentication + authorization +
+            rate limiting + input validation) provides the strongest protection.
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Sidebar (Left) -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#introduction">Introduction</a>
+            <a class="nav-link" href="#authentication">Authentication</a>
+            <a class="nav-link ms-3" href="#api-keys">• API Keys</a>
+            <a class="nav-link ms-3" href="#jwt">• JWT</a>
+            <a class="nav-link ms-3" href="#oauth">• OAuth 2.0</a>
+            <a class="nav-link" href="#authorization">Authorization</a>
+            <a class="nav-link ms-3" href="#rbac">• RBAC</a>
+            <a class="nav-link ms-3" href="#abac">• ABAC</a>
+            <a class="nav-link" href="#rate-limiting">Rate Limiting</a>
+            <a class="nav-link" href="#threat-protection">Threat Protection</a>
+            <a class="nav-link" href="#tls-mtls">TLS & mTLS</a>
+            <a class="nav-link" href="#observability">Observability</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../jwt-authentication/" class="text-decoration-none text-muted">JWT
+                Authentication</a></li>
+            <li class="mb-2"><a href="../rate-limiting/" class="text-decoration-none text-muted">Rate Limiting</a></li>
+            <li class="mb-2"><a href="../microservices-vs-monolith/"
+                class="text-decoration-none text-muted">Microservices
+                Architecture</a></li>
+            <li class="mb-2"><a href="../fault-tolerant-patterns/"
+                class="text-decoration-none text-muted">Fault-Tolerant
+                Patterns</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
