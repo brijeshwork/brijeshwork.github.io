@@ -1,47 +1,586 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Microservices vs Monoliths — Which Architecture Fits Your Project? — System Design | Brijesh Patel</title>
-<meta name="description" content="Compare microservices and monolith architectures: trade-offs, operational complexity, scaling, and when to choose each for your project.">
-<link rel="canonical" href="https://brijesh.work/system-design/microservices-vs-monolith/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Microservices vs Monolith Architecture Guide | Patterns, Trade-offs & Migration</title>
+  <meta name="description"
+    content="Complete guide to Microservices vs Monolith architectures: detailed comparison, migration strategies, service boundaries, deployment patterns, and decision framework.">
+  <meta name="keywords"
+    content="microservices, monolith, architecture patterns, migration, service boundaries, domain-driven design, deployment, scaling">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/microservices-vs-monolith/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Custom styles matching Event-Driven Architecture page */
+    .hero-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #94a3b8;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0d6efd;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+      padding: 0.5em 0.8em;
+    }
+
+    .arch-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      background: white;
+      margin-bottom: 2rem;
+    }
+
+    .arch-card h3 {
+      color: #0d6efd;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Microservices vs Monoliths — Which Architecture Fits Your Project?</h1>
-        <p class="lead">A practical comparison of monolithic and microservice architectures with guidance on trade-offs, team organization, deployment and scaling.</p>
 
-        <h2 id="summary">Summary</h2>
-        <p>Monoliths are simpler to develop and deploy early; microservices improve modularity and independent scaling but add operational overhead. Choose based on team size, release cadence, and scaling needs.</p>
+<body class="bg-white">
 
-        <h2 id="tradeoffs">Key trade-offs</h2>
-        <ul>
-          <li>Operational complexity vs deployment independence</li>
-          <li>Latency & distributed transactions vs single-process performance</li>
-          <li>Team ownership and release velocity</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <h2 id="recommendations">Recommendations</h2>
-        <ul>
-          <li>Start with a modular monolith; split into microservices when scaling and organizational needs demand it</li>
-          <li>Invest in observability, CI/CD and automation before breaking into many services</li>
-        </ul>
-
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-primary bg-opacity-25 text-white border border-white border-opacity-25">Architecture
+            Pattern</span>
+          <h1 class="display-4 fw-bold mb-3">Microservices vs Monolith</h1>
+          <p class="hero-subtitle mb-4">Choose the right architecture for your project. Understand trade-offs, migration
+            strategies, and when each pattern makes sense.</p>
+          <div class="d-flex gap-3">
+            <a href="#comparison" class="btn btn-primary">Compare Architectures</a>
+            <a href="#migration" class="btn btn-outline-light">Migration Guide</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="../multi-tenant-saas/">Multi-tenant SaaS</a></li><li><a href="../fault-tolerant-patterns/">Fault-tolerant Patterns</a></li></ul></div></div></aside>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Introduction -->
+        <section id="overview" class="content-section">
+          <h2>Architecture Overview</h2>
+          <p class="lead text-secondary">The most fundamental decision in system architecture: how to structure your
+            application.</p>
+          <p>Every software system exists on a spectrum between two architectural extremes: <strong>monolithic</strong>
+            (single unified codebase) and <strong>microservices</strong> (distributed collection of independent
+            services). Neither is universally "better"—the right choice depends on team size, scaling requirements,
+            organizational maturity, and business goals.</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">📦 Monolithic Architecture</h5>
+                <p class="small mb-2">A single, unified application where all components (UI, business logic, data
+                  access) run in the same process.</p>
+                <p class="small text-muted mb-0"><strong>Best for:</strong> Startups, MVPs, small teams, simple
+                  domains.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🔗 Microservices Architecture</h5>
+                <p class="small mb-2">Multiple small, independent services that communicate over a network, each owning
+                  its own data and deployment.</p>
+                <p class="small text-muted mb-0"><strong>Best for:</strong> Large teams, complex domains, independent
+                  scaling needs.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Monolith Deep Dive -->
+        <section id="monolith" class="content-section">
+          <h2>Monolithic Architecture</h2>
+
+          <div class="arch-card">
+            <h3>Structure & Organization</h3>
+            <p>In a monolith, all code lives in a single codebase and runs as a single process. A typical structure
+              might be:</p>
+            <ul>
+              <li><strong>Presentation Layer:</strong> UI, API controllers, views</li>
+              <li><strong>Business Logic Layer:</strong> Services, domain models, workflows</li>
+              <li><strong>Data Access Layer:</strong> Database queries, ORM, repositories</li>
+            </ul>
+            <p class="mb-0 small text-muted">All layers share the same database and memory space.</p>
+          </div>
+
+          <h4 class="mt-4">Benefits of Monoliths</h4>
+          <ul>
+            <li><strong>Simplicity:</strong> Single codebase, one deployment, simpler debugging and testing.</li>
+            <li><strong>Development Speed:</strong> No network overhead, easy refactoring across modules, shared code.
+            </li>
+            <li><strong>ACID Transactions:</strong> Database transactions work natively across all operations.</li>
+            <li><strong>Lower Operational Overhead:</strong> One service to deploy, monitor, and scale.</li>
+            <li><strong>Performance:</strong> In-memory function calls are faster than network requests.</li>
+          </ul>
+
+          <h4 class="mt-4">Challenges of Monoliths</h4>
+          <ul>
+            <li><strong>Scaling Limitations:</strong> Must scale the entire app, even if only one module is under load.
+            </li>
+            <li><strong>Deployment Coupling:</strong> A bug in one module can break the entire deployment.</li>
+            <li><strong>Team Bottlenecks:</strong> Large teams often step on each other's toes with merge conflicts.
+            </li>
+            <li><strong>Technology Lock-in:</strong> Harder to adopt new languages or frameworks for specific modules.
+            </li>
+            <li><strong>Long Build Times:</strong> As the codebase grows, builds and tests can become slow.</li>
+          </ul>
+
+          <div class="alert alert-light border mt-3">
+            <strong>💡 Modular Monolith:</strong> A well-architected monolith with clear module boundaries can provide
+            90% of the benefits of microservices without the operational complexity. Start here before considering
+            microservices.
+          </div>
+        </section>
+
+        <!-- Microservices Deep Dive -->
+        <section id="microservices" class="content-section">
+          <h2>Microservices Architecture</h2>
+
+          <div class="arch-card">
+            <h3>Structure & Organization</h3>
+            <p>Microservices decompose the application into small, independent services:</p>
+            <ul>
+              <li>Each service handles a specific business capability (e.g., User Service, Order Service, Payment
+                Service)</li>
+              <li>Services communicate via APIs (REST, gRPC, message queues)</li>
+              <li>Each service has its own database (Database per Service pattern)</li>
+              <li>Services can be deployed independently</li>
+            </ul>
+          </div>
+
+          <h4 class="mt-4">Benefits of Microservices</h4>
+          <ul>
+            <li><strong>Independent Scaling:</strong> Scale only the services that need it (e.g., scale Payment Service
+              during Black Friday).</li>
+            <li><strong>Team Autonomy:</strong> Small teams own services end-to-end, reducing coordination overhead.
+            </li>
+            <li><strong>Technology Diversity:</strong> Use the best tool for each job (Python for ML, Go for high
+              throughput).</li>
+            <li><strong>Fault Isolation:</strong> A bug in one service doesn't crash the entire system.</li>
+            <li><strong>Independent Deployment:</strong> Deploy services separately, enabling faster release cycles.
+            </li>
+          </ul>
+
+          <h4 class="mt-4">Challenges of Microservices</h4>
+          <ul>
+            <li><strong>Operational Complexity:</strong> Need for service discovery, load balancing, distributed
+              tracing, monitoring.</li>
+            <li><strong>Network Latency:</strong> Inter-service communication is slower than function calls.</li>
+            <li><strong>Distributed Transactions:</strong> No ACID guarantees across services. Must use eventual
+              consistency or Sagas.</li>
+            <li><strong>Data Duplication:</strong> Each service owns its data, leading to potential inconsistencies.
+            </li>
+            <li><strong>Testing Complexity:</strong> Integration tests require orchestrating multiple services.</li>
+            <li><strong>DevOps Investment:</strong> Requires mature CI/CD, containerization (Docker), orchestration
+              (Kubernetes).</li>
+          </ul>
+
+          <div class="alert alert-warning border mt-3">
+            <strong>⚠️ Warning:</strong> Microservices add <em>significant</em> complexity. Don't adopt them unless you
+            have: (1) Multiple teams, (2) Independent scaling needs, (3) Mature DevOps practices, and (4) A complex
+            domain.
+          </div>
+        </section>
+
+        <!-- Comparison Table -->
+        <section id="comparison" class="content-section">
+          <h2>Detailed Comparison</h2>
+          <p>A comprehensive comparison across key dimensions to guide your architectural decision.</p>
+
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered comparison-table">
+              <thead>
+                <tr>
+                  <th style="width: 25%">Dimension</th>
+                  <th style="width: 37.5%">Monolithic</th>
+                  <th style="width: 37.5%">Microservices</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Development Complexity</strong></td>
+                  <td>Low. Single codebase, easy to navigate and refactor.</td>
+                  <td>High. Distributed system patterns, API contracts, versioning.</td>
+                </tr>
+                <tr>
+                  <td><strong>Deployment</strong></td>
+                  <td>Simple. Single deployment artifact (JAR, container, binary).</td>
+                  <td>Complex. Orchestrate multiple services, version compatibility.</td>
+                </tr>
+                <tr>
+                  <td><strong>Scaling</strong></td>
+                  <td>Vertical (add more CPU/RAM) or horizontal (replicate entire app).</td>
+                  <td>Horizontal per service. Scale only what's needed.</td>
+                </tr>
+                <tr>
+                  <td><strong>Performance</strong></td>
+                  <td>Fast in-process function calls. No network overhead.</td>
+                  <td>Network latency between services. Can be mitigated with caching, async messaging.</td>
+                </tr>
+                <tr>
+                  <td><strong>Fault Tolerance</strong></td>
+                  <td>Single point of failure. One bug can crash everything.</td>
+                  <td>Isolated failures. Circuit breakers and retries prevent cascading failures.</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Management</strong></td>
+                  <td>Single database. ACID transactions across all operations.</td>
+                  <td>Database per service. Eventual consistency, distributed transactions (Sagas).</td>
+                </tr>
+                <tr>
+                  <td><strong>Team Organization</strong></td>
+                  <td>Works well for small teams (1-10 developers). Coordination required for larger teams.</td>
+                  <td>Enables autonomous teams. Each team owns one or more services.</td>
+                </tr>
+                <tr>
+                  <td><strong>Technology Flexibility</strong></td>
+                  <td>Standardized stack. Entire app uses one language/framework.</td>
+                  <td>Polyglot architecture. Use different languages per service.</td>
+                </tr>
+                <tr>
+                  <td><strong>Testing</strong></td>
+                  <td>Easier integration testing. All code in one process.</td>
+                  <td>Complex. Requires contract testing, mocking, service virtualization.</td>
+                </tr>
+                <tr>
+                  <td><strong>Observability</strong></td>
+                  <td>Single log file, simple monitoring.</td>
+                  <td>Distributed tracing (Jaeger, Zipkin), centralized logging (ELK), service mesh (Istio).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Service Boundaries & DDD -->
+        <section id="service-boundaries" class="content-section">
+          <h2>Service Boundaries & Domain-Driven Design</h2>
+          <p>The hardest part of microservices: deciding where to split. Poor boundaries lead to high coupling and
+            distributed monoliths.</p>
+
+          <h4 class="mt-4">Domain-Driven Design (DDD) Principles</h4>
+          <p>Use <strong>Bounded Contexts</strong> from DDD to identify service boundaries:</p>
+          <ul>
+            <li><strong>Bounded Context:</strong> A logical boundary where a specific domain model applies (e.g., "Order
+              Management", "Inventory", "Billing").</li>
+            <li><strong>Ubiquitous Language:</strong> Each context has its own language. "Customer" in Billing may
+              differ from "Customer" in Support.</li>
+            <li><strong>Context Map:</strong> Document relationships between contexts (Shared Kernel, Customer-Supplier,
+              Anti-Corruption Layer).</li>
+          </ul>
+
+          <h4 class="mt-4">Identifying Service Boundaries</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">✅ Good Boundaries</h6>
+                <ul class="small mb-0">
+                  <li>High cohesion within service</li>
+                  <li>Low coupling between services</li>
+                  <li>Aligned with business capabilities</li>
+                  <li>Clear ownership by a single team</li>
+                  <li>Independent data model</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h6 class="fw-bold">❌ Poor Boundaries</h6>
+                <ul class="small mb-0">
+                  <li>Services that constantly call each other</li>
+                  <li>Shared database across services</li>
+                  <li>Boundaries based on tech layers (UI, Logic, Data)</li>
+                  <li>Too fine-grained (nano-services)</li>
+                  <li>Tight coupling via synchronous calls</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Conway's Law:</strong> "Organizations design systems that mirror their communication structure."
+            Align service boundaries with team boundaries. If teams must coordinate heavily, merge their services.
+          </div>
+        </section>
+
+        <!-- Migration Strategies -->
+        <section id="migration" class="content-section">
+          <h2>Migration Strategies</h2>
+          <p>Most companies start with a monolith and migrate to microservices. Here's how to do it incrementally.</p>
+
+          <h4 class="mt-4">1. Strangler Fig Pattern</h4>
+          <p>Gradually replace parts of the monolith with microservices, routing traffic to the new service while the
+            monolith still handles other requests.</p>
+          <p><strong>Steps:</strong></p>
+          <ol>
+            <li>Identify a module to extract (e.g., User Authentication)</li>
+            <li>Build a new microservice with the same functionality</li>
+            <li>Route requests to the new service via a proxy/API Gateway</li>
+            <li>Once stable, remove the code from the monolith</li>
+            <li>Repeat for other modules</li>
+          </ol>
+          <div class="alert alert-light border">
+            <strong>Why it works:</strong> Zero downtime. You can test the new service with a small percentage of
+            traffic before full migration.
+          </div>
+
+          <h4 class="mt-4 pt-3">2. Database Decomposition</h4>
+          <p>The hardest part of migration: splitting the monolith's database.</p>
+          <p><strong>Strategies:</strong></p>
+          <ul>
+            <li><strong>Separate Schema:</strong> Move service tables to a new schema, still in the same database (low
+              risk).</li>
+            <li><strong>Separate Database:</strong> Move to a completely separate database (higher isolation).</li>
+            <li><strong>Data Duplication:</strong> Allow some data to be duplicated across services (eventual
+              consistency via events).</li>
+            <li><strong>Shared Database Anti-Pattern:</strong> Avoid services sharing the same database tables—it
+              defeats the purpose of microservices.</li>
+          </ul>
+
+          <h4 class="mt-4 pt-3">3. Event-Driven Migration</h4>
+          <p>Use events to decouple services during migration:</p>
+          <ul>
+            <li>The monolith publishes events (e.g., "OrderCreated") to a message broker (Kafka, RabbitMQ)</li>
+            <li>New microservices subscribe to these events</li>
+            <li>Services can be added/removed without modifying the monolith</li>
+          </ul>
+        </section>
+
+        <!-- Deployment & Operations -->
+        <section id="deployment" class="content-section">
+          <h2>Deployment & Operations</h2>
+          <p>Microservices require significantly more infrastructure investment than monoliths.</p>
+
+          <h4 class="mt-4">Container Orchestration</h4>
+          <p><strong>Docker + Kubernetes:</strong> Standard for microservices deployment.</p>
+          <ul>
+            <li><strong>Docker:</strong> Package each service as a container with all dependencies.</li>
+            <li><strong>Kubernetes:</strong> Orchestrates containers—handles scaling, rolling updates, health checks,
+              service discovery.</li>
+          </ul>
+
+          <h4 class="mt-4">CI/CD Pipeline Differences</h4>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Stage</th>
+                  <th>Monolith</th>
+                  <th>Microservices</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Build</strong></td>
+                  <td>Single build pipeline</td>
+                  <td>Separate pipeline per service</td>
+                </tr>
+                <tr>
+                  <td><strong>Testing</strong></td>
+                  <td>Unit + integration tests in one suite</td>
+                  <td>Unit tests per service + contract testing + E2E tests</td>
+                </tr>
+                <tr>
+                  <td><strong>Deployment</strong></td>
+                  <td>Deploy entire app at once</td>
+                  <td>Deploy services independently (blue-green, canary)</td>
+                </tr>
+                <tr>
+                  <td><strong>Rollback</strong></td>
+                  <td>Rollback entire app</td>
+                  <td>Rollback individual services (version compatibility required)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4 class="mt-4">Observability Requirements</h4>
+          <p>Microservices require advanced monitoring:</p>
+          <ul>
+            <li><strong>Distributed Tracing:</strong> Track requests across multiple services (Jaeger, Zipkin, AWS
+              X-Ray).</li>
+            <li><strong>Centralized Logging:</strong> Aggregate logs from all services (ELK Stack, Splunk).</li>
+            <li><strong>Service Mesh:</strong> Manage service-to-service communication (Istio, Linkerd).</li>
+            <li><strong>Metrics & Alerting:</strong> Monitor latency, error rates, throughput per service (Prometheus,
+              Grafana).</li>
+          </ul>
+        </section>
+
+        <!-- Decision Framework -->
+        <section id="decision-framework" class="content-section">
+          <h2>Decision Framework: When to Choose Each</h2>
+
+          <div class="arch-card">
+            <h3>✅ Start with a Monolith If:</h3>
+            <ul>
+              <li>You're building an MVP or new product (speed > scalability)</li>
+              <li>Your team is small (< 10 developers)</li>
+              <li>The domain is simple or not yet well-understood</li>
+              <li>You don't have mature DevOps practices</li>
+              <li>You need ACID transactions across all operations</li>
+            </ul>
+          </div>
+
+          <div class="arch-card">
+            <h3>✅ Migrate to Microservices When:</h3>
+            <ul>
+              <li>You have multiple teams that need to work independently</li>
+              <li>Different parts of the app have different scaling needs</li>
+              <li>You need to adopt new technologies for specific modules</li>
+              <li>Deployment coupling is slowing down releases</li>
+              <li>The domain is complex and well-understood (clear bounded contexts)</li>
+              <li>You have mature CI/CD, monitoring, and DevOps culture</li>
+            </ul>
+          </div>
+
+          <h4 class="mt-4">Real-World Examples</h4>
+          <ul>
+            <li><strong>Netflix:</strong> Migrated from monolith to microservices to scale globally (1000+ services).
+            </li>
+            <li><strong>Amazon:</strong> "Two-pizza teams" each owning microservices to move faster at scale.</li>
+            <li><strong>Shopify:</strong> Started with a modular monolith, selectively extracted services for payment,
+              shipping, etc.</li>
+            <li><strong>Etsy:</strong> Stayed with a monolith for years, invested in continuous deployment instead.
+            </li>
+          </ul>
+
+          <div class="alert alert-warning border">
+            <strong>Anti-Pattern:</strong> Don't build microservices just because "it's what Google does." Most
+            companies aren't Google-scale. A well-designed monolith beats a poorly-designed microservices architecture.
+          </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Monoliths</strong> are simpler, faster to develop, and sufficient for most teams. Start here.
+            </li>
+            <li><strong>Microservices</strong> enable team autonomy and independent scaling but add significant
+              operational complexity.</li>
+            <li>Use <strong>Domain-Driven Design</strong> (Bounded Contexts) to identify service boundaries.</li>
+            <li>Migrate incrementally using the <strong>Strangler Fig Pattern</strong>—don't do a big-bang rewrite.</li>
+            <li>Invest in <strong>observability</strong>, <strong>CI/CD</strong>, and <strong>automation</strong> before
+              adopting microservices.</li>
+            <li>The best architecture is the one that matches your <strong>team size</strong>, <strong>domain
+                complexity</strong>, and <strong>scaling needs</strong>.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar (Left) -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#overview">Architecture Overview</a>
+            <a class="nav-link" href="#monolith">Monolithic Architecture</a>
+            <a class="nav-link" href="#microservices">Microservices Architecture</a>
+            <a class="nav-link" href="#comparison">Detailed Comparison</a>
+            <a class="nav-link" href="#service-boundaries">Service Boundaries & DDD</a>
+            <a class="nav-link" href="#migration">Migration Strategies</a>
+            <a class="nav-link" href="#deployment">Deployment & Operations</a>
+            <a class="nav-link" href="#decision-framework">Decision Framework</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../event-driven-architecture/"
+                class="text-decoration-none text-muted">Event-Driven
+                Architecture</a></li>
+            <li class="mb-2"><a href="../load-balancing/" class="text-decoration-none text-muted">Load Balancing</a>
+            </li>
+            <li class="mb-2"><a href="../api-gateway/" class="text-decoration-none text-muted">API Gateway</a></li>
+            <li class="mb-2"><a href="../service-discovery/" class="text-decoration-none text-muted">Service
+                Discovery</a></li>
+          </ul>
+        </div>
+      </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>

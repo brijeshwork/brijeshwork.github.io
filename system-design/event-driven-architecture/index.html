@@ -1,46 +1,658 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Event-Driven Architecture — Designing with Kafka and RabbitMQ — System Design | Brijesh Patel</title>
-<meta name="description" content="Event-driven architecture patterns using Kafka and RabbitMQ: event models, ordering, delivery guarantees, and system design trade-offs.">
-<link rel="canonical" href="https://brijesh.work/system-design/event-driven-architecture/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Event-Driven Architecture Guide | Kafka, RabbitMQ, Patterns & Implementation</title>
+  <meta name="description"
+    content="Complete guide to Event-Driven Architecture: Kafka vs RabbitMQ, event patterns, delivery guarantees, idempotency, error handling, and Python implementation examples.">
+  <meta name="keywords"
+    content="event-driven architecture, kafka, rabbitmq, message broker, pub/sub, event sourcing, cqrs, idempotency, exactly-once delivery">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/event-driven-architecture/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Custom styles for Event-Driven Architecture page */
+    .hero-section {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #94a3b8;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0d6efd;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: #0d6efd;
+      padding: 0.5em 0.8em;
+    }
+
+    .pattern-card {
+      border-left: 4px solid #0d6efd;
+      background: #f8fafc;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Event-Driven Architecture — Designing with Kafka and RabbitMQ</h1>
-        <p class="lead">Patterns and trade-offs for event-driven systems: message formats, ordering, exactly-once vs at-least-once, and integration with notification queues.</p>
 
-        <h2 id="components">Core components</h2>
-        <ul>
-          <li>Event producers and consumers</li>
-          <li>Message broker (Kafka for durable logs, RabbitMQ for routing and queues)</li>
-          <li>Schema registry and event contracts</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="guarantees">Delivery guarantees</h2>
-        <ul>
-          <li>At-least-once: simpler, requires idempotency on consumers</li>
-          <li>Exactly-once: possible with Kafka Streams or additional coordination but more complex</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <h2 id="integration">Integration</h2>
-        <p>Link → <a href="../notification-queue/">Real-Time Notification Queue</a> for fanout and delivery considerations.</p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-primary bg-opacity-25 text-white border border-white border-opacity-25">Core
+            Concept</span>
+          <h1 class="display-4 fw-bold mb-3">Event-Driven Architecture</h1>
+          <p class="hero-subtitle mb-4">Build scalable, loosely-coupled systems using asynchronous event communication.
+            Master Kafka, RabbitMQ, delivery guarantees, and idempotency patterns.</p>
+          <div class="d-flex gap-3">
+            <a href="#implementation" class="btn btn-primary">View Examples</a>
+            <a href="#kafka-vs-rabbitmq" class="btn btn-outline-light">Compare Brokers</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Core components</a></li><li><a href="#guarantees">Guarantees</a></li></ul></div></div></aside>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Introduction -->
+        <section id="what-is-eda" class="content-section">
+          <h2>What is Event-Driven Architecture?</h2>
+          <p class="lead text-secondary">A design paradigm where services communicate by producing and consuming events
+            asynchronously.</p>
+          <p>In traditional request/response systems, Service A directly calls Service B and waits for a response. This
+            creates tight coupling and synchronous dependencies. In contrast, <strong>Event-Driven Architecture
+              (EDA)</strong> uses events as the primary means of communication between services.</p>
+
+          <p>An <strong>event</strong> is a record of something that happened in the system (e.g., "OrderPlaced",
+            "PaymentProcessed", "UserRegistered"). Services publish events to a <strong>message broker</strong>, and
+            other services subscribe to events they care about—without knowing who produced them.</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🎯 Key Benefits</h5>
+                <ul class="list-unstyled mb-0">
+                  <li class="mb-2">✓ <strong>Decoupling:</strong> Services don't need to know about each other.</li>
+                  <li class="mb-2">✓ <strong>Scalability:</strong> Process events independently and in parallel.</li>
+                  <li class="mb-2">✓ <strong>Resilience:</strong> Failures in one service don't block others.</li>
+                  <li>✓ <strong>Flexibility:</strong> Add new consumers without changing producers.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">⚠️ When to Use EDA</h5>
+                <ul class="mb-0 small">
+                  <li>Microservices that need to react to changes in other services</li>
+                  <li>Real-time data processing and analytics pipelines</li>
+                  <li>Notification systems and user activity tracking</li>
+                  <li>Systems requiring audit logs or event sourcing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Event Patterns -->
+        <section id="event-patterns" class="content-section">
+          <h2>Event Patterns</h2>
+          <p>Different patterns suit different use cases. Here are the most common event-driven patterns.</p>
+
+          <div id="pub-sub" class="pattern-card">
+            <h4>1. Publish-Subscribe (Pub/Sub)</h4>
+            <p><strong>Pattern:</strong> A producer publishes events to a topic/exchange. Multiple consumers subscribe
+              to that topic and each receives a copy of every event.</p>
+            <p><strong>Use Case:</strong> Sending notifications to multiple channels (Email, SMS, Push) when an order
+              is placed.</p>
+            <p class="mb-0 small text-muted">Example: Kafka topics, RabbitMQ fanout exchanges.</p>
+          </div>
+
+          <div id="event-sourcing" class="pattern-card">
+            <h4>2. Event Sourcing</h4>
+            <p><strong>Pattern:</strong> Instead of storing only the current state, store <em>all events</em> that led
+              to that state. The current state is derived by replaying events.</p>
+            <p><strong>Use Case:</strong> Banking systems where every transaction must be auditable and reversible.</p>
+            <p class="mb-0 small text-muted">Example: Append-only event log in Kafka, Event Store DB.</p>
+          </div>
+
+          <div id="cqrs" class="pattern-card">
+            <h4>3. CQRS (Command Query Responsibility Segregation)</h4>
+            <p><strong>Pattern:</strong> Separate the write model (commands) from the read model (queries). Commands
+              produce events; read models are updated by consuming those events.</p>
+            <p><strong>Use Case:</strong> E-commerce where writes (orders) and reads (product catalog) have different
+              scaling needs.</p>
+            <p class="mb-0 small text-muted">Often combined with Event Sourcing for complete audit trails.</p>
+          </div>
+
+          <div id="event-streaming" class="pattern-card">
+            <h4>4. Event Streaming vs Message Queuing</h4>
+            <p><strong>Event Streaming (Kafka):</strong> Events are stored in durable logs. Consumers can replay
+              events from any point in time. Multiple consumers can read independently.</p>
+            <p><strong>Message Queuing (RabbitMQ):</strong> Messages are removed once consumed. Focus on delivery to
+              one consumer (work queue) or broadcast (fanout).</p>
+            <p class="mb-0 small text-muted">Choose streaming for analytics and replay; choose queuing for task
+              distribution.</p>
+          </div>
+        </section>
+
+        <!-- Kafka vs RabbitMQ -->
+        <section id="kafka-vs-rabbitmq" class="content-section">
+          <h2>Kafka vs RabbitMQ: Detailed Comparison</h2>
+          <p>Both are popular message brokers, but they're optimized for different use cases. Understanding their
+            trade-offs is critical for system design.</p>
+
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered comparison-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%">Feature</th>
+                  <th style="width: 40%">Apache Kafka</th>
+                  <th style="width: 40%">RabbitMQ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Architecture</strong></td>
+                  <td>Distributed commit log. Events are stored as an append-only log and retained for a configurable
+                    period (days/weeks).</td>
+                  <td>Traditional message broker. Messages are queued in memory/disk and deleted after consumption.</td>
+                </tr>
+                <tr>
+                  <td><strong>Message Retention</strong></td>
+                  <td>Long-term storage. Consumers can replay messages from any offset.</td>
+                  <td>Short-term. Messages are removed once acknowledged by consumers.</td>
+                </tr>
+                <tr>
+                  <td><strong>Throughput</strong></td>
+                  <td>Extremely high (millions of messages/sec). Optimized for streaming and batch processing.</td>
+                  <td>Moderate. Better for transactional messaging with complex routing.</td>
+                </tr>
+                <tr>
+                  <td><strong>Latency</strong></td>
+                  <td>Low, but optimized for throughput over ultra-low latency (milliseconds).</td>
+                  <td>Very low latency for real-time message delivery (microseconds to milliseconds).</td>
+                </tr>
+                <tr>
+                  <td><strong>Message Ordering</strong></td>
+                  <td>Guaranteed within a partition. Use partition keys to route related events to the same partition.
+                  </td>
+                  <td>FIFO ordering within a queue, but harder to guarantee ordering across multiple consumers.</td>
+                </tr>
+                <tr>
+                  <td><strong>Routing</strong></td>
+                  <td>Simple topic-based routing. Consumers filter events in code.</td>
+                  <td>Advanced routing via exchanges (direct, topic, fanout, headers). Message filtering at broker
+                    level.</td>
+                </tr>
+                <tr>
+                  <td><strong>Use Cases</strong></td>
+                  <td>Event streaming, log aggregation, real-time analytics, event sourcing, data pipelines.</td>
+                  <td>Task queues, request/reply patterns, complex routing, transactional messaging.</td>
+                </tr>
+                <tr>
+                  <td><strong>Scalability</strong></td>
+                  <td>Horizontal scaling via partitions. Add brokers and partitions to handle more load.</td>
+                  <td>Vertical scaling (add more RAM/CPU) or clustering. More complex to scale horizontally.</td>
+                </tr>
+                <tr>
+                  <td><strong>Delivery Semantics</strong></td>
+                  <td>At-least-once by default. Exactly-once possible with Kafka Streams/Transactional API.</td>
+                  <td>At-most-once or at-least-once. No native exactly-once support.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Rule of Thumb:</strong> Use <strong>Kafka</strong> when you need high throughput, event replay, and
+            long-term storage (e.g., analytics, event sourcing). Use <strong>RabbitMQ</strong> when you need complex
+            routing, low latency, and traditional queuing patterns (e.g., background jobs, RPC).
+          </div>
+        </section>
+
+        <!-- Delivery Guarantees -->
+        <section id="delivery-guarantees" class="content-section">
+          <h2>Delivery Guarantees</h2>
+          <p>Understanding delivery semantics is crucial for building reliable event-driven systems. The choice affects
+            performance, complexity, and data consistency.</p>
+
+          <div id="at-most-once" class="mb-4 pt-3">
+            <h4>1. At-Most-Once Delivery</h4>
+            <p><strong>Guarantee:</strong> A message is delivered zero or one time. It may be lost but will never be
+              duplicated.</p>
+            <p><strong>How it works:</strong> Producer sends the message without waiting for acknowledgment. If the
+              network fails, the message is lost.</p>
+            <p><strong>Use Case:</strong> Non-critical metrics, logging, telemetry where occasional data loss is
+              acceptable.</p>
+            <div class="alert alert-light border">
+              <strong>Trade-off:</strong> Highest performance, lowest reliability. Rarely used in production for
+              business-critical data.
+            </div>
+          </div>
+
+          <div id="at-least-once" class="mb-4 pt-3">
+            <h4>2. At-Least-Once Delivery</h4>
+            <p><strong>Guarantee:</strong> A message is delivered one or more times. It will never be lost, but may be
+              duplicated.</p>
+            <p><strong>How it works:</strong> Producer retries until it receives acknowledgment. If acknowledgment is
+              lost, the producer retries, causing duplicates.</p>
+            <p><strong>Requirement:</strong> Consumers MUST be <strong>idempotent</strong>—processing the same message
+              multiple times should have the same effect as processing it once.</p>
+            <div class="alert alert-light border">
+              <strong>Use Case:</strong> Most production systems. Simpler than exactly-once, and idempotency is often
+              achievable.
+            </div>
+          </div>
+
+          <div id="exactly-once" class="mb-4 pt-3">
+            <h4>3. Exactly-Once Delivery</h4>
+            <p><strong>Guarantee:</strong> A message is delivered exactly one time. No duplicates, no loss.</p>
+            <p><strong>How it works:</strong> Requires distributed transactions or deduplication mechanisms. Kafka
+              achieves this via transactional producers and idempotent consumers with offset commits.</p>
+            <p><strong>Complexity:</strong> Significantly more complex. Performance overhead for coordination.</p>
+            <div class="alert alert-warning border">
+              <strong>⚠️ Reality Check:</strong> True exactly-once is difficult to achieve end-to-end. Often,
+              "exactly-once processing" means exactly-once within the Kafka cluster, but external side effects (DB
+              writes, API calls) still require idempotency.
+            </div>
+          </div>
+        </section>
+
+        <!-- Idempotency -->
+        <section id="idempotency" class="content-section">
+          <h2>Idempotency Patterns</h2>
+          <p>Since at-least-once delivery causes duplicates, consumers must handle the same event multiple times
+            safely. This is called <strong>idempotency</strong>.</p>
+
+          <h4 class="mt-4">Why Idempotency Matters</h4>
+          <p>Imagine an "OrderPlaced" event causes a charge to the customer's credit card. If the event is processed
+            twice, the customer gets charged twice—catastrophic! Idempotency ensures repeated processing is safe.</p>
+
+          <h4 class="mt-4">Deduplication Strategies</h4>
+          <ul>
+            <li><strong>Unique Message ID:</strong> Each event has a unique ID. Store processed IDs in a database/cache
+              (Redis). Reject duplicates.</li>
+            <li><strong>Natural Idempotency:</strong> Some operations are naturally idempotent (e.g., "SET user_status
+              = ACTIVE").</li>
+            <li><strong>Versioning:</strong> Use event timestamps or version numbers. Only process events newer than
+              the last processed version.</li>
+            <li><strong>Database Constraints:</strong> Use UNIQUE constraints to prevent duplicate inserts.</li>
+          </ul>
+
+          <h4 class="mt-4">Python Example: Idempotent Message Handler</h4>
+          <pre><code class="language-python">import redis
+import json
+
+# Redis for tracking processed message IDs
+redis_client = redis.StrictRedis(host='localhost', port=6379, decode_responses=True)
+
+def process_event(event):
+    """
+    Idempotent event handler using Redis for deduplication.
+    """
+    event_id = event['id']
+    event_type = event['type']
+    
+    # Check if we've already processed this event
+    cache_key = f"processed:{event_id}"
+    if redis_client.exists(cache_key):
+        print(f"⚠️  Duplicate event {event_id} detected. Skipping.")
+        return
+    
+    # Process the event (business logic)
+    if event_type == "OrderPlaced":
+        print(f"✅ Processing order: {event['order_id']}")
+        # Charge credit card, update inventory, etc.
+    
+    # Mark event as processed (TTL: 7 days)
+    redis_client.setex(cache_key, 604800, "processed")
+    print(f"✅ Event {event_id} processed successfully.")
+
+# Simulate consuming events
+events = [
+    {"id": "evt_001", "type": "OrderPlaced", "order_id": "ORD123"},
+    {"id": "evt_001", "type": "OrderPlaced", "order_id": "ORD123"},  # Duplicate
+    {"id": "evt_002", "type": "OrderPlaced", "order_id": "ORD456"}
+]
+
+for event in events:
+    process_event(event)
+
+# Output:
+# ✅ Processing order: ORD123
+# ✅ Event evt_001 processed successfully.
+# ⚠️  Duplicate event evt_001 detected. Skipping.
+# ✅ Processing order: ORD456
+# ✅ Event evt_002 processed successfully.
+</code></pre>
+        </section>
+
+        <!-- Error Handling -->
+        <section id="error-handling" class="content-section">
+          <h2>Error Handling & Reliability</h2>
+          <p>Events can fail to process due to bugs, transient errors, or downstream service failures. A robust
+            event-driven system handles these gracefully.</p>
+
+          <div id="retry-mechanisms" class="mb-4 pt-3">
+            <h4>1. Retry Mechanisms</h4>
+            <p>Automatically retry failed events with <strong>exponential backoff</strong> to avoid overwhelming
+              downstream services.</p>
+            <p><strong>Strategy:</strong> Retry immediately, then after 1s, 2s, 4s, 8s, etc. Use max retries (e.g., 5)
+              to prevent infinite loops.</p>
+            <div class="alert alert-light border">
+              <strong>Best Practice:</strong> Add jitter (random delay) to prevent thundering herd when many consumers
+              retry simultaneously.
+            </div>
+          </div>
+
+          <div id="dead-letter-queue" class="mb-4 pt-3">
+            <h4>2. Dead Letter Queues (DLQ)</h4>
+            <p>After max retries, move failed events to a <strong>Dead Letter Queue</strong> for manual inspection or
+              reprocessing.</p>
+            <p><strong>Benefits:</strong></p>
+            <ul>
+              <li>Prevents blocking of healthy events (poison pill problem)</li>
+              <li>Allows engineers to debug failures without data loss</li>
+              <li>Can replay events after fixing bugs</li>
+            </ul>
+            <p class="small text-muted">Example: Kafka DLQ topics, RabbitMQ dead-letter exchanges, AWS SQS DLQ.</p>
+          </div>
+
+          <div id="circuit-breaker" class="mb-4 pt-3">
+            <h4>3. Circuit Breakers</h4>
+            <p>If a downstream service (e.g., payment API) is failing repeatedly, temporarily <strong>stop sending
+                requests</strong> (open the circuit) to give it time to recover.</p>
+            <p><strong>States:</strong> Closed (normal) → Open (failing, requests rejected) → Half-Open (testing
+              recovery).</p>
+          </div>
+
+          <div id="monitoring" class="mb-4 pt-3">
+            <h4>4. Monitoring & Alerting</h4>
+            <p>Track key metrics to detect issues early:</p>
+            <ul>
+              <li><strong>Consumer Lag:</strong> How far behind consumers are from the latest events (critical for
+                Kafka).</li>
+              <li><strong>Error Rate:</strong> Percentage of events failing processing.</li>
+              <li><strong>DLQ Size:</strong> Spike in DLQ size indicates systemic issues.</li>
+              <li><strong>Processing Time:</strong> P95/P99 latencies to catch slow consumers.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Schema Registry -->
+        <section id="schema-registry" class="content-section">
+          <h2>Schema Registry & Event Contracts</h2>
+          <p>As systems evolve, event schemas change (new fields, renamed fields, etc.). A <strong>Schema
+              Registry</strong> ensures producers and consumers agree on the event format and handles versioning.</p>
+
+          <h4 class="mt-4">Why Schema Registry?</h4>
+          <ul>
+            <li><strong>Type Safety:</strong> Prevents runtime errors from schema mismatches.</li>
+            <li><strong>Evolution:</strong> Add fields without breaking existing consumers (forward/backward
+              compatibility).</li>
+            <li><strong>Documentation:</strong> Schema serves as living documentation of event structure.</li>
+          </ul>
+
+          <h4 class="mt-4">Popular Formats</h4>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">Avro</h6>
+                <p class="small mb-0">Binary format. Compact, fast, strong schema evolution. Used with Confluent Schema
+                  Registry.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">Protobuf</h6>
+                <p class="small mb-0">Google's binary format. Efficient, language-agnostic, backward compatible.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tech-card">
+                <h6 class="fw-bold">JSON Schema</h6>
+                <p class="small mb-0">Human-readable, easy to debug, but larger payload size and slower parsing.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-light border mt-3">
+            <strong>Best Practice:</strong> Define schemas in a centralized registry (Confluent Schema Registry, AWS
+            Glue). Enforce validation in producers and consumers.
+          </div>
+        </section>
+
+        <!-- Implementation -->
+        <section id="implementation" class="content-section">
+          <h2>Python Implementation Examples</h2>
+
+          <h4 id="kafka-example" class="mt-4">Kafka Producer & Consumer</h4>
+          <p>Using <code>kafka-python</code> library to produce and consume events.</p>
+
+          <pre><code class="language-python">from kafka import KafkaProducer, KafkaConsumer
+import json
+
+# === PRODUCER ===
+producer = KafkaProducer(
+    bootstrap_servers=['localhost:9092'],
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
+
+# Publish an event
+event = {
+    "event_id": "evt_12345",
+    "type": "OrderPlaced",
+    "order_id": "ORD789",
+    "user_id": "user_456",
+    "amount": 99.99
+}
+
+producer.send('orders', value=event, key=b'user_456')
+producer.flush()
+print("✅ Event published to Kafka")
+
+# === CONSUMER ===
+consumer = KafkaConsumer(
+    'orders',
+    bootstrap_servers=['localhost:9092'],
+    auto_offset_reset='earliest',
+    enable_auto_commit=True,
+    group_id='order-processor',
+    value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+)
+
+print("🔄 Consuming events...")
+for message in consumer:
+    event = message.value
+    print(f"📩 Received: {event['type']} | Order: {event['order_id']}")
+    # Process event (idempotent handler recommended)
+</code></pre>
+
+          <h4 id="rabbitmq-example" class="mt-4 pt-3">RabbitMQ Producer & Consumer</h4>
+          <p>Using <code>pika</code> library for traditional message queuing.</p>
+
+          <pre><code class="language-python">import pika
+import json
+
+# === PRODUCER ===
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+
+# Declare a queue
+channel.queue_declare(queue='notifications', durable=True)
+
+message = {
+    "user_id": "user_789",
+    "type": "EmailNotification",
+    "subject": "Your order was shipped!",
+    "body": "Track your package at ..."
+}
+
+channel.basic_publish(
+    exchange='',
+    routing_key='notifications',
+    body=json.dumps(message),
+    properties=pika.BasicProperties(delivery_mode=2)  # Persistent
+)
+
+print("✅ Message sent to RabbitMQ")
+connection.close()
+
+# === CONSUMER ===
+def callback(ch, method, properties, body):
+    message = json.loads(body)
+    print(f"📧 Sending {message['type']} to user {message['user_id']}")
+    # Send email via SMTP, etc.
+    ch.basic_ack(delivery_tag=method.delivery_tag)
+
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='notifications', durable=True)
+
+channel.basic_consume(queue='notifications', on_message_callback=callback)
+print("🔄 Waiting for messages...")
+channel.start_consuming()
+</code></pre>
+        </section>
+
+        <!-- Summary -->
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li>Use <strong>Event-Driven Architecture</strong> to decouple services and improve scalability.</li>
+            <li>Choose <strong>Kafka</strong> for high-throughput streaming and event replay; choose
+              <strong>RabbitMQ</strong> for low-latency queuing and complex routing.
+            </li>
+            <li>Implement <strong>at-least-once delivery</strong> with idempotent consumers for most use cases.</li>
+            <li>Use <strong>Dead Letter Queues</strong> and <strong>exponential backoff</strong> for robust error
+              handling.</li>
+            <li>Adopt a <strong>Schema Registry</strong> to manage event schema evolution safely.</li>
+            <li>Monitor <strong>consumer lag</strong>, error rates, and DLQ size to catch issues early.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar (Left) -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#what-is-eda">What is EDA?</a>
+            <a class="nav-link" href="#event-patterns">Event Patterns</a>
+            <a class="nav-link ms-3" href="#pub-sub">• Pub/Sub</a>
+            <a class="nav-link ms-3" href="#event-sourcing">• Event Sourcing</a>
+            <a class="nav-link ms-3" href="#cqrs">• CQRS</a>
+            <a class="nav-link ms-3" href="#event-streaming">• Streaming vs Queuing</a>
+            <a class="nav-link" href="#kafka-vs-rabbitmq">Kafka vs RabbitMQ</a>
+            <a class="nav-link" href="#delivery-guarantees">Delivery Guarantees</a>
+            <a class="nav-link ms-3" href="#at-most-once">• At-Most-Once</a>
+            <a class="nav-link ms-3" href="#at-least-once">• At-Least-Once</a>
+            <a class="nav-link ms-3" href="#exactly-once">• Exactly-Once</a>
+            <a class="nav-link" href="#idempotency">Idempotency Patterns</a>
+            <a class="nav-link" href="#error-handling">Error Handling</a>
+            <a class="nav-link ms-3" href="#retry-mechanisms">• Retry Mechanisms</a>
+            <a class="nav-link ms-3" href="#dead-letter-queue">• Dead Letter Queue</a>
+            <a class="nav-link ms-3" href="#circuit-breaker">• Circuit Breakers</a>
+            <a class="nav-link" href="#schema-registry">Schema Registry</a>
+            <a class="nav-link" href="#implementation">Python Examples</a>
+            <a class="nav-link ms-3" href="#kafka-example">• Kafka</a>
+            <a class="nav-link ms-3" href="#rabbitmq-example">• RabbitMQ</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../notification-queue/" class="text-decoration-none text-muted">Notification
+                Queue</a></li>
+            <li class="mb-2"><a href="../load-balancing/" class="text-decoration-none text-muted">Load Balancing</a>
+            </li>
+            <li class="mb-2"><a href="../caching-layer/" class="text-decoration-none text-muted">Caching Layer</a></li>
+            <li class="mb-2"><a href="../rate-limiting/" class="text-decoration-none text-muted">Rate Limiting</a></li>
+          </ul>
+        </div>
+      </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
