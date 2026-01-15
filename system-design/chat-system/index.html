@@ -1,48 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Building a Real-Time Chat System — System Design | Brijesh Patel</title>
-<meta name="description" content="Design a real-time chat system (WhatsApp-like): message routing, delivery guarantees, presence, storage, and scaling strategies.">
-<link rel="canonical" href="https://brijesh.work/system-design/chat-system/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat System Design | WhatsApp Architecture, WebSockets & Cassandra</title>
+  <meta name="description"
+    content="System design guide for a scalable Chat System (WhatsApp/Facebook Messenger): WebSocket architecture, Cassandra/HBase datalayer, user presence (heartbeats), and group chat handling.">
+  <meta name="keywords"
+    content="system design, chat system, whatsapp architecture, websockets, cassandra, user presence, heartbeat, group chat, push notifications, message broker">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/chat-system/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #a5b4fc;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #312e81;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(49, 46, 129, 0.1);
+      color: #312e81;
+      padding: 0.5em 0.8em;
+    }
+
+    .arch-diagram {
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: monospace;
+    }
+
+    .arch-box {
+      border: 1px solid #cbd5e1;
+      padding: 10px 20px;
+      display: inline-block;
+      margin: 10px;
+      background: #e0e7ff;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .arrow {
+      font-size: 1.5rem;
+      color: #6366f1;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Building a Real-Time Chat System (WhatsApp-like)</h1>
-        <p class="lead">Patterns for real-time messaging: connection management, delivery guarantees, replication, presence, and storage trade-offs.</p>
 
-        <h2 id="components">Core components</h2>
-        <ul>
-          <li>Connection layer (WebSocket/QUIC) for persistent connections</li>
-          <li>Message broker for fanout and durable delivery (Kafka, NATS Streaming)</li>
-          <li>Delivery semantics: at-most-once, at-least-once, exactly-once (trade-offs)</li>
-          <li>Storage: hot store for recent messages, cold store for archives</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="scaling">Scaling</h2>
-        <ul>
-          <li>Partition conversation space by conversation id</li>
-          <li>Use presence service for routing to active connections</li>
-          <li>Design for eventual consistency across multi-device delivery</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-25 text-white border border-white border-opacity-25">Real-Time
+            Messaging</span>
+          <h1 class="display-4 fw-bold mb-3">WhatsApp System Design</h1>
+          <p class="hero-subtitle mb-4">Architecting a billion-user chat platform: WebSocket servers, Cassandra
+            Wide-Column storage, User Presence heartbeats, and Group Chat fanout.</p>
+          <div class="d-flex gap-3">
+            <a href="#architecture" class="btn btn-light text-primary fw-bold"
+              style="color: #312e81 !important;">Architecture</a>
+            <a href="#database" class="btn btn-outline-light">Database Choice</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Components</a></li><li><a href="#scaling">Scaling</a></li></ul></div></div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Architecture -->
+        <section id="architecture" class="content-section">
+          <h2>High-Level Architecture</h2>
+          <p class="lead text-secondary">The system is split into Real-Time (Ephemeral) and Storage (Persistent) layers.
+          </p>
+
+          <div class="arch-diagram d-none d-md-block">
+            <div class="arch-box bg-dark text-white">Client</div>
+            <span class="arrow">↔</span>
+            <div class="arch-box">Load Balancer</div>
+            <span class="arrow">↔</span>
+            <div class="arch-box bg-primary text-white">WebSocket<br>Gateway</div>
+            <span class="arrow">→</span>
+            <div class="arch-box">Message<br>Queue</div>
+            <span class="arrow">→</span>
+            <div class="arch-box bg-success text-white">DB Workers</div>
+          </div>
+
+          <h4 class="mt-4">Component Breakdown</h4>
+          <ul>
+            <li><strong>WebSocket Gateway:</strong> Holds persistent TCP connections for online users. Uses Redis to map
+              `User_ID -> Gateway_Server_IP`.</li>
+            <li><strong>Chat Service:</strong> Orchestrates message routing. If User B is offline, sends to Push
+              Notification Service.</li>
+            <li><strong>Presence Service:</strong> Check if user is Online/Offline via Heartbeats.</li>
+            <li><strong>Group Service:</strong> Manages Group metadata (Members, Admin).</li>
+          </ul>
+        </section>
+
+        <!-- Database Choice -->
+        <section id="database" class="content-section">
+          <h2>Database Choice: Cassandra vs MySQL</h2>
+          <p>Chat systems generate massive write throughput (TB of data per day). Traditional RDBMS (MySQL) struggle
+            with this scale.</p>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Criteria</th>
+                <th>RDBMS (MySQL)</th>
+                <th>Key-Value (Redis)</th>
+                <th>Wide-Column (Cassandra/HBase)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Data Model</strong></td>
+                <td>Relational (Joins)</td>
+                <td>Simple Key-Value</td>
+                <td>Time-Series / Wide-Column</td>
+              </tr>
+              <tr>
+                <td><strong>Scaling</strong></td>
+                <td>Vertical (Hard to Shard)</td>
+                <td>Memory Limited</td>
+                <td><strong>Horizontal (Linear Scale)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Query Pattern</strong></td>
+                <td>Complex Queries</td>
+                <td>Single Item</td>
+                <td>"Get recent messages for User A"</td>
+              </tr>
+              <tr>
+                <td><strong>Verdict</strong></td>
+                <td>Bad for History</td>
+                <td>Good for Presence</td>
+                <td><strong>Best for Chat History</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="alert alert-info border border-info mt-3">
+            <strong>Why Cassandra?</strong> It supports extremely high write throughput and stores messages effectively
+            ordered by time (`Partition Key: ChatID`, `Clustering Key: Timestamp`).
+          </div>
+        </section>
+
+        <!-- User Presence -->
+        <section id="presence" class="content-section">
+          <h2>User Presence (Heartbeats)</h2>
+          <p>How do we know if a friend is "Online"?</p>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold">Heartbeat Mechanism</h5>
+                <p class="small">Detailed Flow:</p>
+                <ol class="small text-muted">
+                  <li>Client sends "I'm alive" signal every 5s.</li>
+                  <li>Load Balancer forwards to <strong>Presence Service</strong>.</li>
+                  <li>Service updates <strong>Redis</strong> with TTL=10s.</li>
+                  <li>If no heartbeat for 10s, key expires -> User Offline.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card">
+                <h5 class="fw-bold">Fanout Optimization</h5>
+                <p class="small text-muted">Do not broadcast "Online" status to <i>everyone</i>. Only send updates to
+                  friends specifically viewing the chat list (Active Viewport).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Python Example -->
+        <section id="code" class="content-section">
+          <h2>WebSocket Implementation (Python/FastAPI)</h2>
+          <pre><code class="language-python">from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+
+app = FastAPI()
+
+class ConnectionManager:
+    def __init__(self):
+        # Map user_id to websocket connection
+        self.active_connections: dict[str, WebSocket] = {}
+
+    async def connect(self, websocket: WebSocket, user_id: str):
+        await websocket.accept()
+        self.active_connections[user_id] = websocket
+
+    def disconnect(self, user_id: str):
+        if user_id in self.active_connections:
+            del self.active_connections[user_id]
+
+    async def send_personal_message(self, message: str, user_id: str):
+        if user_id in self.active_connections:
+            # Send real-time if online
+            await self.active_connections[user_id].send_text(message)
+        else:
+            # Fallback to Push Notification / DB
+            print(f"User {user_id} is offline. Queuing message.")
+
+manager = ConnectionManager()
+
+@app.websocket("/ws/{user_id}")
+async def websocket_endpoint(websocket: WebSocket, user_id: str):
+    await manager.connect(websocket, user_id)
+    try:
+        while True:
+            data = await websocket.receive_text()
+            # Process incoming message
+    except WebSocketDisconnect:
+        manager.disconnect(user_id)</code></pre>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li>Use <strong>WebSockets</strong> for bi-directional low-latency communication.</li>
+            <li>Choose <strong>Cassandra/HBase</strong> for storing chat history due to write-heavy nature.</li>
+            <li>Implement <strong>User Presence</strong> with Redis-based heartbeats.</li>
+            <li>Handle <strong>Group Chats</strong> by iterating through members and managing fanout carefully.</li>
+            <li>Ensure <strong>Reliability</strong> with Acknowledgements (ACKs) and Retry queues.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#architecture">Architecture</a>
+            <a class="nav-link" href="#database">Database (Cassandra)</a>
+            <a class="nav-link" href="#presence">User Presence</a>
+            <a class="nav-link" href="#code">WebSocket Code</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../notification-queue/" class="text-decoration-none text-muted">Notification
+                Queue</a></li>
+            <li class="mb-2"><a href="../location-tracking/" class="text-decoration-none text-muted">Location
+                Tracking</a></li>
+            <li class="mb-2"><a href="../file-upload/" class="text-decoration-none text-muted">File Upload</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
