@@ -1,41 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Designing a Logging and Monitoring System — System Design | Brijesh Patel</title>
-<meta name="description" content="Design patterns for logging and monitoring: centralized logging, metrics, tracing, alerting and dashboards, linked with analytics dashboards.">
-<link rel="canonical" href="https://brijesh.work/system-design/logging-monitoring/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Logging & Monitoring System Design | ELK, Prometheus & Observability</title>
+  <meta name="description"
+    content="Architecting Observability: Centralized Logging (ELK/EFK), Metric Collection (Prometheus), Structured Logging (JSON), and Sidecar patterns for distributed systems.">
+  <meta name="keywords"
+    content="system design, logging, monitoring, observability, elk stack, prometheus, grafana, structured logging, distributed tracing, jaeger">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/logging-monitoring/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #c2410c 0%, #9a3412 100%);
+      /* Orange/Red */
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid #fdba74;
+    }
+
+    .hero-subtitle {
+      color: #fed7aa;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #c2410c;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #fff7ed;
+      /* Light orange */
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #ffedd5;
+    }
+
+    .badge-soft {
+      background-color: rgba(253, 186, 116, 0.1);
+      color: #ea580c;
+      padding: 0.5em 0.8em;
+    }
+
+    .log-pipeline {
+      background: #ffffff;
+      border: 2px dashed #ea580c;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .pipeline-step {
+      border: 2px solid #c2410c;
+      padding: 10px 15px;
+      display: inline-block;
+      margin: 10px;
+      background: #fff;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #9a3412;
+    }
+
+    .arrow {
+      font-size: 1.5rem;
+      color: #f97316;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a Logging and Monitoring System</h1>
-        <p class="lead">Patterns for centralized logging, metrics collection, distributed tracing, alerting and observability. Links to analytics dashboard design for visualization.</p>
 
-        <h2 id="components">Components</h2>
-        <ul>
-          <li>Log aggregation (ELK/Fluentd/FluentBit), metrics (Prometheus), tracing (Jaeger)</li>
-          <li>Retention policies and cost control for large volumes of logs</li>
-          <li>Dashboards and alerting rules tied to SLOs</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="integration">Integration</h2>
-        <p>Link → <a href="../analytics-dashboard/">Analytics Dashboard</a> for visualizing aggregated metrics and logs.</p>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-10 text-white border border-white border-opacity-25">Observability
+            & DevOps</span>
+          <h1 class="display-4 fw-bold mb-3">Logging & Monitoring System</h1>
+          <p class="hero-subtitle mb-4">From print statements to production observability: Designing the ELK/EFK stack,
+            Structured Logging, and Sidecar Collectors.</p>
+          <div class="d-flex gap-3">
+            <a href="#pipeline" class="btn btn-light text-danger fw-bold" style="color: #c2410c !important;">Log
+              Pipeline</a>
+            <a href="#structured" class="btn btn-outline-light">Structured Logs</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Components</a></li><li><a href="#integration">Integration</a></li></ul></div></div></aside>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Architecture -->
+        <section id="pipeline" class="content-section">
+          <h2>The Logging Pipeline (ELK/EFK)</h2>
+          <p class="lead text-secondary">Logs must be shipped off the server immediately. They are ephemeral on the node
+            but permanent in the archive.</p>
+
+          <div class="log-pipeline d-none d-md-block">
+            <div class="pipeline-step">App<br>(STDOUT)</div>
+            <span class="arrow">→</span>
+            <div class="pipeline-step bg-light">Collector<br>(Fluentd/Filebeat)</div>
+            <span class="arrow">→</span>
+            <div class="pipeline-step bg-warning text-dark">Buffer<br>(Kafka/Redis)</div>
+            <span class="arrow">→</span>
+            <div class="pipeline-step bg-primary text-white">Indexer<br>(Elasticsearch)</div>
+            <span class="arrow">→</span>
+            <div class="pipeline-step bg-success text-white">UI<br>(Kibana)</div>
+          </div>
+          <p class="small text-center text-muted mt-2"><em>*The "Buffer" layer is optional but recommended for
+              high-volume systems to handle backpressure.</em></p>
+        </section>
+
+        <!-- Structured Logging -->
+        <section id="structured" class="content-section">
+          <h2>Start with Structured Logging</h2>
+          <p>Do NOT log plain text strings. Log **JSON**. Machines cannot parse "Error: User 123 failed". They can parse
+            `{"level":"error", "user_id":123}`.</p>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card bg-light border-danger mb-3">
+                <div class="card-header text-danger fw-bold">❌ Bad (Unstructured)</div>
+                <div class="card-body font-monospace p-3 text-break">
+                  [2023-10-05 10:00:01] ERROR Payment failed for user 555. Reason: Timeout.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card bg-light border-success mb-3">
+                <div class="card-header text-success fw-bold">✅ Good (JSON/Structured)</div>
+                <div class="card-body font-monospace p-3 small text-break">
+                  {
+                  "timestamp": "2023-10-05T10:00:01Z",
+                  "level": "ERROR",
+                  "event": "payment_failed",
+                  "user_id": 555,
+                  "reason": "timeout",
+                  "service": "billing-service"
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <pre><code class="language-python"># Python Implementation (Structlog)
+import structlog
+
+log = structlog.get_logger()
+
+# This produces JSON automatically
+log.error("payment_failed", 
+          user_id=555, 
+          reason="timeout", 
+          amount=99.00)</code></pre>
+        </section>
+
+        <!-- Collection Patterns -->
+        <section id="patterns" class="content-section">
+          <h2>Collection Patterns: DaemonSet vs Sidecar</h2>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Pattern</th>
+                <th>Description</th>
+                <th>Pros</th>
+                <th>Cons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>DaemonSet (Node Agent)</strong></td>
+                <td>One collector (e.g., Fluent Bit) per Node. Reads all container logs from `/var/log`.</td>
+                <td>Resource efficient (1 agent per node).</td>
+                <td>Hard to customize parsing per app.</td>
+              </tr>
+              <tr>
+                <td><strong>Sidecar</strong></td>
+                <td>Dedicated collector container inside <em>each</em> Pod.</td>
+                <td>Full isolation. Custom parsing logic per app.</td>
+                <td>High resource usage (N agents).</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Observability -->
+        <section id="observability" class="content-section">
+          <h2>The 3 Long Pillars of Observability</h2>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="tech-card border-top border-3 border-dark">
+                <h5 class="fw-bold">📜 Logs</h5>
+                <p class="small text-muted">Discrete events. "What happened?"<br>(e.g., Error stacktrace)</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="tech-card border-top border-3 border-danger">
+                <h5 class="fw-bold">📈 Metrics</h5>
+                <p class="small text-muted">Aggregatable numbers. "Is it healthy?"<br>(e.g., CPU, Req/sec)</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="tech-card border-top border-3 border-primary">
+                <h5 class="fw-bold">🧭 Traces</h5>
+                <p class="small text-muted">Request journey. "Where is the latency?"<br>(e.g., Span across
+                  microservices)</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>ELK Stack:</strong> Elastic (Store), Logstash (Process), Kibana (View). The industry standard.
+            </li>
+            <li><strong>Format:</strong> Always use JSON structured logging to enable powerful querying (e.g.,
+              `user_id:555`).</li>
+            <li><strong>Context:</strong> Using Correlation IDs (Trace IDs) is the only way to debug microservices.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#pipeline">Logging Pipeline</a>
+            <a class="nav-link" href="#structured">Structured Logging</a>
+            <a class="nav-link" href="#patterns">Sidecar vs DaemonSet</a>
+            <a class="nav-link" href="#observability">Three Pillars</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../containerized-docker-kubernetes/"
+                class="text-decoration-none text-muted">Docker & K8s</a></li>
+            <li class="mb-2"><a href="../monitoring-prometheus-grafana/"
+                class="text-decoration-none text-muted">Monitoring (Prometheus)</a></li>
+            <li class="mb-2"><a href="../api-gateway-service-mesh/" class="text-decoration-none text-muted">Service
+                Mesh</a></li>
+          </ul>
+        </div>
+      </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
