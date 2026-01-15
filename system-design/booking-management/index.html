@@ -1,65 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Booking Management System Design — System Design | Brijesh Patel</title>
-<meta name="description" content="Design patterns for booking management systems (hotels, appointments, events): availability, conflict resolution, calendar sync and scaling strategies.">
-<link rel="canonical" href="https://brijesh.work/system-design/booking-management/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Booking System Design | Concurrency, Locking & Double-Booking Prevention</title>
+  <meta name="description"
+    content="Architecting a high-concurrency Booking System: Optimistic vs Pessimistic Locking, Database Transaction Isolation, and prevention of double-booking races.">
+  <meta name="keywords"
+    content="system design, booking system, concurrency control, optimistic locking, pessimistic locking, database transactions, double booking, distributed locking">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/booking-management/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+      /* Indigo */
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid #818cf8;
+    }
+
+    .hero-subtitle {
+      color: #e0e7ff;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #4f46e5;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #eef2ff;
+    }
+
+    .badge-soft {
+      background-color: rgba(79, 70, 229, 0.1);
+      color: #4338ca;
+      padding: 0.5em 0.8em;
+    }
+
+    .lock-diagram {
+      background: #ffffff;
+      border: 2px dashed #818cf8;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: monospace;
+    }
+
+    .db-box {
+      border: 3px solid #3730a3;
+      padding: 15px;
+      display: inline-block;
+      margin: 10px;
+      background: #eef2ff;
+      border-radius: 8px;
+      width: 200px;
+      font-weight: bold;
+    }
+
+    .user-box {
+      background: #fff;
+      border: 2px solid #94a3b8;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Booking Management System Design</h1>
-        <p class="lead">Architectural patterns for booking systems — availability models, conflict handling, calendar integration and high-concurrency booking flows.</p>
 
-        <h2 id="requirements">Requirements</h2>
-        <ul>
-          <li>Accurate availability checks and prevention of double-booking</li>
-          <li>Support time zones and recurring bookings</li>
-          <li>Low-latency booking confirmation (user experience)</li>
-          <li>High concurrency and consistency for inventory like rooms or slots</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="architecture">Architecture patterns</h2>
-        <ul>
-          <li>Optimistic locking with conflict resolution for low-latency flows</li>
-          <li>Pessimistic locking (database row locks) for critical resources</li>
-          <li>Distributed lock service (Redis Redlock) for cross-node consistency</li>
-          <li>Event-driven eventual consistency for calendar sync and notifications</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <h2 id="availability-models">Availability models</h2>
-        <p>Represent availability as time slots or capacity units depending on domain. Pre-reserve inventory for a short TTL to prevent race conditions during checkout.</p>
-
-        <h2 id="scaling">Scaling & data flow</h2>
-        <ul>
-          <li>Partition bookings by resource (hotel id, location) to distribute load</li>
-          <li>Use CQRS for separating read-optimized availability views from write paths</li>
-          <li>Batch processing for reconciliation and cleanup of orphaned reservations</li>
-        </ul>
-
-        <h2 id="integration">Integrations & calendars</h2>
-        <p>Integrate with external calendars (Google Calendar, Outlook) using webhooks and normalized event models. Implement exponential backoff + deduplication for webhook retries.</p>
-
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Choose an availability model that matches your domain and combine locking strategies with a resilient reconciliation pipeline to maintain consistency and user experience.</p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-10 text-white border border-white border-opacity-25">High
+            Concurrency</span>
+          <h1 class="display-4 fw-bold mb-3">Booking System Design</h1>
+          <p class="hero-subtitle mb-4">Handling the "1 Ticket, 1000 Buyers" problem using Optimistic Locking, Database
+            Constraints, and Distributed Transactions.</p>
+          <div class="d-flex gap-3">
+            <a href="#concurrency" class="btn btn-light text-primary fw-bold" style="color: #4f46e5 !important;">Locking
+              Strategies</a>
+            <a href="#schema" class="btn btn-outline-light">DB Schema</a>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#architecture">Architecture</a></li><li><a href="#availability-models">Availability models</a></li></ul></div></div>
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Architecture -->
+        <section id="architecture" class="content-section">
+          <h2>State Management & Inventory</h2>
+          <p class="lead text-secondary">The core problem is <strong>race conditions</strong>. If User A and B click
+            "Book" at the same millisecond, only one should succeed.</p>
+
+          <div class="lock-diagram d-none d-md-block">
+            <div class="d-flex justify-content-between">
+              <div class="user-box">User A</div>
+              <div class="user-box">User B</div>
+            </div>
+            <div class="my-3 text-center">
+              <span style="font-size: 2rem;">⬇ ⬇</span>
+              <br>
+              <span class="badge bg-danger">RACE CONDITION!</span>
+            </div>
+            <div class="db-box">
+              Database<br>
+              Inventory: 1
+            </div>
+          </div>
+        </section>
+
+        <!-- Concurrency Control -->
+        <section id="concurrency" class="content-section">
+          <h2>Concurrency Control Strategies</h2>
+          <p>How do we prevent double-booking?</p>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Mechanism</th>
+                <th>Use Case</th>
+                <th>Performance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Pessimistic Locking</strong></td>
+                <td>`SELECT ... FOR UPDATE`</td>
+                <td>High conflict (flash sales)</td>
+                <td>Low (Blocks rows)</td>
+              </tr>
+              <tr>
+                <td><strong>Optimistic Locking</strong></td>
+                <td>`version` column check</td>
+                <td>Low conflict (hotel rooms)</td>
+                <td>High (No DB locks)</td>
+              </tr>
+              <tr>
+                <td><strong>Database Constraint</strong></td>
+                <td>`UNIQUE(seat_id, event_id)`</td>
+                <td>Simple uniqueness</td>
+                <td>Very High</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Code Examples -->
+        <section id="implementation" class="content-section">
+          <h2>Hardware-Level Enforcement</h2>
+
+          <h5 class="mt-4">1. Optimistic Locking (Recommended)</h5>
+          <p>We add a <code>version</code> column to the Inventory table.</p>
+          <pre><code class="language-sql">-- 1. Read the current version (e.g., v1)
+SELECT quantity, version FROM inventory WHERE id = 100;
+
+-- 2. Decrement conditionally
+UPDATE inventory 
+SET quantity = quantity - 1, version = version + 1
+WHERE id = 100 AND version = 1; -- <--- Fails if version changed!</code></pre>
+
+          <h5 class="mt-4">2. Pessimistic Locking</h5>
+          <p>Locks the row until transaction commits. Dangerous for performance.</p>
+          <pre><code class="language-sql">BEGIN;
+SELECT * FROM inventory WHERE id = 100 FOR UPDATE;
+-- Do calculations
+UPDATE inventory SET quantity = quantity - 1 WHERE id = 100;
+COMMIT;</code></pre>
+        </section>
+
+        <!-- Schema -->
+        <section id="schema" class="content-section">
+          <h2>Database Schema Design</h2>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card border-top border-3 border-primary">
+                <h5 class="fw-bold">📅 Inventory Table</h5>
+                <ul class="small text-muted mb-0">
+                  <li><code>id</code></li>
+                  <li><code>event_id</code></li>
+                  <li><code>total_seats</code></li>
+                  <li><code>available_seats</code></li>
+                  <li><code>version</code> (INT)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card border-top border-3 border-success">
+                <h5 class="fw-bold">🎟️ Booking Table</h5>
+                <ul class="small text-muted mb-0">
+                  <li><code>booking_id</code> (UUID)</li>
+                  <li><code>user_id</code></li>
+                  <li><code>status</code> (PENDING, CONFIRMED, EXPIRED)</li>
+                  <li><code>created_at</code></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Distributed Locks -->
+        <section id="dist-locks" class="content-section">
+          <h2>Distributed Locking (Redis)</h2>
+          <p>For temporary "holds" (e.g., holding a seat for 10 mins while user pays), use Redis.</p>
+          <ul>
+            <li><strong>Key:</strong> `lock:seat:123`</li>
+            <li><strong>TTL:</strong> 600 seconds (10 mins)</li>
+            <li><strong>Pattern:</strong> <a href="https://redis.io/base/dist-lock" target="_blank">Redlock</a>
+              algorithm ensures safety across Redis implementations.</li>
+          </ul>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Optimistic Locking:</strong> Best for most general booking systems (Hotels, Flights).</li>
+            <li><strong>Pessimistic Locking:</strong> Use only when you absolutely cannot afford a retry loop (rare).
+            </li>
+            <li><strong>Constraints:</strong> `UNIQUE` indexes are your final safety net against race conditions.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#architecture">Race Conditions</a>
+            <a class="nav-link" href="#concurrency">Locking Strategies</a>
+            <a class="nav-link" href="#implementation">SQL Implementation</a>
+            <a class="nav-link" href="#schema">DB Schema</a>
+            <a class="nav-link" href="#dist-locks">Distributed Locks</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../order-payment/" class="text-decoration-none text-muted">Order & Payment</a>
+            </li>
+            <li class="mb-2"><a href="../database-sharding/" class="text-decoration-none text-muted">Database
+                Sharding</a></li>
+            <li class="mb-2"><a href="../subscription-billing/" class="text-decoration-none text-muted">Billing
+                System</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
