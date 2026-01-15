@@ -1,59 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Designing a Real-Time Location Tracking System (Uber-like) — System Design | Brijesh Patel</title>
-<meta name="description" content="Design patterns for real-time location tracking systems: GPS ingestion, location indexing, WebSocket delivery, geospatial queries, and scaling strategies.">
-<link rel="canonical" href="https://brijesh.work/system-design/location-tracking/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Real-Time Location Tracking Design | Geohashing, Quadtrees, & Redis Geo</title>
+  <meta name="description"
+    content="System design guide for building a scalable real-time location tracking service like Uber/Grab. Covers Geohashing, Quadtrees, Redis Geo, WebSocket vs MQTT, and database strategies.">
+  <meta name="keywords"
+    content="system design, location tracking, uber architecture, geohashing, quadtree, redis geo, postgis, websocket, mqtt, realtime">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/location-tracking/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #ccfbf1;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0f766e;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(15, 118, 110, 0.1);
+      color: #0f766e;
+      padding: 0.5em 0.8em;
+    }
+
+    .spatial-diagram {
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: monospace;
+    }
+
+    .grid-cell {
+      border: 1px solid #cbd5e1;
+      padding: 10px;
+      display: inline-block;
+      margin: 2px;
+      background: #f1f5f9;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a Real-Time Location Tracking System (Uber-like)</h1>
-        <p class="lead">Patterns for ingesting GPS data, real-time delivery with WebSockets, geospatial indexing, and handling scale and accuracy trade-offs.</p>
 
-        <h2 id="requirements">Requirements</h2>
-        <ul>
-          <li>Process frequent GPS updates from many devices with low latency</li>
-          <li>Support real-time updates to nearby users and routing services</li>
-          <li>Geospatial queries for nearest-neighbor and zone membership</li>
-          <li>Tolerate noisy GPS and provide smoothing/filters</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="architecture">Architecture notes</h2>
-        <ul>
-          <li>Ingest GPS via HTTP or UDP into an ingestion tier (load balanced)</li>
-          <li>Normalize, validate and deduplicate location events</li>
-          <li>Use in-memory stores (Redis, in-memory grids) with geospatial indexes for fast proximity queries</li>
-          <li>Push updates to clients over WebSocket/QUIC connections using a presence/routing service</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <h2 id="geospatial">Geospatial considerations</h2>
-        <ul>
-          <li>Use S2 geometry, geohash or R-tree indexes depending on accuracy and query patterns</li>
-          <li>Bucket moving entities into tiles to limit query radius and fanout</li>
-        </ul>
-
-        <h2 id="scaling">Scaling</h2>
-        <ul>
-          <li>Partition by geography and shard by tiles/regions</li>
-          <li>Use edge aggregation for very high update rates (aggregate frequent updates before forwarding)</li>
-        </ul>
-
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-25 text-white border border-white border-opacity-25">Real-Time
+            Systems</span>
+          <h1 class="display-4 fw-bold mb-3">Real-Time Location Tracking</h1>
+          <p class="hero-subtitle mb-4">Designing scalable architectures for ride-sharing (Uber/Grab): Geohashing,
+            Quadtrees, Redis Geo, and low-latency socket delivery.</p>
+          <div class="d-flex gap-3">
+            <a href="#indexing" class="btn btn-light text-primary fw-bold" style="color: #0d9488 !important;">Spatial
+              Indexing</a>
+            <a href="#redis" class="btn btn-outline-light">Redis Implementation</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4"><div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#geospatial">Geospatial</a></li><li><a href="#scaling">Scaling</a></li></ul></div></div></aside>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Architecture -->
+        <section id="architecture" class="content-section">
+          <h2>High-Level Architecture</h2>
+          <p class="lead text-secondary">The system must handle high-throughput writes (drivers moving every 3s) and
+            heavy read queries (riders looking for nearby drivers).</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">📡 Ingestion Service</h5>
+                <p><strong>Protocol:</strong> WebSocket or MQTT over TCP.</p>
+                <p class="small text-muted">Drivers maintain a persistent connection. Updates are lightweight (Lat,
+                  Long, DriverID). Load balanced via Consistent Hashing to keep a driver on the same node.</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">🗺️ Spatial Index (Redis)</h5>
+                <p><strong>Storage:</strong> In-memory Geospatial Index.</p>
+                <p class="small text-muted">Stores ephemeral location data. TTL of 30 seconds. Used for "Find Nearby"
+                  queries. Persistent storage (Cassandra) acts as an archival log.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Spatial Indexing -->
+        <section id="indexing" class="content-section">
+          <h2>Spatial Indexing Strategies</h2>
+          <p>How do we efficiently find " Drivers within 1km"? Using standard SQL <code>WHERE</code> clauses is too
+            slow. we need spatial indexing.</p>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Technique</th>
+                <th>How it works</th>
+                <th>Pros</th>
+                <th>Cons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Geohash</strong></td>
+                <td>Encodes (Lat, Long) into a Base32 string. Longer string = more precision. Neighbors share prefixes.
+                </td>
+                <td>Easy to implement. Single string key.</td>
+                <td>Edge cases (neighbors might have totally different hashes at boundaries).</td>
+              </tr>
+              <tr>
+                <td><strong>Quadtree</strong></td>
+                <td>Recursively divides 2D space into 4 quadrants. Tree structure.</td>
+                <td>Adaptable resolution (denser areas get deeper trees).</td>
+                <td>Complex to rebuild dynamically if data changes fast.</td>
+              </tr>
+              <tr>
+                <td><strong>Google S2</strong></td>
+                <td>Maps sphere to 1D curve (Hilbert Curve).</td>
+                <td>Handles Earth's curvature. Very fast region covering.</td>
+                <td>Complex math library required.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="spatial-diagram mt-3">
+            <p class="fw-bold">Geohash Conceptual View</p>
+            <div class="grid-cell">u4pru0 <br> (Driver A)</div>
+            <div class="grid-cell">u4pru1 <br> (Driver B)</div>
+            <div class="grid-cell">u4pru2 <br> (Empty)</div>
+            <div class="grid-cell">u4pru3 <br> (User)</div>
+            <p class="small text-muted mt-2">Nearby users share the prefix "u4pru"</p>
+          </div>
+        </section>
+
+        <!-- Stacks -->
+        <section id="protocols" class="content-section">
+          <h2>Protocol: WebSocket vs MQTT</h2>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="tech-card border-start border-4 border-success">
+                <h5 class="fw-bold">WebSocket</h5>
+                <ul class="small">
+                  <li><strong>Full Duplex:</strong> Good for chat & location.</li>
+                  <li><strong>Heavy:</strong> Headers overhead can be significant.</li>
+                  <li><strong>Battery:</strong> Keeps radio active.</li>
+                  <li><strong>Use Case:</strong> Rider App (browsers support it natively).</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="tech-card border-start border-4 border-info">
+                <h5 class="fw-bold">MQTT</h5>
+                <ul class="small">
+                  <li><strong>Lightweight:</strong> Binary protocol, min header 2 bytes.</li>
+                  <li><strong>Pub/Sub:</strong> Built-in topic routing.</li>
+                  <li><strong>Battery:</strong> Optimized for IoT/Mobile.</li>
+                  <li><strong>Use Case:</strong> Driver App (Native mobile implementation).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Redis Implementation -->
+        <section id="redis" class="content-section">
+          <h2>Implementation: Redis Geo</h2>
+          <p>Redis has built-in geospatial support (using Geohashing internally). It's incredibly fast (O(log(N))).</p>
+
+          <h5 class="mt-4">Python Example</h5>
+          <pre><code class="language-python">import redis
+
+# Connect to Redis
+r = redis.Redis(host='localhost', port=6379, db=0)
+
+def update_driver_location(driver_id, lat, lon):
+    """Add/Update driver location (GEOADD key lon lat member)"""
+    r.geoadd("active_drivers", (lon, lat, driver_id))
+    # Set expire to auto-remove inactive drivers
+    # Note: GEO commands don't support EXPIRE directly on members, 
+    # usually managed via separate ZSET or key logic in production.
+
+def find_nearby_drivers(user_lat, user_lon, radius_km=1):
+    """Find drivers within radius (GEORADIUS key lon lat radius unit)"""
+    drivers = r.georadius(
+        "active_drivers", 
+        user_lon, 
+        user_lat, 
+        radius_km, 
+        unit="km", 
+        withdist=True, 
+        withcoord=True, 
+        sort="ASC"
+    )
+    return drivers
+
+# Usage
+update_driver_location("driver_101", 37.7749, -122.4194)
+nearby = find_nearby_drivers(37.7750, -122.4180, 2)
+print(nearby) 
+# Output: [[b'driver_101', 0.1235, (37.7749, -122.4194)]]</code></pre>
+
+          <div class="alert alert-warning border border-warning mt-3">
+            <strong>⚠️ Scaling Redis:</strong> Single Redis instance can handle ~100k updates/sec. For global scale,
+            Shard by City/Region (e.g., <code>active_drivers:san_francisco</code>). Do not put all world drivers in one
+            key.
+          </div>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Ingestion:</strong> Use persistent connections (WebSocket/MQTT) to handle frequent updates.</li>
+            <li><strong>Storage:</strong> Redis (Geospatial) for real-time reads. Cassandra/S3 for historical logs.</li>
+            <li><strong>Indexing:</strong> Geohash/Google S2 allows efficient "K-Nearest Neighbors" queries.</li>
+            <li><strong>Optimizations:</strong> Batch updates on the client side. Only send updates if movement > 10
+              meters.</li>
+            <li><strong>Privacy:</strong> Fuzzy location techniques when precise accuracy isn't needed.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#architecture">Architecture</a>
+            <a class="nav-link" href="#indexing">Spatial Indexing</a>
+            <a class="nav-link" href="#protocols">Protocols (MQTT vs WS)</a>
+            <a class="nav-link" href="#redis">Redis Implementation</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../notification/" class="text-decoration-none text-muted">Notification System</a>
+            </li>
+            <li class="mb-2"><a href="../event-driven-architecture/" class="text-decoration-none text-muted">Event
+                Driven</a></li>
+            <li class="mb-2"><a href="../microservices-vs-monolith/"
+                class="text-decoration-none text-muted">Microservices</a></li>
+          </ul>
+        </div>
+      </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
