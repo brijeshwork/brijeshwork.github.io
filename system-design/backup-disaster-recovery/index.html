@@ -1,49 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Designing Backup and Disaster Recovery Systems — System Design | Brijesh Patel</title>
-<meta name="description" content="Backup and disaster recovery design: RPO/RTO, cross-region replication, backups, and runbooks for resilient systems.">
-<link rel="canonical" href="https://brijesh.work/system-design/backup-disaster-recovery/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backup & Disaster Recovery | RPO, RTO & Failover Patterns</title>
+  <meta name="description"
+    content="A comprehensive guide to Backup and Disaster Recovery (DR) system design. Covers RPO vs RTO, WAL Archiving, Pilot Light vs Warm Standby patterns, and Postgres PITR implementations.">
+  <meta name="keywords"
+    content="system design, disaster recovery, backup strategies, rpo, rto, pilot light, active-active, wal archiving, postgresql pitr, high availability">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/backup-disaster-recovery/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      /* Slate / Dark */
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid #ef4444;
+      /* Alert Red accent */
+    }
+
+    .hero-subtitle {
+      color: #cbd5e1;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #ef4444;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      padding: 0.5em 0.8em;
+    }
+
+    .timeline-diagram {
+      background: #ffffff;
+      border: 2px dashed #94a3b8;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-box {
+      border: 3px solid #ef4444;
+      padding: 10px 15px;
+      display: inline-block;
+      margin: 10px;
+      background: #fef2f2;
+      border-radius: 8px;
+      width: 150px;
+      font-weight: bold;
+    }
+
+    /* Steps for backup flow */
+    .backup-step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .backup-step-num {
+      background: #0f172a;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 15px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing Backup and Disaster Recovery Systems</h1>
-        <p class="lead">A practical guide to backups, DR planning, RTO/RPO, failover strategies and runbooks for production systems.</p>
+<body class="bg-white">
 
-        <h2 id="rpo-rto">RPO and RTO</h2>
-        <p>Define acceptable data loss (RPO) and restoration time (RTO), and design backup frequency and failover automation to meet those targets.</p>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <h3 id="strategies">Strategies</h3>
-        <ul>
-          <li>Cross-region replication</li>
-          <li>Point-in-time recovery (database snapshots)</li>
-          <li>Cold vs warm vs hot standby</li>
-          <li>Disaster recovery runbooks and regular drills</li>
-        </ul>
-
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Recovery is as much people and processes as it is technology; test your runbooks and automate failover where safe and possible.</p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-10 text-white border border-white border-opacity-25">Resiliency
+            Engineering</span>
+          <h1 class="display-4 fw-bold mb-3">Backup & Disaster Recovery (DR)</h1>
+          <p class="hero-subtitle mb-4">Prepare for the worst: Mastering RPO vs RTO, Multi-Site Failover strategies, and
+            Point-in-Time Recovery.</p>
+          <div class="d-flex gap-3">
+            <a href="#metrics" class="btn btn-light text-danger fw-bold" style="color: #ef4444 !important;">RPO vs
+              RTO</a>
+            <a href="#dr-patterns" class="btn btn-outline-light">DR Patterns</a>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#rpo-rto">RPO/RTO</a></li><li><a href="#strategies">Strategies</a></li></ul></div></div>
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Metrics -->
+        <section id="metrics" class="content-section">
+          <h2>RPO vs RTO: The Golden Metrics</h2>
+          <p class="lead text-secondary">Every DR plan starts with defining acceptable loss limits.</p>
+
+          <div class="timeline-diagram d-none d-md-block">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span>Last Backup</span>
+              <span class="text-danger fw-bold">💥 DISASTER</span>
+              <span>System Restored</span>
+            </div>
+            <div class="progress" style="height: 30px;">
+              <div class="progress-bar bg-success" role="progressbar" style="width: 35%">Operating Normal</div>
+              <div class="progress-bar bg-warning text-dark fw-bold" role="progressbar" style="width: 15%">RPO (Data
+                Loss)</div>
+              <div class="progress-bar bg-danger fw-bold" role="progressbar" style="width: 25%">RTO (Downtime)</div>
+              <div class="progress-bar bg-success" role="progressbar" style="width: 25%">Recovered</div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-6">
+                <h5 class="text-warning">RPO (Recovery Point Objective)</h5>
+                <small>Max acceptable <strong>Data Loss</strong>. If RPO=1h, you lose up to 1h of data.</small>
+              </div>
+              <div class="col-6">
+                <h5 class="text-danger">RTO (Recovery Time Objective)</h5>
+                <small>Max acceptable <strong>Downtime</strong>. If RTO=4h, service must be back in 4h.</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Backup Types -->
+        <section id="backup-types" class="content-section">
+          <h2>Backup Strategies</h2>
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Storage Cost</th>
+                <th>Restore Speed</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Full Backup</strong></td>
+                <td>Copy entire dataset.</td>
+                <td>High</td>
+                <td>Fastest (Start & Finish)</td>
+              </tr>
+              <tr>
+                <td><strong>Incremental</strong></td>
+                <td>Copy only changes since <i>last backup</i> (full or incremental).</td>
+                <td>Lowest</td>
+                <td>Slowest (Need Full + All Incremental chains)</td>
+              </tr>
+              <tr>
+                <td><strong>Differential</strong></td>
+                <td>Copy changes since <i>last Full backup</i>.</td>
+                <td>Medium</td>
+                <td>Moderate (Full + Latest Diff)</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- DR Patterns -->
+        <section id="dr-patterns" class="content-section">
+          <h2>Disaster Recovery Patterns</h2>
+          <p>Multi-region architecture strategies generally driven by cost vs RTO.</p>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold">🔥 Pilot Light</h5>
+                <p class="small text-muted"><strong>Cost:</strong> Low | <strong>RTO:</strong> Mins/Hours</p>
+                <p class="small">Database is replicated (active-passive), but App Servers are <strong>OFF</strong>. We
+                  spin them up (via Auto Scaling) only during disaster.</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold">🌤️ Warm Standby</h5>
+                <p class="small text-muted"><strong>Cost:</strong> Medium | <strong>RTO:</strong> Seconds/Mins</p>
+                <p class="small">Scaled-down version of App Servers runs in DR region. Can scale up quickly to handle
+                  full traffic load.</p>
+              </div>
+            </div>
+            <div class="col-12 mb-3">
+              <div class="tech-card border-danger border-top border-4">
+                <h5 class="fw-bold">⚡ Multi-Site Active/Active</h5>
+                <p class="small text-muted"><strong>Cost:</strong> High | <strong>RTO:</strong> Near Zero</p>
+                <p class="small">Both regions handle traffic simultaneously. DNS Weighted Routing shifts traffic if one
+                  region fails. Requires complex bi-directional DB replication.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WAL Archiving -->
+        <section id="pitr" class="content-section">
+          <h2>Point-in-Time Recovery (PITR)</h2>
+          <p>Snapshots are not enough. If someone deletes a table at 2:00 PM, and your snapshot was 1:00 PM, you lose 1
+            hour. with <strong>WAL (Write Ahead Log) Archiving</strong>, you can replay transactions to 1:59 PM.</p>
+
+          <h5 class="mt-4">Postgres Implementation</h5>
+          <pre><code class="language-bash"># postgresql.conf
+archive_mode = on
+archive_command = 'test ! -f /mnt/arch/%f && cp %f /mnt/arch/%f'
+# Better: Use WAL-G or Barman for S3 uploads
+# archive_command = 'wal-g wal-push %p'</code></pre>
+
+          <h5 class="mt-3">Restore Process</h5>
+          <ol>
+            <li>Stop DB Service.</li>
+            <li>Restore Base Backup (Snapshot).</li>
+            <li>Configure `restore_command` to fetch WAL files from S3.</li>
+            <li>Set `recovery_target_time = '2026-01-15 13:59:00'`.</li>
+            <li>Start DB. Postgres replays WALs until it hits the target time.</li>
+          </ol>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>RPO/RTO:</strong> Define these first. They dictate the budget (e.g., Active-Active is
+              expensive).</li>
+            <li><strong>Test It:</strong> A backup is worthless if the restore process fails. Run DR drills annually.
+            </li>
+            <li><strong>3-2-1 Rule:</strong> 3 copies of data, 2 different media types, 1 offsite (Cloud/DR Region).
+            </li>
+            <li><strong>WAL Archiving:</strong> Essential for limiting RPO to seconds.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#metrics">RPO vs RTO</a>
+            <a class="nav-link" href="#backup-types">Backup Types</a>
+            <a class="nav-link" href="#dr-patterns">DR Patterns</a>
+            <a class="nav-link" href="#pitr">PITR & WAL</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../fault-tolerant-patterns/" class="text-decoration-none text-muted">Fault
+                Tolerance</a></li>
+            <li class="mb-2"><a href="../cloud-storage-system-design/" class="text-decoration-none text-muted">Cloud
+                Storage</a></li>
+            <li class="mb-2"><a href="../database-sharding/" class="text-decoration-none text-muted">DB Sharding</a>
+            </li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
