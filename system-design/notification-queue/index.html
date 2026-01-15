@@ -1,43 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Designing a Real-Time Notification Queue — System Design | Brijesh Patel</title>
-<meta name="description" content="Design patterns for real-time notification queues: message ordering, fanout, retries, backpressure and integration with downstream processors.">
-<link rel="canonical" href="https://brijesh.work/system-design/notification-queue/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notification Queue Design | Ordering, Fanout, Backpressure & DLQ</title>
+  <meta name="description"
+    content="Deep dive into Notification Queue internals: Message ordering with partitions, Consumer Groups, Fanout patterns, Backpressure handling, and exactly-once delivery guarantees.">
+  <meta name="keywords"
+    content="system design, message queue, kafka, rabbitmq, fanout pattern, backpressure, dead letter queue, exactly once delivery, consumer groups">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/notification-queue/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #4338ca 0%, #312e81 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #c7d2fe;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #4338ca;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #f1f5f9;
+    }
+
+    .badge-soft {
+      background-color: rgba(67, 56, 202, 0.1);
+      color: #4338ca;
+      padding: 0.5em 0.8em;
+    }
+
+    .queue-diagram {
+      background: #ffffff;
+      border: 2px dashed #a5b4fc;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: monospace;
+    }
+
+    .queue-box {
+      border: 1px solid #cbd5e1;
+      padding: 15px;
+      display: inline-block;
+      margin: 5px;
+      background: #e0e7ff;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .arrow {
+      font-size: 1.5rem;
+      color: #6366f1;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a Real-Time Notification Queue</h1>
-        <p class="lead">Architectures for real-time message queues: ordering, backpressure, retry strategies, and high-throughput fanout for notifications.</p>
 
-        <h2 id="components">Key components</h2>
-        <ul>
-          <li>Message broker (Kafka, Pulsar) for durable high-throughput queues</li>
-          <li>Consumer groups for scalable processing and partitioned ordering</li>
-          <li>Backpressure and rate limiting to protect downstream systems</li>
-          <li>Retry and dead-letter queues for failed deliveries</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="integration">Integration notes</h2>
-        <p>Integrate with notification delivery services (email, SMS, push) via worker pools and use idempotency for safe retries.</p>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-25 text-white border border-white border-opacity-25">Message
+            Brokers</span>
+          <h1 class="display-4 fw-bold mb-3">Notification Queue Internals</h1>
+          <p class="hero-subtitle mb-4">Mastering message delivery: Fanout patterns, guaranteeing order with partitions,
+            handling backpressure, and implementing Dead Letter Queues (DLQ).</p>
+          <div class="d-flex gap-3">
+            <a href="#fanout" class="btn btn-light text-primary fw-bold" style="color: #4338ca !important;">Fanout
+              Pattern</a>
+            <a href="#ordering" class="btn btn-outline-light">Message Ordering</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Components</a></li><li><a href="#integration">Integration</a></li></ul></div></div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Fanout Pattern -->
+        <section id="fanout" class="content-section">
+          <h2>Fanout Pattern (Pub/Sub)</h2>
+          <p class="lead text-secondary">A single event (e.g., "New Post") needs to trigger multiple downstream actions:
+            send Push Notification, update Search Index, and Archive to Data Lake.</p>
+
+          <div class="queue-diagram d-none d-md-block">
+            <div class="queue-box bg-dark text-white">Publisher</div>
+            <span class="arrow">→</span>
+            <div class="queue-box">Topic: events.post</div>
+            <div style="display:inline-block; vertical-align:middle;">
+              <span class="d-block arrow">↘</span>
+              <span class="d-block arrow">→</span>
+              <span class="d-block arrow">↗</span>
+            </div>
+            <div style="display:inline-block; vertical-align:middle; text-align:left;">
+              <div class="queue-box bg-white">Consumer A (Push)</div><br>
+              <div class="queue-box bg-white">Consumer B (Search)</div><br>
+              <div class="queue-box bg-white">Consumer C (Analytics)</div>
+            </div>
+          </div>
+
+          <p><strong>Implementation:</strong> Use <strong>Consumer Groups</strong> in Kafka. Each service (Push, Search)
+            is a separate Consumer Group. Kafka replicates the message to all groups, but within a group, only one
+            instance processes it.</p>
+        </section>
+
+        <!-- Message Ordering -->
+        <section id="ordering" class="content-section">
+          <h2>Guaranteed Message Ordering</h2>
+          <p>Strict global ordering limit scalability. We usually need ordering <strong>per entity</strong> (e.g., all
+            messages for User A must process in order).</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold mb-3">Partition Key Strategy</h5>
+                <p>When publishing to Kafka/Kinesis, use <code>user_id</code> as the <strong>Partition Key</strong>.
+                </p>
+                <ul class="small text-muted">
+                  <li>All events for <code>user_123</code> go to Partition 1.</li>
+                  <li>Consumer 1 reads Partition 1 strictly FIFO.</li>
+                  <li>Result: User A's "Create" event always processes before "Delete".</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card bg-light border-0">
+                <h5 class="fw-bold mb-3">⚠️ The Pitfall</h5>
+                <p>If you use <strong>threads</strong> in your consumer (Parallel Processing), you lose ordering
+                  guarantees within that shard. </p>
+                <p class="small text-danger">Fix: Use consistent hashing within the consumer or single-threaded
+                  processing per partition.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Backpressure -->
+        <section id="backpressure" class="content-section">
+          <h2>Backpressure & Throttling</h2>
+          <p>What if the Notification Service produces 10k msg/sec, but the SMS Provider (Twilio) allows only 100/sec?
+          </p>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>How it works</th>
+                <th>Trade-off</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rate Limiting (Token Bucket)</strong></td>
+                <td>Consumer checks a local/Redis bucket before making API call.</td>
+                <td>Simple, effective for API limits.</td>
+              </tr>
+              <tr>
+                <td><strong>Prefetch Count</strong></td>
+                <td>(RabbitMQ) Consumer only pulls N messages at a time. It won't take more until it ACKs.</td>
+                <td>Prevents consumer memory overflow.</td>
+              </tr>
+              <tr>
+                <td><strong>Delay Queues</strong></td>
+                <td>If rate limited, push message to a separate "Delay Queue" (TTL 10s) to retry later.</td>
+                <td>Adds latency but ensures eventual delivery.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Reliability -->
+        <section id="reliability" class="content-section">
+          <h2>Reliability: DLQ & Poison Pills</h2>
+          <p>A "Poison Pill" is a message that always crashes the consumer (e.g., malformed JSON). If you retry 5 times,
+            it crashes 5 times.</p>
+
+          <h5 class="mt-4">Dead Letter Queue (DLQ) Pattern</h5>
+          <ol>
+            <li>Consumer reads message.</li>
+            <li>Tries to process → Fails.</li>
+            <li>Retry N times (Exponential Backoff).</li>
+            <li>If still fails → <strong>ACK</strong> the message on main queue, but <strong>Publish</strong> it to a
+              <code>DLQ-Topic</code>.</li>
+            <li>Alert engineers to inspect the DLQ manually.</li>
+          </ol>
+
+          <pre><code class="language-python"># Python Consumer Skeleton
+def process_message(msg):
+    retries = 0
+    while retries < 3:
+        try:
+            do_work(msg)
+            return
+        except Exception:
+            retries += 1
+            time.sleep(2 ** retries) # Exponential backoff
+    
+    # Failed after retries -> Send to DLQ
+    produce_to_dlq(msg)
+    log_error(f"Moved message {msg.id} to DLQ")</code></pre>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li>Use <strong>Fanout</strong> to decouple producers from multiple downstream consumers.</li>
+            <li>Guarantee <strong>Ordering</strong> by using Partition Keys (Consumer Group per Partition).</li>
+            <li>Handle <strong>Backpressure</strong> using Prefetch limits and consistent Rate Limiters.</li>
+            <li>Never block the pipe: move failing messages to a <strong>Dead Letter Queue</strong>.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#fanout">Fanout Pattern</a>
+            <a class="nav-link" href="#ordering">Message Ordering</a>
+            <a class="nav-link" href="#backpressure">Backpressure</a>
+            <a class="nav-link" href="#reliability">DLQ & Poison Pills</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../notification/" class="text-decoration-none text-muted">Notification System</a>
+            </li>
+            <li class="mb-2"><a href="../event-driven-architecture/" class="text-decoration-none text-muted">Event
+                Driven Arch</a></li>
+            <li class="mb-2"><a href="../fault-tolerant-patterns/" class="text-decoration-none text-muted">Fault
+                Tolerance</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
