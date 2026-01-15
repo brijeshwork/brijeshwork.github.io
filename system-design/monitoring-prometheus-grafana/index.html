@@ -1,109 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Designing a Monitoring System with Prometheus and Grafana — System Design | Brijesh Patel</title>
-<meta name="description" content="Monitoring system design using Prometheus and Grafana: metrics collection, alerting, retention and dashboard design.">
-<link rel="canonical" href="https://brijesh.work/system-design/monitoring-prometheus-grafana/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-</head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>System Monitoring with Prometheus & Grafana | Metrics & Alerting</title>
+  <meta name="description"
+    content="End-to-end monitoring system design: Prometheus Architecture (Pull vs Push), Metric Types (Counter, Gauge), PromQL queries, and AlertManager routing.">
+  <meta name="keywords"
+    content="system design, monitoring, prometheus, grafana, metrics, alertmanager, observability, time series database, promql, exporters">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/monitoring-prometheus-grafana/" />
 
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a Monitoring System with Prometheus and Grafana</h1>
-        <p class="lead">A practical tutorial on setting up a metrics-driven monitoring stack using Prometheus for collection and Grafana for visualization and alerting.</p>
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
 
-        <h2 id="components">Components</h2>
-        <ul>
-          <li>Metrics instrumentation (client libraries)</li>
-          <li>Prometheus scraping and federation</li>
-          <li>Long-term storage and retention (Thanos/Loki)</li>
-          <li>Grafana dashboards and alerting rules</li>
-        </ul>
-
-        <h2 id="best-practices">Best practices</h2>
-        <ul>
-          <li>Use cardinality controls to avoid high-series counts</li>
-          <li>Define meaningful SLOs and alert thresholds</li>
-          <li>Instrument business and system metrics</li>
-        </ul>
-
-        <h2 id="prometheus-recording-rules">Prometheus — recording rules example</h2>
-        <p>Use recording rules to precompute expensive queries and reduce dashboard latency.</p>
-        <pre><code class="language-yaml">groups:
-  - name: recording_rules
-    rules:
-      - record: job:http_inprogress_requests:sum
-        expr: sum(http_inprogress_requests) by (job)
-      - record: instance:cpu:rate5m
-        expr: avg(rate(node_cpu_seconds_total{mode!="idle"}[5m])) by (instance)
-</code></pre>
-
-        <h2 id="prometheus-alerts">Prometheus — alerting rules example</h2>
-        <p>Example alert: high error rate and slow response time for a service.</p>
-        <pre><code class="language-yaml">groups:
-  - name: service_alerts
-    rules:
-      - alert: HighRequestErrorRate
-        expr: increase(http_requests_total{status=~"5.."}[5m]) / increase(http_requests_total[5m]) > 0.05
-        for: 5m
-        labels:
-          severity: page
-        annotations:
-          summary: "High 5xx rate for {{ $labels.service }}"
-          description: "5xx rate is >5% for 5 minutes."
-
-      - alert: HighLatency
-        expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, service)) > 1
-        for: 10m
-        labels:
-          severity: ticket
-        annotations:
-          summary: "High p95 latency for {{ $labels.service }}"
-</code></pre>
-
-        <h2 id="grafana-dashboard">Grafana — minimal dashboard snippet</h2>
-        <p>This is a tiny example of a Grafana dashboard JSON model (simplified).</p>
-        <pre><code class="language-json">{
-  "title": "Service Overview",
-  "panels": [
-    {
-      "type": "graph",
-      "title": "Request rate (rps)",
-      "targets": [{"expr": "sum(rate(http_requests_total[1m])) by (service)"}]
-    },
-    {
-      "type": "graph",
-      "title": "P95 Latency",
-      "targets": [{"expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, service))"}]
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #181b1f 0%, #141619 100%);
+      /* Grafana Dark */
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid #ff9900;
+      /* Grafana Orange */
     }
-  ]
-}
-</code></pre>
 
-        <h2 id="thanos">Long-term storage — Thanos / Cortex notes</h2>
-        <p>For long-term retention and global query, integrate Prometheus with Thanos or Cortex. Thanos Sidecar uploads blocks to object storage and provides a global query layer.</p>
+    .hero-subtitle {
+      color: #f795ea;
+      /* Grafana Purple/Axis color */
+      font-size: 1.25rem;
+    }
 
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Combine Prometheus's short-term storage with a long-term system like Thanos for retention, and create dashboards that reflect SLOs, not just raw metrics. Use recording rules to optimize dashboards and alerting to detect incidents early.</p>
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #ff9900;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #fff;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #fff7ed;
+      color: #c05621;
+    }
+
+    .metric-box {
+      border-left: 4px solid #ff9900;
+      background: #f8f9fa;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .badge-soft {
+      background-color: rgba(255, 153, 0, 0.1);
+      color: #ff9900;
+      padding: 0.5em 0.8em;
+    }
+
+    .pipeline-viz {
+      background: #181b1f;
+      color: white;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .stage-box {
+      border: 1px solid #ff9900;
+      padding: 10px 15px;
+      display: inline-block;
+      margin: 10px;
+      background: #22252b;
+      border-radius: 4px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .arrow {
+      font-size: 1.5rem;
+      color: #ff9900;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-white">
+
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-10 text-white border border-white border-opacity-25">Observability
+            & Data</span>
+          <h1 class="display-4 fw-bold mb-3">Monitoring with Prometheus</h1>
+          <p class="hero-subtitle mb-4">The industry standard for Time Series data. Learn the Pull Model, PromQL
+            queries, and how to structure your alerts.</p>
+          <div class="d-flex gap-3">
+            <a href="#metrics" class="btn btn-warning fw-bold text-dark">Metric Types</a>
+            <a href="#promql" class="btn btn-outline-light">PromQL Basics</a>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#components">Components</a></li><li><a href="#best-practices">Best practices</a></li></ul></div></div>
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Architecture -->
+        <section id="architecture" class="content-section">
+          <h2>The Pull Model Architecture</h2>
+          <p class="lead text-secondary">Unlike traditional systems (Nagios, Pushgateway), Prometheus
+            <strong>pulls</strong> metrics from targets.</p>
+
+          <div class="pipeline-viz d-none d-md-block">
+            <div class="stage-box">App / Host<br>(/metrics)</div>
+            <span class="arrow">← Scrape</span>
+            <div class="stage-box">Prometheus Server<br>(TSDB)</div>
+            <span class="arrow">Query →</span>
+            <div class="stage-box" style="border-color: #f795ea;">Grafana<br>(Dashboard)</div>
+            <br>
+            <span class="arrow" style="transform: rotate(90deg); display: inline-block;">↓</span>
+            <br>
+            <div class="stage-box" style="border-color: #ff3333;">AlertManager<br>(PagerDuty/Slack)</div>
+          </div>
+
+          <p><strong>Why Pull?</strong></p>
+          <ul>
+            <li><strong>Central Control:</strong> Prometheus decides <em>when</em> and <em>what</em> to scrape.</li>
+            <li><strong>Reliability:</strong> If the app goes down, Prometheus knows immediately (Scrape failed).</li>
+            <li><strong>Simplicity:</strong> No heavy agent required on the host; just an HTTP endpoint.</li>
+          </ul>
+        </section>
+
+        <!-- Metric Types -->
+        <section id="metrics" class="content-section">
+          <h2>The 4 Metric Types</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="metric-box">
+                <h5 class="fw-bold">1. Counter</h5>
+                <p class="small text-secondary">A value that only goes UP (or resets on restart).</p>
+                <code class="text-dark">http_requests_total</code>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="metric-box">
+                <h5 class="fw-bold">2. Gauge</h5>
+                <p class="small text-secondary">A value that can go up and down.</p>
+                <code class="text-dark">memory_usage_bytes</code>, <code class="text-dark">temperature_celsius</code>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="metric-box">
+                <h5 class="fw-bold">3. Histogram</h5>
+                <p class="small text-secondary">Samples observations (e.g., request duration) into buckets.</p>
+                <code class="text-dark">request_duration_bucket{le="0.5"}</code>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="metric-box">
+                <h5 class="fw-bold">4. Summary</h5>
+                <p class="small text-secondary">Similar to Histogram but calculates quantiles on the client side.</p>
+                <code class="text-dark">rpc_duration_seconds</code>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PromQL -->
+        <section id="promql" class="content-section">
+          <h2>PromQL: Querying the Data</h2>
+          <p>Prometheus Query Language is functional and vector-based.</p>
+
+          <div class="card bg-light mb-3">
+            <div class="card-header fw-bold">Calculating Rate (Requests Per Second)</div>
+            <div class="card-body">
+              <pre><code class="language-python"># Calculate the per-second rate of requests over the last 5 minutes
+rate(http_requests_total[5m])
+
+# Sum it up by Service (removing other labels like 'instance')
+sum(rate(http_requests_total[5m])) by (service)</code></pre>
+            </div>
+          </div>
+
+          <div class="card bg-light mb-3">
+            <div class="card-header fw-bold">99th Percentile Latency</div>
+            <div class="card-body">
+              <pre><code class="language-python"># Calculate the approximate 99th percentile duration
+histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- Alerts -->
+        <section id="alerting" class="content-section">
+          <h2>Alerting & Recording Rules</h2>
+          <p>Don't alert on CPU usage. Alert on <strong>User Pain</strong> (High Error Rate, High Latency).</p>
+
+          <pre><code class="language-yaml">groups:
+- name: example
+  rules:
+  # RECORDING RULE: Pre-compute complex query
+  - record: job:http_inprogress_requests:sum
+    expr: sum(http_inprogress_requests) by (job)
+
+  # ALERTING RULE: Fire if condition is true for 10m
+  - alert: HighErrorRate
+    expr: job:request_latency_seconds:mean5m{job="myjob"} > 0.5
+    for: 10m
+    labels:
+      severity: page
+    annotations:
+      summary: "High request latency on {{ $labels.instance }}"</code></pre>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Service Discovery:</strong> Prometheus finds targets automatically (via K8s, EC2, Consul).</li>
+            <li><strong>Exporters:</strong> Use "Node Exporter" for system metrics and sidecars for app metrics.</li>
+            <li><strong>Visualization:</strong> Use Grafana Variables to create dynamic dashboards (e.g., select Pod).
+            </li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#architecture">Architecture</a>
+            <a class="nav-link" href="#metrics">Metric Types</a>
+            <a class="nav-link" href="#promql">PromQL Queries</a>
+            <a class="nav-link" href="#alerting">Alerting Rules</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../logging-monitoring/" class="text-decoration-none text-muted">Logging (ELK)</a>
+            </li>
+            <li class="mb-2"><a href="../containerized-docker-kubernetes/"
+                class="text-decoration-none text-muted">Kubernetes</a></li>
+            <li class="mb-2"><a href="../distributed-tracing/" class="text-decoration-none text-muted">Distributed
+                Tracing</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
