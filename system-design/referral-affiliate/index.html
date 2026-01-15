@@ -1,49 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Designing a Referral and Affiliate Tracking System — System Design | Brijesh Patel</title>
-<meta name="description" content="Patterns for building referral and affiliate tracking systems: attribution models, fraud detection, payout workflows and CRM integrations.">
-<link rel="canonical" href="https://brijesh.work/system-design/referral-affiliate/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Referral & Affiliate System Design | Attribution Models & Fraud Detection</title>
+  <meta name="description"
+    content="Architecting a scalable Referral System: First-click vs Last-click attribution, generating unique referral codes, detecting fraud (self-referrals), and preventing cookie stuffing.">
+  <meta name="keywords"
+    content="system design, referral system, affiliate marketing, attribution models, fraud detection, cookies, referral codes, growth hacking">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/referral-affiliate/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+      /* Pink/Rose */
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid #f9a8d4;
+    }
+
+    .hero-subtitle {
+      color: #fce7f3;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #db2777;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #fdf2f8;
+    }
+
+    .badge-soft {
+      background-color: rgba(219, 39, 119, 0.1);
+      color: #db2777;
+      padding: 0.5em 0.8em;
+    }
+
+    .attribution-flow {
+      background: #ffffff;
+      border: 2px dashed #f472b6;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-box {
+      border: 2px solid #be185d;
+      padding: 10px 15px;
+      display: inline-block;
+      margin: 10px;
+      background: #fff;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .arrow {
+      font-size: 1.5rem;
+      color: #ec4899;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a Referral and Affiliate Tracking System</h1>
-        <p class="lead">How to track referrals and affiliates: unique tracking links, attribution windows, deduplication, payout calculations and CRM integration.</p>
 
-        <h2 id="requirements">Requirements</h2>
-        <ul>
-          <li>Track referral attribution reliably across sessions and channels</li>
-          <li>Prevent fraud and duplicate attributions</li>
-          <li>Support reports for payouts and partner dashboards</li>
-          <li>Integrate with CRM and billing for payouts</li>
-        </ul>
+<body class="bg-white">
 
-        <h2 id="architecture">Architecture</h2>
-        <ul>
-          <li>Tracking pixel / link redirects for capturing source and utm-like metadata</li>
-          <li>Event ingestion pipeline (message queue) to process conversions and attribute them</li>
-          <li>Attribution store with TTLs and idempotent writes</li>
-          <li>Fraud detection via scoring and heuristics</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-10 text-white border border-white border-opacity-25">Growth
+            Engineering</span>
+          <h1 class="display-4 fw-bold mb-3">Referral & Affiliate System</h1>
+          <p class="hero-subtitle mb-4">Designing for virality: Attribution Logic, First-click vs Last-click, unique
+            code generation, and preventing referral fraud.</p>
+          <div class="d-flex gap-3">
+            <a href="#attribution" class="btn btn-light text-danger fw-bold"
+              style="color: #db2777 !important;">Attribution Models</a>
+            <a href="#fraud" class="btn btn-outline-light">Fraud Detection</a>
+          </div>
+        </div>
       </div>
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#architecture">Architecture</a></li><li><a href="#requirements">Requirements</a></li></ul></div></div>
+    </div>
+  </section>
+
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Architecture -->
+        <section id="architecture" class="content-section">
+          <h2>High-Level Architecture</h2>
+          <p class="lead text-secondary">The goal is to accurately map a <strong>Visitor</strong> to a
+            <strong>Referrer</strong>.</p>
+
+          <div class="attribution-flow d-none d-md-block">
+            <div class="step-box">Alice shares Link<br><code>/ref/alice123</code></div>
+            <span class="arrow">→</span>
+            <div class="step-box bg-light">Bob Clicks<br>(Cookie Set: alice123)</div>
+            <span class="arrow">→</span>
+            <div class="step-box bg-light">Bob Signs Up<br>(Read Cookie)</div>
+            <span class="arrow">→</span>
+            <div class="step-box border-success text-success">Attribute Referral<br><code>referrer_id = alice</code>
+            </div>
+          </div>
+        </section>
+
+        <!-- Link Generation -->
+        <section id="link-gen" class="content-section">
+          <h2>Generating Referral Codes</h2>
+          <p>Do not use User IDs (e.g., `?ref=1054`) directly. It leaks growth metrics. Use random or encoded strings.
+          </p>
+
+          <pre><code class="language-python">import secrets
+import string
+
+def generate_referral_code(length=8):
+    # Base62 alphabet (0-9, a-z, A-Z)
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for _ in range(length))
+
+# Output: "Xk92mB7z"
+# URL: example.com/register?ref=Xk92mB7z</code></pre>
+        </section>
+
+        <!-- Attribution Models -->
+        <section id="attribution" class="content-section">
+          <h2>Attribution Models</h2>
+          <p>If a user clicks multiple links (Alice's -> Charlie's), who gets the credit?</p>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Logic</th>
+                <th>Pros</th>
+                <th>Cons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Last Click (Standard)</strong></td>
+                <td>Latest referrer cookie overwrites previous.</td>
+                <td>Rewards the closer. Simple to implement.</td>
+                <td>Ignores "awareness" drivers.</td>
+              </tr>
+              <tr>
+                <td><strong>First Click</strong></td>
+                <td>First referrer cookie is locked for `N` days.</td>
+                <td>Rewards the introducer.</td>
+                <td>Frustrating for recent influencers.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="alert alert-info mt-3">
+            <strong>Window Lookback:</strong> Typically 30-day or 90-day cookie expiration.
+          </div>
+        </section>
+
+        <!-- Fraud -->
+        <section id="fraud" class="content-section">
+          <h2>Fraud Detection</h2>
+          <p>Users will try to refer themselves (Self-referral) to get double rewards.</p>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold">🚫 Basic Checks</h5>
+                <ul class="text-muted small">
+                  <li>Same IP Address?</li>
+                  <li>Same Device Fingerprint?</li>
+                  <li>Referrer Email == New User Email?</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold">🕵️ Advanced Checks</h5>
+                <ul class="text-muted small">
+                  <li>Fuzzy Name Matching ("John Doe" vs "John Doe 2")</li>
+                  <li>Payment Method Deduplication (Same credit card?)</li>
+                  <li>Velocity Checks (10 referrals in 1 min?)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Unique Codes:</strong> Use random strings, allowing users to customize aliases.</li>
+            <li><strong>Cookies:</strong> Use 1st-party cookies to persist attribution through sign-up.</li>
+            <li><strong>Fraud:</strong> Block the reward, not the sign-up. Let them register, but flag the referral as
+              "Investigate".</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#architecture">Architecture</a>
+            <a class="nav-link" href="#link-gen">Link Generation</a>
+            <a class="nav-link" href="#attribution">Attribution Models</a>
+            <a class="nav-link" href="#fraud">Fraud Detection</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../subscription-billing/" class="text-decoration-none text-muted">Billing
+                System</a></li>
+            <li class="mb-2"><a href="../user-management/" class="text-decoration-none text-muted">User Management</a>
+            </li>
+            <li class="mb-2"><a href="../event-driven-architecture/" class="text-decoration-none text-muted">Event
+                Processing</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
