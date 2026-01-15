@@ -1,126 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>API Gateway and Service Mesh Design in Microservices — System Design | Brijesh Patel</title>
-<meta name="description" content="Compare API gateway and service mesh design: responsibilities, routing, observability, and when to use each.">
-<link rel="canonical" href="https://brijesh.work/system-design/api-gateway-service-mesh/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Gateway vs Service Mesh | Sidecars, mTLS, and Traffic Splitting</title>
+  <meta name="description"
+    content="Detailed comparison of API Gateway (North-South) vs Service Mesh (East-West). Covers Sidecar patterns with Envoy/Istio, mTLS security, observability, and traffic splitting configurations.">
+  <meta name="keywords"
+    content="system design, api gateway, service mesh, istio, envoy, sidecar pattern, microservices, mtls, traffic splitting, kubernetes">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/api-gateway-service-mesh/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #fcd34d;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #b45309;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #fffbeb;
+    }
+
+    .badge-soft {
+      background-color: rgba(217, 119, 6, 0.1);
+      color: #b45309;
+      padding: 0.5em 0.8em;
+    }
+
+    .mesh-diagram {
+      background: #ffffff;
+      border: 2px dashed #fbbf24;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: monospace;
+    }
+
+    .pod-box {
+      border: 2px solid #94a3b8;
+      padding: 15px;
+      display: inline-block;
+      margin: 10px;
+      background: #fff;
+      border-radius: 8px;
+      position: relative;
+      text-align: left;
+    }
+
+    .sidecar {
+      background: #fcd34d;
+      border: 1px solid #d97706;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .app-container {
+      background: #e2e8f0;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      display: inline-block;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>API Gateway and Service Mesh Design in Microservices</h1>
-        <p class="lead">Understanding the roles of API gateways and service meshes and how they complement each other in microservices architectures.</p>
+<body class="bg-white">
 
-        <h2 id="roles">Roles and responsibilities</h2>
-        <p>API gateways handle north-south traffic (external requests), offering routing, auth, rate-limiting and aggregation. Service meshes handle east-west traffic (service-to-service) offering mTLS, observability and fine-grained traffic control.</p>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <!-- Architecture diagram -->
-        <div class="mb-4">
-          <svg width="100%" height="160" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="API gateway and service mesh architecture">
-            <defs><style>.r{fill:#f8f9fa;stroke:#adb5bd;stroke-width:1}.t{font-size:12px;fill:#212529}</style></defs>
-            <rect x="20" y="20" width="200" height="120" class="r" rx="6"/>
-            <text x="120" y="50" text-anchor="middle" class="t">Clients / External</text>
-
-            <rect x="250" y="15" width="220" height="60" class="r" rx="6"/>
-            <text x="360" y="45" text-anchor="middle" class="t">API Gateway (Envoy/Nginx)</text>
-
-            <rect x="250" y="85" width="220" height="50" class="r" rx="6"/>
-            <text x="360" y="110" text-anchor="middle" class="t">Service Mesh (sidecars)</text>
-
-            <rect x="500" y="20" width="360" height="120" class="r" rx="6"/>
-            <text x="680" y="50" text-anchor="middle" class="t">Microservices (pods)</text>
-            <path d="M220 80 L250 45" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
-            <path d="M470 80 L500 80" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
-            <defs><marker id="m" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#495057"/></marker></defs>
-          </svg>
-          <p class="small text-muted">Figure: clients → API gateway (north-south) → service mesh + sidecars (east-west) → microservices.</p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-25 text-white border border-white border-opacity-25">Microservices
+            Patterns</span>
+          <h1 class="display-4 fw-bold mb-3">API Gateway vs Service Mesh</h1>
+          <p class="hero-subtitle mb-4">Navigating the connectivity maze: Understanding North-South vs East-West
+            traffic, the Sidecar pattern, and when you truly need Istio.</p>
+          <div class="d-flex gap-3">
+            <a href="#comparison" class="btn btn-light text-warning fw-bold"
+              style="color: #b45309 !important;">Comparison</a>
+            <a href="#sidecar" class="btn btn-outline-light">Sidecar Pattern</a>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <h3 id="comparison">Gateway vs Mesh — quick comparison</h3>
-        <table class="table table-sm">
-          <thead><tr><th>Capability</th><th>API Gateway</th><th>Service Mesh</th></tr></thead>
-          <tbody>
-            <tr><td>Traffic direction</td><td>North-South</td><td>East-West</td></tr>
-            <tr><td>Auth</td><td>Edge auth, JWT/OAuth</td><td>mTLS, service identity</td></tr>
-            <tr><td>Rate limiting</td><td>Yes (edge)</td><td>可 per-service (with sidecar)</td></tr>
-            <tr><td>Observability</td><td>Basic metrics/tracing</td><td>Rich telemetry per RPC</td></tr>
-            <tr><td>Traffic shaping</td><td>Limited</td><td>Advanced (traffic split, retries)</td></tr>
-          </tbody>
-        </table>
+  <div class="container pb-5">
+    <div class="row">
 
-        <h3 id="envoy-example">Envoy — example HTTP route (snippet)</h3>
-        <pre><code class="language-yaml"># Simplified Envoy virtual host route
-static_resources:
-  listeners:
-  - name: listener_0
-    address: { socket_address: { address: 0.0.0.0, port_value: 8080 }}
-    filter_chains:
-    - filters:
-      - name: envoy.filters.network.http_connection_manager
-        typed_config:
-          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-          stat_prefix: ingress_http
-          route_config:
-            virtual_hosts:
-            - name: backend
-              domains: ["*"]
-              routes:
-              - match: { prefix: "/api/" }
-                route: { cluster: service_backend }
-</code></pre>
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
 
-        <h3 id="istio-canary">Istio — VirtualService canary example</h3>
-        <p>Traffic splitting to perform canary rollouts.</p>
-        <pre><code class="language-yaml">apiVersion: networking.istio.io/v1alpha3
+        <!-- Concepts -->
+        <section id="concepts" class="content-section">
+          <h2>The Core Distinction</h2>
+          <p class="lead text-secondary">A common source of confusion. Both route traffic, but they serve different
+            domains.</p>
+
+          <div class="row mt-4">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card border-top border-4 border-warning">
+                <h5 class="fw-bold mb-3">🌐 API Gateway (North-South)</h5>
+                <p><strong>Entry Point:</strong> Handles traffic entering the cluster from the outside world
+                  (Mobile/Web).</p>
+                <ul class="small text-muted">
+                  <li>Authentication (OAuth/JWT)</li>
+                  <li>Rate Limiting (Per Client)</li>
+                  <li>Response Aggregation</li>
+                  <li>SSL Termination</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card border-top border-4 border-info">
+                <h5 class="fw-bold mb-3">🕸️ Service Mesh (East-West)</h5>
+                <p><strong>Inter-Service:</strong> Handles traffic <i>inside</i> the cluster between microservices.</p>
+                <ul class="small text-muted">
+                  <li>Mutual TLS (mTLS) Security</li>
+                  <li>Service Discovery</li>
+                  <li>Retries & Circuit Breaking</li>
+                  <li>Observability (Tracing)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sidecar Pattern -->
+        <section id="sidecar" class="content-section">
+          <h2>The Sidecar Pattern</h2>
+          <p>How does a Service Mesh intercept traffic without changing code? By injecting a <strong>Sidecar
+              Proxy</strong> (e.g., Envoy) into every Pod.</p>
+
+          <div class="mesh-diagram d-none d-md-block">
+            <div class="pod-box">
+              <strong>Pod A (Checkout)</strong><br>
+              <div class="mt-2">
+                <span class="sidecar">Envoy Proxy</span> ↔ <span class="app-container">App Container</span>
+              </div>
+            </div>
+            <span style="font-size: 2rem; vertical-align: middle;">➡ mTLS ➡</span>
+            <div class="pod-box">
+              <strong>Pod B (Payment)</strong><br>
+              <div class="mt-2">
+                <span class="app-container">App Container</span> ↔ <span class="sidecar">Envoy Proxy</span>
+              </div>
+            </div>
+            <p class="text-muted small mt-3">Application code talks to `localhost`. Envoy handles the network magic.</p>
+          </div>
+        </section>
+
+        <!-- Configuration -->
+        <section id="config" class="content-section">
+          <h2>Traffic Control (Istio Example)</h2>
+          <p>Service Meshes allow advanced routing rules like <strong>Canary Deployments</strong> (shift 10% traffic to
+            v2).</p>
+
+          <h5 class="mt-4">1. VirtualService (Routing Logic)</h5>
+          <pre><code class="language-yaml">apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: my-service
+  name: payment-service
 spec:
-  hosts: ["my-service.default.svc.cluster.local"]
+  hosts:
+  - payment
   http:
   - route:
-    - destination: { host: my-service, subset: stable }
+    - destination:
+        host: payment
+        subset: v1
       weight: 90
-    - destination: { host: my-service, subset: canary }
-      weight: 10
-</code></pre>
+    - destination:
+        host: payment
+        subset: v2
+      weight: 10  # 10% traffic to Canary</code></pre>
 
-        <h3 id="recommendations">Recommendations</h3>
-        <ul>
-          <li>Start with an API gateway for external concerns; add a service mesh when you need mTLS, advanced traffic control, or richer telemetry.</li>
-          <li>Prefer gradual rollouts (canaries) and automated health checks for promotion/rollback.</li>
-          <li>Use policy-as-code to centralize routing and security policies.</li>
-        </ul>
+          <h5 class="mt-4">2. DestinationRule (Subsets)</h5>
+          <pre><code class="language-yaml">apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: payment-service
+spec:
+  host: payment
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2</code></pre>
+        </section>
 
-        <h3 id="when-to-use">When to adopt a service mesh</h3>
-        <ul>
-          <li>Need for mutual TLS between services</li>
-          <li>Fine-grained traffic shaping and retries</li>
-          <li>Centralized telemetry for east-west calls</li>
-        </ul>
+        <!-- Comparison Table -->
+        <section id="comparison" class="content-section">
+          <h2>When to use what?</h2>
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Requirement</th>
+                <th>API Gateway</th>
+                <th>Service Mesh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Hiding Internal APIs</strong></td>
+                <td>✅ Yes (Facade Pattern)</td>
+                <td>❌ No</td>
+              </tr>
+              <tr>
+                <td><strong>Zero-Trust Security (mTLS)</strong></td>
+                <td>❌ No (Usually terminates SSL)</td>
+                <td>✅ Yes (Auto-rotates certs)</td>
+              </tr>
+              <tr>
+                <td><strong>Protocol Translation</strong></td>
+                <td>✅ Yes (REST -> gRPC)</td>
+                <td>❌ No (Primarily Transport)</td>
+              </tr>
+              <tr>
+                <td><strong>Observability</strong></td>
+                <td>Edge Metrics only</td>
+                <td>Deep End-to-End Tracing</td>
+              </tr>
+            </tbody>
+          </table>
 
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Use API gateways for external concerns and use service meshes to augment service-to-service control; both together solve different parts of the networking and security puzzle.</p>
-      </div>
+          <div class="alert alert-danger border border-danger mt-3">
+            <strong>⚠️ Complexity Warning:</strong> Don't adopt a Service Mesh (Istio/Linkerd) unless you have 50+
+            microservices or strict compliance (mTLS) needs. The operational overhead is massive.
+          </div>
+        </section>
 
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#roles">Roles</a></li><li><a href="#when-to-use">When to use</a></li></ul></div></div>
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>API Gateway:</strong> The "Front Door". Focuses on Client-to-Cluster security and routing.</li>
+            <li><strong>Service Mesh:</strong> The "Internal Nervous System". Focuses on Service-to-Service reliability
+              and security.</li>
+            <li><strong>Sidecar Pattern:</strong> Decouples network logic from application code.</li>
+            <li><strong>Start Simple:</strong> Most smaller architectures only need an API Gateway + Standard K8s
+              networking.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#concepts">Core Distinction</a>
+            <a class="nav-link" href="#sidecar">Sidecar Pattern</a>
+            <a class="nav-link" href="#config">Traffic Control (YAML)</a>
+            <a class="nav-link" href="#comparison">When to Use</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../secure-api-gateway/" class="text-decoration-none text-muted">Secure API
+                Gateway</a></li>
+            <li class="mb-2"><a href="../microservices-vs-monolith/"
+                class="text-decoration-none text-muted">Microservices</a></li>
+            <li class="mb-2"><a href="../fault-tolerant-patterns/" class="text-decoration-none text-muted">Fault
+                Tolerance</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
