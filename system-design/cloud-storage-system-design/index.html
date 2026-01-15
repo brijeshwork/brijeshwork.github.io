@@ -1,143 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How to Design a Cloud Storage System (AWS S3, GCP, Azure) — System Design | Brijesh Patel</title>
-<meta name="description" content="Cloud storage system design: object storage patterns, consistency, durability, partitioning and lifecycle management.">
-<link rel="canonical" href="https://brijesh.work/system-design/cloud-storage-system-design/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cloud Storage System Design | S3 Architecture, Erasure Coding & Consistency</title>
+  <meta name="description"
+    content="Deep dive into designing a scalable Cloud Object Storage (like AWS S3): Architecture, Data Partitioning, Erasure Coding vs Replication, Strong Consistency, and Multiplayer Uploads.">
+  <meta name="keywords"
+    content="system design, cloud storage, object storage, s3 architecture, erasure coding, consistent hashing, cap theorem, strong consistency, multipart upload">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/cloud-storage-system-design/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      color: #cffafe;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0e7490;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f8fafc;
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #ecfeff;
+    }
+
+    .badge-soft {
+      background-color: rgba(8, 145, 178, 0.1);
+      color: #0891b2;
+      padding: 0.5em 0.8em;
+    }
+
+    .arch-diagram {
+      background: #ffffff;
+      border: 2px dashed #a5f3fc;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: monospace;
+    }
+
+    .arch-box {
+      border: 2px solid #94a3b8;
+      padding: 10px 20px;
+      display: inline-block;
+      margin: 10px;
+      background: #fff;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .arrow {
+      font-size: 1.5rem;
+      color: #06b6d4;
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>How to Design a Cloud Storage System (AWS S3, GCP, Azure)</h1>
-        <p class="lead">Designing a durable, scalable object storage service with considerations for consistency, metadata, and cost.</p>
+<body class="bg-white">
 
-        <h2 id="requirements">Requirements</h2>
-        <ul>
-          <li>High durability and availability</li>
-          <li>Scalable to billions of objects and large payloads</li>
-          <li>Metadata indexing and efficient listing</li>
-          <li>Access control and lifecycle policies</li>
-        </ul>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <h3 id="design-sketch">Design sketch</h3>
-        <p>Partition by object key prefixes, store object data in chunked storage with erasure coding, and keep small metadata in a highly-available metadata store (Dynamo-style). Use CDNs for hot objects.</p>
-
-        <!-- Architecture diagram -->
-        <div class="mb-4">
-          <svg width="100%" height="180" viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cloud storage architecture">
-            <defs>
-              <style>.b{fill:#f8f9fa;stroke:#adb5bd;stroke-width:1}.l{font-size:12px;fill:#212529}</style>
-            </defs>
-            <rect x="20" y="20" width="200" height="120" class="b" rx="6"/>
-            <text x="120" y="50" text-anchor="middle" class="l">Clients</text>
-            <text x="120" y="70" text-anchor="middle" class="l">(PUT/GET/ LIST)</text>
-
-            <rect x="250" y="10" width="260" height="160" class="b" rx="6"/>
-            <text x="380" y="40" text-anchor="middle" class="l">Frontend / API Layer</text>
-            <text x="380" y="60" text-anchor="middle" class="l">Auth, ACLs, Upload orchestration</text>
-
-            <rect x="540" y="20" width="320" height="120" class="b" rx="6"/>
-            <text x="700" y="50" text-anchor="middle" class="l">Storage Cluster</text>
-            <text x="700" y="70" text-anchor="middle" class="l">Chunk store, Erasure coding, Object index</text>
-
-            <path d="M220 80 L250 80" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
-            <path d="M510 80 L540 80" stroke="#495057" stroke-width="2" marker-end="url(#m)"/>
-            <defs><marker id="m" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#495057"/></marker></defs>
-          </svg>
-          <p class="small text-muted">Figure: Client → API layer (auth, multipart orchestration) → storage cluster (chunking + erasure coding + metadata index).</p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-25 text-white border border-white border-opacity-25">Distributed
+            Storage</span>
+          <h1 class="display-4 fw-bold mb-3">Cloud Storage Design (S3)</h1>
+          <p class="hero-subtitle mb-4">Architecting a planet-scale object store: Decoupling Metadata from Data, Erasure
+            Coding for 99.999999999% durability, and Strong Consistency.</p>
+          <div class="d-flex gap-3">
+            <a href="#architecture" class="btn btn-light text-info fw-bold"
+              style="color: #0e7490 !important;">Architecture</a>
+            <a href="#erasure" class="btn btn-outline-light">Erasure Coding</a>
+          </div>
         </div>
-
-        <h3 id="partitioning">Partitioning & key design</h3>
-        <p>Design object keys to ensure even distribution. Common techniques:</p>
-        <ul>
-          <li>Hash prefixes: shard by hash(object_key) &lt;&lt; N to distribute objects across partitions.</li>
-          <li>Bucket + date: use logical buckets and time prefixes for efficient life-cycle operations.</li>
-          <li>Consistent hashing for node membership changes to minimize reshuffle.</li>
-        </ul>
-
-        <h3 id="erasure-coding">Erasure coding vs replication</h3>
-        <p>Erasure coding (e.g., Reed-Solomon) reduces storage overhead compared to full replication while providing durability. Typical parameters: RS(k=6, m=3) stores 6 data shards + 3 parity shards.</p>
-        <p>Trade-offs:</p>
-        <ul>
-          <li>Encoding/decoding CPU cost vs storage savings.</li>
-          <li>Reconstruction read amplification (need to fetch k shards to rebuild).</li>
-          <li>Good for cold or bulk storage; replication may be used for frequently-read hot objects.</li>
-        </ul>
-
-        <h3 id="metadata-model">Metadata model (example)</h3>
-        <p>Keep small metadata in a highly-available key-value store for fast lookups. Example record:</p>
-        <pre><code class="language-json">{
-  "object_key": "photos/2025/10/27/image-12345.jpg",
-  "bucket": "user-uploads",
-  "size": 5242880,
-  "content_type": "image/jpeg",
-  "created_at": "2025-10-27T10:15:00Z",
-  "chunk_locations": [
-    {"shard_id":"s1","node":"node-3","offset":0},
-    {"shard_id":"s2","node":"node-9","offset":0}
-  ],
-  "acl": "private",
-  "tags": {"user":"123","album":"summer"}
-}
-</code></pre>
-
-        <h3 id="multipart-upload">Multipart upload flow (simplified)</h3>
-        <ol>
-          <li>Client calls POST /{bucket}/{key}?uploads to start and gets an uploadId.</li>
-          <li>Client uploads parts: PUT /{bucket}/{key}?partNumber=X&uploadId=ID</li>
-          <li>Server stores each part as temporary objects (or directly as chunks in the chunk store).</li>
-          <li>Client calls CompleteUpload with list of parts; server composes final object, runs erasure-coding and writes metadata.</li>
-        </ol>
-
-        <pre><code class="language-bash"># example: start upload (pseudo)
-curl -X POST https://storage.example.com/user-uploads/photos/2025/10/27/image-12345.jpg?uploads \
-  -H "Authorization: Bearer $TOKEN"
-# returns uploadId=abc123
-</code></pre>
-
-        <h3 id="lifecycle">Lifecycle policies & cost management</h3>
-        <p>Use lifecycle rules to move objects to colder storage (or delete) after a defined TTL.</p>
-        <pre><code class="language-json">{
-  "Rules": [
-    {"ID": "expire-30-days", "Prefix": "tmp/", "Status": "Enabled", "Expiration": {"Days": 30}},
-    {"ID": "transition-cold", "Prefix": "archives/", "Status": "Enabled", "Transition": {"Days": 90, "StorageClass": "GLACIER"}}
-  ]
-}
-</code></pre>
-
-        <h3 id="consistency">Consistency and listing</h3>
-        <p>Object storage often offers eventual consistency for listing and metadata updates while providing strong read-after-write for new objects in many systems — document your service guarantees and design clients to handle eventual consistency for listings.</p>
-
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Design object stores with a separation of concerns: fast metadata/index for lookups, chunked durable storage for payloads, and a CDN layer for hot reads. Choose erasure coding parameters and partitioning strategies based on access patterns and cost targets.</p>
-
-        <!-- Prism.js for code highlighting -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
-
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Object storage systems trade consistency for availability and scale; choose design patterns based on access patterns and SLAs.</p>
       </div>
+    </div>
+  </section>
 
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#requirements">Requirements</a></li><li><a href="#design-sketch">Design sketch</a></li></ul></div></div>
+  <div class="container pb-5">
+    <div class="row">
+
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
+
+        <!-- Architecture -->
+        <section id="architecture" class="content-section">
+          <h2>High-Level Architecture</h2>
+          <p class="lead text-secondary">The core principle is separation of concerns: <strong>Metadata</strong> (the
+            directory structure) is stored separately from <strong>Block Data</strong> (the actual file content).</p>
+
+          <div class="arch-diagram d-none d-md-block">
+            <div class="arch-box bg-dark text-white">Client</div>
+            <span class="arrow">→</span>
+            <div class="arch-box">Load Balancer</div>
+            <span class="arrow">→</span>
+            <div class="arch-box bg-primary text-white">API Service</div>
+            <br>
+            <span class="arrow" style="transform: rotate(90deg); display: inline-block;">⬇</span>
+            &nbsp;&nbsp;&nbsp;&nbsp; <span class="arrow"
+              style="transform: rotate(90deg); display: inline-block;">⬇</span>
+            <br>
+            <div class="arch-box bg-warning text-dark">Metadata Store<br><small>(DynamoDB/Cassandra)</small></div>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="arch-box bg-success text-white">Block Store<br><small>(HDD/SSD Cluster)</small></div>
+          </div>
+
+          <h4 class="mt-4">Component Responsibilities</h4>
+          <ul>
+            <li><strong>API Service:</strong> Authentication (IAM), Rate Limiting, and Request Orchestration.</li>
+            <li><strong>Metadata Store:</strong> Stores `Buckets`, `ObjectKeys`, `ACLs`. Needs fast Key-Value lookups.
+            </li>
+            <li><strong>Block Store:</strong> Stores immutable chunks of data (Blobs). Optimized for throughput (MB/s).
+            </li>
+          </ul>
+        </section>
+
+        <!-- Partitioning -->
+        <section id="partitioning" class="content-section">
+          <h2>Data Partitioning</h2>
+          <p>You cannot store Petabytes on one machine. We rely on <strong>Consistent Hashing</strong> to distribute
+            data across thousands of nodes.</p>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold">Namespace Partitioning</h5>
+                <p class="small text-muted">Objects are distributed based on a hash of the
+                  <code>BucketName + ObjectKey</code>. This prevents hot spots unless a single key gets massive traffic
+                  (handled by caching).</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold">Consistent Hashing</h5>
+                <p class="small text-muted">A virtual ring topology. When a node is added/removed, only <code>1/N</code>
+                  keys need to be remapped, minimizing data shuffling.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Erasure Coding -->
+        <section id="erasure" class="content-section">
+          <h2>Erasure Coding vs Replication</h2>
+          <p>How does S3 achieve 11 9s of durability without bankrupting AWS?</p>
+
+          <table class="table table-bordered comparison-table">
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Concept</th>
+                <th>Storage Overhead</th>
+                <th>Use Case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>3x Replication</strong></td>
+                <td>Stores 3 full copies of data.</td>
+                <td><strong>200% Overhead</strong> (3GB for 1GB data)</td>
+                <td>Fast Reads, Low Latency access (Hot Tier).</td>
+              </tr>
+              <tr>
+                <td><strong>Erasure Coding (EC)</strong></td>
+                <td>Splits data into `n` chunks + `k` parity.</td>
+                <td><strong>~50% Overhead</strong> (1.5GB for 1GB data)</td>
+                <td>High Durability, Cold/Warm Storage (S3 Standard).</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="alert alert-info border border-info mt-3">
+            <strong>Example (4+2 Encoding):</strong> Split file into 4 data chunks + calculate 2 parity chunks. You can
+            lose <strong>ANY 2</strong> chunks and still recover the file. Overhead is just 50%!
+          </div>
+        </section>
+
+        <!-- Python Example -->
+        <section id="code" class="content-section">
+          <h2>Implementation: Multipart Upload (Python Boto3)</h2>
+          <p>For large files (>100MB), passing a single stream is risky (network failure). Use <strong>Multipart
+              Uploads</strong> to upload chunks in parallel.</p>
+
+          <pre><code class="language-python">import boto3
+from boto3.s3.transfer import TransferConfig
+
+s3 = boto3.client('s3')
+config = TransferConfig(
+    multipart_threshold=1024 * 25, # 25MB threshold
+    max_concurrency=10,
+    multipart_chunksize=1024 * 25,
+    use_threads=True
+)
+
+file_path = '/path/to/large_video.mp4'
+key = 'uploads/video.mp4'
+bucket = 'my-streaming-bucket'
+
+def upload_file():
+    # Boto3 handles the complex logic of:
+    # 1. InitiateMultipartUpload
+    # 2. UploadPart (in parallel threads)
+    # 3. CompleteMultipartUpload
+    s3.upload_file(file_path, bucket, key, Config=config)
+    print("Upload Complete!")
+
+# Presigned URL for Secure Direct-to-S3 Upload (Client-Side)
+def generate_presigned_url():
+    return s3.generate_presigned_url(
+        'put_object',
+        Params={'Bucket': bucket, 'Key': key},
+        ExpiresIn=3600
+    )</code></pre>
+        </section>
+
+        <!-- Consistency -->
+        <section id="consistency" class="content-section">
+          <h2>Consistency Models: Strong vs Eventual</h2>
+          <p>Historically, S3 was <strong>Eventual Consistency</strong> (updates might take seconds to propogate). In
+            2020, AWS moved to <strong>Strong Consistency</strong>.</p>
+          <div class="tech-card">
+            <h5 class="fw-bold">How Strong Consistency Works (Simplified)</h5>
+            <p class="mb-0">When you write a new object, the request doesn't return <code>200 OK</code> until the data
+              is safely replicated to a quorum of nodes. Subsequent <code>GET</code> requests are guaranteed to see the
+              new object immediately.</p>
+          </div>
+        </section>
+
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Decouple Metadata:</strong> Separate the filename/index (DynamoDB) from the blob content (HDD).
+            </li>
+            <li><strong>Erasure Coding:</strong> Use EC for massive durability at low cost compared to replication.</li>
+            <li><strong>Multipart Uploads:</strong> Essential for reliability and speed with large files.</li>
+            <li><strong>Consistency:</strong> Modern object stores prioritize Strong Consistency for better DX.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#architecture">Architecture</a>
+            <a class="nav-link" href="#partitioning">Data Partitioning</a>
+            <a class="nav-link" href="#erasure">Erasure Coding</a>
+            <a class="nav-link" href="#code">Python Example</a>
+            <a class="nav-link" href="#consistency">Consistency Models</a>
+          </nav>
+
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../file-upload/" class="text-decoration-none text-muted">File Upload System</a>
+            </li>
+            <li class="mb-2"><a href="../fault-tolerant-patterns/" class="text-decoration-none text-muted">Fault
+                Tolerance</a></li>
+            <li class="mb-2"><a href="../structure-as-code-terraform/" class="text-decoration-none text-muted">Terraform
+                (IaC)</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
