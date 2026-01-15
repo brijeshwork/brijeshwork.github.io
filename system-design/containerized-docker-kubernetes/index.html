@@ -1,179 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Designing a Containerized System with Docker & Kubernetes — System Design | Brijesh Patel</title>
-<meta name="description" content="Containerization and Kubernetes system design: images, deployments, operators, networking and scaling patterns for production systems.">
-<link rel="canonical" href="https://brijesh.work/system-design/containerized-docker-kubernetes/" />
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docker & Kubernetes Architecture | Pods, Services & Ingress</title>
+  <meta name="description"
+    content="Mastering System Design with Containers: Docker Architecture (Images vs Containers), Kubernetes Components (Pods, Control Plane), and Scalable Orchestration patterns.">
+  <meta name="keywords"
+    content="system design, docker, kubernetes, containers, k8s, orchestration, microservices, pods, ingress, service mesh">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/containerized-docker-kubernetes/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    /* Shared System Design Theme */
+    .hero-section {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      /* Ocean Blue */
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid #7dd3fc;
+    }
+
+    .hero-subtitle {
+      color: #bae6fd;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .sidebar-toc .nav-link {
+      color: #64748b;
+      padding: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-toc .nav-link:hover,
+    .sidebar-toc .nav-link.active {
+      color: #0284c7;
+      font-weight: 500;
+    }
+
+    .content-section {
+      margin-bottom: 3rem;
+    }
+
+    .tech-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      height: 100%;
+      background: #f0f9ff;
+      /* Light blue */
+      transition: transform 0.2s;
+    }
+
+    .tech-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-table th {
+      background-color: #e0f2fe;
+    }
+
+    .badge-soft {
+      background-color: rgba(125, 211, 252, 0.1);
+      color: #bae6fd;
+      padding: 0.5em 0.8em;
+    }
+
+    .cluster-diagram {
+      background: #ffffff;
+      border: 2px dashed #0284c7;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .node-box {
+      border: 2px solid #0369a1;
+      padding: 15px;
+      display: inline-block;
+      margin: 10px;
+      background: #fff;
+      border-radius: 8px;
+      width: 45%;
+      vertical-align: top;
+    }
+
+    .pod-box {
+      border: 1px solid #7dd3fc;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 5px;
+      margin: 5px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 991px) {
+      .order-lg-1 {
+        order: 2;
+      }
+
+      .order-lg-2 {
+        order: 1;
+      }
+    }
+  </style>
 </head>
-<body>
-<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<section>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8">
-        <h1>Designing a Containerized System with Docker &amp; Kubernetes</h1>
-        <p class="lead">Best practices for building and running containerized applications at scale using Docker and Kubernetes.</p>
+<body class="bg-white">
 
-        <h2 id="why-containers">Why containers?</h2>
-        <p>Containers provide environment consistency, fast startup and resource isolation. Kubernetes adds orchestration for scheduling, scaling and rolling updates.</p>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
 
-        <!-- Architecture diagram -->
-        <div class="mb-4">
-          <svg width="100%" height="170" viewBox="0 0 900 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Containers and Kubernetes architecture">
-            <defs>
-              <style>.n{fill:#f8f9fa;stroke:#adb5bd;stroke-width:1}.t{font-size:12px;fill:#212529}</style>
-            </defs>
-            <rect x="20" y="20" width="240" height="120" class="n" rx="6"/>
-            <text x="140" y="50" text-anchor="middle" class="t">Developer Workflow</text>
-            <text x="140" y="70" text-anchor="middle" class="t">Git → CI → Image</text>
-
-            <rect x="300" y="15" width="260" height="140" class="n" rx="6"/>
-            <text x="430" y="45" text-anchor="middle" class="t">Kubernetes Cluster</text>
-            <text x="430" y="68" text-anchor="middle" class="t">Nodes → Kubelet → kube-proxy</text>
-            <text x="430" y="88" text-anchor="middle" class="t">Pods (containers), Services, Ingress</text>
-
-            <rect x="590" y="20" width="260" height="120" class="n" rx="6"/>
-            <text x="720" y="50" text-anchor="middle" class="t">Observability & Ops</text>
-            <text x="720" y="70" text-anchor="middle" class="t">Prometheus, Grafana, ELK</text>
-
-            <path d="M260 80 L300 80" stroke="#495057" stroke-width="2" marker-end="url(#a)"/>
-            <defs><marker id="a" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#495057"/></marker></defs>
-          </svg>
-          <p class="small text-muted">Figure: Developer pushes code → CI builds image → Kubernetes runs pods and provides scaling, networking and observability.</p>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <span
+            class="badge badge-soft mb-3 rounded-pill bg-light bg-opacity-10 text-white border border-white border-opacity-25">Infrastructure
+            & Scaling</span>
+          <h1 class="display-4 fw-bold mb-3">Docker & Kubernetes</h1>
+          <p class="hero-subtitle mb-4">The Operating System of the Cloud. Understanding Containers, Pods, Services, and
+            how to orchestrate distributed systems.</p>
+          <div class="d-flex gap-3">
+            <a href="#k8s-arch" class="btn btn-light text-primary fw-bold" style="color: #0284c7 !important;">K8s
+              Architecture</a>
+            <a href="#docker-basics" class="btn btn-outline-light">Docker Basics</a>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <h3 id="examples">Examples & samples</h3>
+  <div class="container pb-5">
+    <div class="row">
 
-        <h4 id="dockerfile">Sample Dockerfile (multi-stage)</h4>
-        <pre><code class="language-dockerfile"># Build stage
-FROM node:18-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
+      <!-- Main Content -->
+      <main class="col-lg-9 order-lg-2">
 
-# Production stage
-FROM node:18-alpine
-WORKDIR /app
-COPY --from=build /app/dist ./dist
-COPY package*.json ./
-RUN npm ci --only=production
-CMD ["node", "dist/index.js"]
-</code></pre>
+        <!-- Docker Basics -->
+        <section id="docker-basics" class="content-section">
+          <h2>Docker: "Build Once, Run Anywhere"</h2>
+          <p class="lead text-secondary">A container is a standard unit of software that packages code and all its
+            dependencies.</p>
 
-        <h4 id="k8s-manifests">Kubernetes manifests (Deployment + Service)</h4>
-        <p>Minimal deployment and ClusterIP service example.</p>
-        <pre><code class="language-yaml">apiVersion: apps/v1
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold">🖼️ Image (The Class)</h5>
+                <p class="small text-muted">A read-only template with instructions for creating a Docker container.
+                  Built from a `Dockerfile`.</p>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="tech-card">
+                <h5 class="fw-bold">📦 Container (The Object)</h5>
+                <p class="small text-muted">A runnable instance of an image. Isolated from other containers and the host
+                  system.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- K8s Architecture -->
+        <section id="k8s-arch" class="content-section">
+          <h2>Kubernetes Architecture</h2>
+          <p>K8s is not just about running containers; it's about <strong>Scheduling</strong> and
+            <strong>Self-Healing</strong>.</p>
+
+          <div class="cluster-diagram d-none d-md-block">
+            <h5 class="text-primary fw-bold mb-3">K8s Cluster</h5>
+            <div class="node-box" style="border-color: #64748b;">
+              <strong>Control Plane (Master)</strong><br>
+              <span class="badge bg-secondary">API Server</span>
+              <span class="badge bg-secondary">Scheduler</span>
+              <span class="badge bg-secondary">etcd</span>
+            </div>
+            <div class="node-box">
+              <strong>Worker Node</strong><br>
+              <div class="pod-box">Pod 1 (App A)</div>
+              <div class="pod-box">Pod 2 (App B)</div>
+              <span class="badge bg-info text-dark mt-2">Kubelet</span>
+              <span class="badge bg-info text-dark mt-2">Kube-Proxy</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- K8s Objects -->
+        <section id="objects" class="content-section">
+          <h2>Core K8s Objects</h2>
+
+          <table class="table table-bordered comparison-table">
+            <tr>
+              <th style="width: 25%">Object</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><strong>Pod</strong></td>
+              <td>The smallest deployable unit. Usually 1 container per pod. Ephemeral API address.</td>
+            </tr>
+            <tr>
+              <td><strong>Deployment</strong></td>
+              <td>Manages Pods. Handles Scaling and Rolling Updates. "I want 3 replicas of App A".</td>
+            </tr>
+            <tr>
+              <td><strong>Service</strong></td>
+              <td>Stable networking abstraction. "Traffic to 'my-service' goes to any healthy Pod".</td>
+            </tr>
+            <tr>
+              <td><strong>Ingress</strong></td>
+              <td>HTTP/HTTPS router. Exposes Services to the outside world.</td>
+            </tr>
+          </table>
+
+          <h5 class="mt-4">Service Types</h5>
+          <ul>
+            <li><strong>ClusterIP:</strong> Internal only. (Default)</li>
+            <li><strong>NodePort:</strong> Open a specific port on every Node IP.</li>
+            <li><strong>LoadBalancer:</strong> Provision a Cloud LB (AWS ALB/GCP LB).</li>
+          </ul>
+        </section>
+
+        <!-- Code Examples -->
+        <section id="code" class="content-section">
+          <h2>Manifest Examples</h2>
+          <p>Everything in K8s is declarative YAML.</p>
+
+          <pre><code class="language-yaml"># deployment.yaml
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app
+  name: payment-service
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: my-app
+      app: payment
   template:
     metadata:
       labels:
-        app: my-app
+        app: payment
     spec:
       containers:
-      - name: my-app
-        image: ghcr.io/ORG/APP:v1
+      - name: app
+        image: my-payment-app:v2
         ports:
-        - containerPort: 3000
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "500m"
-            memory: "512Mi"
-
+        - containerPort: 8080
 ---
+# service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-app-svc
+  name: payment-svc
 spec:
   selector:
-    app: my-app
+    app: payment
   ports:
   - port: 80
-    targetPort: 3000
-  type: ClusterIP
-</code></pre>
+    targetPort: 8080
+  type: ClusterIP</code></pre>
+        </section>
 
-        <h4 id="hpa">Horizontal Pod Autoscaler (HPA) example</h4>
-        <pre><code class="language-yaml">apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: my-app-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: my-app
-  minReplicas: 2
-  maxReplicas: 20
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 60
-</code></pre>
+        <section class="content-section border-top pt-5">
+          <h2>Summary</h2>
+          <ul>
+            <li><strong>Abstraction:</strong> Docker abstracts the OS. Kubernetes abstracts the Data Center.</li>
+            <li><strong>Pods:</strong> Treat them like cattle, not pets. They die and get replaced automatically.</li>
+            <li><strong>Networking:</strong> Services provide stable IPs for unstable Pods.</li>
+          </ul>
+        </section>
 
-        <h4 id="notes">Notes & tips</h4>
-        <ul>
-          <li>Prefer small, single-purpose containers and let K8s compose them.</li>
-          <li>Set resource requests/limits to allow the scheduler to bin-pack nodes efficiently.</li>
-          <li>Use liveness/readiness probes to avoid routing traffic to unhealthy pods.</li>
-          <li>Consider using a service mesh for gradual traffic shifting and observability.</li>
-        </ul>
+      </main>
 
-        <!-- Prism.js for syntax highlighting -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"></script>
+      <!-- Sidebar -->
+      <aside class="col-lg-3 order-lg-1 mb-4">
+        <div class="sidebar-sticky">
+          <h6 class="fw-bold text-uppercase text-secondary mb-3 small tracking-wide">On this page</h6>
+          <nav class="nav flex-column sidebar-toc">
+            <a class="nav-link" href="#docker-basics">Docker Basics</a>
+            <a class="nav-link" href="#k8s-arch">Architecture</a>
+            <a class="nav-link" href="#objects">Pods & Services</a>
+            <a class="nav-link" href="#code">YAML Examples</a>
+          </nav>
 
-        <h3 id="core-components">Core components</h3>
-        <ul>
-          <li>Container images and registries</li>
-          <li>Deployment controllers, replicasets</li>
-          <li>ConfigMaps, Secrets, and volume management</li>
-          <li>Service discovery, ingress and service meshes</li>
-        </ul>
-
-        <h3 id="scaling-ops">Scaling & ops considerations</h3>
-        <ul>
-          <li>Horizontal Pod Autoscaler & custom metrics</li>
-          <li>Node autoscaling and bin-packing</li>
-          <li>Resource requests/limits and QoS classes</li>
-          <li>CI/CD integration for image promotion</li>
-        </ul>
-
-        <h2 id="conclusion">Conclusion</h2>
-        <p>Adopt immutable images, automate deployments, and design for observability and resilience when running containerized workloads in production.</p>
-      </div>
-
-      <aside class="col-12 col-lg-4">
-        <div class="card mb-4"><div class="card-body"><h5>Quick links</h5><ul class="list-unstyled"><li><a href="#why-containers">Why containers?</a></li><li><a href="#core-components">Core components</a></li></ul></div></div>
+          <hr class="my-4">
+          <h6 class="fw-bold text-secondary mb-3 small">Related Topics</h6>
+          <ul class="list-unstyled small">
+            <li class="mb-2"><a href="../cicd-pipeline-design/" class="text-decoration-none text-muted">CI/CD
+                Pipelines</a></li>
+            <li class="mb-2"><a href="../logging-monitoring/" class="text-decoration-none text-muted">Observability</a>
+            </li>
+            <li class="mb-2"><a href="../microservices-vs-monolith/"
+                class="text-decoration-none text-muted">Microservices</a></li>
+          </ul>
+        </div>
       </aside>
+
     </div>
   </div>
-</section>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<script>includeHTML();</script>
+  <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+  <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-docker.min.js"></script>
+  <script>includeHTML();</script>
 </body>
+
 </html>
