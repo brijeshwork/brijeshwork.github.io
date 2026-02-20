@@ -103,10 +103,10 @@ section {
    ============================================ */
 
 .hero-section {
-  /* padding: 60px 0; */
   position: relative;
   overflow: hidden;
-  padding-top: 50px;
+  min-height: 500px;
+  padding: 0;
 }
 
 @media (max-width: 991px) {
@@ -256,7 +256,7 @@ section {
   justify-content: center;
   width: 45px;
   height: 45px;
-  background: #000000;
+  background: #d0d0d0;
   border-radius: 50%;
   color: white;
   text-decoration: none;
