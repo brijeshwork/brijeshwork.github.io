@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brijesh.work/sitemap.xml
