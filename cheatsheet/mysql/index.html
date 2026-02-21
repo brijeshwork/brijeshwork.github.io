@@ -1,251 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Mysql | Brijesh Patel</title>
-<link rel="canonical" href="https://brijesh.work/cheatsheet/mysql/" />
-<meta name="description" content="Mysql: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MySQL Cheatsheet: Commands, Queries & Tips | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/cheatsheet/mysql/" />
+    <meta name="description"
+        content="A comprehensive MySQL cheatsheet featuring practical examples, essential commands, querying tips, and best practices by Brijesh Patel.">
+    <meta name="keywords" content="MySQL, cheatsheet, SQL commands, queries, database management, brijesh patel">
+    <meta name="author" content="Brijesh Patel">
 
-<link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
 
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Mysql | Brijesh Patel" />
-<meta property="og:description" content="Mysql: practical examples, tutorials and tips by Brijesh Patel. Includes code samples, step-by-step explanations and best practices." />
-<meta property="og:url" content="https://brijesh.work/" />
-<meta property="og:site_name" content="Brijesh Patel" />
-<meta property="og:image" content="https://brijesh.work/" />
-<meta property="og:image:width" content="960" />
-<meta property="og:image:height" content="640" />
-<meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="MySQL Cheatsheet: Commands, Queries & Tips | Brijesh Patel" />
+    <meta property="og:description"
+        content="A comprehensive MySQL cheatsheet featuring practical examples, essential commands, querying tips, and best practices." />
+    <meta property="og:url" content="https://brijesh.work/cheatsheet/mysql/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/pub/media/images/og-image-mysql.jpg" />
+    <meta property="og:image:width" content="960" />
+    <meta property="og:image:height" content="640" />
+    <meta property="og:image:type" content="image/jpeg" />
 
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@brijeshwork" />
-<meta name="twitter:label1" content="Written by" />
-<meta name="twitter:data1" content="Brijesh Patel" />
-<meta name="twitter:label2" content="Est. reading time" />
-<meta name="twitter:data2" content="9 minutes" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:title" content="MySQL Cheatsheet: Commands, Queries & Tips | Brijesh Patel" />
+    <meta name="twitter:description"
+        content="A comprehensive MySQL cheatsheet featuring practical examples, essential commands, querying tips, and best practices." />
+    <meta name="twitter:image" content="https://brijesh.work/pub/media/images/og-image-mysql.jpg" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Brijesh Patel" />
+    <meta name="twitter:label2" content="Est. reading time" />
+    <meta name="twitter:data2" content="9 minutes" />
 
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <!-- Prism for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Security/Database Theme (Blue/Indigo) */
+        :root {
+            --theme-primary: #3b82f6;
+            /* Blue 500 */
+            --theme-secondary: #6366f1;
+            /* Indigo 500 */
+            --theme-dark: #1e3a8a;
+            /* Blue 900 */
+            --theme-light: #eff6ff;
+            /* Blue 50 */
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 4px solid var(--theme-primary);
+        }
+
+        .hero-subtitle {
+            color: #bfdbfe;
+            font-size: 1.25rem;
+        }
+
+        .cheatsheet-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            height: 100%;
+            background: #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+        }
+
+        .cheatsheet-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--theme-primary);
+        }
+
+        .cheatsheet-card .card-header {
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--theme-dark);
+            padding: 1rem 1.25rem;
+        }
+
+        .cheatsheet-card .card-body {
+            padding: 0;
+        }
+
+        pre[class*="language-"] {
+            margin: 0 !important;
+            border-radius: 0 0 0.5rem 0.5rem !important;
+            border: none !important;
+            font-size: 0.85rem !important;
+        }
+    </style>
 
 </head>
-<body>
-    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<section>
-    <div class="container-fix">
+<body class="bg-light">
+
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <h1>MySQL Cheatsheet</h1>
-                    <p>Essential MySQL commands, queries, and database management techniques for developers.</p>
+                <div class="col-lg-8">
+                    <span
+                        class="badge bg-primary bg-opacity-25 text-white border border-light border-opacity-25 mb-3">Database
+                        Management</span>
+                    <h1 class="display-4 fw-bold mb-3">MySQL Cheatsheet</h1>
+                    <p class="hero-subtitle mb-4">Essential MySQL commands, queries, and database management techniques
+                        for developers. Bookmark this page for quick reference.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section>
-    <div class="container-fix">
+    <!-- Cheatsheet Content -->
+    <section class="pb-5">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
+            <div class="row g-4" data-masonry='{"percentPosition": true }'>
 
-<h3>Browsing</h3>
-<pre>
-SHOW DATABASES;
+                <!-- Browsing -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-primary border-bottom border-3">
+                            <h2 class="h5 mb-0">Browsing</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">SHOW DATABASES;
 SHOW TABLES;
-SHOW FIELDS FROM table / DESCRIBE table;
+SHOW FIELDS FROM table;
+DESCRIBE table;
 SHOW CREATE TABLE table;
 SHOW PROCESSLIST;
-KILL process_number;
-</pre>
+KILL process_number;</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Select - Join</h3>
-<pre>
-    SELECT ... FROM t1 JOIN t2 ON t1.id1 = t2.id2 WHERE condition;
-    SELECT ... FROM t1 LEFT JOIN t2 ON t1.id1 = t2.id2 WHERE condition;
-    SELECT ... FROM t1 JOIN (t2 JOIN t3 ON ...) ON ...
-</pre>
+                <!-- Select -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-success border-bottom border-3">
+                            <h2 class="h5 mb-0">Select</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">SELECT * FROM table;
+SELECT * FROM table1, table2;
+SELECT field1, field2 FROM table1, table2;
+SELECT ... FROM ... WHERE condition;
+SELECT ... FROM ... WHERE condition GROUP BY field;
+SELECT ... FROM ... WHERE cond GROUP BY field HAVING x;
+SELECT ... FROM ... WHERE condition ORDER BY f1, f2;
+SELECT ... FROM ... WHERE cond ORDER BY f1, f2 DESC;
+SELECT ... FROM ... WHERE condition LIMIT 10;
+SELECT DISTINCT field1 FROM ...
+SELECT DISTINCT field1, field2 FROM ...</code></pre>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Select - Join -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-info border-bottom border-3">
+                            <h2 class="h5 mb-0">Select - Join</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">SELECT ... FROM t1 JOIN t2 ON t1.id1 = t2.id2 WHERE cond;
+SELECT ... FROM t1 LEFT JOIN t2 ON t1.id1 = t2.id2 WHERE cond;
+SELECT ... FROM t1 JOIN (t2 JOIN t3 ON ...) ON ...</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Select</h3>
-<pre>
-    SELECT * FROM table;
-    SELECT * FROM table1, table2;
-    SELECT field1, field2 FROM table1, table2;
-    SELECT ... FROM ... WHERE condition
-    SELECT ... FROM ... WHERE condition GROUP BY field;
-    SELECT ... FROM ... WHERE condition GROUP BY field HAVING condition2;
-    SELECT ... FROM ... WHERE condition ORDER BY field1, field2;
-    SELECT ... FROM ... WHERE condition ORDER BY field1, field2 DESC;
-    SELECT ... FROM ... WHERE condition LIMIT 10;
-    SELECT DISTINCT field1 FROM ...
-    SELECT DISTINCT field1, field2 FROM ...
-</pre>
+                <!-- Create / Open / Delete Database -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-warning border-bottom border-3">
+                            <h2 class="h5 mb-0">Manage Databases</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">CREATE DATABASE DatabaseName;
+CREATE DATABASE DatabaseName CHARACTER SET utf8;
+USE DatabaseName;
+DROP DATABASE DatabaseName;
+ALTER DATABASE DatabaseName CHARACTER SET utf8;</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Create / Open / Delete Database</h3>
-<pre>
-    CREATE DATABASE DatabaseName;
-    CREATE DATABASE DatabaseName CHARACTER SET utf8;
-    USE DatabaseName;
-    DROP DATABASE DatabaseName;
-    ALTER DATABASE DatabaseName CHARACTER SET utf8;
-</pre>
+                <!-- Conditions -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-danger border-bottom border-3">
+                            <h2 class="h5 mb-0">Conditions</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">field1 = value1
+field1 &lt;&gt; value1
+field1 LIKE 'value _ %'
+field1 IS NULL
+field1 IS NOT NULL
+field1 IS IN (value1, value2)
+field1 IS NOT IN (value1, value2)
+condition1 AND condition2
+condition1 OR condition2</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Conditions</h3>
-<pre>field1 = value1
-    field1 <> value1
-    field1 LIKE 'value _ %'
-    field1 IS NULL
-    field1 IS NOT NULL
-    field1 IS IN (value1, value2)
-    field1 IS NOT IN (value1, value2)
-    condition1 AND condition2
-    condition1 OR condition2</pre>
+                <!-- Update -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-secondary border-bottom border-3">
+                            <h2 class="h5 mb-0">Update</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">UPDATE table1 SET field1=new_value1 WHERE condition;
+UPDATE table1, table2 
+SET field1=new_value1, field2=new_value2, ... 
+WHERE table1.id1 = table2.id2 AND condition;</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Backup Database to SQL File</h3>
-<pre>mysqldump -u Username -p dbNameYouWant > databasename_backup.sql</pre>
+                <!-- Create / Delete Table -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-primary border-bottom border-3">
+                            <h2 class="h5 mb-0">Create / Delete Table</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">CREATE TABLE table (field1 type1, field2 type2);
+CREATE TABLE table (field1 type1, field2 type2, INDEX (field));
+CREATE TABLE table (field1 type1, field2 type2, PRIMARY KEY (field1));
+CREATE TABLE table IF NOT EXISTS;
+CREATE TEMPORARY TABLE table;
 
-<h3>Repair Tables After Unclean Shutdown</h3>
-<pre>mysqlcheck --all-databases;
-    mysqlcheck --all-databases --fast;</pre>
+DROP TABLE table;
+DROP TABLE IF EXISTS table;
+DROP TABLE table1, table2;</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Update</h3>
-<pre>UPDATE table1 SET field1=new_value1 WHERE condition;
-    UPDATE table1, table2 SET field1=new_value1, field2=new_value2, ... WHERE
-      table1.id1 = table2.id2 AND condition;</pre>
+                <!-- Foreign Keys -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-info border-bottom border-3">
+                            <h2 class="h5 mb-0">Foreign Keys</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">CREATE TABLE table1 (fk_field1 type1, field2 type2, ...,
+  FOREIGN KEY (fk_field1) REFERENCES table2 (t2_fieldA))
+  [ON UPDATE|ON DELETE] [CASCADE|SET NULL]
 
-<h3>Create / Delete / Modify Table</h3>
-<pre>CREATE TABLE table (field1 type1, field2 type2);
-    CREATE TABLE table (field1 type1, field2 type2, INDEX (field));
-    CREATE TABLE table (field1 type1, field2 type2, PRIMARY KEY (field1));
-    CREATE TABLE table (field1 type1, field2 type2, PRIMARY KEY (field1,field2));</pre>
+CREATE TABLE table1 (fk_field1 type1, fk_field2 type2, ...,
+  FOREIGN KEY (fk_field1, fk_field2) 
+  REFERENCES table2 (t2_fieldA, t2_fieldB))</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<pre>CREATE TABLE table1 (fk_field1 type1, field2 type2, ...,
-    FOREIGN KEY (fk_field1) REFERENCES table2 (t2_fieldA))
-      [ON UPDATE|ON DELETE] [CASCADE|SET NULL]</pre>
-<pre>CREATE TABLE table1 (fk_field1 type1, fk_field2 type2, ...,
-    FOREIGN KEY (fk_field1, fk_field2) REFERENCES table2 (t2_fieldA, t2_fieldB))</pre>
-<pre>CREATE TABLE table IF NOT EXISTS;</pre>
-<pre>CREATE TEMPORARY TABLE table;</pre>
-<pre>DROP TABLE table;
-    DROP TABLE IF EXISTS table;
-    DROP TABLE table1, table2, ...</pre>
-<pre>ALTER TABLE table MODIFY field1 type1
-    ALTER TABLE table MODIFY field1 type1 NOT NULL ...
-    ALTER TABLE table CHANGE old_name_field1 new_name_field1 type1
-    ALTER TABLE table CHANGE old_name_field1 new_name_field1 type1 NOT NULL ...
-    ALTER TABLE table ALTER field1 SET DEFAULT ...
-    ALTER TABLE table ALTER field1 DROP DEFAULT
-    ALTER TABLE table ADD new_name_field1 type1
-    ALTER TABLE table ADD new_name_field1 type1 FIRST
-    ALTER TABLE table ADD new_name_field1 type1 AFTER another_field
-    ALTER TABLE table DROP field1</pre>
+                <!-- Alter Table -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-success border-bottom border-3">
+                            <h2 class="h5 mb-0">Alter Table</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">ALTER TABLE table MODIFY field1 type1;
+ALTER TABLE table MODIFY field1 type1 NOT NULL;
+ALTER TABLE table CHANGE old_name new_name type1;
+ALTER TABLE table ALTER field1 SET DEFAULT ...;
+ALTER TABLE table ALTER field1 DROP DEFAULT;
+ALTER TABLE table ADD new_field1 type1 FIRST;
+ALTER TABLE table ADD new_field1 type1 AFTER another_field;
+ALTER TABLE table DROP field1;</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<pre>
-    ALTER TABLE table MODIFY field1 type1 FIRST
-    ALTER TABLE table MODIFY field1 type1 AFTER another_field
-    ALTER TABLE table CHANGE old_name_field1 new_name_field1 type1 FIRST
-    ALTER TABLE table CHANGE old_name_field1 new_name_field1 type1 AFTER
-      another_field  
-</pre>
+                <!-- Insert & Delete -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-warning border-bottom border-3">
+                            <h2 class="h5 mb-0">Insert & Delete Data</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">INSERT INTO table1 (field1, field2) VALUES (value1, value2);
 
-<h3>Reset Root Password</h3>
-<pre>
-    $ /etc/init.d/mysql stop
+DELETE FROM table1; 
+TRUNCATE table1;
+DELETE FROM table1 WHERE condition;
+DELETE FROM table1, table2 
+WHERE table1.id1 = table2.id2 AND condition;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users and Privileges -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-danger border-bottom border-3">
+                            <h2 class="h5 mb-0">Users and Privileges</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">CREATE USER 'user'@'localhost';
+GRANT ALL PRIVILEGES ON base.* TO 'user'@'localhost' IDENTIFIED BY 'pass';
+GRANT SELECT, INSERT, DELETE ON base.* TO 'user'@'localhost';
+REVOKE ALL PRIVILEGES ON base.* FROM 'user'@'host';
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user'@'host';
+FLUSH PRIVILEGES;
+
+SET PASSWORD = PASSWORD('new_pass');
+SET PASSWORD FOR 'user'@'host' = PASSWORD('new_pass');
+
+DROP USER 'user'@'host'; -- Host '%' indicates any host</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup and Restore -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-secondary border-bottom border-3">
+                            <h2 class="h5 mb-0">Backup, Restore & Repair</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-bash"># Backup Database to SQL File
+mysqldump -u Username -p dbNameYouWant > database_backup.sql
+
+# Restore from backup SQL File
+mysql -u Username -p dbNameYouWant &lt; database_backup.sql;
+
+# Repair Tables After Unclean Shutdown
+mysqlcheck --all-databases;
+mysqlcheck --all-databases --fast;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Root Password Reset -->
+                <div class="col-lg-6 col-xl-4">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-dark border-bottom border-3">
+                            <h2 class="h5 mb-0">Reset Root Password</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-bash">$ /etc/init.d/mysql stop
 $ mysqld_safe --skip-grant-tables
 $ mysql # on another terminal
 mysql> UPDATE mysql.user SET password=PASSWORD('new_pass') WHERE user='root';
-## Switch back to the mysqld_safe terminal and kill the process using Control + \
-$ /etc/init.d/mysql start
-</pre>
+## Switch back to mysqld_safe terminal and kill process (Ctrl + \)
+$ /etc/init.d/mysql start</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Restore from backup SQL File</h3>
-<pre>mysql -u Username -p dbNameYouWant < databasename_backup.sql;</pre>
+                <!-- Data Types -->
+                <div class="col-lg-12">
+                    <div class="cheatsheet-card">
+                        <div class="card-header border-info border-bottom border-3">
+                            <h2 class="h5 mb-0">Main Data Types</h2>
+                        </div>
+                        <div class="card-body">
+                            <pre><code class="language-sql">TINYINT (1o: -128 to +127) | SMALLINT (2o: +-65 000) | MEDIUMINT (3o: +-16 000 000)
+INT (4o: +- 2 000 000 000) | BIGINT (8o: +-9.10^18)
+⚠ INT(2) = “2 digits displayed” – NOT “number with 2 digits max”
 
-<h3>Insert</h3>
-<pre>INSERT INTO table1 (field1, field2) VALUES (value1, value2);</pre>
+FLOAT(M,D) | DOUBLE(M,D) | FLOAT(D=0->53)
+⚠ 8,3 -> 12345,678 – NOT 12345678,123!
 
-<h3>Delete</h3>
-<pre>DELETE FROM table1 / TRUNCATE table1
-    DELETE FROM table1 WHERE condition
-    DELETE FROM table1, table2 WHERE table1.id1 =
-      table2.id2 AND condition</pre>
+TIME (HH:MM) | YEAR (AAAA) | DATE (AAAA-MM-JJ)
+DATETIME (AAAA-MM-JJ HH:MM; années 1000->9999)
+TIMESTAMP (like DATETIME, but 1970->2038, compatible with Unix)
 
-<h3>Keys</h3>
-<pre>CREATE TABLE table (..., PRIMARY KEY (field1, field2))
-    CREATE TABLE table (..., FOREIGN KEY (field1, field2) REFERENCES table2
-    (t2_field1, t2_field2))</pre>
+VARCHAR (single-line; explicit size) | TEXT (multi-lines; max size=65535) | BLOB (binary)
+Variants for TEXT&BLOB: TINY (max=255), MEDIUM (max=~16000), and LONG (max=4Go). Ex: VARCHAR(32), TINYTEXT, LONGBLOB
 
-<h3>Users and Privileges</h3>
-<pre>CREATE USER 'user'@'localhost';
-    GRANT ALL PRIVILEGES ON base.* TO 'user'@'localhost' IDENTIFIED BY 'password';
-    GRANT SELECT, INSERT, DELETE ON base.* TO 'user'@'localhost' IDENTIFIED BY 'password';
-    REVOKE ALL PRIVILEGES ON base.* FROM 'user'@'host'; -- one permission only
-    REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user'@'host'; -- all permissions
-    FLUSH PRIVILEGES;</pre>
-<pre>
-    SET PASSWORD = PASSWORD('new_pass');
-    SET PASSWORD FOR 'user'@'host' = PASSWORD('new_pass');
-    SET PASSWORD = OLD_PASSWORD('new_pass'); 
-</pre>
-<pre>DROP USER 'user'@'host';
-    Host ‘%’ indicates any host.</pre>
+ENUM ('value1', 'value2', ...) -- (default NULL, or '' if NOT NULL)</code></pre>
+                        </div>
+                    </div>
+                </div>
 
-<h3>Main Data Types</h3>
-<pre>TINYINT (1o: -128 to +127)
-    SMALLINT (2o: +-65 000)
-    MEDIUMINT (3o: +-16 000 000)
-    INT (4o: +- 2 000 000 000)
-    BIGINT (8o: +-9.10^18)
-    Precise interval: -(2^(8*N-1)) -> (2^8*N)-1
-    ⚠ INT(2) = “2 digits displayed” – NOT “number with 2 digits max”
-    
-    FLOAT(M,D)
-    DOUBLE(M,D)
-    FLOAT(D=0->53)
-    ⚠ 8,3 -> 12345,678 – NOT 12345678,123!
-    
-    TIME (HH:MM)
-    YEAR (AAAA)
-    DATE (AAAA-MM-JJ)
-    DATETIME (AAAA-MM-JJ HH:MM; années 1000->9999)
-    TIMESTAMP (like DATETIME, but 1970->2038, compatible with Unix)
-    VARCHAR (single-line; explicit size)
-    TEXT (multi-lines; max size=65535)
-    BLOB (binary; max size=65535)
-    Variants for TEXT&BLOB: TINY (max=255), MEDIUM (max=~16000), and LONG (max=4Go). Ex: VARCHAR(32), TINYTEXT, LONGBLOB, MEDIUMTEXT
-    
-    ENUM ('value1', 'value2', ...) -- (default NULL, or '' if NOT NULL)</pre>
+            </div>
+        </div>
+    </section>
 
-<h3></h3>
-<pre></pre>
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
 
-<h3></h3>
-<pre></pre>
-
-<h3></h3>
-<pre></pre>
-
-
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <!-- Scripts -->
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <!-- Masonry for optimal grid layout -->
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+        integrity="sha384-GNFwBvfVxBkLMJpYMOABq3cINrRO61BNCN44Qq7c2fP4kS7wYMAjB1p+y1JdoxlB" crossorigin="anonymous"
+        async></script>
+    <!-- Prism.js for code formatting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script>includeHTML();</script>
 </body>
+
 </html>
-<script>includeHTML();</script>
