@@ -42,106 +42,141 @@
 <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
 <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
 <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        color: #ffffff;
+        padding: 80px 0;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+    .hero-section h1 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #ffffff;
+        font-size: 2.5rem;
+    }
+    .hero-section p {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+    .content-card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        padding: 35px;
+        margin-bottom: 30px;
+        border: 1px solid #eaedf2;
+    }
+    .content-card h2 {
+        color: #2c3e50;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #f0f4f8;
+        padding-bottom: 12px;
+    }
+    .content-card h3 {
+        color: #34495e;
+        font-size: 1.2rem;
+        margin-top: 25px;
+        margin-bottom: 15px;
+    }
+    .content-card p {
+        color: #5a6c7d;
+        line-height: 1.7;
+    }
+    pre {
+        background-color: #282c34 !important;
+        color: #abb2bf !important;
+        padding: 20px !important;
+        border-radius: 8px;
+        overflow-x: auto;
+        border: 1px solid #1e2127;
+    }
+    code {
+        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    }
+    .alert-warning {
+        background-color: #fff8e1;
+        border-left: 4px solid #ffc107;
+        color: #856404;
+        padding: 15px 20px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+</style>
 </head>
 <body>
 <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<div class="container-fix">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>PHP Strings Examples</h1>
-                    <p>PHP string manipulation examples including concatenation, functions, and string operations.</p>
+<main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                    <h1>PHP String Manipulation</h1>
+                    <p>Master PHP string functions with practical examples for counting, reversing, searching, and replacing text.</p>
                 </div>
-                <div class="col-lg-12">
-                    <h4>Get the length of a string - strlen()</h4>
-            </div>
-            <div class="col-lg-12">
-                <pre>
-                <xmp>
-                    <?php
-                    echo strlen("Hello world!");
-                    ?>
-                </xmp>
-                </pre>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<div class="container-fix">
+    <!-- Main Content -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h4>Count the number of words in a string - str_word_count()</h4>
-            </div>
-            <div class="col-lg-12">
-                <pre>
-                <xmp>
-                    <?php
-                    echo str_word_count("Hello world!");
-                    ?>
-                </xmp>
-                </pre>
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                
+                <div class="content-card">
+                    <h2>📏 1. Get the Length of a String</h2>
+                    <p>The <code>strlen()</code> function returns the length of a string in bytes. It is commonly used to validate string constraints.</p>
+                    <pre><code class="language-php">&lt;?php
+// Output: 12
+echo strlen("Hello world!");
+?&gt;</code></pre>
+                </div>
+
+                <div class="content-card">
+                    <h2>📝 2. Count Words in a String</h2>
+                    <p>The <code>str_word_count()</code> function counts the number of words inside a string.</p>
+                    <pre><code class="language-php">&lt;?php
+// Output: 2
+echo str_word_count("Hello world!");
+?&gt;</code></pre>
+                </div>
+
+                <div class="content-card">
+                    <h2>🔁 3. Reverse a String</h2>
+                    <p>The <code>strrev()</code> function reverses the sequence of a string.</p>
+                    <pre><code class="language-php">&lt;?php
+// Output: !dlrow olleH
+echo strrev("Hello world!");
+?&gt;</code></pre>
+                </div>
+
+                <div class="content-card">
+                    <h2>🔍 4. Search for Text within a String</h2>
+                    <p>The <code>strpos()</code> function searches for a specific text within a string and returns the first occurrence's index (0-based).</p>
+                    <pre><code class="language-php">&lt;?php
+// Output: 6
+echo strpos("Hello world!", "world");
+?&gt;</code></pre>
+                </div>
+
+                <div class="content-card">
+                    <h2>✏️ 5. Replace Text within a String</h2>
+                    <p>The <code>str_replace()</code> function replaces specific characters or words with others within a string.</p>
+                    <pre><code class="language-php">&lt;?php
+// Output: Hello Dolly!
+echo str_replace("world", "Dolly", "Hello world!");
+?&gt;</code></pre>
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-<div class="container-fix">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h4>Reverse a string - strrev()</h4>
-            </div>
-            <div class="col-lg-12">
-                <pre>
-                <xmp>
-                    <?php
-                    echo strrev("Hello world!");
-                    ?>
-                </xmp>
-                </pre>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fix">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h4>Search for a specific text within a string - strpos()</h4>
-            </div>
-            <div class="col-lg-12">
-                <pre>
-                <xmp>
-                    <?php
-                    echo strpos("Hello world!", "world");
-                    ?>
-                </xmp>
-                </pre>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fix">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h4>Replace text within a string - str_replace()</h4>
-            </div>
-            <div class="col-lg-12">
-                <pre>
-                <xmp>
-                    <?php
-                    echo str_replace("world", "Dolly", "Hello world!");
-                    ?> 
-                </xmp>
-                </pre>
-            </div>
-        </div>
-    </div>
-</div>
+</main>
 
 
 <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
