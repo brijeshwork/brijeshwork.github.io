@@ -49,177 +49,187 @@
     <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
     <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
     <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: #ffffff;
+            padding: 80px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 2.5rem;
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        .content-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid #eaedf2;
+        }
+        .content-card h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 12px;
+        }
+        .content-card h3 {
+            color: #34495e;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .content-card p {
+            color: #5a6c7d;
+            line-height: 1.7;
+        }
+        pre {
+            background-color: #282c34 !important;
+            color: #abb2bf !important;
+            padding: 20px !important;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #1e2127;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        .alert-warning {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-    <div class="container-fix">
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                        <h1>PHP SimpleXML Examples</h1>
+                        <p>Learn how to read and manipulate XML data effortlessly using PHP's SimpleXML parser with practical examples.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1>PHP SimpleXML Examples</h1>
-                    <p>PHP SimpleXML parser examples and usage.</p>
-                </div>
-                <div class="col-lg-12">
-                    <h4>Use simplexml_load_string() to read XML data from a string</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $myXMLData =
-                    "<?xml version='1.0' encoding='UTF-8'?>
-                    <note>
-                    <to>Tove</to>
-                    <from>Jani</from>
-                    <heading>Reminder</heading>
-                    <body>Don't forget me this weekend!</body>
-                    </note>";
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                     
-                    $xml=simplexml_load_string($myXMLData) or die("Error: Cannot create object");
-                    print_r($xml);
-                    ?>
-                </xmp>
-                </pre>
+                    <div class="content-card">
+                        <h2>📝 1. Read XML Data From a String</h2>
+                        <p>The <code>simplexml_load_string()</code> function is used to convert well-formed XML string data into a SimpleXMLElement object.</p>
+                        <pre><code class="language-php">&lt;?php
+$myXMLData =
+"&lt;?xml version='1.0' encoding='UTF-8'?&gt;
+&lt;note&gt;
+  &lt;to&gt;Tove&lt;/to&gt;
+  &lt;from&gt;Jani&lt;/from&gt;
+  &lt;heading&gt;Reminder&lt;/heading&gt;
+  &lt;body&gt;Don't forget me this weekend!&lt;/body&gt;
+&lt;/note&gt;";
+
+$xml = simplexml_load_string($myXMLData) or die("Error: Cannot create object");
+print_r($xml);
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>📂 2. Read XML Data From a File</h2>
+                        <p>Use the <code>simplexml_load_file()</code> function to load and parse an external XML document into an object.</p>
+                        <pre><code class="language-php">&lt;?php
+$xml = simplexml_load_file("note.xml") or die("Error: Cannot create object");
+print_r($xml);
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🔍 3. Get Specific Node Values</h2>
+                        <p>Once loaded into an object, you can access the XML nodes easily by treating them as object properties.</p>
+                        <pre><code class="language-php">&lt;?php
+$xml = simplexml_load_file("note.xml") or die("Error: Cannot create object");
+
+echo $xml-&gt;to . "&lt;br&gt;";
+echo $xml-&gt;from . "&lt;br&gt;";
+echo $xml-&gt;heading . "&lt;br&gt;";
+echo $xml-&gt;body;
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>📚 4. Access Node Values of Specific Elements (Arrays)</h2>
+                        <p>If there are multiple elements with the same node name, SimpleXML treats them as an array. You can access specific elements using an index.</p>
+                        <pre><code class="language-php">&lt;?php
+$xml = simplexml_load_file("books.xml") or die("Error: Cannot create object");
+
+echo $xml-&gt;book[0]-&gt;title . "&lt;br&gt;";
+echo $xml-&gt;book[1]-&gt;title;
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🔄 5. Loop Through Node Values</h2>
+                        <p>Use the `children()` method inside a <code>foreach</code> loop to gracefully iterate through all XML children nodes.</p>
+                        <pre><code class="language-php">&lt;?php
+$xml = simplexml_load_file("books.xml") or die("Error: Cannot create object");
+
+foreach($xml-&gt;children() as $books) {
+    echo $books-&gt;title . ", ";
+    echo $books-&gt;author . ", ";
+    echo $books-&gt;year . ", ";
+    echo $books-&gt;price . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🏷️ 6. Get Attribute Values</h2>
+                        <p>Attributes can be accessed directly using standard array syntax `['attribute_name']` on the element.</p>
+                        <pre><code class="language-php">&lt;?php
+$xml = simplexml_load_file("books.xml") or die("Error: Cannot create object");
+
+echo $xml-&gt;book[0]['category'] . "&lt;br&gt;";
+echo $xml-&gt;book[1]-&gt;title['lang'];
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🔁 7. Loop Through Attribute Values</h2>
+                        <p>Similarly, you can loop through children nodes and access their respective attributes efficiently.</p>
+                        <pre><code class="language-php">&lt;?php
+$xml = simplexml_load_file("books.xml") or die("Error: Cannot create object");
+
+foreach($xml-&gt;children() as $books) {
+    echo $books-&gt;title['lang'];
+    echo "&lt;br&gt;";
+}
+?&gt;</code></pre>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>PHP SimpleXML Examples</h1>
-                    <p>PHP SimpleXML parser examples and usage.</p>
-                </div>
-                <div class="col-lg-12">
-                    <h4>Use simplexml_load_file() to read XML data from a file</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $xml=simplexml_load_file("note.xml") or die("Error: Cannot create object");
-                    print_r($xml);
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Get node values</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $xml=simplexml_load_file("note.xml") or die("Error: Cannot create object");
-                    echo $xml->to . "<br>";
-                    echo $xml->from . "<br>";
-                    echo $xml->heading . "<br>";
-                    echo $xml->body;
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Get node values of specific elements</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $xml=simplexml_load_file("books.xml") or die("Error: Cannot create object");
-                    echo $xml->book[0]->title . "<br>";
-                    echo $xml->book[1]->title;
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Get node values - loop</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $xml=simplexml_load_file("books.xml") or die("Error: Cannot create object");
-                    foreach($xml->children() as $books) {
-                            echo $books->title . ", ";
-                            echo $books->author . ", ";
-                            echo $books->year . ", ";
-                            echo $books->price . "<br>";
-                    }
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Get attribute values</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $xml=simplexml_load_file("books.xml") or die("Error: Cannot create object");
-                    echo $xml->book[0]['category'] . "<br>";
-                    echo $xml->book[1]->title['lang'];
-                    ?>
-                    
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Get attribute values - loop</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $xml=simplexml_load_file("books.xml") or die("Error: Cannot create object");
-                    foreach($xml->children() as $books) {
-                        echo $books->title['lang'];
-                        echo "<br>";
-                    }
-                    ?>
-                    
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
 
 

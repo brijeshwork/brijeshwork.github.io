@@ -49,205 +49,256 @@
     <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
     <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
     <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: #ffffff;
+            padding: 80px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 2.5rem;
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        .content-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid #eaedf2;
+        }
+        .content-card h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 12px;
+        }
+        .content-card h3 {
+            color: #34495e;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .content-card p {
+            color: #5a6c7d;
+            line-height: 1.7;
+        }
+        pre {
+            background-color: #282c34 !important;
+            color: #abb2bf !important;
+            padding: 20px !important;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #1e2127;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        .alert-warning {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-    <div class="container-fix">
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                        <h1>PHP MySQL Data Operations</h1>
+                        <p>Learn how to connect, query, and fetch data from MySQL using PHP's Object-oriented MySQLi, Procedural MySQLi, and PDO.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1>PHP MySQL Data Examples</h1>
-                    <p>PHP examples for working with MySQL databases, including data retrieval, insertion, and manipulation.</p>
-                </div>
-                <div class="col-lg-12">
-                    <h4>Select data with MySQLi (Object-oriented)</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $servername = "localhost";
-                    $username = "username";
-                    $password = "password";
-                    $dbname = "myDB";
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                     
-                    // Create connection
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    // Check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-                    
-                    $sql = "SELECT id, firstname, lastname FROM MyGuests";
-                    $result = $conn->query($sql);
-                    
-                    if ($result->num_rows > 0) {
-                        // output data of each row
-                        while($row = $result->fetch_assoc()) {
-                            echo "<br> id: ". $row["id"]. " - Name: ". $row["firstname"]. " " . $row["lastname"] . "<br>";
-                        }
-                    } else {
-                        echo "0 results";
-                    }
-                    
-                    $conn->close();
-                    ?>
-                </xmp>
-                </pre>
+                    <div class="content-card">
+                        <h2>🐘 1. Select Data with MySQLi (Object-oriented)</h2>
+                        <p>MySQLi (MySQL Improved) is a relational database driver used solely for MySQL. Let's see how to query data and fetch results using its Object-oriented interface.</p>
+                        <pre><code class="language-php">&lt;?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$dbname = "myDB";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn-&gt;connect_error) {
+    die("Connection failed: " . $conn-&gt;connect_error);
+}
+
+$sql = "SELECT id, firstname, lastname FROM MyGuests";
+$result = $conn-&gt;query($sql);
+
+if ($result-&gt;num_rows &gt; 0) {
+    // Output data of each row
+    while($row = $result-&gt;fetch_assoc()) {
+        echo "ID: ". $row["id"]. " - Name: ". $row["firstname"]. " " . $row["lastname"] . "&lt;br&gt;";
+    }
+} else {
+    echo "0 results found.";
+}
+
+$conn-&gt;close();
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>📜 2. Select Data with MySQLi (Procedural)</h2>
+                        <p>If you prefer a procedural approach over an object-oriented one, MySQLi also offers procedural functions to accomplish the exact same task.</p>
+                        <pre><code class="language-php">&lt;?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$dbname = "myDB";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT id, firstname, lastname FROM MyGuests";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) &gt; 0) {
+    // Output data of each row
+    while($row = mysqli_fetch_assoc($result)) {
+        echo "ID: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "&lt;br&gt;";
+    }
+} else {
+    echo "0 results found.";
+}
+
+mysqli_close($conn);
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>📊 3. Display Results in an HTML Table (MySQLi OOP)</h2>
+                        <p>Often, you will want to present your tabular data beautifully. Here is how you can render query results directly into an HTML table structure.</p>
+                        <pre><code class="language-php">&lt;?php
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$dbname = "myDB";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn-&gt;connect_error) {
+    die("Connection failed: " . $conn-&gt;connect_error);
+}
+
+$sql = "SELECT id, firstname, lastname FROM MyGuests";
+$result = $conn-&gt;query($sql);
+
+if ($result-&gt;num_rows &gt; 0) {
+    echo "&lt;table border='1'&gt;";
+    echo "&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;/tr&gt;";
+    
+    // Output data of each row
+    while($row = $result-&gt;fetch_assoc()) {
+        echo "&lt;tr&gt;&lt;td&gt;" . $row["id"]. "&lt;/td&gt;&lt;td&gt;" . $row["firstname"]. " " . $row["lastname"]. "&lt;/td&gt;&lt;/tr&gt;";
+    }
+    
+    echo "&lt;/table&gt;";
+} else {
+    echo "0 results found.";
+}
+
+$conn-&gt;close();
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🛡️ 4. Select Data with PDO using Prepared Statements</h2>
+                        <p>PDO (PHP Data Objects) provides a unified way to access different database systems and enables Prepared Statements, which are highly recommended for preventing SQL Injection attacks.</p>
+                        <pre><code class="language-php">&lt;?php
+echo "&lt;table style='border: solid 1px black;'&gt;";
+echo "&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Firstname&lt;/th&gt;&lt;th&gt;Lastname&lt;/th&gt;&lt;/tr&gt;";
+
+class TableRows extends RecursiveIteratorIterator {
+    function __construct($it) {
+        parent::__construct($it, self::LEAVES_ONLY);
+    }
+
+    function current() {
+        return "&lt;td style='width: 150px; border: 1px solid black;'&gt;" . parent::current(). "&lt;/td&gt;";
+    }
+
+    function beginChildren() {
+        echo "&lt;tr&gt;";
+    }
+
+    function endChildren() {
+        echo "&lt;/tr&gt;\n";
+    }
+}
+
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$dbname = "myDBPDO";
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // Set the PDO error mode to exception
+    $conn-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Prepare and execute statement
+    $stmt = $conn-&gt;prepare("SELECT id, firstname, lastname FROM MyGuests");
+    $stmt-&gt;execute();
+
+    // Set the resulting array to associative
+    $result = $stmt-&gt;setFetchMode(PDO::FETCH_ASSOC);
+
+    // Iterating recursively through the result set
+    foreach(new TableRows(new RecursiveArrayIterator($stmt-&gt;fetchAll())) as $k=&gt;$v) {
+        echo $v;
+    }
+} catch(PDOException $e) {
+    echo "Error: " . $e-&gt;getMessage();
+}
+
+$conn = null;
+echo "&lt;/table&gt;";
+?&gt;</code></pre>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Select data with MySQLi (Procedural)</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $servername = "localhost";
-                    $username = "username";
-                    $password = "password";
-                    $dbname = "myDB";
-                    
-                    // Create connection
-                    $conn = mysqli_connect($servername, $username, $password, $dbname);
-                    // Check connection
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error());
-                    }
-                    
-                    $sql = "SELECT id, firstname, lastname FROM MyGuests";
-                    $result = mysqli_query($conn, $sql);
-                    
-                    if (mysqli_num_rows($result) > 0) {
-                        // output data of each row
-                        while($row = mysqli_fetch_assoc($result)) {
-                            echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-                        }
-                    } else {
-                        echo "0 results";
-                    }
-                    
-                    mysqli_close($conn);
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Put the resut in an HTML table (Object-oriented)</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    $servername = "localhost";
-                    $username = "username";
-                    $password = "password";
-                    $dbname = "myDB";
-                    
-                    // Create connection
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    // Check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-                    
-                    $sql = "SELECT id, firstname, lastname FROM MyGuests";
-                    $result = $conn->query($sql);
-                    
-                    if ($result->num_rows > 0) {
-                        echo "<table><tr><th>ID</th><th>Name</th></tr>";
-                        // output data of each row
-                        while($row = $result->fetch_assoc()) {
-                            echo "<tr><td>" . $row["id"]. "</td><td>" . $row["firstname"]. " " . $row["lastname"]. "</td></tr>";
-                        }
-                        echo "</table>";
-                    } else {
-                        echo "0 results";
-                    }
-                    
-                    $conn->close();
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Select data with PDO (+ Prepared statements)</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    echo "<table style='border: solid 1px black;'>";
-                     echo "<tr><th>Id</th><th>Firstname</th><th>Lastname</th></tr>";
-                    
-                    class TableRows extends RecursiveIteratorIterator {
-                        function __construct($it) {
-                            parent::__construct($it, self::LEAVES_ONLY);
-                        }
-                    
-                        function current() {
-                            return "<td style='width: 150px; border: 1px solid black;'>" . parent::current(). "</td>";
-                        }
-                    
-                        function beginChildren() {
-                            echo "<tr>";
-                        }
-                    
-                        function endChildren() {
-                            echo "</tr>" . "\n";
-                        }
-                    }
-                    
-                    $servername = "localhost";
-                    $username = "username";
-                    $password = "password";
-                    $dbname = "myDBPDO";
-                    
-                    try {
-                        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $stmt = $conn->prepare("SELECT id, firstname, lastname FROM MyGuests");
-                        $stmt->execute();
-                    
-                        // set the resulting array to associative
-                        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                    
-                        foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
-                            echo $v;
-                        }
-                    }
-                    catch(PDOException $e) {
-                        echo "Error: " . $e->getMessage();
-                    }
-                    $conn = null;
-                    echo "</table>";
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
 
 

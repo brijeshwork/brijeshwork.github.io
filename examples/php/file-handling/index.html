@@ -49,34 +49,151 @@
     <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
     <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
     <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: #ffffff;
+            padding: 80px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 2.5rem;
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        .content-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid #eaedf2;
+        }
+        .content-card h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 12px;
+        }
+        .content-card h3 {
+            color: #34495e;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .content-card p {
+            color: #5a6c7d;
+            line-height: 1.7;
+        }
+        pre {
+            background-color: #282c34 !important;
+            color: #abb2bf !important;
+            padding: 20px !important;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #1e2127;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        .alert-warning {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-    <div class="container-fix">
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                        <h1>PHP File Handling: A Comprehensive Guide</h1>
+                        <p>Learn how to read, write, and manipulate files in PHP using practical examples and modern best practices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1>PHP File Handling Examples</h1>
-                    <p>PHP file handling examples including file operations, reading, writing, and file system functions.</p>
-                </div>
-                <div class="col-lg-12">
-                    <h4>Use readfile() to read a file and write it to the output buffer</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    echo readfile("webdictionary.txt");
-                    ?>
-                </xmp>
-                </pre>
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                    
+                    <div class="content-card">
+                        <h2>📖 1. Outputting a File with <code>readfile()</code></h2>
+                        <p>The <code>readfile()</code> function reads a file and writes it directly to the output buffer. It is useful when you just want to output the contents of a file directly to the browser without modifying it.</p>
+                        
+                        <h3>Example</h3>
+                        <pre><code class="language-php">&lt;?php
+// Reads and outputs the content of webdictionary.txt
+echo readfile("webdictionary.txt");
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>📂 2. Opening and Closing a File</h2>
+                        <p>For more control, use <code>fopen()</code> and <code>fclose()</code>. <code>fopen()</code> provides various modes such as <code>r</code> (read), <code>w</code> (write), and <code>a</code> (append). Always close files after you are done.</p>
+                        <pre><code class="language-php">&lt;?php
+// Open a file for reading
+$file = fopen("webdictionary.txt", "r") or die("Unable to open file!");
+
+// Do some file operations...
+
+// Always close the file to free up resources
+fclose($file);
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🔍 3. Reading File Contents</h2>
+                        <p>Using <code>fread()</code>, you can read from an open file. You must pass the file pointer and the maximum length (in bytes) to read.</p>
+                        <pre><code class="language-php">&lt;?php
+$file = fopen("webdictionary.txt", "r") or die("Unable to open file!");
+
+// Read the complete file using filesize()
+echo fread($file, filesize("webdictionary.txt"));
+
+fclose($file);
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>✍️ 4. Writing to a File</h2>
+                        <p>Using <code>fwrite()</code>, you can write data to a file. Be careful with mode <code>w</code>, as it will overwrite the file. Use mode <code>a</code> if you wish to append without deleting existing content.</p>
+                        <pre><code class="language-php">&lt;?php
+$file = fopen("newfile.txt", "w") or die("Unable to open file!");
+
+$txt = "John Doe\n";
+fwrite($file, $txt);
+
+$txt = "Jane Doe\n";
+fwrite($file, $txt);
+
+fclose($file);
+?&gt;</code></pre>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
 
 

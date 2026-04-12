@@ -49,107 +49,164 @@
     <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
     <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
     <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: #ffffff;
+            padding: 80px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 2.5rem;
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        .content-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid #eaedf2;
+        }
+        .content-card h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 12px;
+        }
+        .content-card h3 {
+            color: #34495e;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .content-card p {
+            color: #5a6c7d;
+            line-height: 1.7;
+        }
+        pre {
+            background-color: #282c34 !important;
+            color: #abb2bf !important;
+            padding: 20px !important;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #1e2127;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        .alert-warning {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>PHP Constants Examples</h1>
-                    <p>PHP constant definition and usage examples.</p>
-                </div>
-                <div class="col-lg-12">
-                    <h4>Case-sensitive constant name</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    // case-sensitive constant name
-                    define("GREETING", "Welcome to W3Schools.com!");
-                    echo GREETING;
-                    ?>
-                </xmp>
-                </pre>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                        <h1>PHP Constants: A Comprehensive Guide</h1>
+                        <p>Learn how to define and use constants in PHP along with practical examples and best practices.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container-fix">
+        </section>
+
+        <!-- Main Content -->
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1>PHP Constants Examples</h1>
-                    <p>PHP constant definition and usage examples.</p>
-                </div>
-                <div class="col-lg-12">
-                    <h4>Case-insensitive constant name</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    // case-insensitive constant name
-                    define("GREETING", "Welcome to W3Schools.com!", true);
-                    echo greeting;
-                    ?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Create a Array constant with define()</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    define("cars", [
-                      "Alfa Romeo",
-                      "BMW",
-                      "Toyota"
-                    ]);
-                    echo cars[0];
-                    ?> 
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Use a constant inside a function (when it is defined outside the function)</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-                    <?php
-                    define("GREETING", "Welcome to W3Schools.com!");
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                     
-                    function myTest() {
-                      echo GREETING;
-                    }
-                     
-                    myTest();
-                    ?> 
-                </xmp>
-                </pre>
+                    <div class="content-card">
+                        <h2>📌 1. Defining a Constant</h2>
+                        <p>A constant is an identifier (name) for a simple value. Unlike variables, constants cannot be changed or undefined once they have been set during script execution. In PHP, you can define a constant using the <code>define()</code> function or the <code>const</code> keyword.</p>
+                        
+                        <h3>Case-sensitive Constant Name</h3>
+                        <pre><code class="language-php">&lt;?php
+// Defining a case-sensitive constant
+define("GREETING", "Welcome to Brijesh Patel's Tech Guide!");
+
+echo GREETING;
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🚀 2. Using the <code>const</code> Keyword</h2>
+                        <p>The <code>const</code> keyword is often preferred because it defines constants at compile time compared to <code>define()</code> which defines them at run time. It generally offers better readability and performance.</p>
+                        <pre><code class="language-php">&lt;?php
+const SITE_NAME = "brijesh.work";
+
+echo "Visit " . SITE_NAME . " for more tutorials!";
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>📦 3. Creating an Array Constant</h2>
+                        <p>PHP also supports array constants. You can create an array constant using either the <code>define()</code> function (PHP 7.0+) or the <code>const</code> keyword (PHP 5.6+).</p>
+                        <pre><code class="language-php">&lt;?php
+define("SUPPORTED_LANGUAGES", [
+    "PHP",
+    "JavaScript",
+    "Python",
+    "Go"
+]);
+
+echo "I love coding in " . SUPPORTED_LANGUAGES[0] . "!";
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🌍 4. Constants Inside Functions</h2>
+                        <p>Unlike standard variables, constants are automatically global and can be used directly across the entire script without needing the <code>global</code> keyword.</p>
+                        <pre><code class="language-php">&lt;?php
+define("DB_HOST", "localhost");
+
+function connectDatabase() {
+    // We can access DB_HOST directly inside the function
+    echo "Connecting to database at " . DB_HOST . "...";
+}
+ 
+connectDatabase();
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>⚠️ 5. Case-insensitive Constants (Deprecated)</h2>
+                        <div class="alert-warning">
+                            <strong>Deprecated Warning:</strong> Defining case-insensitive constants by passing <code>true</code> as the third parameter to <code>define()</code> has been <strong>deprecated as of PHP 7.3.0</strong> and <strong>removed in PHP 8.0.0</strong>. You should avoid this practice.
+                        </div>
+                        <pre><code class="language-php">&lt;?php
+// NOT RECOMMENDED: The third parameter enabled case-insensitivity
+// This will throw a deprecation warning in PHP 7.3+ and a fatal error in PHP 8.0+
+define("OLD_GREETING", "Hello World!", true);
+
+echo old_greeting; 
+?&gt;</code></pre>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
 
 
