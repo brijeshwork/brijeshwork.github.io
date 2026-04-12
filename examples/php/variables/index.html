@@ -49,179 +49,195 @@
     <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
     <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
     <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: #ffffff;
+            padding: 80px 0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-size: 2.5rem;
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        .content-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid #eaedf2;
+        }
+        .content-card h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 12px;
+        }
+        .content-card h3 {
+            color: #34495e;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        .content-card p {
+            color: #5a6c7d;
+            line-height: 1.7;
+        }
+        pre {
+            background-color: #282c34 !important;
+            color: #abb2bf !important;
+            padding: 20px !important;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #1e2127;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        .alert-warning {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
     <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>PHP Variables Examples</h1>
-                    <p>PHP variable types, scope, and manipulation.</p>
-                </div>
-                <div class="col-lg-12">
-                    <h4>Create different variables</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-<?php
-    $txt = "Hello world!";
-    $x = 5;
-    $y = 10.5;
-    
-    echo $txt;
-    echo "<br>";
-    echo $x;
-    echo "<br>";
-    echo $y;
-?>
-                </xmp>
-                </pre>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                        <h1>PHP Variables & Scope</h1>
+                        <p>Learn how to define, manipulate, and understand the scope of variables in PHP.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>PHP Variables Examples</h1>
-                    <p>PHP variable types, scope, and manipulation.</p>
-                </div>
-                <div class="col-lg-12">
-                    <h4>Test global scope (variable outside function)</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-<?php
-    $x = 5; // global scope
-        
-    function myTest() {
-        // using x inside this function will generate an error
-        echo "<p>Variable x inside function is: $x</p>";
-    } 
-    myTest();
-    
-    echo "<p>Variable x outside function is: $x</p>";
-?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Test local scope (variable inside function)</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-<xmp>
-    <?php
-    function myTest() {
-        $x = 5; // local scope
-        echo "<p>Variable x inside function is: $x</p>";
-    } 
-    myTest();
-    
-    // using x outside the function will generate an error
-    echo "<p>Variable x outside function is: $x</p>";
-?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Use the global keyword to access a global variable from within a function</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-<?php
-    $x = 5;
-    $y = 10;
-    
-    function myTest() {
-        global $x, $y;
-        $y = $x + $y;
-    } 
-    
-    myTest();  // run function
-    echo $y; // output the new value for variable $y
-?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Use the $GLOBALS[] array to access a global variable from within a function</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-<?php
-    $x = 5;
-    $y = 10;
-    
-    function myTest() {
-        $GLOBALS['y'] = $GLOBALS['x'] + $GLOBALS['y'];
-    } 
-    
-    myTest();
-    echo $y;
-?>
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fix">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Use the static keyword to let a local variable not be deleted after execution of function</h4>
-                </div>
-                <div class="col-lg-12">
-                    <pre>
-                <xmp>
-<?php
-    function myTest() {
-        static $x = 0;
-        echo $x;
-        $x++;
-    }
-    
-    myTest();
-    echo "<br>";
-    myTest();
-    echo "<br>";
-    myTest();
-?> 
-                </xmp>
-                </pre>
-                </div>
-            </div>
-        </div>
-    </div>
+        </section>
 
+        <!-- Main Content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                    
+                    <div class="content-card">
+                        <h2>📦 1. Create Different Variables</h2>
+                        <p>In PHP, a variable starts with the <code>$</code> sign, followed by the name of the variable. PHP is a loosely typed language, so we do not have to declare data types.</p>
+                        <pre><code class="language-php">&lt;?php
+$txt = "Hello world!";
+$x = 5;
+$y = 10.5;
+
+echo $txt;
+echo "&lt;br&gt;";
+echo $x;
+echo "&lt;br&gt;";
+echo $y;
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🌍 2. Global Scope (Outside a Function)</h2>
+                        <p>A variable declared outside a function has a GLOBAL SCOPE and can only be accessed outside a function.</p>
+                        <pre><code class="language-php">&lt;?php
+$x = 5; // global scope
+    
+function myTest() {
+    // using x inside this function will generate an error
+    echo "&lt;p&gt;Variable x inside function is: $x&lt;/p&gt;";
+} 
+myTest();
+
+echo "&lt;p&gt;Variable x outside function is: $x&lt;/p&gt;";
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🏠 3. Local Scope (Inside a Function)</h2>
+                        <p>A variable declared within a function has a LOCAL SCOPE and can only be accessed within that function.</p>
+                        <pre><code class="language-php">&lt;?php
+function myTest() {
+    $x = 5; // local scope
+    echo "&lt;p&gt;Variable x inside function is: $x&lt;/p&gt;";
+} 
+myTest();
+
+// using x outside the function will generate an error
+echo "&lt;p&gt;Variable x outside function is: $x&lt;/p&gt;";
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🔑 4. The <code>global</code> Keyword</h2>
+                        <p>The <code>global</code> keyword is used to access a global variable from within a function.</p>
+                        <pre><code class="language-php">&lt;?php
+$x = 5;
+$y = 10;
+
+function myTest() {
+    global $x, $y;
+    $y = $x + $y;
+} 
+
+myTest();  // run function
+echo $y; // output the new value for variable $y (15)
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>🌐 5. The <code>$GLOBALS</code> Array</h2>
+                        <p>PHP also stores all global variables in an array called <code>$GLOBALS[index]</code>. The index holds the name of the variable. This array is also accessible from within functions.</p>
+                        <pre><code class="language-php">&lt;?php
+$x = 5;
+$y = 10;
+
+function myTest() {
+    $GLOBALS['y'] = $GLOBALS['x'] + $GLOBALS['y'];
+} 
+
+myTest();
+echo $y; // Output 15
+?&gt;</code></pre>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>📌 6. The <code>static</code> Keyword</h2>
+                        <p>Normally, when a function is completed/executed, all of its variables are deleted. However, sometimes we want a local variable NOT to be deleted. We use the <code>static</code> keyword when first declaring the variable to achieve this.</p>
+                        <pre><code class="language-php">&lt;?php
+function myTest() {
+    static $x = 0;
+    echo $x;
+    $x++;
+}
+
+myTest(); // Output 0
+echo "&lt;br&gt;";
+myTest(); // Output 1
+echo "&lt;br&gt;";
+myTest(); // Output 2
+?&gt;</code></pre>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
 
 
     <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
