@@ -1,0 +1,996 @@
+<header
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <h1
+        style="box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:40px;line-height:50px;margin-bottom:20px;margin-top:0px;outline:none;text-wrap:balance;">
+        <strong>Design Consistent Hashing</strong>
+    </h1>
+</header>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    To achieve horizontal scaling, it is important to distribute requests/data efficiently and evenly across servers.
+    Consistent hashing is a commonly used technique to achieve this goal. But first, let us take an in-depth look at the
+    problem.
+</p>
+<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="the-rehashing-problem">
+    <strong>The rehashing problem</strong>
+</h2>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    If you have <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>n</i></em>
+    cache servers, a common way to balance the load is to use the following hash method:
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>serverIndex
+            = hash(key) % N</i></em>, where <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>N</i></em>
+    is the size of the server pool.
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Let us use an example to illustrate how it works. As shown in Table 1, we have 4 servers and 8 string keys with
+    their hashes.
+</p>
+<figure class="table">
+    <table
+        style="-webkit-text-stroke-width:0px;border-collapse:collapse;border-color:rgb(233, 233, 233);border-style:solid;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin-bottom:0px;margin-top:0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+        <thead
+            style="background-color:rgb(245, 245, 245);border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+            <tr
+                style="border-bottom:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <th
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;padding:10px;">
+                    <strong
+                        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">key</strong>
+                </th>
+                <th
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;padding:10px;">
+                    <strong
+                        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">hash</strong>
+                </th>
+                <th
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;padding:10px;">
+                    <strong
+                        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">hash
+                        % 4</strong>
+                </th>
+            </tr>
+        </thead>
+        <tbody
+            style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+            <tr
+                style="border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key0
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    18358617
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    1
+                </td>
+            </tr>
+            <tr
+                style="background-color:rgb(245, 245, 245);border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key1
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    26143584
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    0
+                </td>
+            </tr>
+            <tr
+                style="border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key2
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    18131146
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    2
+                </td>
+            </tr>
+            <tr
+                style="background-color:rgb(245, 245, 245);border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key3
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    35863496
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    0
+                </td>
+            </tr>
+            <tr
+                style="border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key4
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    34085809
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    1
+                </td>
+            </tr>
+            <tr
+                style="background-color:rgb(245, 245, 245);border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key5
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    27581703
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    3
+                </td>
+            </tr>
+            <tr
+                style="border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key6
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    38164978
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    2
+                </td>
+            </tr>
+            <tr
+                style="background-color:rgb(245, 245, 245);border-bottom:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key7
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    22530351
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    3
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</figure>
+<p class="tableCaption"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41) !important;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;margin-top:12px;orphans:2;outline:none;text-align:center !important;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;width:940px;word-spacing:0px;">
+    Table 1
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    To fetch the server where a key is stored, we perform the modular operation <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>f(key)
+            % 4</i></em>. For instance, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>hash(key0)
+            % 4 = 1</i></em> means a client must contact server 1 to fetch the cached data. Figure 1 shows the
+    distribution of keys based on Table 1.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-1-JYB5LSFH.svg"
+            alt="Image represents a simple consistent hashing scheme for distributing keys across four servers.  The top line shows the formula `serverIndex = hash % 4`, indicating that a key's hash value (presumably a numerical representation generated from the key itself) is modulo-4'd to determine which server (indexed 0-3) it's assigned to. Below, four servers (`server 0`, `server 1`, `server 2`, `server 3`) are depicted as colored boxes, each associated with a server index (0, 1, 2, 3 respectively).  Underneath the servers, a list of keys (`key1`, `key0`, `key2`, `key5`, `key6`, `key7`) is shown, with some keys (e.g., `key1`, `key0`) visually associated with specific servers based on their implied hash value and the modulo operation.  The text 'keover does not luppo full SVG ikey6' appears to be a corrupted or incomplete label associated with `key6`, suggesting a potential issue with the image's OCR.  The overall diagram illustrates a basic load balancing strategy where keys are distributed across servers using a consistent hashing algorithm to ensure even distribution and minimize data movement during rebalancing."
+            width="370" height="189" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 1
+    </figcaption>
+</figure>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    This approach works well when the size of the server pool is fixed, and the data distribution is even. However,
+    problems arise when new servers are added, or existing servers are removed. For example, if server 1 goes offline,
+    the size of the server pool becomes 3. Using the same hash function, we get the same hash value for a key. But
+    applying modular operation gives us different server indexes because the number of servers is reduced by 1. We get
+    the results as shown in Table 2 by applying <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>hash
+            % 3</i></em>:
+</p>
+<figure class="table">
+    <table
+        style="-webkit-text-stroke-width:0px;border-collapse:collapse;border-color:rgb(233, 233, 233);border-style:solid;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin-bottom:0px;margin-top:0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+        <thead
+            style="background-color:rgb(245, 245, 245);border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+            <tr
+                style="border-bottom:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <th
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;padding:10px;">
+                    <strong
+                        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">key</strong>
+                </th>
+                <th
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;padding:10px;">
+                    <strong
+                        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">hash</strong>
+                </th>
+                <th
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;padding:10px;">
+                    <strong
+                        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">hash
+                        % 3</strong>
+                </th>
+            </tr>
+        </thead>
+        <tbody
+            style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+            <tr
+                style="border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key0
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    18358617
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    0
+                </td>
+            </tr>
+            <tr
+                style="background-color:rgb(245, 245, 245);border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key1
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    26143584
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    0
+                </td>
+            </tr>
+            <tr
+                style="border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key2
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    18131146
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    1
+                </td>
+            </tr>
+            <tr
+                style="background-color:rgb(245, 245, 245);border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key3
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    35863496
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    2
+                </td>
+            </tr>
+            <tr
+                style="border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key4
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    34085809
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    1
+                </td>
+            </tr>
+            <tr
+                style="background-color:rgb(245, 245, 245);border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key5
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    27581703
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    0
+                </td>
+            </tr>
+            <tr
+                style="border-bottom:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key6
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    38164978
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    1
+                </td>
+            </tr>
+            <tr
+                style="background-color:rgb(245, 245, 245);border-bottom:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    key7
+                </td>
+                <td
+                    style="border-right:1px solid rgb(233, 233, 233);box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    22530351
+                </td>
+                <td
+                    style="border-right:medium none currentcolor;box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;line-height:24px;outline:none;padding:10px;">
+                    0
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</figure>
+<p class="tableCaption"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41) !important;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;margin-top:12px;orphans:2;outline:none;text-align:center !important;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;width:940px;word-spacing:0px;">
+    Table 2
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Figure 2 shows the new distribution of keys based on Table 2.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-2-25DSOGUM.svg"
+            alt="Image represents a simple consistent hashing scheme for distributing keys across three servers.  The top line shows the formula `serverIndex = hash % 3`, indicating that a key's hash value (modulo 3) determines its assigned server.  Below, 'Server Index' labels columns representing server indices 0, 1, and 2.  Corresponding to each index is a labeled server box ('server 0', 'server 1', 'server 2', and 'server 3' although only three are used in the hashing scheme).  The 'Keys' section lists example keys ('key0', 'key1', 'key2', 'key3', 'key4', 'key5', 'key6') which would be distributed across the servers based on their hash values.  For instance, `hash('key0') % 3` would likely result in 0, assigning `key0` to `server 0`, and similarly for other keys.  The visual arrangement shows a conceptual mapping of keys to servers using the modulo operation.  The presence of 'server 3' suggests potential future expansion beyond the current three-server setup."
+            width="370" height="229" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 2
+    </figcaption>
+</figure>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    As shown in Figure 2, most keys are redistributed, not just the ones originally stored in the offline server (server
+    1). This means that when server 1 goes offline, most cache clients will connect to the wrong servers to fetch data.
+    This causes a storm of cache misses. Consistent hashing is an effective technique to mitigate this problem.
+</p>
+<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="consistent-hashing">
+    <strong>Consistent hashing</strong>
+</h2>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Quoted from Wikipedia: "Consistent hashing is a special kind of hashing such that when a hash table is re-sized and
+    consistent hashing is used, only k/n keys need to be remapped on average, where k is the number of keys, and n is
+    the number of slots. In contrast, in most traditional hash tables, a change in the number of array slots causes
+    nearly all keys to be remapped [1]”.
+</p>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="hash-space-and-hash-ring">
+    <strong>Hash space and hash ring</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Now we understand the definition of consistent hashing, let us find out how it works. Assume SHA-1 is used as the
+    hash function f, and the output range of the hash function is: <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>x0,
+            x1, x2, x3, …, xn</i></em>. In cryptography, SHA-1’s hash space goes from 0 to 2^160 - 1. That means <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>x0</i></em>
+    corresponds to 0, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>xn</i></em>
+    corresponds to 2^160 – 1, and all the other hash values in the middle fall between 0 and 2^160 - 1. Figure 3 shows
+    the hash space.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-3-REYWWCBF.svg"
+            alt="Image represents a simplified diagram illustrating data processing or transformation.  A long, rectangular box, representing a system or process, is shown horizontally.  On the left, an arrow labeled 'x0' points downwards into the top of the box, indicating input data labeled 'x0' entering the system. On the right, an arrow labeled 'xn' points downwards into the top of the box from above, indicating output data labeled 'xn' exiting the system. The box itself contains the text 'Viewer does not support full SVG 1.1,' indicating that the original diagram was likely an SVG image that cannot be fully rendered by the current viewer.  The overall structure suggests a linear transformation where input 'x0' is processed within the system to produce output 'xn.'  No internal details of the processing within the box are visible."
+            width="500" height="59" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 3
+    </figcaption>
+</figure>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    By collecting both ends, we get a hash ring as shown in Figure 4:
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-4-IYSYQWO7.svg"
+            alt="Image represents a simplified diagram illustrating a circular buffer or ring buffer data structure.  The circle depicts the buffer itself, a fixed-size memory region used for storing data.  A short vertical line segment inside the circle represents the current write pointer, indicating the location where the next data element will be written.  Two arrows point to the top of this vertical line, labeled 'x0' and 'xn'.  'x0' likely indicates the starting address or index of the buffer, while 'xn' represents the current write index, showing the location where the next data element will be written.  The data flows into the buffer at 'xn', and as the buffer fills, 'xn' moves around the circle.  Once 'xn' reaches the end, it wraps around to the beginning, overwriting older data if the buffer is full.  The absence of a read pointer suggests a simplified representation focusing solely on the write operation. The text 'Viewer does not support full SVG 1.1' at the bottom is a browser-related message indicating the image rendering limitations and is not part of the data structure itself."
+            width="203" height="256" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 4
+    </figcaption>
+</figure>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="hash-servers">
+    <strong>Hash servers</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Using the same hash function f, we map servers based on server IP or name onto the ring. Figure 5 shows that 4
+    servers are mapped on the hash ring.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-5-4LOAYCHE.svg"
+            alt="Image represents a conceptual diagram illustrating a system of four servers (server 0, server 1, server 2, and server 3), each represented by a colored square on the left, and their arrangement in a ring topology.  The servers are also represented as nodes (s0, s1, s2, s3) in a circular gray line forming the ring.  Each node is color-coded to match its corresponding server label on the left.  A dark gray arrow points from the top to node s0, labeled 'f (server 0),' indicating a function or operation 'f' is performed on server 0.  The text 's0 = server 0...' to the right of the ring suggests that node s0 represents server 0 and potentially additional information associated with it.  The nodes are connected by the circular line, implying communication or data flow between them within the ring structure.  The bottom of the image contains a message indicating that the viewer does not support full SVG 1.1, which is likely a rendering issue unrelated to the core system representation."
+            width="587" height="362" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 5
+    </figcaption>
+</figure>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="hash-keys">
+    <strong>Hash keys</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    One thing worth mentioning is that hash function used here is different from the one in “the rehashing problem,” and
+    there is no modular operation. As shown in Figure 6, 4 cache keys (key0, key1, key2, and key3) are hashed onto the
+    hash ring
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-6-SDSBYUI6.svg"
+            alt="Image represents a circular arrangement of components depicting a system architecture.  A gray circle forms the backbone, upon which four colored nodes (s0, s1, s2, s3) are placed equidistantly. These nodes, labeled s0, s1, s2, and s3, represent servers, with their corresponding server numbers (server 0, server 1, server 2, server 3) listed in colored boxes to the left.  The colors of the server boxes match the colors of the corresponding nodes on the circle. Four black nodes (k0, k1, k2, k3) are also placed on the circle, interspersed between the colored server nodes.  These black nodes likely represent keys or other control points within the system.  A text annotation 's0 = server 0s1...' to the right indicates that the s0 node's label is shorthand for a more complex identifier potentially including other server instances.  The gray circle connecting all nodes suggests a ring topology or a cyclical dependency between the components. No explicit information flow is shown, but the arrangement implies interaction or communication between adjacent nodes along the circle."
+            width="587" height="336" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 6
+    </figcaption>
+</figure>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="server-lookup">
+    <strong>Server lookup</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    To determine which server a key is stored on, we go clockwise from the key position on the ring until a server is
+    found. Figure 7 explains this process. Going clockwise, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key0</i></em>
+    is stored on <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            0</i></em>; <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key1</i></em>
+    is stored on <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            1</i></em>; <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key2</i></em>
+    is stored on <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            2</i></em> and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key3</i></em>
+    is stored on <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            3</i></em>.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-7-OIUSEHJP.svg"
+            alt="Image represents a circular arrangement of nodes representing servers and keys, connected by a gray circular path.  Four colored nodes labeled `s0`, `s1`, `s2`, and `s3` represent servers, with `s0` (light purple) being explicitly identified as 'server 0s1...' suggesting it represents a composite of servers.  These server nodes are positioned along the outer edge of the circle. Four black nodes labeled `k0`, `k1`, `k2`, and `k3` represent keys and are located on the same circular path, but slightly inward from the server nodes.  Black arrows indicate the direction of information flow or connections.  `k0` connects to `s0`, `k3` connects to `s3`, `k2` connects to `s2`, and `k1` connects to `s1`.  A separate box on the left lists 'Servers' and shows four colored rectangles labeled 'server 0,' 'server 1,' 'server 2,' and 'server 3,' mirroring the colors of the corresponding server nodes in the circular diagram.  The overall structure suggests a ring topology with keys associated with each server, implying a system where keys control access to or interaction with the servers."
+            width="587" height="356" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 7
+    </figcaption>
+</figure>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="add-a-server">
+    <strong>Add a server</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Using the logic described above, adding a new server will only require redistribution of a fraction of keys.
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    In Figure 8, after a new <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            4</i></em> is added, only <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key0</i></em>
+    needs to be redistributed. <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>k1,
+            k2,</i></em> and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>k3</i></em>
+    remain on the same servers. Let us take a close look at the logic. Before <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            4</i></em> is added, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key0</i></em>
+    is stored on <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            0</i></em>. Now, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key0</i></em>
+    will be stored on <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            4</i></em> because <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            4</i></em> is the first server it encounters by going clockwise from <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key0</i></em>’s
+    position on the ring. The other keys are not redistributed based on consistent hashing algorithm.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-8-OBPLVFJF.svg"
+            alt="Image represents a circular arrangement of nodes representing servers and keys.  Five colored nodes labeled `s0`, `s1`, `s2`, `s3`, and `s4` represent servers 0 through 4 respectively, with their corresponding colors matching a legend on the left showing server labels and colors (purple, light blue, pink, orange, and green).  Five black nodes labeled `k0`, `k1`, `k2`, `k3`, and implicitly `k4` (though not explicitly labeled) represent keys.  A thick gray arc connects the server nodes in a circular fashion.  Solid arrows indicate a directed connection from `k0` to `s4` labeled 'keyo' and a dashed arrow shows a connection from `k0` to `s0`.  A text annotation states that `s0` represents server 0, server 1, and so on.  The keys are positioned between the servers, and the image suggests a relationship between keys and servers, possibly indicating ownership or access control.  The bottom of the image shows 'key2' indicating the label for key `k2`.  The text 'Viewer does not support full SVG 1.1' indicates a rendering issue."
+            width="587" height="403" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 8
+    </figcaption>
+</figure>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="remove-a-server">
+    <strong>Remove a server</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    When a server is removed, only a small fraction of keys require redistribution with consistent hashing. In Figure 9,
+    when <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            1</i></em> is removed, only <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>key1</i></em>
+    must be remapped to <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            2</i></em>. The rest of the keys are unaffected.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-9-NK63F2OI.svg"
+            alt="Image represents a circular arrangement of nodes connected by a gray arc, representing a ring topology.  Four colored nodes labeled `s0`, `s1`, `s2`, and `s3` are positioned along the outer arc, representing servers.  These server nodes are color-coded and correspond to a list of servers on the left: `s0` (light purple) corresponds to `server 0` (light purple box), `s1` (light blue) to `server 1` (light blue box), `s2` (pink) to `server 2` (pink box), and `s3` (light orange) to `server 3` (light orange box). Four black nodes labeled `k0`, `k1`, `k2`, and `k3` are interspersed between the server nodes along the same arc, likely representing keys or control points. A thick black curved arrow points from `k2` to `s2`, suggesting a unidirectional data flow or control mechanism.  The text 's0 = server 0s1...' indicates that the `s0` node's label is an abbreviation representing a sequence of servers. The bottom of the image contains a message indicating that the viewer does not fully support the SVG format used to create the diagram."
+            width="587" height="393" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 9
+    </figcaption>
+</figure>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="two-issues-in-the-basic-approach">
+    <strong>Two issues in the basic approach</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    The consistent hashing algorithm was introduced by Karger et al. at MIT [1]. The basic steps are:
+</p>
+<ul
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="e7b44643f0a0ad17468a7507fce203e24">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            Map servers and keys on to the ring using a uniformly distributed hash function.
+        </p>
+    </li>
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="e6bf8bc6fa5a774e3dbe14024a45b9e59">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            To find out which server a key is mapped to, go clockwise from the key position until the first server on
+            the ring is found.
+        </p>
+    </li>
+</ul>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Two problems are identified with this approach. First, it is impossible to keep the same size of partitions on the
+    ring for all servers considering a server can be added or removed. A partition is the hash space between adjacent
+    servers. It is possible that the size of the partitions on the ring assigned to each server is very small or fairly
+    large. In Figure 10, if <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s1</i></em>
+    is removed, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s2’s</i></em>
+    partition (highlighted with the bidirectional arrows) is twice as large as <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s0</i></em>
+    and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s3’s</i></em>
+    partition.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-10-FCDAIIM2.svg"
+            alt="Image represents a circular arrangement of four servers (s0, s1, s2, s3) depicted as colored circles, labeled with 's' followed by a number.  These servers are positioned along a grey circular path.  To the left, a vertical stack of colored rectangular boxes labeled 'Servers' lists 'server 0,' 'server 1,' 'server 2,' and 'server 3,' seemingly corresponding to the colored circles on the ring.  A bright pink curved arrow indicates data flow, starting from server s1, proceeding to server s2, and then continuing to server s0.  The text 's0 = server 0s1...' suggests that server s0's identity incorporates information from servers 0 and 1.  At the bottom, a message 'Viewer does not support full SVG 1.1' indicates a limitation in rendering the diagram's full visual detail."
+            width="617" height="342" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 10
+    </figcaption>
+</figure>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Second, it is possible to have a non-uniform key distribution on the ring. For instance, if servers are mapped to
+    positions listed in Figure 11, most of the keys are stored on <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            2</i></em>. However, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            1</i></em> and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            3</i></em> have no data.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-11-BZXRZPW7.svg"
+            alt="Image represents a circular arrangement of servers, depicted as a gray ring with colored nodes representing individual servers.  Four colored nodes, labeled `s0`, `s1`, `s2`, and `s3`, are positioned along the ring's circumference, each representing a specific server.  `s0` is light purple, `s1` is light blue, `s2` is pink, and `s3` is light orange.  A text annotation next to `s0` clarifies that `s0` corresponds to `server 0s1...`, suggesting a naming convention.  Between the colored nodes are four uncolored, white circles along the ring, indicating potential additional server locations or connection points.  To the left of the circular arrangement, a vertical list displays four rectangular boxes, each labeled `server 0`, `server 1`, `server 2`, and `server 3`, respectively, mirroring the color scheme of the nodes on the ring and providing a key to their identification.  The bottom of the image contains a message indicating that the viewer does not support full SVG 1.1.  The overall diagram suggests a ring topology or a distributed system where servers are interconnected in a circular fashion."
+            width="549" height="327" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 11
+    </figcaption>
+</figure>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    A technique called virtual nodes or replicas is used to solve these problems.
+</p>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="virtual-nodes">
+    <strong>Virtual nodes</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    A virtual node refers to the real node, and each server is represented by multiple virtual nodes on the ring. In
+    Figure 12, both <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            0</i></em> and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            1</i></em> have 3 virtual nodes. The 3 is arbitrarily chosen; and in real-world systems, the number of
+    virtual nodes is much larger. Instead of using <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s0</i></em>,
+    we have <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s0_0,
+            s0_1</i></em>, and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s0_2</i></em>
+    to represent <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            0</i></em> on the ring. Similarly, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s1_0,
+            s1_1</i></em>, and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s1_2</i></em>
+    represent server 1 on the ring. With virtual nodes, each server is responsible for multiple partitions. Partitions
+    (edges) with label <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s0</i></em>
+    are managed by server 0. On the other hand, partitions with label <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s1</i></em>
+    are managed by <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            1</i></em>.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-12-JS3PL6KQ.svg"
+            alt="Image represents a system architecture diagram illustrating data flow between two servers (labeled 'server 0' and 'server 1') using a ring topology.  The diagram shows a circular arrangement of nodes, with four nodes colored purple (labeled `s0_0`, `s0_1`, `s0_2`, representing server 0's data) and four nodes colored light blue (`s1_0`, `s1_1`, `s1_2`, representing server 1's data).  A thick dark gray line connects these nodes in a circular fashion, representing the main data pathway.  Thinner lines, colored light purple and light blue, depict data transfer between specific nodes.  Light purple lines (labeled `s0`) represent data flow originating from server 0, while light blue lines (labeled `s1`) represent data flow from server 1.  For example, a light purple line connects `s0_2` to `s1_2`, indicating data transfer from server 0's second data point to server 1's second data point.  Similarly, a light blue line connects `s1_0` to `s0_0`, showing data transfer in the opposite direction.  The text 's0 = server 0s1...' suggests that the `s0` labels represent a composite data identifier combining data from both servers.  A note at the bottom indicates that the viewer does not fully support the SVG format used in the diagram."
+            width="557" height="383" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 12
+    </figcaption>
+</figure>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    To find which server a key is stored on, we go clockwise from the key’s location and find the first virtual node
+    encountered on the ring. In Figure 13, to find out which server <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>k0</i></em>
+    is stored on, we go clockwise from <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>k0</i></em>’s
+    location and find virtual node <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s1_1</i></em>,
+    which refers to <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            1</i></em>.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-13-EH76K4PV.svg"
+            alt="Image represents a system architecture diagram showing two servers, labeled 'server 0' (purple) and 'server 1' (cyan), and their interaction with a ring-shaped network.  The ring consists of six nodes:  three labeled `s0_0`, `s0_1`, `s0_2` (purple) representing instances on server 0, and three labeled `s1_0`, `s1_1`, `s1_2` (cyan) representing instances on server 1.  These nodes are arranged around a grey circular line, indicating a ring topology.  A separate black node, labeled `k0`, is connected to the ring and has a self-looping arrow pointing back to itself, suggesting a control or coordination function.  A text annotation near the top right clarifies that `s0` represents server 0 instances (`0s1...`), implying a naming convention.  The bottom of the diagram displays a message indicating that the viewer does not fully support the SVG format used to create the image."
+            width="557" height="336" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 13
+    </figcaption>
+</figure>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    As the number of virtual nodes increases, the distribution of keys becomes more balanced. This is because the
+    standard deviation gets smaller with more virtual nodes, leading to balanced data distribution. Standard deviation
+    measures how data are spread out. The outcome of an experiment carried out by online research [2] shows that with
+    one or two hundred virtual nodes, the standard deviation is between 5% (200 virtual nodes) and 10% (100 virtual
+    nodes) of the mean. The standard deviation will be smaller when we increase the number of virtual nodes. However,
+    more spaces are needed to store data about virtual nodes. This is a tradeoff, and we can tune the number of virtual
+    nodes to fit our system requirements.
+</p>
+<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="find-affected-keys">
+    <strong>Find affected keys</strong>
+</h3>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    When a server is added or removed, a fraction of data needs to be redistributed. How can we find the affected range
+    to redistribute the keys?
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    In Figure 14, <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>server
+            4</i></em> is added onto the ring. The affected range starts from <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s4</i></em>
+    (newly added node) and moves anticlockwise around the ring until a server is found (<em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s3</i></em>).
+    Thus, keys located between <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s3</i></em>
+    and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s4</i></em>
+    need to be redistributed to <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s4</i></em>.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-14-HZNKA3J3.svg"
+            alt="Image represents a circular arrangement of nodes representing servers and keys.  Five colored nodes labeled `s0`, `s1`, `s2`, `s3`, and `s4` represent servers 0 through 4 respectively, with their corresponding colors matching a legend of rectangular server boxes on the left.  Five black nodes labeled `k0`, `k1`, `k2`, `k3`, and implicitly `k4` (though not explicitly labeled) represent keys.  A thick gray arc connects the server nodes in a circular fashion.  Solid arrows indicate a directed connection from `k0` to `s4` labeled 'keyo' and a dashed arrow shows a connection from `k0` to `s0`.  Another dashed arrow shows a connection from `s4` to `s0`. The text 's0 = server 0s1...' indicates that `s0` represents a composite or aggregated server.  The keys are positioned between the servers along the gray arc.  The overall structure suggests a ring topology with keys potentially acting as routing or access points between servers."
+            width="587" height="403" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 14
+    </figcaption>
+</figure>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    When a server (<em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s1</i></em>)
+    is removed as shown in Figure 15, the affected range starts from <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s1</i></em>
+    (removed node) and moves anticlockwise around the ring until a server is found (<em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s0</i></em>).
+    Thus, keys located between <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s0</i></em>
+    and <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s1</i></em>
+    must be redistributed to <em
+        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>s2</i></em>.
+</p>
+<figure class="py-1"
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <div
+        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
+        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
+            src="https://bytebytego.com/images/courses/system-design-interview/design-consistent-hashing/figure-5-15-PNWYOYZO.svg"
+            alt="Image represents a circular arrangement of nodes connected by a gray arc, representing a ring topology.  Four colored nodes labeled `s0`, `s1`, `s2`, and `s3` are positioned along the outer arc, representing servers.  `s0` is light purple, `s1` is light blue, `s2` is pink, and `s3` is light orange.  These server nodes are further identified by a text annotation stating `s0 = server 0s1...`, implying a naming convention. Four black-filled nodes labeled `k0`, `k1`, `k2`, and `k3` are placed at the intersections of the gray arc and the imaginary radii connecting the colored server nodes to the center. These `k` nodes likely represent key components or points within the system. A thick black curved arrow points from `k2` to `s2`, suggesting a unidirectional flow or dependency.  To the left, a rectangular box labeled 'Servers' lists four colored rectangles representing servers 0, 1, 2, and 3, mirroring the colors of the `s` nodes in the ring.  The bottom of the image contains a message indicating that the viewer does not fully support the SVG format used to create the diagram."
+            width="587" height="393" loading="lazy" decoding="async" data-nimg="1">
+    </div>
+    <figcaption class="py-1"
+        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
+        Figure 15
+    </figcaption>
+</figure>
+<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="wrap-up">
+    <strong>Wrap up</strong>
+</h2>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    In this chapter, we had an in-depth discussion about consistent hashing, including why it is needed and how it
+    works. The benefits of consistent hashing include:
+</p>
+<ul
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="e08ef0626037e93a00285211e64f1e1b4">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            Minimized keys are redistributed when servers are added or removed.
+        </p>
+    </li>
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="e777cc652470c4cb6b968ce71d3704dbe">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            It is easy to scale horizontally because data are more evenly distributed.
+        </p>
+    </li>
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="eb182035390dd451be6fd32ab0b14e23a">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            Mitigate hotspot key problem. Excessive access to a specific shard could cause server overload. Imagine data
+            for Katy Perry, Justin Bieber, and Lady Gaga all end up on the same shard. Consistent hashing helps to
+            mitigate the problem by distributing the data more evenly.
+        </p>
+    </li>
+</ul>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Consistent hashing is widely used in real-world systems, including some notable ones:
+</p>
+<ul
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="e46669b74bc4236ef1aee4849160bea08">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            Partitioning component of Amazon’s Dynamo database [3]
+        </p>
+    </li>
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="e65f44b320ea6a6bd5c54086632211de7">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            Data partitioning across the cluster in Apache Cassandra [4]
+        </p>
+    </li>
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="eb79d700622fae6f917ed58ac03123ca8">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            Discord chat application [5]
+        </p>
+    </li>
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="e50959d28d2af4b17410b59061d561b3a">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            Akamai content delivery network [6]
+        </p>
+    </li>
+    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
+        data-list-item-id="eefbf20f5b758b848700e6aaf780d03db">
+        <p
+            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
+            Maglev network load balancer [7]
+        </p>
+    </li>
+</ul>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    Congratulations on getting this far! Now give yourself a pat on the back. Good job!
+</p>
+<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
+    id="reference-materials">
+    <strong>Reference materials</strong>
+</h2>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    [1] Consistent hashing:<br>
+    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
+        target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Consistent_hashing"><u
+            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://en.wikipedia.org/wiki/Consistent_hashing</u></a>
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    [2] Consistent Hashing:<br>
+    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
+        target="_blank" rel="noopener noreferrer" href="https://tom-e-white.com/2007/11/consistent-hashing.html"><u
+            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://tom-e-white.com/2007/11/consistent-hashing.html</u></a>
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    [3] Dynamo: Amazon’s Highly Available Key-value Store:<br>
+    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
+        target="_blank" rel="noopener noreferrer"
+        href="https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"><u
+            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf</u></a>
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    [4] Cassandra - A Decentralized Structured Storage System:<br>
+    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
+        target="_blank" rel="noopener noreferrer"
+        href="http://www.cs.cornell.edu/Projects/ladis2009/papers/Lakshman-ladis2009.PDF"><u
+            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">http://www.cs.cornell.edu/Projects/ladis2009/papers/Lakshman-ladis2009.PDF</u></a>
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    [5] How Discord Scaled Elixir to 5,000,000 Concurrent Users:<br>
+    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
+        target="_blank" rel="noopener noreferrer"
+        href="https://discord.com/blog/how-discord-scaled-elixir-to-5-000-000-concurrent-users"><u
+            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://discord.com/blog/how-discord-scaled-elixir-to-5-000-000-concurrent-users</u></a>
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    [6] CS168: The Modern Algorithmic Toolbox Lecture #1: Introduction and Consistent Hashing:<br>
+    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
+        target="_blank" rel="noopener noreferrer" href="http://theory.stanford.edu/~tim/s16/l/l1.pdf"><u
+            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">http://theory.stanford.edu/~tim/s16/l/l1.pdf</u></a>
+</p>
+<p
+    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin:0px;orphans:2;outline:none;text-align:left !important;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
+    [7] Maglev: A Fast and Reliable Software Network Load Balancer:<br>
+    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
+        target="_blank" rel="noopener noreferrer"
+        href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/44824.pdf"><u
+            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/44824.pdf</u></a>
+</p>

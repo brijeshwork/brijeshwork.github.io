@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel</title>
-    <link rel="canonical" href="https://brijesh.work/tutorial/javascript/ajax/" />
-    <meta name="description" content="Brijesh Patel PHP Developer | Magento | Laravel">
+    <title>JavaScript JSON Tutorial - Introduction, Syntax, Parse & Stringify | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/tutorial/javascript/json/" />
+    <meta name="description" content="Complete JavaScript JSON tutorial. Learn what JSON is, JSON syntax, JSON stringify, JSON parse, JSON vs XML, and how to work with JSON arrays and objects.">
     <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
@@ -28,11 +28,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
-    <meta property="og:description" content="Brijesh Patel PHP Developer | Magento | Laravel" />
-    <meta property="og:url" content="https://brijesh.work/tutorial/mysql/" />
+    <meta property="og:title" content="JavaScript JSON Tutorial - Introduction, Syntax, Parse & Stringify | Brijesh Patel" />
+    <meta property="og:description" content="Complete JavaScript JSON tutorial. Learn what JSON is, JSON syntax, JSON stringify, JSON parse, JSON vs XML, and how to work with JSON arrays and objects." />
+    <meta property="og:url" content="https://brijesh.work/tutorial/javascript/json/" />
     <meta property="og:site_name" content="Brijesh Patel" />
-    <meta property="og:image" content="https://brijesh.work/tutorial/mysql/" />
+    <meta property="og:image" content="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png" />
     <meta property="og:image:width" content="960" />
     <meta property="og:image:height" content="640" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -55,7 +55,8 @@
 
                 <h1>JSON - Introduction</h1>
                 <p>JSON stands for <strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject
-                    <strong>N</strong>otation</p>
+                    <strong>N</strong>otation
+                </p>
                 <p>JSON is a <strong>text format</strong> for storing and transporting data</p>
                 <p>JSON is "self-describing" and easy to understand</p>
                 <h2>JSON Example</h2>
@@ -78,7 +79,8 @@
                 <h2>What is JSON?</h2>
                 <ul>
                     <li>JSON stands for <strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject
-                        <strong>N</strong>otation</li>
+                        <strong>N</strong>otation
+                    </li>
                     <li>JSON is a lightweight data-interchange format</li>
                     <li>JSON is plain text written in JavaScript object notation</li>
                     <li>JSON is used to send data between computers</li>
@@ -402,7 +404,8 @@
                         rel="noopener">Try it Yourself &raquo;</a>
                 </div>
                 <p>Or, you can use the second parameter, of the <code>JSON.parse()</code> function, called
-                    <em>reviver</em>.</p>
+                    <em>reviver</em>.
+                </p>
                 <p>The <em>reviver</em> parameter is a function that checks each property, before returning the value.
                 </p>
                 <div>
@@ -524,7 +527,8 @@
                         rel="noopener">Try it Yourself &raquo;</a>
                 </div>
                 <p>This can be omitted if you convert your functions into strings before running the
-                    <code>JSON.stringify()</code> function.</p>
+                    <code>JSON.stringify()</code> function.
+                </p>
                 <div>
                     <h3>Example</h3>
                     <div>const obj = {name: "John", age: function () {return 30;}, city: "New York"};<br />obj.age =
@@ -901,9 +905,9 @@
                         rel="noopener">Try it Yourself &raquo;</a>
                 </div>
                 <hr />
-        <h2>Dynamic HTML Table</h2>
-        <p>Make the HTML table based on the value of a drop down menu: <select id="myselect" aria-label="Choose dataset" 
-            onchange="change_myselect(this.value)">
+                <h2>Dynamic HTML Table</h2>
+                <p>Make the HTML table based on the value of a drop down menu: <select id="myselect"
+                        aria-label="Choose dataset" onchange="change_myselect(this.value)">
                         <option value="">Choose an option:</option>
                         <option value="customers">Customers</option>
                         <option value="products">Products</option>
@@ -957,7 +961,8 @@
                 <p>Requesting a file from another domain can cause problems, due to cross-domain policy.</p>
                 <p>Requesting an external <em>script</em> from another domain does not have this problem.</p>
                 <p>JSONP uses this advantage, and request files using the script tag instead of the
-                    <code>XMLHttpRequest</code> object.</p>
+                    <code>XMLHttpRequest</code> object.
+                </p>
                 <div>
                     <div>&lt;script src="demo_jsonp.php"&gt;</div>
                 </div>

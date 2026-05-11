@@ -1,10 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>REST API Development Guide | Brijesh Patel</title>
-    <meta name="description" content="A complete guide to REST API development, covering key concepts, HTTP methods, design principles, and implementation steps.">
+    <meta name="description"
+        content="A complete guide to REST API development, covering key concepts, HTTP methods, design principles, and implementation steps.">
+    <link rel="canonical" href="https://brijesh.work/tutorial/api/development/" />
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="REST API Development Guide | Brijesh Patel" />
+    <meta property="og:description"
+        content="A complete guide to REST API development, covering key concepts, HTTP methods, design principles, and implementation steps." />
+    <meta property="og:url" content="https://brijesh.work/tutorial/api/development/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png" />
+    <meta property="og:image:width" content="192" />
+    <meta property="og:image:height" content="192" />
+    <meta property="og:image:type" content="image/png" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:title" content="REST API Development Guide | Brijesh Patel" />
+    <meta name="twitter:description"
+        content="A complete guide to REST API development, covering key concepts, HTTP methods, design principles, and implementation steps." />
+    <meta name="twitter:image" content="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png" />
 
     <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
     <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
@@ -12,36 +54,44 @@
 
     <style>
         .section-bg {
-            background-color: #f8f9fa; /* Light gray background */
+            background-color: #f8f9fa;
+            /* Light gray background */
             padding: 20px;
             border-radius: 5px;
             margin-bottom: 15px;
         }
+
         .code-block {
-            background-color: #e9ecef; /* Slightly darker gray for code blocks */
+            background-color: #e9ecef;
+            /* Slightly darker gray for code blocks */
             padding: 10px;
             border-radius: 5px;
-            overflow-x: auto; /* Enable horizontal scrolling for long code lines */
+            overflow-x: auto;
+            /* Enable horizontal scrolling for long code lines */
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #dee2e6;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
-        
+
         .content-wrapper {
             display: flex;
             gap: 30px;
             position: relative;
         }
-        
+
         .sidebar {
             width: 300px;
             position: sticky;
@@ -52,21 +102,22 @@
             background: #fff;
             border-right: 1px solid #dee2e6;
         }
-        
+
         .main-content {
             flex: 1;
             max-width: calc(100% - 330px);
         }
-        
-        .sidebar ul, .sidebar ol {
+
+        .sidebar ul,
+        .sidebar ol {
             list-style: none;
             padding-left: 0;
         }
-        
+
         .sidebar li {
             margin-bottom: 10px;
         }
-        
+
         .sidebar a {
             color: #333;
             text-decoration: none;
@@ -74,164 +125,176 @@
             padding: 5px 10px;
             border-radius: 4px;
         }
-        
+
         .sidebar a:hover {
             background: #f0f0f0;
             color: #007bff;
         }
-        
+
         .sidebar ul ul {
             padding-left: 20px;
             margin-top: 5px;
         }
-        
+
         /* Add smooth scrolling */
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 20px;
         }
+
         .sidebar {
-      background-color: #f8f9fa;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 20px 25px;
-      max-width: 350px;
-      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    }
-    
-    .sidebar h2 {
-      color: #2c3e50;
-      font-size: 1.5rem;
-      margin-top: 0;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #3498db;
-    }
-    
-    .sidebar ol {
-      counter-reset: section;
-      list-style-type: none;
-      padding-left: 0;
-      margin-top: 0;
-    }
-    
-    .sidebar ol > li {
-      position: relative;
-      padding-left: 25px;
-      margin-bottom: 12px;
-      counter-increment: section;
-      font-weight: 500;
-    }
-    
-    .sidebar ol > li::before {
-      content: counter(section) ".";
-      position: absolute;
-      left: 0;
-      color: #3498db;
-      font-weight: 600;
-    }
-    
-    .sidebar ul {
-      list-style-type: none;
-      padding-left: 25px;
-      margin-top: 8px;
-      margin-bottom: 5px;
-    }
-    
-    .sidebar ul > li {
-      margin-bottom: 8px;
-      font-weight: normal;
-      position: relative;
-      padding-left: 15px;
-    }
-    
-    .sidebar ul > li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: #3498db;
-    }
-    
-    .sidebar a {
-      color: #34495e;
-      text-decoration: none;
-      transition: color 0.2s;
-      display: inline-block;
-      line-height: 1.4;
-    }
-    
-    .sidebar a:hover {
-      color: #3498db;
-      text-decoration: underline;
-    }
-    
-    @media (max-width: 768px) {
-      .sidebar {
-        max-width: 100%;
-      }
-    }
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px 25px;
+            max-width: 350px;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
 
-       
-       
+        .sidebar h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
 
-           
-        
+        .sidebar ol {
+            counter-reset: section;
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 0;
+        }
+
+        .sidebar ol>li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            counter-increment: section;
+            font-weight: 500;
+        }
+
+        .sidebar ol>li::before {
+            content: counter(section) ".";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding-left: 25px;
+            margin-top: 8px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar ul>li {
+            margin-bottom: 8px;
+            font-weight: normal;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .sidebar ul>li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+        }
+
+        .sidebar a {
+            color: #34495e;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: inline-block;
+            line-height: 1.4;
+        }
+
+        .sidebar a:hover {
+            color: #3498db;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
     <header>
-    <div class="container">
-        <nav>
-          <ul>
-            <li>
-              <p>
-                <a style="padding:0;margin: 0;color: #ffffff;" href="https://brijesh.work/">
-                  <img style="width:40px;" src="https://brijesh.work/pub/media/img/brijesh-work-logo.png" alt="Brijesh Work Logo">
-                </a> 
-              </p>
-            </li>
-            <li><p><a  target="_blank" href="https://twitter.com/brijeshwork/" rel="noopener nofollow"><img align="left" alt="Brijesh Patel Twitter" width="28px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg" style="max-width: 100%;"></a></p></li>
-            <li><p><a  target="_blank" href="https://www.linkedin.com/in/brijeshwork/" rel="noopener nofollow"><img align="left" alt="Brijesh Patel LinkedIn" width="28px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" style="max-width: 100%;"></a></p></li>
-            <li><p><a  target="_blank" href="https://github.com/brijeshwork/" rel="noopener nofollow"><img align="left" alt="Brijesh Patel Github" width="28px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" style="max-width: 100%;"></a></p></li>
-            <li class="pullRight"><a href="https://brijesh.work/about/"> About</a></li>
-            <li class="pullRight"><a href="https://brijesh.work/portfolio/">Work</a></li>
-            <li class="pullRight"><a href="https://brijesh.work/service/">Service</a></li>
-          </ul>
-        </nav>
-      </div>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li>
+                        <p>
+                            <a style="padding:0;margin: 0;color: #ffffff;" href="https://brijesh.work/">
+                                <img style="width:40px;" src="https://brijesh.work/pub/media/img/brijesh-work-logo.png"
+                                    alt="Brijesh Work Logo">
+                            </a>
+                        </p>
+                    </li>
+                    <li>
+                        <p><a target="_blank" href="https://twitter.com/brijeshwork/" rel="noopener nofollow"><img
+                                    align="left" alt="Brijesh Patel Twitter" width="28px"
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg"
+                                    style="max-width: 100%;"></a></p>
+                    </li>
+                    <li>
+                        <p><a target="_blank" href="https://www.linkedin.com/in/brijeshwork/"
+                                rel="noopener nofollow"><img align="left" alt="Brijesh Patel LinkedIn" width="28px"
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg"
+                                    style="max-width: 100%;"></a></p>
+                    </li>
+                    <li>
+                        <p><a target="_blank" href="https://github.com/brijeshwork/" rel="noopener nofollow"><img
+                                    align="left" alt="Brijesh Patel Github" width="28px"
+                                    src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg"
+                                    style="max-width: 100%;"></a></p>
+                    </li>
+                    <li class="pullRight"><a href="https://brijesh.work/about/"> About</a></li>
+                    <li class="pullRight"><a href="https://brijesh.work/portfolio/">Work</a></li>
+                    <li class="pullRight"><a href="https://brijesh.work/service/">Service</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <div class="container mt-5">
         <div class="content-wrapper">
             <!-- Sidebar with Table of Contents -->
             <div class="sidebar">
-    <h2>Table of Contents</h2>
-    <ol>
-      <li><a href="#what-is-rest">What is a REST API?</a></li>
-      <li><a href="#key-features">Key Features of REST API</a></li>
-      <li><a href="#http-methods">HTTP Methods in REST API</a>
-        <ul>
-          <li><a href="#get-method">GET - Retrieve Data</a></li>
-          <li><a href="#post-method">POST - Create New Resource</a></li>
-          <li><a href="#put-method">PUT - Update Resource</a></li>
-          <li><a href="#patch-method">PATCH - Partial Update</a></li>
-          <li><a href="#delete-method">DELETE - Remove Resource</a></li>
-        </ul>
-      </li>
-      <li><a href="#less-common-methods">Less Common HTTP Methods</a></li>
-      <li><a href="#best-practices">Best Practices for API Design</a></li>
-      <li><a href="#authentication">Authentication</a></li>
-      <li><a href="#caching">REST API Caching Strategies</a></li>
-      <li><a href="#headers">HTTP Headers: A Deep Dive</a></li>
-      <li><a href="#development-steps">Steps to Develop a REST API</a></li>
-      <li><a href="#security">Security</a></li>
-      <li><a href="#documentation">Documentation</a></li>
-      <li><a href="#testing">Testing</a></li>
-      <li><a href="#versioning">Versioning</a></li>
-      <li><a href="#deployment">Deployment</a></li>
-      <li><a href="#frameworks">Frameworks</a></li>
-    </ol>
-  </div>
+                <h2>Table of Contents</h2>
+                <ol>
+                    <li><a href="#what-is-rest">What is a REST API?</a></li>
+                    <li><a href="#key-features">Key Features of REST API</a></li>
+                    <li><a href="#http-methods">HTTP Methods in REST API</a>
+                        <ul>
+                            <li><a href="#get-method">GET - Retrieve Data</a></li>
+                            <li><a href="#post-method">POST - Create New Resource</a></li>
+                            <li><a href="#put-method">PUT - Update Resource</a></li>
+                            <li><a href="#patch-method">PATCH - Partial Update</a></li>
+                            <li><a href="#delete-method">DELETE - Remove Resource</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#less-common-methods">Less Common HTTP Methods</a></li>
+                    <li><a href="#best-practices">Best Practices for API Design</a></li>
+                    <li><a href="#authentication">Authentication</a></li>
+                    <li><a href="#caching">REST API Caching Strategies</a></li>
+                    <li><a href="#headers">HTTP Headers: A Deep Dive</a></li>
+                    <li><a href="#development-steps">Steps to Develop a REST API</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#documentation">Documentation</a></li>
+                    <li><a href="#testing">Testing</a></li>
+                    <li><a href="#versioning">Versioning</a></li>
+                    <li><a href="#deployment">Deployment</a></li>
+                    <li><a href="#frameworks">Frameworks</a></li>
+                </ol>
+            </div>
 
             <!-- Main Content -->
             <div class="main-content">
@@ -239,7 +302,8 @@
 
                 <section id="what-is-rest" class="mb-5 section-bg">
                     <h2>1. What is a REST API?</h2>
-                    <p><b>REST (Representational State Transfer)</b> is an architectural style for networked applications using <b>stateless communication</b>.</p>
+                    <p><b>REST (Representational State Transfer)</b> is an architectural style for networked
+                        applications using <b>stateless communication</b>.</p>
                     <h3>Key Aspects:</h3>
                     <ul>
                         <li>Works over <b>HTTP/HTTPS</b>.</li>
@@ -744,7 +808,8 @@ DELETE /users/123 ✔️</code></pre>
 
                 <section id="complete-example" class="mb-5 section-bg">
                     <h2>Complete API Example</h2>
-                    <p>Below is a complete working example of a RESTful API with all CRUD operations and proper error handling:</p>
+                    <p>Below is a complete working example of a RESTful API with all CRUD operations and proper error
+                        handling:</p>
 
                     <h3>1. Database Structure</h3>
                     <div class="code-block">
@@ -933,7 +998,7 @@ function validateInput($input) {
 
                     <h3>3. How to Use</h3>
                     <p>Here are examples of how to interact with the API using cURL:</p>
-                    
+
                     <h4>Get All Items</h4>
                     <div class="code-block">
                         <pre><code class="bash">curl -X GET http://your-domain.com/api.php</code></pre>
@@ -1184,25 +1249,25 @@ curl -X DELETE http://your-domain.com/api.php/1</code></pre>
 
                 <section id="key-methods" class="mb-5 section-bg">
                     <h2>🚀 Key Methods</h3>
-                    <h3>1️⃣ API Keys</h3>
-                    <h4>🔧 How It Works</h4>
-                    <p>Unique token in each request.</p>
-                    <h4>✅ Example</h4>
-                    <div class="code-block">
-                        <pre><code class="http">GET /api/v1/users
+                        <h3>1️⃣ API Keys</h3>
+                        <h4>🔧 How It Works</h4>
+                        <p>Unique token in each request.</p>
+                        <h4>✅ Example</h4>
+                        <div class="code-block">
+                            <pre><code class="http">GET /api/v1/users
 Headers:
     Authorization: ApiKey xyz1234securetoken</code></pre>
-                    </div>
-                    <h4>📌 Suitable For</h4>
-                    <ul>
-                        <li>Internal services.</li>
-                        <li>Low-security APIs.</li>
-                    </ul>
-                    <h4>⚠️ Limitations</h4>
-                    <ul>
-                        <li>No identity context.</li>
-                        <li>Vulnerable to leaks.</li>
-                    </ul>
+                        </div>
+                        <h4>📌 Suitable For</h4>
+                        <ul>
+                            <li>Internal services.</li>
+                            <li>Low-security APIs.</li>
+                        </ul>
+                        <h4>⚠️ Limitations</h4>
+                        <ul>
+                            <li>No identity context.</li>
+                            <li>Vulnerable to leaks.</li>
+                        </ul>
                 </section>
 
                 <section id="jwt" class="mb-5 section-bg">
@@ -1420,7 +1485,8 @@ Headers:
 
                 <section id="security" class="mb-5 section-bg">
                     <h2>12. Security</h2>
-                    <p class="lead">Security is a critical aspect of API development. Here are essential security best practices to protect your API from common vulnerabilities.</p>
+                    <p class="lead">Security is a critical aspect of API development. Here are essential security best
+                        practices to protect your API from common vulnerabilities.</p>
 
                     <h3>12.1 Input Validation</h3>
                     <p>Always validate all incoming data to prevent <b>injection attacks</b>.</p>
@@ -1621,7 +1687,8 @@ if ($requests > 100) {
 
                 <section id="introduction" class="mb-5 section-bg">
                     <h2>Introduction</h2>
-                    <p><b>HTTP headers</b> ensure <b>efficient communication</b>, <b>strong security</b>, and <b>better user experience</b> in web development.</p>
+                    <p><b>HTTP headers</b> ensure <b>efficient communication</b>, <b>strong security</b>, and <b>better
+                            user experience</b> in web development.</p>
                 </section>
 
                 <section id="what-are-headers" class="mb-5 section-bg">
@@ -1666,12 +1733,12 @@ if ($requests > 100) {
 
                 <section id="cache-control" class="mb-5 section-bg">
                     <h2>3️⃣ Cache-Control</h3>
-                    <h3>Purpose</h3>
-                    <p>Controls caching.</p>
-                    <h3>Example</h3>
-                    <div class="code-block">
-                        <pre><code class="http">Cache-Control: max-age=3600</code></pre>
-                    </div>
+                        <h3>Purpose</h3>
+                        <p>Controls caching.</p>
+                        <h3>Example</h3>
+                        <div class="code-block">
+                            <pre><code class="http">Cache-Control: max-age=3600</code></pre>
+                        </div>
                 </section>
 
                 <section id="set-cookie" class="mb-5 section-bg">
@@ -1966,12 +2033,12 @@ return $data;</code></pre>
 ETag: "v1.0"</code></pre>
                     </div>
                     <p>2. Later request:</p>
-                     <div class="code-block">
+                    <div class="code-block">
                         <pre><code class="http">GET /profile/123
 If-None-Match: "v1.0"</code></pre>
                     </div>
                     <p>3. If data unchanged:</p>
-                     <div class="code-block">
+                    <div class="code-block">
                         <pre><code class="http">304 Not Modified</code></pre>
                     </div>
                 </section>
@@ -2025,33 +2092,33 @@ If-None-Match: "v1.0"</code></pre>
                 </section>
 
                 <section id="choosing-strategy" class="mb-5 section-bg"></section>
-                    <h2>🎯 Choosing Strategy</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Requirement</th>
-                                <th>Best Fit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Speeding up static data</td>
-                                <td>Client-Side Cache</td>
-                            </tr>
-                            <tr>
-                                <td>Global caching</td>
-                                <td>CDN</td>
-                            </tr>
-                            <tr>
-                                <td>Speeding up dynamic data</td>
-                                <td>Application Cache</td>
-                            </tr>
-                            <tr>
-                                <td>Flexible caching</td>
-                                <td>HTTP Headers</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <h2>🎯 Choosing Strategy</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Requirement</th>
+                            <th>Best Fit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Speeding up static data</td>
+                            <td>Client-Side Cache</td>
+                        </tr>
+                        <tr>
+                            <td>Global caching</td>
+                            <td>CDN</td>
+                        </tr>
+                        <tr>
+                            <td>Speeding up dynamic data</td>
+                            <td>Application Cache</td>
+                        </tr>
+                        <tr>
+                            <td>Flexible caching</td>
+                            <td>HTTP Headers</td>
+                        </tr>
+                    </tbody>
+                </table>
                 </section>
 
                 <section id="best-practices-caching" class="mb-5 section-bg">
@@ -2109,61 +2176,72 @@ If-None-Match: "v1.0"</code></pre>
     <footer>
         <div class="container-fix border-bottom" style="background-color:#fbfbfb;padding:5px 0;">
             <div class="container">
-              <div class="row">
-                <div class="col-lg-12">
-                  <h1 style="font-size:80px;color: var(--color-primary);">Turn your brand <br /> into a great one.</h1>
-                  <a  rel="noopener nofollow" target="_blank" class="button hireme-btn" href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91">Start a project &nbsp;<svg width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M5 13h11.86l-3.63 4.36a1 1 0 0 0 1.54 1.28l5-6a1.19 1.19 0 0 0 .09-.15c0-.05.05-.08.07-.13A1 1 0 0 0 20 12a1 1 0 0 0-.07-.36c0-.05-.05-.08-.07-.13a1.19 1.19 0 0 0-.09-.15l-5-6A1 1 0 0 0 14 5a1 1 0 0 0-.64.23 1 1 0 0 0-.13 1.41L16.86 11H5a1 1 0 0 0 0 2z" data-name="arrow-forward"/></g></svg></a>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 style="font-size:80px;color: var(--color-primary);">Turn your brand <br /> into a great one.
+                        </h1>
+                        <a rel="noopener nofollow" target="_blank" class="button hireme-btn"
+                            href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91">Start a project &nbsp;<svg
+                                width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <g data-name="Layer 2">
+                                    <path
+                                        d="M5 13h11.86l-3.63 4.36a1 1 0 0 0 1.54 1.28l5-6a1.19 1.19 0 0 0 .09-.15c0-.05.05-.08.07-.13A1 1 0 0 0 20 12a1 1 0 0 0-.07-.36c0-.05-.05-.08-.07-.13a1.19 1.19 0 0 0-.09-.15l-5-6A1 1 0 0 0 14 5a1 1 0 0 0-.64.23 1 1 0 0 0-.13 1.41L16.86 11H5a1 1 0 0 0 0 2z"
+                                        data-name="arrow-forward" />
+                                </g>
+                            </svg></a>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="container-fix border-bottom" style="background-color:#fbfbfb;padding:5px 0;">
+        </div>
+        <div class="container-fix border-bottom" style="background-color:#fbfbfb;padding:5px 0;">
             <div class="container">
                 <div class="row">
-                  <div class="col">
-                    <h4><a href="https://brijesh.work/tutorial/">Tutorial</a></h4>
-                    <p><a href="https://brijesh.work/tutorial/html5/">Html</a></p>
-                    <p><a href="https://brijesh.work/tutorial/css/">CSS</a></p>
-                    <p><a href="https://brijesh.work/tutorial/javascript/">JavaScript</a></p>
-                    <p><a href="https://brijesh.work/tutorial/php/">PHP</a></p>
-                    <p><a href="https://brijesh.work/tutorial/mysql/">Mysql</a></p>
-                  </div>
-                  <div class="col">
-                    <h4><a href="https://brijesh.work/cheatsheet/">Cheat Sheet</a></h4>
-                    <p><a href="https://brijesh.work/cheatsheet/chatgpt/">ChatGPT</a></p>
-                    <p><a href="https://brijesh.work/cheatsheet/html/">Html</a></p>
-                    <p><a href="https://brijesh.work/cheatsheet/css/">CSS</a></p>
-                    <p><a href="https://brijesh.work/cheatsheet/wordpress/">Wordpress</a></p>
-                    <p><a href="https://brijesh.work/cheatsheet/mysql/">MySql</a></p>
-                  </div>
-                  <div class="col">
-                    <h4><a href="https://brijesh.work/interview/">Interview</a></h4>
-                    <p><a href="https://brijesh.work/interview/project-management/">Project Management</a></p>
-                    <p><a href="https://brijesh.work/interview/php/">PHP</a></p>
-                    <p><a href="https://brijesh.work/interview/mysql/">MySql</a></p>
-                  </div>
-                  <div class="col">
-                    <h4><a href="https://brijesh.work/marketing/">Marketing</a></h4>
-                    <p><a href="https://brijesh.work/marketing/instagram/">Instagram</a></p>
-                    <p><a href="https://brijesh.work/marketing/seo/">SEO</a></p>
-                  </div>
-                  <div class="col">
-                    <h4><a href="https://brijesh.work/examples/">Examples</a></h4>
-                    <p><a href="https://brijesh.work/examples/javascript/">Javascript</a></p>
-                    <p><a href="https://brijesh.work/examples/php/">php</a></p>
-                    <p><a href="https://brijesh.work/examples/mysql/">MySql</a></p>
-                  </div>
+                    <div class="col">
+                        <h4><a href="https://brijesh.work/tutorial/">Tutorial</a></h4>
+                        <p><a href="https://brijesh.work/tutorial/html5/">Html</a></p>
+                        <p><a href="https://brijesh.work/tutorial/css/">CSS</a></p>
+                        <p><a href="https://brijesh.work/tutorial/javascript/">JavaScript</a></p>
+                        <p><a href="https://brijesh.work/tutorial/php/">PHP</a></p>
+                        <p><a href="https://brijesh.work/tutorial/mysql/">Mysql</a></p>
+                    </div>
+                    <div class="col">
+                        <h4><a href="https://brijesh.work/cheatsheet/">Cheat Sheet</a></h4>
+                        <p><a href="https://brijesh.work/cheatsheet/chatgpt/">ChatGPT</a></p>
+                        <p><a href="https://brijesh.work/cheatsheet/html/">Html</a></p>
+                        <p><a href="https://brijesh.work/cheatsheet/css/">CSS</a></p>
+                        <p><a href="https://brijesh.work/cheatsheet/wordpress/">Wordpress</a></p>
+                        <p><a href="https://brijesh.work/cheatsheet/mysql/">MySql</a></p>
+                    </div>
+                    <div class="col">
+                        <h4><a href="https://brijesh.work/interview/">Interview</a></h4>
+                        <p><a href="https://brijesh.work/interview/project-management/">Project Management</a></p>
+                        <p><a href="https://brijesh.work/interview/php/">PHP</a></p>
+                        <p><a href="https://brijesh.work/interview/mysql/">MySql</a></p>
+                    </div>
+                    <div class="col">
+                        <h4><a href="https://brijesh.work/marketing/">Marketing</a></h4>
+                        <p><a href="https://brijesh.work/marketing/instagram/">Instagram</a></p>
+                        <p><a href="https://brijesh.work/marketing/seo/">SEO</a></p>
+                    </div>
+                    <div class="col">
+                        <h4><a href="https://brijesh.work/examples/">Examples</a></h4>
+                        <p><a href="https://brijesh.work/examples/javascript/">Javascript</a></p>
+                        <p><a href="https://brijesh.work/examples/php/">php</a></p>
+                        <p><a href="https://brijesh.work/examples/mysql/">MySql</a></p>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="container-fix" style="background-color:#fbfbfb;padding:5px 0;">
+        </div>
+        </div>
+        <div class="container-fix" style="background-color:#fbfbfb;padding:5px 0;">
             <div class="container">
-              <div class="row">
-                <p class="text-center" style="color: var(--color-primary);text-align: center;"><a href="mailto:bp@brijesh.work">Email Me</a></p>
-              </div>
+                <div class="row">
+                    <p class="text-center" style="color: var(--color-primary);text-align: center;"><a
+                            href="mailto:bp@brijesh.work">Email Me</a></p>
+                </div>
             </div>
     </footer>
     <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
 </body>
+
 </html>
