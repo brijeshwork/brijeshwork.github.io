@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Database Migrations | System Design | Brijesh Patel</title>
+    <meta name="description" content="A complete system design guide for Database Migrations: zero-downtime migrations, schema changes, data backfills, dual-write patterns, and rollback strategies.">
+    <meta name="author" content="Brijesh Patel">
+    <meta name="keywords" content="database migrations, zero downtime, schema changes, data backfill, dual write, rollback strategy, system design interview">
+    <link rel="canonical" href="https://brijesh.work/system-design/database-migrations/" />
+    <meta property="og:title" content="Database Migrations | System Design | Brijesh Patel">
+    <meta property="og:description" content="A complete system design guide for Database Migrations: zero-downtime migrations, schema changes, data backfills, dual-write patterns, and rollback strategies.">
+    <meta property="og:url" content="https://brijesh.work/system-design/database-migrations/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Brijesh Patel">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Database Migrations | System Design | Brijesh Patel">
+    <meta name="twitter:description" content="A complete system design guide for Database Migrations: zero-downtime migrations, schema changes, data backfills, dual-write patterns, and rollback strategies.">
+    <meta name="twitter:creator" content="@brijeshwork">
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Database Migrations",
+  "description": "A complete system design guide for Database Migrations: zero-downtime migrations, schema changes, data backfills, dual-write patterns, and rollback strategies.",
+  "author": {
+    "@type": "Person",
+    "name": "Brijesh Patel",
+    "url": "https://brijesh.work"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Brijesh Patel",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://brijesh.work/pub/img/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://brijesh.work/system-design/database-migrations/"
+  }
+}
+    </script>
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-premium.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
+    <section class="sd-hero" aria-label="Page header">
+        <h1>Database Migrations</h1>
+        <p class="lead">A complete system design walkthrough — zero-downtime migrations, schema changes, data backfills &amp; rollback strategies.</p>
+        <div class="sd-hero-badges"><span class="sd-badge">🗃️ Schema Changes</span><span class="sd-badge">⏱️ Zero Downtime</span><span class="sd-badge">🔄 Dual Write</span><span class="sd-badge">↩️ Rollback</span></div>
+    </section>
+    <div class="sd-layout">
+        <nav class="sd-toc" aria-label="Table of contents">
+            <h5>Contents</h5>
+            <ol>
+                <li><a href="#step-1">Understand the Problem</a></li>
+                <li><a href="#step-2">High-Level Design</a></li>
+                <li><a href="#step-3">Deep Dive</a></li>
+                <li><a href="#step-4">Wrap Up</a></li>
+            </ol>
+        </nav>
+        <article class="sd-content">
+<div class="container py-5">
+    <p>Content coming soon.</p>
+  </div>
+        </article>
+    </div>
+    <button id="btn-back-to-top" aria-label="Back to top" title="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+        </svg>
+    </button>
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <script>includeHTML();</script>
+    <script>
+        const btn = document.getElementById('btn-back-to-top');
+        window.addEventListener('scroll', () => { btn.style.display = window.scrollY > 300 ? 'flex' : 'none'; });
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        const headings = document.querySelectorAll('.sd-content h2[id], .sd-content h3[id]');
+        const tocLinks = document.querySelectorAll('.sd-toc a');
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    tocLinks.forEach(l => l.classList.remove('active'));
+                    const lk = document.querySelector('.sd-toc a[href="#'+e.target.id+'"]');
+                    if (lk) lk.classList.add('active');
+                }
+            });
+        }, { rootMargin: '0px 0px -60% 0px' });
+        headings.forEach(h => obs.observe(h));
+    </script>
+</body>
+</html>

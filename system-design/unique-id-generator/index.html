@@ -1,621 +1,587 @@
-<header
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <h1
-        style="box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:40px;line-height:50px;margin-bottom:20px;margin-top:0px;outline:none;text-wrap:balance;">
-        <strong>Design A Unique ID Generator In Distributed Systems</strong>
-    </h1>
-</header>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    In this chapter, you are asked to design a unique ID generator in distributed systems. Your first thought might be
-    to use a primary key with the <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>auto_increment</i></em>
-    attribute in a traditional database. However, <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>auto_increment</i></em>
-    does not work in a distributed environment because a single database server is not large enough and generating
-    unique IDs across multiple databases with minimal delay is challenging.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Here are a few examples of unique IDs:
-</p>
-<figure class="py-1"
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <div
-        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
-        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
-            src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-1-VGKGPLH3.svg"
-            alt="Image represents a simplified conceptual diagram illustrating a database table or a similar data structure.  The diagram shows a single column labeled 'user_id' containing a list of numerical user identifiers.  The column is enclosed within a dashed rectangular border, suggesting a table structure.  Each row within the border represents a single record, with each record containing a unique, long numerical user ID.  The IDs are presented as sequential entries, vertically stacked, implying a possible ordering or indexing mechanism.  There are no explicit connections to other tables or components shown; the diagram focuses solely on the structure and content of the 'user_id' column, which appears to store a series of distinct user identification numbers.  No other attributes or columns are visible, and there's no indication of any relationships with other data elements."
-            width="276" height="311" decoding="async" data-nimg="1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Design A Unique ID Generator | System Design | Brijesh Patel</title>
+    <meta name="description" content="A complete system design guide for a Unique ID Generator in distributed systems: UUID, Twitter Snowflake, ticket servers, and clock synchronization.">
+    <meta name="author" content="Brijesh Patel">
+    <meta name="keywords" content="unique ID generator, distributed systems, Twitter Snowflake, UUID, ticket server, clock synchronization, system design interview">
+    <link rel="canonical" href="https://brijesh.work/system-design/unique-id-generator/" />
+    <meta property="og:title" content="Design A Unique ID Generator | System Design | Brijesh Patel">
+    <meta property="og:description" content="A complete system design guide for a Unique ID Generator in distributed systems: UUID, Twitter Snowflake, ticket servers, and clock synchronization.">
+    <meta property="og:url" content="https://brijesh.work/system-design/unique-id-generator/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Brijesh Patel">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Design A Unique ID Generator | System Design | Brijesh Patel">
+    <meta name="twitter:description" content="A complete system design guide for a Unique ID Generator in distributed systems: UUID, Twitter Snowflake, ticket servers, and clock synchronization.">
+    <meta name="twitter:creator" content="@brijeshwork">
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Design A Unique ID Generator",
+  "description": "A complete system design guide for a Unique ID Generator in distributed systems: UUID, Twitter Snowflake, ticket servers, and clock synchronization.",
+  "author": {
+    "@type": "Person",
+    "name": "Brijesh Patel",
+    "url": "https://brijesh.work"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Brijesh Patel",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://brijesh.work/pub/img/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://brijesh.work/system-design/unique-id-generator/"
+  }
+}
+    </script>
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-premium.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
+    <section class="sd-hero" aria-label="Page header">
+        <h1>Design A Unique ID Generator</h1>
+        <p class="lead">A complete system design walkthrough — UUID, Twitter Snowflake, ticket servers &amp; clock synchronization for distributed unique IDs.</p>
+        <div class="sd-hero-badges"><span class="sd-badge">❄️ Snowflake ID</span><span class="sd-badge">🔢 UUID</span><span class="sd-badge">⏱️ Clock Sync</span><span class="sd-badge">🎫 Ticket Server</span></div>
+    </section>
+    <div class="sd-layout">
+        <nav class="sd-toc" aria-label="Table of contents">
+            <h5>Contents</h5>
+            <ol>
+                <li><a href="#step-1">Understand the Problem</a></li>
+                <li><a href="#step-2">High-Level Design</a></li>
+                <li><a href="#multi-master">Multi-master Replication</a></li>
+                <li><a href="#uuid">UUID</a></li>
+                <li><a href="#ticket-server">Ticket Server</a></li>
+                <li><a href="#snowflake">Twitter Snowflake</a></li>
+                <li><a href="#step-3">Deep Dive</a></li>
+                <li><a href="#step-4">Wrap Up</a></li>
+            </ol>
+        </nav>
+        <article class="sd-content">
+<div class="container py-5">
+        <p>
+            In this chapter, you are asked to design a unique ID generator in distributed systems. Your first thought
+            might be
+            to use a primary key with the <em><i>auto_increment</i></em>
+            attribute in a traditional database. However, <em><i>auto_increment</i></em>
+            does not work in a distributed environment because a single database server is not large enough and
+            generating
+            unique IDs across multiple databases with minimal delay is challenging.
+        </p>
+        <p>
+            Here are a few examples of unique IDs:
+        </p>
+        <figure>
+            <div>
+                <img class="img-fluid rounded shadow-sm" src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-1-VGKGPLH3.svg"
+                    alt="Image represents a simplified conceptual diagram illustrating a database table or a similar data structure.  The diagram shows a single column labeled 'user_id' containing a list of numerical user identifiers.  The column is enclosed within a dashed rectangular border, suggesting a table structure.  Each row within the border represents a single record, with each record containing a unique, long numerical user ID.  The IDs are presented as sequential entries, vertically stacked, implying a possible ordering or indexing mechanism.  There are no explicit connections to other tables or components shown; the diagram focuses solely on the structure and content of the 'user_id' column, which appears to store a series of distinct user identification numbers.  No other attributes or columns are visible, and there's no indication of any relationships with other data elements."
+                    width="276" height="311" loading="lazy">
+            </div>
+            <figcaption>
+                Figure 1
+            </figcaption>
+        </figure>
+        <h2 id="step-1---understand-the-problem-and-establish-design-scope">
+            <strong>Step 1 - Understand the problem and establish design scope</strong>
+        </h2>
+        <p>
+            Asking clarification questions is the first step to tackle any system design interview question. Here is an
+            example
+            of candidate-interviewer interaction:
+        </p>
+        <p>
+            <strong>Candidate</strong>:
+            What are the characteristics of unique IDs?<br>
+            <strong>Interviewer</strong>:
+            IDs must be unique and sortable.
+        </p>
+        <p>
+            <strong>Candidate</strong>:
+            For each new record, does ID increment by 1?<br>
+            <strong>Interviewer</strong>:
+            The ID increments by time but not necessarily only increments by 1. IDs created in the evening are larger
+            than those
+            created in the morning on the same day.
+        </p>
+        <p>
+            <strong>Candidate</strong>:
+            Do IDs only contain numerical values?<br>
+            <strong>Interviewer</strong>:
+            Yes, that is correct.
+        </p>
+        <p>
+            <strong>Candidate</strong>:
+            What is the ID length requirement?<br>
+            <strong>Interviewer</strong>:
+            IDs should fit into 64-bit.
+        </p>
+        <p>
+            <strong>Candidate</strong>:
+            What is the scale of the system?<br>
+            <strong>Interviewer</strong>:
+            The system should be able to generate 10,000 IDs per second.
+        </p>
+        <p>
+            Above are some of the sample questions that you can ask your interviewer. It is important to understand the
+            requirements and clarify ambiguities. For this interview question, the requirements are listed as follows:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    IDs must be unique.
+                </p>
+            </li>
+            <li>
+                <p>
+                    IDs are numerical values only.
+                </p>
+            </li>
+            <li>
+                <p>
+                    IDs fit into 64-bit.
+                </p>
+            </li>
+            <li>
+                <p>
+                    IDs are ordered by date.
+                </p>
+            </li>
+            <li>
+                <p>
+                    Ability to generate over 10,000 unique IDs per second.
+                </p>
+            </li>
+        </ul>
+        <h2 id="step-2---propose-high-level-design-and-get-buy-in">
+            <strong>Step 2 - Propose high-level design and get buy-in</strong>
+        </h2>
+        <p>
+            Multiple options can be used to generate unique IDs in distributed systems. The options we considered are:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    Multi-master replication
+                </p>
+            </li>
+            <li>
+                <p>
+                    Universally unique identifier (UUID)
+                </p>
+            </li>
+            <li>
+                <p>
+                    Ticket server
+                </p>
+            </li>
+            <li>
+                <p>
+                    Twitter snowflake approach
+                </p>
+            </li>
+        </ul>
+        <p>
+            Let us look at each of them, how they work, and the pros/cons of each option.
+        </p>
+        <h3 id="multi-master-replication">
+            <strong>Multi-master replication</strong>
+        </h3>
+        <p>
+            As shown in Figure 2, the first approach is multi-master replication.
+        </p>
+        <figure>
+            <div>
+                <img class="img-fluid rounded shadow-sm" src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-2-4ZOIVNTR.svg"
+                    alt="Image represents a system architecture diagram showing two MySQL databases connected to a cluster of web servers.  Two rectangular boxes labeled 'My SQL' represent the two separate MySQL database instances.  From each MySQL instance, arrows point towards a larger rectangular box labeled 'Web servers,' which depicts three vertically stacked, smaller rectangles representing individual web servers.  The arrow from the first MySQL database is labeled '1, 3, 5...', indicating that this database serves odd-numbered requests or data.  Similarly, the arrow from the second MySQL database is labeled '2, 4, 6...', suggesting this database handles even-numbered requests or data, implying a load balancing strategy where requests are distributed across the two databases. The entire diagram is enclosed within a dashed, light-blue border.  A small text at the bottom reads 'Viewer does not support full SVG 1.1,' indicating a limitation of the viewer used to display the diagram."
+                    width="500" height="245" loading="lazy">
+            </div>
+            <figcaption>
+                Figure 2
+            </figcaption>
+        </figure>
+        <p>
+            This approach uses the databases’ <em><i>auto_increment</i></em>
+            feature. Instead of increasing the next ID by 1, we increase it by <em><i>k,</i></em>
+            where <em><i>k</i></em>
+            is the number of database servers in use. As illustrated in Figure 2, next ID to be generated is equal to
+            the
+            previous ID in the same server plus 2. This solves some scalability issues because IDs can scale with the
+            number of
+            database servers. However, this strategy has some major drawbacks:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    Hard to scale with multiple data centers
+                </p>
+            </li>
+            <li>
+                <p>
+                    IDs do not go up with time across multiple servers.
+                </p>
+            </li>
+            <li>
+                <p>
+                    It does not scale well when a server is added or removed.
+                </p>
+            </li>
+        </ul>
+        <h3 id="uuid">
+            <strong>UUID</strong>
+        </h3>
+        <p>
+            A UUID is another easy way to obtain unique IDs. UUID is a 128-bit number used to identify information in
+            computer
+            systems. UUID has a very low probability of getting collusion. Quoted from Wikipedia, “after generating 1
+            billion
+            UUIDs every second for approximately 100 years would the probability of creating a single duplicate reach
+            50%” [1].
+        </p>
+        <p>
+            Here is an example of UUID: <em><i>09c93e62-50b4-468d-bf8a-c07e1040bfb2</i></em>.
+            UUIDs can be generated independently without coordination between servers. Figure 3 presents the UUIDs
+            design.
+        </p>
+        <figure>
+            <div>
+                <img class="img-fluid rounded shadow-sm" src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-3-Y3ZNPIH3.svg"
+                    alt="Image represents a system architecture diagram showing four identical units, each enclosed within a dashed, light-blue rectangular border.  Each unit consists of two stacked rectangular boxes. The top box in each unit is labeled 'Web Server,' indicating a web server component.  Below each 'Web Server' box is a smaller box labeled 'ID gen,' suggesting an ID generation component. There are no visible connections or data flows depicted between the units; each unit appears to function independently.  The overall arrangement suggests a horizontally scaled deployment of a system where each unit has a web server and a local ID generator. The 'Viewer does not support full SVG 1.1' message at the bottom indicates a limitation of the viewer used to display the diagram."
+                    width="600" height="181" loading="lazy">
+            </div>
+            <figcaption>
+                Figure 3
+            </figcaption>
+        </figure>
+        <p>
+            In this design, each web server contains an ID generator, and a web server is responsible for generating IDs
+            independently.
+        </p>
+        <p>
+            Pros:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    Generating UUID is simple. No coordination between servers is needed so there will not be any
+                    synchronization issues.
+                </p>
+            </li>
+            <li>
+                <p>
+                    The system is easy to scale because each web server is responsible for generating IDs they consume.
+                    ID
+                    generator can easily scale with web servers.
+                </p>
+            </li>
+        </ul>
+        <p>
+            Cons:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    IDs are 128 bits long, but our requirement is 64 bits.
+                </p>
+            </li>
+            <li>
+                <p>
+                    IDs do not go up with time.
+                </p>
+            </li>
+            <li>
+                <p>
+                    IDs could be non-numeric.
+                </p>
+            </li>
+        </ul>
+        <h3 id="ticket-server">
+            <strong>Ticket Server</strong>
+        </h3>
+        <p>
+            Ticket servers are another interesting way to generate unique IDs. Flicker developed ticket servers to
+            generate
+            distributed primary keys [2]. It is worth mentioning how the system works.
+        </p>
+        <figure>
+            <div>
+                <img class="img-fluid rounded shadow-sm" src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-4-TJJLCKSS.svg"
+                    alt="Image represents a simplified system architecture diagram showing four 'Web Server' components connected to a central 'Ticket Server' component.  Each of the four rectangular boxes labeled 'Web Server' represents a separate web server instance.  Lines connect each 'Web Server' to a single rectangular box labeled 'Ticket Server,' indicating a unidirectional communication flow from each web server to the central ticket server.  This suggests that the web servers might be requesting or sending data (likely ticket-related information) to the central Ticket Server. The overall structure implies a client-server model where multiple web servers act as clients, interacting with a single, central Ticket Server.  The dashed-line border around the entire diagram suggests the scope of the depicted system.  The text 'Viewer does not support full SVG 1.1' at the bottom is a technical note indicating a limitation of the display software, not related to the system architecture itself."
+                    width="600" height="237" loading="lazy">
+            </div>
+            <figcaption>
+                Figure 4
+            </figcaption>
+        </figure>
+        <p>
+            The idea is to use a centralized <em><i>auto_increment</i></em>
+            feature in a single database server (Ticket Server). To learn more about this, refer to flicker’s
+            engineering blog
+            article [2].
+        </p>
+        <p>
+            Pros:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    Numeric IDs.
+                </p>
+            </li>
+            <li>
+                <p>
+                    It is easy to implement, and it works for small to medium-scale applications.
+                </p>
+            </li>
+        </ul>
+        <p>
+            Cons:
+        </p>
+        <ul>
+            <li>
+                Single point of failure. Single ticket server means if the ticket server goes down, all systems that
+                depend on
+                it will face issues. To avoid a single point of failure, we can set up multiple ticket servers. However,
+                this
+                will introduce new challenges such as data synchronization.
+            </li>
+        </ul>
+        <h3 id="twitter-snowflake-approach">
+            <strong>Twitter snowflake approach</strong>
+        </h3>
+        <p>
+            Approaches mentioned above give us some ideas about how different ID generation systems work. However, none
+            of them
+            meet our specific requirements; thus, we need another approach. Twitter’s unique ID generation system called
+            “snowflake” [3] is inspiring and can satisfy our requirements.
+        </p>
+        <p>
+            Divide and conquer is our friend. Instead of generating an ID directly, we divide an ID into different
+            sections.
+            Figure 5 shows the layout of a 64-bit ID.
+        </p>
+        <figure>
+            <div>
+                <img class="img-fluid rounded shadow-sm" src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-5-R4B5RGNK.svg"
+                    alt="Image represents a data structure composed of five distinct fields, each with a specified bit length.  From left to right, the first field is a single bit (1 bit), followed by a 41-bit field.  Next, there's a 5-bit field labeled '0', suggesting it might be a status or version indicator.  This is followed by another 5-bit field labeled 'timestamp...', indicating it stores timestamp information. Finally, a 12-bit field completes the structure.  The fields are arranged horizontally, implying a concatenated structure where the bits of each field are sequentially combined to form a larger data unit. No explicit connections or information flow between the fields are shown; the diagram simply illustrates the composition and size of each component within the overall data structure."
+                    width="600" height="81" loading="lazy">
+            </div>
+            <figcaption>
+                Figure 5
+            </figcaption>
+        </figure>
+        <p>
+            Each section is explained below.
+        </p>
+        <ul>
+            <li>
+                <p>
+                    Sign bit: 1 bit. It will always be 0. This is reserved for future uses. It can potentially be used
+                    to
+                    distinguish between signed and unsigned numbers.
+                </p>
+            </li>
+            <li>
+                <p>
+                    Timestamp: 41 bits. Milliseconds since the epoch or custom epoch. We use Twitter snowflake default
+                    epoch
+                    1288834974657, equivalent to Nov 04, 2010, 01:42:54 UTC.
+                </p>
+            </li>
+            <li>
+                <p>
+                    Datacenter ID: 5 bits, which gives us <em><i>2
+                            ^ 5 = 32</i></em> datacenters.
+                </p>
+            </li>
+            <li>
+                <p>
+                    Machine ID: 5 bits, which gives us <em><i>2
+                            ^ 5 = 32</i></em> machines per datacenter.
+                </p>
+            </li>
+            <li>
+                <p>
+                    Sequence number: 12 bits. For every ID generated on that machine/process, the sequence number is
+                    incremented
+                    by 1. The number is reset to 0 every millisecond.
+                </p>
+            </li>
+        </ul>
+        <h2 id="step-3---design-deep-dive">
+            <strong>Step 3 - Design deep dive</strong>
+        </h2>
+        <p>
+            In the high-level design, we discussed various options to design a unique ID generator in distributed
+            systems. We
+            settle on an approach that is based on the Twitter snowflake ID generator. Let us dive deep into the design.
+            To
+            refresh our memory, the design diagram is relisted below.
+        </p>
+        <figure>
+            <div>
+                <img class="img-fluid rounded shadow-sm" src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-6-33JFUIC3.svg"
+                    alt="Image represents a data structure composed of five distinct fields, each with a specified bit length.  From left to right, the fields are: a 1-bit field (likely a flag or boolean value); a 41-bit field (likely representing a large identifier or counter); a 5-bit field labeled '0' (its purpose is unclear without further context); a 5-bit field labeled 'timestamp...' (suggesting a truncated timestamp); and finally, a 12-bit field (likely representing another identifier or data value).  The fields are arranged horizontally, implying a sequential or concatenated structure. No explicit connections are shown between the fields, but the arrangement suggests they are combined to form a single larger data unit.  The 'timestamp...' label indicates that at least part of the data represents a time value, while the other labels and bit lengths provide clues to the potential function of the remaining fields, though their exact meaning remains ambiguous without additional information."
+                    width="600" height="81" loading="lazy">
+            </div>
+            <figcaption>
+                Figure 6
+            </figcaption>
+        </figure>
+        <p>
+            Datacenter IDs and machine IDs are chosen at the startup time, generally fixed once the system is up
+            running. Any
+            changes in datacenter IDs and machine IDs require careful review since an accidental change in those values
+            can lead
+            to ID conflicts. Timestamp and sequence numbers are generated when the ID generator is running.
+        </p>
+        <p>
+            Timestamp
+        </p>
+        <p>
+            The most important 41 bits make up the timestamp section. As timestamps grow with time, IDs are sortable by
+            time.
+            Figure 7 shows an example of how binary representation is converted to UTC. You can also convert UTC back to
+            binary
+            representation using a similar method.
+        </p>
+        <figure>
+            <div>
+                <img class="img-fluid rounded shadow-sm" src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-7-PNNDQIF5.svg"
+                    alt="Image represents a flowchart illustrating the conversion of a binary timestamp to a human-readable date and time.  The process begins with a 64-bit binary number, '0-00100010101001011010011011000101101011000-01010-01100-000000000000,' which is first converted to its decimal equivalent, '297616116568.'  This decimal value is then added to the Twitter epoch value, '1288834974657,' resulting in '1586451091225.' This final number, representing milliseconds since the Twitter epoch, is then converted to a UTC date and time, yielding 'Apr 09 2020 16:51UTC.'  The flowchart uses arrows to indicate the flow of data and text labels to describe each transformation step."
+                    width="500" height="396" loading="lazy">
+            </div>
+            <figcaption>
+                Figure 7
+            </figcaption>
+        </figure>
+        <p>
+            The maximum timestamp that can be represented in 41 bits is
+        </p>
+        <p>
+            <em><i>2
+                    ^ 41 - 1 = 2199023255551</i></em> milliseconds (ms), which gives us: ~ 69 years =
+            <em><i>2199023255551
+                    ms / 1000 / 365 days / 24 hours/ 3600 seconds</i></em>. This means the ID generator will work for 69
+            years
+            and having a custom epoch time close to today’s date delays the overflow time. After 69 years, we will need
+            a new
+            epoch time or adopt other techniques to migrate IDs.
+        </p>
+        <p>
+            Sequence number
+        </p>
+        <p>
+            Sequence number is 12 bits, which give us 2 ^ 12 = 4096 combinations. This field is 0 unless more than one
+            ID is
+            generated in a millisecond on the same server. In theory, a machine can support a maximum of 4096 new IDs
+            per
+            millisecond.
+        </p>
+        <h2 id="step-4---wrap-up">
+            <strong>Step 4 - Wrap up</strong>
+        </h2>
+        <p>
+            In this chapter, we discussed different approaches to design a unique ID generator: multi-master
+            replication, UUID,
+            ticket server, and Twitter snowflake-like unique ID generator. We settle on snowflake as it supports all our
+            use
+            cases and is scalable in a distributed environment.
+        </p>
+        <p>
+            If there is extra time at the end of the interview, here are a few additional talking points:
+        </p>
+        <ul>
+            <li>
+                <p>
+                    Clock synchronization. In our design, we assume ID generation servers have the same clock. This
+                    assumption
+                    might not be true when a server is running on multiple cores. The same challenge exists in
+                    multi-machine
+                    scenarios. Solutions to clock synchronization are out of the scope of this course; however, it is
+                    important
+                    to understand the problem exists. Network Time Protocol is the most popular solution to this
+                    problem. For
+                    interested readers, refer to the reference material [4].
+                </p>
+            </li>
+            <li>
+                <p>
+                    Section length tuning. For example, fewer sequence numbers but more timestamp bits are effective for
+                    low
+                    concurrency and long-term applications.
+                </p>
+            </li>
+            <li>
+                <p>
+                    High availability. Since an ID generator is a mission-critical system, it must be highly available.
+                </p>
+            </li>
+        </ul>
+        <p>
+            Congratulations on getting this far! Now give yourself a pat on the back. Good job!
+        </p>
+        <h2 id="reference-materials">
+            <strong>Reference materials</strong>
+        </h2>
+        <p>
+            [1] Universally unique identifier:<br>
+            <a target="_blank" rel="noopener noreferrer"
+                href="https://en.wikipedia.org/wiki/Universally_unique_identifier"><u>https://en.wikipedia.org/wiki/Universally_unique_identifier</u></a>
+        </p>
+        <p>
+            [2] Ticket Servers: Distributed Unique Primary Keys on the Cheap:<br>
+            <a target="_blank" rel="noopener noreferrer"
+                href="https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/"><u>https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/</u></a>
+        </p>
+        <p>
+            [3] Announcing Snowflake:<br>
+            <a target="_blank" rel="noopener noreferrer"
+                href="https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html"><u>https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html</u></a>
+        </p>
+        <p>
+            [4] Network time protocol:<br>
+            <a target="_blank" rel="noopener noreferrer"
+                href="https://en.wikipedia.org/wiki/Network_Time_Protocol"><u>https://en.wikipedia.org/wiki/Network_Time_Protocol</u></a>
+        </p>
+
     </div>
-    <figcaption class="py-1"
-        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
-        Figure 1
-    </figcaption>
-</figure>
-<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="step-1---understand-the-problem-and-establish-design-scope">
-    <strong>Step 1 - Understand the problem and establish design scope</strong>
-</h2>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Asking clarification questions is the first step to tackle any system design interview question. Here is an example
-    of candidate-interviewer interaction:
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Candidate</strong>:
-    What are the characteristics of unique IDs?<br>
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Interviewer</strong>:
-    IDs must be unique and sortable.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Candidate</strong>:
-    For each new record, does ID increment by 1?<br>
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Interviewer</strong>:
-    The ID increments by time but not necessarily only increments by 1. IDs created in the evening are larger than those
-    created in the morning on the same day.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Candidate</strong>:
-    Do IDs only contain numerical values?<br>
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Interviewer</strong>:
-    Yes, that is correct.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Candidate</strong>:
-    What is the ID length requirement?<br>
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Interviewer</strong>:
-    IDs should fit into 64-bit.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Candidate</strong>:
-    What is the scale of the system?<br>
-    <strong
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;">Interviewer</strong>:
-    The system should be able to generate 10,000 IDs per second.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Above are some of the sample questions that you can ask your interviewer. It is important to understand the
-    requirements and clarify ambiguities. For this interview question, the requirements are listed as follows:
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e26a0910e22af1733f81bf49f060468c8">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            IDs must be unique.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="eb9c0f653c6c0dda3ee36fae7af4e48a0">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            IDs are numerical values only.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="eeb11a9623e6c3c9f8b39e77518ab6a5b">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            IDs fit into 64-bit.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="ed9bb20c8cadb47af4f83522fbb848e77">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            IDs are ordered by date.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e5b8a5a20397c094168fd58eb15fba06c">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Ability to generate over 10,000 unique IDs per second.
-        </p>
-    </li>
-</ul>
-<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="step-2---propose-high-level-design-and-get-buy-in">
-    <strong>Step 2 - Propose high-level design and get buy-in</strong>
-</h2>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Multiple options can be used to generate unique IDs in distributed systems. The options we considered are:
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e3e935131ffdfa334379536dde67a1cc0">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Multi-master replication
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e78f6f5968d0f20bf38bc8e31f7b33e7f">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Universally unique identifier (UUID)
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e3fe3665a656351a2efd8cc7064c2b560">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Ticket server
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e0cb49ddca47512a7a6398e54b9b612c3">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Twitter snowflake approach
-        </p>
-    </li>
-</ul>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Let us look at each of them, how they work, and the pros/cons of each option.
-</p>
-<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="multi-master-replication">
-    <strong>Multi-master replication</strong>
-</h3>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    As shown in Figure 2, the first approach is multi-master replication.
-</p>
-<figure class="py-1"
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <div
-        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
-        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
-            src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-2-4ZOIVNTR.svg"
-            alt="Image represents a system architecture diagram showing two MySQL databases connected to a cluster of web servers.  Two rectangular boxes labeled 'My SQL' represent the two separate MySQL database instances.  From each MySQL instance, arrows point towards a larger rectangular box labeled 'Web servers,' which depicts three vertically stacked, smaller rectangles representing individual web servers.  The arrow from the first MySQL database is labeled '1, 3, 5...', indicating that this database serves odd-numbered requests or data.  Similarly, the arrow from the second MySQL database is labeled '2, 4, 6...', suggesting this database handles even-numbered requests or data, implying a load balancing strategy where requests are distributed across the two databases. The entire diagram is enclosed within a dashed, light-blue border.  A small text at the bottom reads 'Viewer does not support full SVG 1.1,' indicating a limitation of the viewer used to display the diagram."
-            width="500" height="245" loading="lazy" decoding="async" data-nimg="1">
+        </article>
     </div>
-    <figcaption class="py-1"
-        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
-        Figure 2
-    </figcaption>
-</figure>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    This approach uses the databases’ <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>auto_increment</i></em>
-    feature. Instead of increasing the next ID by 1, we increase it by <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>k,</i></em>
-    where <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>k</i></em>
-    is the number of database servers in use. As illustrated in Figure 2, next ID to be generated is equal to the
-    previous ID in the same server plus 2. This solves some scalability issues because IDs can scale with the number of
-    database servers. However, this strategy has some major drawbacks:
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e2a09569a49e64892906ebd3ba4761f9f">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Hard to scale with multiple data centers
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e96bacae788a9959ecb813702e4da7d6d">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            IDs do not go up with time across multiple servers.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e59d53a179a9611d3535dfae3150b7d43">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            It does not scale well when a server is added or removed.
-        </p>
-    </li>
-</ul>
-<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="uuid">
-    <strong>UUID</strong>
-</h3>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    A UUID is another easy way to obtain unique IDs. UUID is a 128-bit number used to identify information in computer
-    systems. UUID has a very low probability of getting collusion. Quoted from Wikipedia, “after generating 1 billion
-    UUIDs every second for approximately 100 years would the probability of creating a single duplicate reach 50%” [1].
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Here is an example of UUID: <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>09c93e62-50b4-468d-bf8a-c07e1040bfb2</i></em>.
-    UUIDs can be generated independently without coordination between servers. Figure 3 presents the UUIDs design.
-</p>
-<figure class="py-1"
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <div
-        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
-        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
-            src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-3-Y3ZNPIH3.svg"
-            alt="Image represents a system architecture diagram showing four identical units, each enclosed within a dashed, light-blue rectangular border.  Each unit consists of two stacked rectangular boxes. The top box in each unit is labeled 'Web Server,' indicating a web server component.  Below each 'Web Server' box is a smaller box labeled 'ID gen,' suggesting an ID generation component. There are no visible connections or data flows depicted between the units; each unit appears to function independently.  The overall arrangement suggests a horizontally scaled deployment of a system where each unit has a web server and a local ID generator. The 'Viewer does not support full SVG 1.1' message at the bottom indicates a limitation of the viewer used to display the diagram."
-            width="600" height="181" loading="lazy" decoding="async" data-nimg="1">
-    </div>
-    <figcaption class="py-1"
-        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
-        Figure 3
-    </figcaption>
-</figure>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    In this design, each web server contains an ID generator, and a web server is responsible for generating IDs
-    independently.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Pros:
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="ec8e73bd3b13d0231a7813186b9c8a988">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Generating UUID is simple. No coordination between servers is needed so there will not be any
-            synchronization issues.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="efc7b2ec0a237d6ccc474b0b58df25ea1">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            The system is easy to scale because each web server is responsible for generating IDs they consume. ID
-            generator can easily scale with web servers.
-        </p>
-    </li>
-</ul>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Cons:
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e10bb07120d4e3dd0258a877c292bc207">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            IDs are 128 bits long, but our requirement is 64 bits.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e05c6e69353ad0d0b55015a62a92f3ad0">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            IDs do not go up with time.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e3e9bbedfa33ed4e326750ef6426dd094">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            IDs could be non-numeric.
-        </p>
-    </li>
-</ul>
-<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="ticket-server">
-    <strong>Ticket Server</strong>
-</h3>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Ticket servers are another interesting way to generate unique IDs. Flicker developed ticket servers to generate
-    distributed primary keys [2]. It is worth mentioning how the system works.
-</p>
-<figure class="py-1"
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <div
-        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
-        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
-            src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-4-TJJLCKSS.svg"
-            alt="Image represents a simplified system architecture diagram showing four 'Web Server' components connected to a central 'Ticket Server' component.  Each of the four rectangular boxes labeled 'Web Server' represents a separate web server instance.  Lines connect each 'Web Server' to a single rectangular box labeled 'Ticket Server,' indicating a unidirectional communication flow from each web server to the central ticket server.  This suggests that the web servers might be requesting or sending data (likely ticket-related information) to the central Ticket Server. The overall structure implies a client-server model where multiple web servers act as clients, interacting with a single, central Ticket Server.  The dashed-line border around the entire diagram suggests the scope of the depicted system.  The text 'Viewer does not support full SVG 1.1' at the bottom is a technical note indicating a limitation of the display software, not related to the system architecture itself."
-            width="600" height="237" loading="lazy" decoding="async" data-nimg="1">
-    </div>
-    <figcaption class="py-1"
-        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
-        Figure 4
-    </figcaption>
-</figure>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    The idea is to use a centralized <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>auto_increment</i></em>
-    feature in a single database server (Ticket Server). To learn more about this, refer to flicker’s engineering blog
-    article [2].
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Pros:
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e97924dce91cd1d7782f32a0a6cfd9399">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Numeric IDs.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e130ea1ae7b1c0e775b9bc34c359f6670">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            It is easy to implement, and it works for small to medium-scale applications.
-        </p>
-    </li>
-</ul>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Cons:
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e6631c4bbaf925465825673f6405a2be6">
-        Single point of failure. Single ticket server means if the ticket server goes down, all systems that depend on
-        it will face issues. To avoid a single point of failure, we can set up multiple ticket servers. However, this
-        will introduce new challenges such as data synchronization.
-    </li>
-</ul>
-<h3 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:26px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:37px;margin-bottom:10px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="twitter-snowflake-approach">
-    <strong>Twitter snowflake approach</strong>
-</h3>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Approaches mentioned above give us some ideas about how different ID generation systems work. However, none of them
-    meet our specific requirements; thus, we need another approach. Twitter’s unique ID generation system called
-    “snowflake” [3] is inspiring and can satisfy our requirements.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Divide and conquer is our friend. Instead of generating an ID directly, we divide an ID into different sections.
-    Figure 5 shows the layout of a 64-bit ID.
-</p>
-<figure class="py-1"
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <div
-        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
-        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
-            src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-5-R4B5RGNK.svg"
-            alt="Image represents a data structure composed of five distinct fields, each with a specified bit length.  From left to right, the first field is a single bit (1 bit), followed by a 41-bit field.  Next, there's a 5-bit field labeled '0', suggesting it might be a status or version indicator.  This is followed by another 5-bit field labeled 'timestamp...', indicating it stores timestamp information. Finally, a 12-bit field completes the structure.  The fields are arranged horizontally, implying a concatenated structure where the bits of each field are sequentially combined to form a larger data unit. No explicit connections or information flow between the fields are shown; the diagram simply illustrates the composition and size of each component within the overall data structure."
-            width="600" height="81" loading="lazy" decoding="async" data-nimg="1">
-    </div>
-    <figcaption class="py-1"
-        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
-        Figure 5
-    </figcaption>
-</figure>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Each section is explained below.
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="ee5681ba9b1921ad296779d4075ddd3e2">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Sign bit: 1 bit. It will always be 0. This is reserved for future uses. It can potentially be used to
-            distinguish between signed and unsigned numbers.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e0566c7033589d5f6b2fce878421089e4">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Timestamp: 41 bits. Milliseconds since the epoch or custom epoch. We use Twitter snowflake default epoch
-            1288834974657, equivalent to Nov 04, 2010, 01:42:54 UTC.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e460e5c12b371e06a5f381dd9aa83c4b0">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Datacenter ID: 5 bits, which gives us <em
-                style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>2
-                    ^ 5 = 32</i></em> datacenters.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="eead2807a1a07b36a85a5ed39c387bdea">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Machine ID: 5 bits, which gives us <em
-                style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>2
-                    ^ 5 = 32</i></em> machines per datacenter.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e7be7c40e9f0df8a9ca1b1af91fdfac8e">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Sequence number: 12 bits. For every ID generated on that machine/process, the sequence number is incremented
-            by 1. The number is reset to 0 every millisecond.
-        </p>
-    </li>
-</ul>
-<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="step-3---design-deep-dive">
-    <strong>Step 3 - Design deep dive</strong>
-</h2>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    In the high-level design, we discussed various options to design a unique ID generator in distributed systems. We
-    settle on an approach that is based on the Twitter snowflake ID generator. Let us dive deep into the design. To
-    refresh our memory, the design diagram is relisted below.
-</p>
-<figure class="py-1"
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <div
-        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
-        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
-            src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-6-33JFUIC3.svg"
-            alt="Image represents a data structure composed of five distinct fields, each with a specified bit length.  From left to right, the fields are: a 1-bit field (likely a flag or boolean value); a 41-bit field (likely representing a large identifier or counter); a 5-bit field labeled '0' (its purpose is unclear without further context); a 5-bit field labeled 'timestamp...' (suggesting a truncated timestamp); and finally, a 12-bit field (likely representing another identifier or data value).  The fields are arranged horizontally, implying a sequential or concatenated structure. No explicit connections are shown between the fields, but the arrangement suggests they are combined to form a single larger data unit.  The 'timestamp...' label indicates that at least part of the data represents a time value, while the other labels and bit lengths provide clues to the potential function of the remaining fields, though their exact meaning remains ambiguous without additional information."
-            width="600" height="81" loading="lazy" decoding="async" data-nimg="1">
-    </div>
-    <figcaption class="py-1"
-        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
-        Figure 6
-    </figcaption>
-</figure>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Datacenter IDs and machine IDs are chosen at the startup time, generally fixed once the system is up running. Any
-    changes in datacenter IDs and machine IDs require careful review since an accidental change in those values can lead
-    to ID conflicts. Timestamp and sequence numbers are generated when the ID generator is running.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Timestamp
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    The most important 41 bits make up the timestamp section. As timestamps grow with time, IDs are sortable by time.
-    Figure 7 shows an example of how binary representation is converted to UTC. You can also convert UTC back to binary
-    representation using a similar method.
-</p>
-<figure class="py-1"
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgba(0, 0, 0, 0.88);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;margin:16px 0px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <div
-        style="box-sizing:border-box;display:flex;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;justify-content:center;outline:none;">
-        <img style="box-sizing:border-box;color:transparent;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"
-            src="https://bytebytego.com/images/courses/system-design-interview/design-a-unique-id-generator-in-distributed-systems/figure-7-7-PNNDQIF5.svg"
-            alt="Image represents a flowchart illustrating the conversion of a binary timestamp to a human-readable date and time.  The process begins with a 64-bit binary number, '0-00100010101001011010011011000101101011000-01010-01100-000000000000,' which is first converted to its decimal equivalent, '297616116568.'  This decimal value is then added to the Twitter epoch value, '1288834974657,' resulting in '1586451091225.' This final number, representing milliseconds since the Twitter epoch, is then converted to a UTC date and time, yielding 'Apr 09 2020 16:51UTC.'  The flowchart uses arrows to indicate the flow of data and text labels to describe each transformation step."
-            width="500" height="396" loading="lazy" decoding="async" data-nimg="1">
-    </div>
-    <figcaption class="py-1"
-        style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;margin:12px 0px;outline:none;">
-        Figure 7
-    </figcaption>
-</figure>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    The maximum timestamp that can be represented in 41 bits is
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>2
-            ^ 41 - 1 = 2199023255551</i></em> milliseconds (ms), which gives us: ~ 69 years = <em
-        style="box-sizing:border-box;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;"><i>2199023255551
-            ms / 1000 / 365 days / 24 hours/ 3600 seconds</i></em>. This means the ID generator will work for 69 years
-    and having a custom epoch time close to today’s date delays the overflow time. After 69 years, we will need a new
-    epoch time or adopt other techniques to migrate IDs.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Sequence number
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Sequence number is 12 bits, which give us 2 ^ 12 = 4096 combinations. This field is 0 unless more than one ID is
-    generated in a millisecond on the same server. In theory, a machine can support a maximum of 4096 new IDs per
-    millisecond.
-</p>
-<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="step-4---wrap-up">
-    <strong>Step 4 - Wrap up</strong>
-</h2>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    In this chapter, we discussed different approaches to design a unique ID generator: multi-master replication, UUID,
-    ticket server, and Twitter snowflake-like unique ID generator. We settle on snowflake as it supports all our use
-    cases and is scalable in a distributed environment.
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    If there is extra time at the end of the interview, here are a few additional talking points:
-</p>
-<ul
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;list-style:disc;margin:0px 0px 16px 28px;orphans:2;outline:none;padding:0px;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e96c255915e09d838c76ccd9f53026952">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Clock synchronization. In our design, we assume ID generation servers have the same clock. This assumption
-            might not be true when a server is running on multiple cores. The same challenge exists in multi-machine
-            scenarios. Solutions to clock synchronization are out of the scope of this course; however, it is important
-            to understand the problem exists. Network Time Protocol is the most popular solution to this problem. For
-            interested readers, refer to the reference material [4].
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e2545c2a52d172ba26ff1cbcb6bc16ee5">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            Section length tuning. For example, fewer sequence numbers but more timestamp bits are effective for low
-            concurrency and long-term applications.
-        </p>
-    </li>
-    <li style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;line-height:26px;list-style:disc;margin:0px;outline:none;padding:0px;"
-        data-list-item-id="e2d78556d352047551df2779584000600">
-        <p
-            style="box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-weight:400;line-height:26px;margin-bottom:4px;margin-top:0px;outline:none;text-align:justify;">
-            High availability. Since an ID generator is a mission-critical system, it must be highly available.
-        </p>
-    </li>
-</ul>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    Congratulations on getting this far! Now give yourself a pat on the back. Good job!
-</p>
-<h2 style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(40, 40, 40);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:30px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;letter-spacing:normal;line-height:40px;margin-bottom:10px;margin-top:16px;orphans:2;outline:none;text-align:start;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;text-wrap:balance;white-space-collapse:collapse;widows:2;word-spacing:0px;"
-    id="reference-materials">
-    <strong>Reference materials</strong>
-</h2>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    [1] Universally unique identifier:<br>
-    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
-        target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Universally_unique_identifier"><u
-            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://en.wikipedia.org/wiki/Universally_unique_identifier</u></a>
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    [2] Ticket Servers: Distributed Unique Primary Keys on the Cheap:<br>
-    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
-        target="_blank" rel="noopener noreferrer"
-        href="https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/"><u
-            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/</u></a>
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:15px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin-bottom:10px;orphans:2;outline:none;text-align:justify;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    [3] Announcing Snowflake:<br>
-    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
-        target="_blank" rel="noopener noreferrer"
-        href="https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html"><u
-            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://blog.twitter.com/engineering/en_us/a/2010/announcing-snowflake.html</u></a>
-</p>
-<p
-    style="-webkit-text-stroke-width:0px;box-sizing:border-box;color:rgb(33, 37, 41);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;font-size:14px;font-style:normal;font-variant-caps:normal;font-variant-ligatures:normal;font-weight:400;letter-spacing:normal;line-height:26px;margin:0px;orphans:2;outline:none;text-align:left !important;text-decoration-color:initial;text-decoration-style:initial;text-decoration-thickness:initial;text-indent:0px;text-transform:none;white-space:normal;widows:2;word-spacing:0px;">
-    [4] Network time protocol:<br>
-    <a style="background-color:transparent;box-sizing:border-box;color:rgb(33, 37, 41);cursor:pointer;font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;transition:color 0.3s;"
-        target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Network_Time_Protocol"><u
-            style="box-sizing:border-box;color:rgb(66, 131, 196);font-family:-apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;outline:none;word-break:break-all;">https://en.wikipedia.org/wiki/Network_Time_Protocol</u></a>
-</p>
+    <button id="btn-back-to-top" aria-label="Back to top" title="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+        </svg>
+    </button>
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <script>includeHTML();</script>
+    <script>
+        const btn = document.getElementById('btn-back-to-top');
+        window.addEventListener('scroll', () => { btn.style.display = window.scrollY > 300 ? 'flex' : 'none'; });
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        const headings = document.querySelectorAll('.sd-content h2[id], .sd-content h3[id]');
+        const tocLinks = document.querySelectorAll('.sd-toc a');
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    tocLinks.forEach(l => l.classList.remove('active'));
+                    const lk = document.querySelector('.sd-toc a[href="#'+e.target.id+'"]');
+                    if (lk) lk.classList.add('active');
+                }
+            });
+        }, { rootMargin: '0px 0px -60% 0px' });
+        headings.forEach(h => obs.observe(h));
+    </script>
+</body>
+</html>
