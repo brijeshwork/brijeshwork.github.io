@@ -1043,7 +1043,7 @@ Authorization: authorization string
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/s3-like-object-storage/figure-8-data-store-components-BMATQ3EZ.png"
+                            src="https://brijesh.work/cdn/s3-like-object-storage/figure-8-data-store-components-BMATQ3EZ.webp"
                             alt="Image represents a simplified architecture diagram illustrating data replication and routing.  A central 'Placement Service' component receives 'Data traffic' from a 'Data Routing Service.'  The Placement Service then sends this data to three separate storage nodes, each represented by a hard drive icon.  The connections between the Placement Service and each storage node are labeled 'Heartbeat,' indicating a regular communication for health checks and coordination.  Each storage node also receives 'Data replication' from the Placement Service, ensuring data redundancy.  The overall flow shows data moving from the routing service, through the placement service, and finally being replicated across multiple storage nodes for high availability and fault tolerance."
                             width="600" height="349" loading="lazy">
                     </div>
@@ -1184,7 +1184,7 @@ Authorization: authorization string
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/s3-like-object-storage/figure-10-data-persistence-flow-7TJ7KRXK.png"
+                            src="https://brijesh.work/cdn/s3-like-object-storage/figure-10-data-persistence-flow-7TJ7KRXK.webp"
                             alt="Image represents a data storage and replication system.  The system begins with an `API Service` which receives a `Write data` request (1). This request is then passed to a `Data Routing Service`. The `Data Routing Service` consults a `Placement Service` (2) to determine the primary data node for storage.  Once the primary node is selected, the `Data Routing Service` sends the data to the primary node (3). The primary node, labeled `Data Node Primary`, then replicates the data to two secondary nodes, labeled `Data Node Secondary` (4).  Heartbeats are exchanged between the primary node and each secondary node to maintain system health and monitor replication status. Finally, the `API Service` receives an `ObjId` (5) in response, indicating successful data storage.  The entire system is labeled `Data Store`, indicating the overall function of data persistence and redundancy."
                             width="700" height="315" loading="lazy">
                     </div>
@@ -1403,7 +1403,7 @@ Authorization: authorization string
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/s3-like-object-storage/table-3-object_mapping-table-N2BUA76T.png"
+                            src="https://brijesh.work/cdn/s3-like-object-storage/table-3-object_mapping-table-N2BUA76T.webp"
                             alt="Image represents a table schema named 'object_mapping'.  The table has four columns:  `object_id` (presumably a unique identifier for each object), `file_name` (a string representing the name of the file where the object is stored), `start_offset` (a numerical value indicating the starting position of the object within the file), and `object_size` (a numerical value representing the size of the object in bytes).  No data rows are shown; only the column names and their data types are depicted. The table's purpose is to map objects to their corresponding file locations and sizes, facilitating efficient retrieval of objects from storage."
                             width="335" height="245" loading="lazy">
                     </div>
@@ -2000,7 +2000,7 @@ Authorization: authorization string
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/s3-like-object-storage/figure-21-database-tables-DAGCX3WM.png"
+                            src="https://brijesh.work/cdn/s3-like-object-storage/figure-21-database-tables-DAGCX3WM.webp"
                             alt="Image represents two database tables depicted as simple rectangular boxes. The left table is labeled 'bucket' and contains four fields: 'bucket_name', 'bucket_id', 'owner_id', and 'enable_versioning'.  The right table is labeled 'object' and contains five fields: 'bucket_name', 'object_name', 'object_version', and 'object_id'.  Each field is listed vertically within its respective table.  There is no visual connection or information flow explicitly shown between the two tables; they are presented independently, suggesting a relational database structure where the 'object' table likely has a foreign key relationship with the 'bucket' table via the 'bucket_name' field, implying that objects belong to buckets."
                             width="400" height="145" loading="lazy">
                     </div>
@@ -2655,7 +2655,7 @@ ORDER BY object_name OFFSET 10 LIMIT 10
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/s3-like-object-storage/chapter-summary-CM6JBEGR.png"
+                            src="https://brijesh.work/cdn/s3-like-object-storage/chapter-summary-CM6JBEGR.webp"
                             alt="Image represents a mind map outlining the design process for an S3-like object storage system.  The central node is 'S3-like Object Storage,' branching into four numbered steps. Step 1 details 'functional requirements,' including bucket creation, object uploading/downloading, object versioning, and listing objects within a bucket.  It also lists 'non-functional requirements,' specifying 100PB data capacity, 6 nines of durability, and 4 nines of availability, along with storage efficiency. Step 2 focuses on the 'high-level design' of uploading and downloading objects. Step 3 delves into the 'data store,' encompassing data persistence flow, how data is organized, durability (achieved through replication and erasure coding), and correctness verification.  This step also addresses the 'metadata data model,' including schema design and scaling strategies for both bucket and object tables, along with object versioning, optimization for large file uploads, and garbage collection. Finally, step 4 simply notes 'wrap up.'  The connections between nodes illustrate the hierarchical breakdown of the design process, from high-level requirements to low-level implementation details."
                             width="650" height="826" loading="lazy">
                     </div>

@@ -97,7 +97,7 @@
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/stock-exchange/figure-1-largest-stock-exchanges-VOCAUYH7.png"
+                            src="https://brijesh.work/cdn/stock-exchange/figure-1-largest-stock-exchanges-VOCAUYH7.webp"
                             alt="Image represents a world map depicting the locations of major stock exchanges globally, categorized by color-coded regions and sized according to their market capitalization. North America shows three olive-green hexagons representing NASDAQ-US, NYSE, and TMX Group, sized to suggest relative market cap. Europe features several blue hexagons representing NASDAQ OMX Nordic Exchange, Deutsche Boerse, Euronext, and SIX Swiss Exchange, again with size indicating relative market capitalization. Asia displays several purple hexagons for Shenzhen Stock Exchange, Shanghai Stock Exchange, Korea Exchange, Japan Exchange Group, and Hong Kong Exchanges and Clearing, with size reflecting relative market cap. Finally, Australia is represented by a single brown hexagon for the Australian Securities Exchange. A separate legend on the left uses concentric octagons to visually represent market capitalization ranges in trillions of dollars ($20T, $5T, $0.5T). The map's background is a light gray dotted pattern, providing a visual contrast to the hexagon-shaped stock exchange representations."
                             width="750" height="359" loading="lazy">
                     </div>
@@ -460,7 +460,7 @@
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/stock-exchange/figure-6-high-level-design-A3NJ5JVE.png"
+                            src="https://brijesh.work/cdn/stock-exchange/figure-6-high-level-design-A3NJ5JVE.webp"
                             alt="Image represents a system architecture diagram for a stock trading platform.  The diagram shows a client's computer (1) connecting to a Broker (14) which then interacts with a Client Gateway (13).  The Client Gateway (13) sends order information (3) to an Order Manager (which includes a Wallet (6)). The Order Manager performs an Aggregated Risk Check (4, 5) before sending the order (7) to a Sequencer (8). The Sequencer (8) then sends the order (10) to a Matching Engine (9) within the Stock Exchange, which interacts with an Order Book (9).  Market data flows (M1, M2, M3) from a Market Data Publisher to the Data Service and back to the Order Manager via a dashed line, indicating a reporting flow (R1, R2).  The Order Manager also sends data (R1) to a Reporter, which stores order and execution data in a DB (database).  Numbers (1-14) indicate the critical path (solid line), while dashed lines represent market data flow (M1, M2, M3) and reporting flow (R1, R2).  The entire system is enclosed within a dashed box, representing the overall platform."
                             width="750" height="410" loading="lazy">
                     </div>
@@ -1106,7 +1106,7 @@ low: low price of each candlestick. Double
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/stock-exchange/figure-12-product-order-execution-CMK5RE7H.png"
+                            src="https://brijesh.work/cdn/stock-exchange/figure-12-product-order-execution-CMK5RE7H.webp"
                             alt="Image represents a database schema diagram showing three entities: 'Order', 'Execution', and 'Product'.  The 'Order' entity, containing attributes like `orderID` (UUID), `productID` (int), `price` (long), `quantity` (long), `side` (Side), `orderStatus` (OrderStatus), `orderType` (OrderType), `timeInForce` (TimeInForce), `symbol` (long), `userID` (long), `clientOrderID` (string), `broker` (string), `accountID` (long), `entryTime` (long), and `transactionTime` (long), has a one-to-many relationship (1:0..n) with the 'Execution' entity.  The 'Execution' entity includes attributes such as `execID` (UUID), `orderID` (UUID), mirroring several attributes from 'Order' but also adding `feeCurrency` (Currency), `feeRate` (long), `feeAmount` (long), and `execStatus` (ExecStatus).  Finally, the 'Order' entity has a one-to-one relationship (1:1) with the 'Product' entity, which contains attributes `productID` (int), `symbol` (type), `lotSize` (int), `tickSize` (decimal), `quoteCurrency` (Currency), `settleCurrency` (Currency), `description` (string), and `field` (type).  The relationships are indicated by labeled arrows showing the cardinality of the connections."
                             width="500" height="700" loading="lazy">
                     </div>
@@ -1751,7 +1751,7 @@ class CandlestickChart {
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/stock-exchange/figure-19-sample-design-of-sequencer-XIKDOBN7.png"
+                            src="https://brijesh.work/cdn/stock-exchange/figure-19-sample-design-of-sequencer-XIKDOBN7.webp"
                             alt="Image represents a system architecture diagram illustrating data flow in an event-processing pipeline.  At the top, a 'Gateway' component is shown, connected via a numbered arrow (1) to a 'ring buffer'. This ring buffer acts as a temporary storage for incoming events.  Another 'ring buffer' is connected to a 'Matching Engine', suggesting parallel processing of events.  Numbered arrow (2) indicates that both ring buffers feed into a 'Sequencer' component. Finally, arrow (3) shows the Sequencer writing the processed events into an 'Event Store (mmap)', represented as a series of vertical bars symbolizing a memory-mapped file for efficient storage and retrieval.  The overall flow depicts events entering through the Gateway, being buffered, processed by the Matching Engine, sequenced, and finally persistently stored in the Event Store."
                             width="500" height="400" loading="lazy">
                     </div>
@@ -2201,7 +2201,7 @@ Context match(OrderBook book, Order order) {
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/stock-exchange/figure-24-market-data-publisher-UJ7LL7ZE.png"
+                            src="https://brijesh.work/cdn/stock-exchange/figure-24-market-data-publisher-UJ7LL7ZE.webp"
                             alt="Image represents a simplified architecture diagram for a system likely involved in financial trading.  On the left, a 'Matching Engine' component processes orders, sending 'Orders, matched results' to a central 'MDP' (Market Data Provider) component. The MDP contains three instances of an 'Order book,' suggesting a system handling multiple order books concurrently.  The MDP feeds data into a 'Candlestick Charts' component, which generates charts with three different time granularities: 1-minute, 1-hour, and 1-day.  These charts are visualized as circular representations within the 'Candlestick Charts' box. A dashed arrow indicates that external systems might access the 1-day candlestick chart data.  The 'Candlestick Charts' component outputs data to a 'Persistence' component, likely a database for storing chart data. Finally, a 'Data Service' component sits at the bottom, suggesting a layer for accessing and potentially distributing the persisted data.  The overall flow is from order matching, through market data processing and chart generation, to data persistence and service access."
                             width="650" height="343" loading="lazy">
                     </div>
@@ -2389,7 +2389,7 @@ Context match(OrderBook book, Order order) {
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/stock-exchange/chapter-summary-KL4KCPJZ.png"
+                            src="https://brijesh.work/cdn/stock-exchange/chapter-summary-KL4KCPJZ.webp"
                             alt="Image represents a hierarchical breakdown of the design process for a Stock Exchange system.  The central node is labeled 'Stock Exchange,' branching into four main steps: Step 1 ('estimation' and 'high-level design'), Step 2 ('api design' and 'data model'), Step 3 (focusing on system performance, fault tolerance, matching algorithms, data publishing optimization, fairness, multicast, colocation, and network security), and Step 4 ('wrap up'). Step 1 begins with 'non-functional requirements,' specifying 'availability: 99.99%', 'fault tolerance,' 'millisecond-level latency,' and 'security,' followed by estimations of '100 symbols' and '215k peak QPS.'  The high-level design considers 'trading flow,' 'market data flow,' and 'reporting flow.' Step 2 details the API design, encompassing 'order,' 'execution,' 'order book,' and 'historical prices,' while the data model includes 'product, order, execution,' 'order book,' and 'candlestick chart.' Step 3 delves into various aspects of system implementation, including high availability, fault tolerance, and specific algorithms and optimizations. Finally, Step 4 represents the concluding phase of the design process.  Each step branches out to illustrate the specific considerations and components involved in designing the Stock Exchange system."
                             width="600" height="1057" loading="lazy">
                     </div>

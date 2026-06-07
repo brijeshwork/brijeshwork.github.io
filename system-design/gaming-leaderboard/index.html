@@ -583,7 +583,7 @@
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-5-leaderboard-table-WGJD5HTB.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-5-leaderboard-table-WGJD5HTB.webp"
                             alt="Image represents a simple database table schema diagram for a leaderboard. The diagram is a rectangular box with a header and a body. The header, positioned at the top, boldly displays the table name 'leaderboard'.  The body, separated from the header by a horizontal line, contains two rows defining the table's columns. The first row specifies a column named 'user_id' with a data type of 'varchar,' indicating it will store variable-length strings representing user identifiers. The second row defines a column named 'score' with a data type of 'int,' signifying it will store integer values representing user scores.  No connections or information flow is depicted beyond the table's internal structure."
                             width="335" height="218" loading="lazy">
                     </div>
@@ -814,7 +814,7 @@ LIMIT 10
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-8-february-leaderboard-is-represented-by-the-sorted-set-G3APTESM.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-8-february-leaderboard-is-represented-by-the-sorted-set-G3APTESM.webp"
                             alt="Image represents a simple data flow diagram showing a leaderboard for February 2021.  A rectangular box labeled 'leaderboard_feb_2021' acts as the source, with a directed arrow pointing to a table. This table is structured with two columns: 'score' (representing numerical scores) and 'member' (representing usernames, e.g., 'user10,' 'user20'). The table contains nine rows, each showing a user's score and corresponding username, ordered from highest to lowest score.  The arrow indicates that the data within the 'leaderboard_feb_2021' box is the source of the information displayed in the score and member columns of the table, effectively representing a leaderboard's data structure and how it might be accessed or displayed."
                             width="500" height="285" loading="lazy">
                     </div>
@@ -964,7 +964,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-11-a-user-scores-a-point-XGFZPTLE.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-11-a-user-scores-a-point-XGFZPTLE.webp"
                             alt="Image represents a simplified system architecture diagram for a leaderboard service.  The diagram shows three main components arranged horizontally. On the left is a box labeled 'Leaderboard service,' representing the application responsible for managing and displaying leaderboard data.  In the center is a box labeled 'ZINCRBY,' indicating the use of a Redis command for incrementing the score of a member in a sorted set, a data structure ideal for leaderboards.  Finally, on the right is the Redis logo, signifying that the leaderboard data is stored in a Redis database.  The arrangement implies that the Leaderboard service interacts with Redis using the ZINCRBY command, likely to update user scores on the leaderboard.  There are no explicit arrows or lines to show data flow, but the implied interaction is that the Leaderboard service sends commands (like ZINCRBY) to Redis to manage the leaderboard data, and retrieves data from Redis to display the leaderboard."
                             width="500" height="60" loading="lazy">
                     </div>
@@ -996,7 +996,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-12-fetch-top-10-global-leaderboard-KOUPGTUC.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-12-fetch-top-10-global-leaderboard-KOUPGTUC.webp"
                             alt="Image represents a simplified system architecture diagram showing the interaction between a Leaderboard service and a Redis database.  A rectangular box labeled 'Leaderboard service' is depicted on the left, indicating a service responsible for managing and presenting leaderboard data.  To its right, a rectangular box displays 'ZREVRANGE,' which is a Redis command used to retrieve sorted set members with scores in descending order within a specified range.  A right-pointing arrow, though not explicitly drawn, is implied to show the flow of a request from the Leaderboard service to the Redis database.  On the far right, the Redis logo is shown, clearly identifying the database technology used.  The overall diagram illustrates how the Leaderboard service likely uses the `ZREVRANGE` command to query a sorted set in Redis, presumably containing user scores, to retrieve and display leaderboard information."
                             width="500" height="60" loading="lazy">
                     </div>
@@ -1027,7 +1027,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-13-fetch-a-users-leaderboard-position-YUJM3G3J.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-13-fetch-a-users-leaderboard-position-YUJM3G3J.webp"
                             alt="Image represents a simplified system architecture diagram showing data flow for a leaderboard service.  On the left, a box labeled 'Leaderboard service' represents the application responsible for managing and displaying leaderboard data.  This service interacts with a central component labeled 'ZREVRANK,' which is implied to be a Redis command for retrieving ranked data.  The right side of the diagram shows the Redis logo, indicating that ZREVRANK is executed against a Redis database.  The overall flow is that the Leaderboard service queries Redis using the ZREVRANK command to retrieve and display ranked information, suggesting that the leaderboard data is stored and managed within a Redis database using its sorted set data structure.  No specific URLs or parameters are visible in the diagram."
                             width="500" height="60" loading="lazy">
                     </div>
@@ -1203,7 +1203,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-15-manage-our-own-services-T3VHGXIJ.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-15-manage-our-own-services-T3VHGXIJ.webp"
                             alt="Image represents a system architecture diagram for a leaderboard application.  The diagram shows a user (represented by a person icon and a smartphone) interacting with a system through a load-balanced set of web servers (represented by a hierarchical box with three subordinate boxes). These web servers connect to a MySQL database storing user profiles and their associated points.  Additionally, a Redis instance is used to cache the top 10 user profiles for faster retrieval, improving performance.  A separate Redis instance stores the leaderboard data as a sorted set, enabling efficient ranking and retrieval of leaderboard information.  Data flows from the user's device to the web servers, which then interact with both the MySQL database for user profile information and the Redis instances for caching and leaderboard data.  The leaderboard data is specifically stored as a sorted set in Redis, optimized for efficient ranking operations."
                             width="700" height="281" loading="lazy">
                     </div>
@@ -1317,7 +1317,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-16-score-a-point-TJAYZUVE.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-16-score-a-point-TJAYZUVE.webp"
                             alt="Image represents a system architecture diagram illustrating the process of updating a leaderboard after a game win.  The sequence begins with a 'Leaderboard service' box, indicating the system responsible for maintaining the leaderboard data.  A 'Win game' box signifies the event triggering the update.  This event flows to an AWS Lambda function (represented by the orange Lambda logo), which acts as the processing unit.  The Lambda function then calls a 'ZINCRBY' command, directed towards a Redis instance (represented by the Redis logo), to atomically increment a player's score.  The 'Insert point' label clarifies the location where the score update is applied within the Redis database. Finally, the updated score is presumably persisted to a MySQL database (represented by the MySQL logo) for long-term storage, although this connection is not explicitly shown with an arrow.  The overall flow depicts a game win triggering an update to a player's score in Redis, potentially followed by a persistent update in MySQL, managed by an AWS Lambda function."
                             width="750" height="180" loading="lazy">
                     </div>
@@ -1332,7 +1332,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-17-retrieve-leaderboard-4UMUHLST.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-17-retrieve-leaderboard-4UMUHLST.webp"
                             alt="Image represents a system architecture diagram illustrating a leaderboard service.  The diagram shows a 'Leaderboard service' box, which initiates a 'Get leaderboard' request. This request is sent to an AWS Lambda function (represented by the orange Lambda symbol). The Lambda function then makes two calls:  ① a 'Call ZREVRANGE' call to a Redis database (represented by the Redis logo), retrieving leaderboard data, and ② a 'Fetch user details' call to a MySQL database (represented by the MySQL logo), fetching additional user information.  The data flows from Redis and MySQL back to the Lambda function, which presumably processes and aggregates the data before returning the complete leaderboard information to the 'Leaderboard service'.  The overall flow depicts a typical architecture for a leaderboard system, leveraging Redis for fast data retrieval and MySQL for persistent user details."
                             width="750" height="180" loading="lazy">
                     </div>
@@ -1474,7 +1474,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-19-hash-partition-BNBRIQB7.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-19-hash-partition-BNBRIQB7.webp"
                             alt="Image represents a Redis Cluster architecture.  At the top, a 'Client' connects to a 'Proxy'. The Proxy then directs requests to one of three Redis shards based on a slot range. Each shard is depicted as a dashed-line box containing a primary node (represented by a red, three-layered cube with a star) and two replica nodes (similar red cubes).  Shard 1 has a slot range of [0, 5500], Shard 2 has [5501, 11000], and Shard 3 has [11001, 16383].  The primary node in each shard is responsible for handling writes, and the replicas provide read availability and redundancy.  Arrows indicate the flow of data: from the Client to the Proxy, and from the Proxy to the appropriate primary node within the relevant shard.  The label 'Redis Cluster' is placed below the three shards, indicating the overall system."
                             width="600" height="512" loading="lazy">
                     </div>
@@ -1495,7 +1495,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-20-scatter-gather-KXBJYDNB.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-20-scatter-gather-KXBJYDNB.webp"
                             alt="Image represents a data processing pipeline using a scatter-gather approach.  Three tables, labeled 'shard 0 (top 10)', 'shard 1 (top 10)', and 'shard 2 (top 10)', each contain a subset of data, organized into two columns: 'score' (numeric) and 'member' (alphanumeric, presumably user IDs). Each shard displays the top 10 entries based on the score.  Arrows labeled 'scatter-gather' indicate that data from each of the three shard tables is sent to a central 'top 10' table. This table aggregates the top 10 entries across all shards, based on the score, resulting in a combined list of the top 10 members with their corresponding scores.  The 'top 10' table also has 'score' and 'member' columns, mirroring the structure of the shard tables.  The process implies a distributed system where data is initially partitioned across multiple shards, then consolidated to produce an overall top 10 ranking."
                             width="500" height="540" loading="lazy">
                     </div>
@@ -1595,7 +1595,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-21-dynamodb-solution-QSI6N2FT.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-21-dynamodb-solution-QSI6N2FT.webp"
                             alt="Image represents a simplified architecture diagram for a leaderboard service.  The diagram shows four components arranged horizontally.  The leftmost component is a white box labeled 'Leaderboard service,' indicating a service responsible for managing and displaying leaderboard data.  Next is a stylized golden-orange icon representing Amazon Elastic Container Service (ECS), suggesting the leaderboard service is deployed using this container orchestration platform.  Following this is an orange icon representing AWS Lambda, implying the use of serverless functions for specific tasks within the leaderboard service, possibly for handling updates or requests. Finally, on the far right, a blue cylindrical icon represents a database, likely storing the leaderboard data (scores, user IDs, timestamps, etc.).  There are no explicit connections drawn between the components, but the implied flow is that the 'Leaderboard service' (running on ECS and utilizing Lambda functions) interacts with the database to read and write leaderboard information."
                             width="500" height="84" loading="lazy">
                     </div>
@@ -1612,7 +1612,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-22-denormalized-view-of-the-leaderboard-and-user-tables-PGST2M7Z.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-22-denormalized-view-of-the-leaderboard-and-user-tables-PGST2M7Z.webp"
                             alt="Image represents a table depicting a database schema or a subset of data from a table.  The table is divided into two main sections: 'Primary key' and 'Attributes'. The 'Primary key' column lists unique identifiers, specifically `user_id` values such as `lovelove`, `i_love_tofu`, `golden_gate`, `pizza_or_bread`, and `ocean`,  with an ellipsis (...) indicating further entries.  The 'Attributes' section contains columns for `score` (numerical user scores), `email` (user email addresses), `profile_pic` (URLs pointing to profile pictures stored on a CDN, e.g., `https://cdn.example/3.png`), and `leaderboard_name` (likely indicating the leaderboard the user belongs to, e.g., `chess#2020-02`). Each row represents a single user record, with the `user_id` serving as the primary key linking all attributes to a specific user.  The data shows a consistent pattern of email addresses using the `@test.com` domain and leaderboard names starting with 'chess' followed by a date.  The ellipsis (...) at the bottom indicates that the table continues beyond the visible rows."
                             width="560" height="194" loading="lazy">
                     </div>
@@ -1634,7 +1634,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-23-partition-key-and-sort-key-NMM4PK4Z.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-23-partition-key-and-sort-key-NMM4PK4Z.webp"
                             alt="Image represents a table depicting a Global Secondary Index with five columns. The first column, labeled 'Partition key (PK)', contains strings representing partition keys, all starting with 'chess#' followed by a date in YYYY-MM format (e.g., 'chess#2020-02'). The second column, 'Sort key (score)', lists integer values. The third column, 'user_id', shows unique user identifiers as strings (e.g., 'lovelove', 'i_love_tofu'). The fourth column, 'email', contains email addresses corresponding to the users.  The fifth column, 'profile_pic', lists URLs pointing to profile pictures stored on a CDN (Content Delivery Network), all starting with 'https://cdn.example/' followed by a string (e.g., '3.png', 'p.png').  Each row represents a single entry in the index, linking a partition key, a score, a user ID, an email address, and a profile picture URL. The table includes an ellipsis (...) at the end to indicate that it continues beyond the visible rows."
                             width="560" height="224" loading="lazy">
                     </div>
@@ -1687,7 +1687,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-24-updated-partition-key-WDZGBZGP.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-24-updated-partition-key-WDZGBZGP.webp"
                             alt="Image represents a table depicting a global secondary index.  The table is divided into five columns. The first column, labeled 'Partition key (PK)', contains unique identifiers formatted as 'chess#YYYY-MM#pX', where YYYY-MM represents a year and month, and pX represents a partition number. The second column, 'Sort key (score)', contains numerical values representing scores, seemingly associated with each partition key. The remaining three columns, collectively labeled 'Attributes', list user information: 'user_id' (a unique username), 'email' (the user's email address), and 'profile_pic' (a URL pointing to the user's profile picture stored on a CDN, 'cdn.example'). Each row in the table represents a data entry, linking a specific partition key and score to a user's ID, email, and profile picture URL.  The table shows several example entries and indicates that more data exists ('...') beyond the visible rows.  The data suggests a system where user data is partitioned and sorted based on a score, allowing for efficient retrieval based on both partition key and score."
                             width="560" height="230" loading="lazy">
                     </div>
@@ -1714,7 +1714,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-25-scatter-gather-TTZSXIYA.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/figure-25-scatter-gather-TTZSXIYA.webp"
                             alt="Image represents a system for generating a top 10 leaderboard from data partitioned across three sources.  Three tables, labeled 'top 10 from partition 0 (scatter)', 'top 10 from partition 1 (scatter)', and 'top 10 from partition 2 (scatter)', each contain the top 10 entries from a respective partition. Each table has three columns: 'Partition key (PK)', 'Sort key (score)', and 'user_id'.  The 'Partition key (PK)' column contains a unique identifier for each partition (e.g., 'chess#2020-02#p0'). The 'Sort key (score)' column contains a numerical score, and the 'user_id' column contains a user identifier.  Arrows labeled 'gather' connect each of these three tables to a final table, 'Top 10 leaderboard,' which has columns 'score' and 'user_id'. The 'gather' operation implies that the data from the three source tables are combined, and then sorted by the 'score' column to produce the final top 10 leaderboard.  The final leaderboard shows the top 10 users based on their scores, aggregated from the three partitions."
                             width="650" height="484" loading="lazy">
                     </div>
@@ -1835,7 +1835,7 @@ WHERE lb1.user_id = {:user_id};
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/gaming-leaderboard/chapter-summary-DXV7IGUO.png"
+                            src="https://brijesh.work/cdn/gaming-leaderboard/chapter-summary-DXV7IGUO.webp"
                             alt="Image represents a mind map outlining the design process for a gaming leaderboard system.  The central node is 'Gaming Leaderboard,' branching into four main steps (step 1, 2, 3, and 4). Step 1 focuses on requirements, splitting into 'functional req' (display top 10, show a user's rank, show four places above and below the desired user) and 'non-functional req' (real-time update, scalable). Step 1 also includes 'estimation,' detailing expected daily active users (5 million DAU) and update score queries per second (2.5k). Step 2 addresses 'api design' (score point, get leaderboard, get player rank) and 'high-level design,' which considers 'data model' options: a relational database solution or a Redis solution. Step 3 explores deployment ('build on the cloud or not') and scaling ('scale Redis' or use an alternative NoSQL solution). Finally, step 4 addresses performance optimization ('faster retrieval and breaking tie') and system reliability ('system failure recovery').  The entire diagram illustrates a hierarchical breakdown of the design process, from initial requirements and estimations to high-level design choices, data modeling, scaling strategies, and considerations for system robustness."
                             width="600" height="724" loading="lazy">
                     </div>

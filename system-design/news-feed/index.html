@@ -221,7 +221,7 @@
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/news-feed/figure-11-2-DHBRUF3G.png"
+                            src="https://brijesh.work/cdn/news-feed/figure-11-2-DHBRUF3G.webp"
                             alt="Image represents a system architecture diagram illustrating the flow of a user request for a news feed.  A user, accessing via either a web browser or mobile app, initiates a request that first resolves through a DNS server. This request, containing parameters like `v1/me/feed?content=Hello&amp;auth_token={auth_token}`, is then directed to a load balancer which distributes the traffic across multiple web servers.  These web servers communicate with three distinct services: a Post Service, a Fanout Service, and a Notification Service. The Post Service retrieves data from a Post Cache, which in turn accesses a Post DB if necessary.  The Fanout Service interacts with a News Feed Cache to provide the news feed content.  The Notification Service is shown but its interaction with other components isn't explicitly detailed.  The diagram highlights the use of caching mechanisms (Post Cache and News Feed Cache) to improve performance by storing frequently accessed data closer to the web servers.  The overall architecture demonstrates a client-server model with load balancing and caching strategies for efficient request handling."
                             width="500" height="803" loading="lazy">
                     </div>
@@ -281,7 +281,7 @@
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/news-feed/figure-11-3-DJSVC462.png"
+                            src="https://brijesh.work/cdn/news-feed/figure-11-3-DJSVC462.webp"
                             alt="Image represents a system architecture diagram for a news feed service.  The diagram starts with a 'User' block containing icons for a web browser and a mobile app, which connects to a DNS server.  From the User block, a request labeled 'v1/me/feed' is sent to a 'Load balancer,' which distributes the request to a cluster of 'Web servers.' These web servers then communicate with a 'News Feed Service,' which in turn accesses a 'News Feed Cache' composed of multiple cache instances (labeled 'CACHE'). The data flow is unidirectional, starting from the user's request and ending at the retrieval of data from the cache.  The web servers are depicted within a dashed-line box, suggesting a cluster or pool of servers. The News Feed Cache is also highlighted with a rounded rectangle, indicating a distinct component.  The overall architecture shows a client-server model with load balancing and caching implemented for improved performance and scalability."
                             width="350" height="518" loading="lazy">
                     </div>
@@ -337,7 +337,7 @@
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/news-feed/figure-11-4-XQVJN6AJ.png"
+                            src="https://brijesh.work/cdn/news-feed/figure-11-4-XQVJN6AJ.webp"
                             alt="Image represents a system architecture diagram for a social media feed.  A user, accessing via web browser or mobile app (sending a request like `/v1/me/feed?content=Hello&amp;auth_token={auth_token}`), initiates the process. This request is routed through a DNS server to a load balancer, which distributes the traffic to multiple web servers.  The web servers handle authentication and rate limiting before interacting with a Post Service. The Post Service retrieves data from a Post Cache, falling back to a Post DB if necessary.  Concurrently, the Fanout Service, receiving friend IDs (1) from the web servers, queries a Graph DB for friends' data (2). This data is then placed in a Message Queue (3). Fanout Workers (4) process these messages, updating a News Feed Cache (5).  The Notification Service is also triggered by the web servers.  The system utilizes caching extensively: Post Cache for post data, User Cache for user data, and News Feed Cache for the final feed.  Data flows are numbered for clarity, showing the sequence of operations."
                             width="700" height="793" loading="lazy">
                     </div>
@@ -606,7 +606,7 @@
                 <figure>
                     <div>
                         <img class="img-fluid rounded shadow-sm"
-                            src="https://brijesh.work/cdn/news-feed/figure-11-7-VBGEYZ3E.png"
+                            src="https://brijesh.work/cdn/news-feed/figure-11-7-VBGEYZ3E.webp"
                             alt="Image represents a system architecture diagram for a news feed service.  A user, accessing via web browser or mobile app, initiates a request (labeled '/v1/me/feed') which first resolves through a DNS server. This request then hits a load balancer (1), distributing the traffic across multiple web servers (2).  The web servers handle authentication and rate limiting before forwarding the request to the 'News Feed Service' (3). This service then accesses a 'News Feed Cache' (4) for data. If the data is not present in the cache, the service fetches it from the 'User DB' via the 'User Cache' (5) and 'Post DB' via the 'Post Cache' (5).  The responses are cached for future requests.  The entire system is fronted by a CDN (6) for faster content delivery, with the load balancer distributing traffic to the web servers and the mobile app connecting directly to the CDN (6).  Numbered arrows indicate the flow of requests and responses between components."
                             width="550" height="553" loading="lazy">
                     </div>

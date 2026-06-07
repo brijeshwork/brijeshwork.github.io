@@ -260,7 +260,7 @@
             <figure>
                 <div>
                     <img class="img-fluid rounded shadow-sm"
-                        src="https://brijesh.work/cdn/rate-limiting/figure-4-1-5NU243KC.png"
+                        src="https://brijesh.work/cdn/rate-limiter/figure-4-1-5NU243KC.webp"
                         alt="Image represents a simplified client-server architecture with a rate limiter.  A light-blue rectangular box labeled 'Client' contains icons representing a laptop and a smartphone, signifying that requests originate from various client devices. A thick, blue arrow labeled 'HTTP request' extends from the Client box to a group of three vertically stacked, light-green rectangular boxes representing 'API Servers,' which are enclosed within a dashed light-blue rounded rectangle.  Adjacent to the API Servers, a white rectangular box labeled 'Rate limiter' is shown, suggesting that the rate limiter sits between the client requests and the API servers. The arrow indicates that the HTTP request flows from the client, through the rate limiter, and finally reaches the API servers.  The arrangement visually depicts a system where the rate limiter manages the flow of HTTP requests from clients to prevent server overload."
                         width="500" height="103" loading="lazy">
                 </div>
@@ -277,7 +277,7 @@
             <figure>
                 <div>
                     <img class="img-fluid rounded shadow-sm"
-                        src="https://brijesh.work/cdn/rate-limiting/figure-4-2-GC455Q56.png"
+                        src="https://brijesh.work/cdn/rate-limiter/figure-4-2-GC455Q56.webp"
                         alt="Image represents a simplified client-server architecture with a rate limiter.  A light-blue rounded rectangle labeled 'Client' contains icons representing a laptop and a smartphone, symbolizing various client devices. A solid blue arrow originates from the Client box, indicating requests flowing towards a vertical rectangular component labeled 'Rate limiter'. This rate limiter acts as a gatekeeper, processing requests before they reach the servers.  Another solid blue arrow extends from the rate limiter to a dashed light-blue rounded rectangle labeled 'API Servers'.  Inside this rectangle are three vertically stacked green rectangles representing multiple API servers. The arrows indicate the unidirectional flow of requests from clients, through the rate limiter, and finally to the API servers for processing.  The overall diagram illustrates a common system design pattern where a rate limiter is used to manage and control the number of requests reaching the backend servers, preventing overload and ensuring system stability."
                         width="500" height="187" loading="lazy">
                 </div>
@@ -297,7 +297,7 @@
             <figure>
                 <div>
                     <img class="img-fluid rounded shadow-sm"
-                        src="https://brijesh.work/cdn/rate-limiting/figure-4-3-KLFLUVLJ.png"
+                        src="https://brijesh.work/cdn/rate-limiter/figure-4-3-KLFLUVLJ.webp"
                         alt="Image represents a system architecture diagram illustrating rate limiting in an API.  A light-blue rounded rectangle labeled 'Client' contains icons representing a laptop and a mobile phone, signifying multiple client devices.  Multiple solid blue arrows emanate from the Client, representing requests, and point towards a tall, dark-grey rectangle labeled 'Rate limiter.'  Some requests successfully pass through the Rate limiter, indicated by the continuation of the arrows to a dashed light-blue rounded rectangle labeled 'API Servers,' which depicts three vertically stacked green server icons.  However, one request is blocked by the Rate limiter, shown by a red 'X' and a dashed red arrow pointing back to the Client with the label '429: Too many requests,' indicating a HTTP 429 error response due to exceeding the rate limit.  The diagram clearly shows the flow of requests from clients, their filtering by the Rate limiter, and the potential for rejection based on exceeding a defined request rate."
                         width="500" height="189" loading="lazy">
                 </div>
@@ -963,7 +963,7 @@
             <figure>
                 <div>
                     <img class="img-fluid rounded shadow-sm"
-                        src="https://brijesh.work/cdn/rate-limiting/figure-4-12-HDGSAAHQ.png"
+                        src="https://brijesh.work/cdn/rate-limiter/figure-4-12-HDGSAAHQ.webp"
                         alt="Image represents a system architecture diagram illustrating a client-server interaction with rate limiting.  A rectangular box labeled 'Client' contains icons representing a laptop and a mobile phone, signifying various client devices.  A solid blue arrow connects the Client to a light-blue hexagonal box labeled 'Rate limiter middleware,' indicating that client requests first pass through this rate-limiting component.  From the rate limiter, another solid blue arrow points to a dashed-line box labeled 'API Servers,' depicted as three vertically stacked green server icons, representing the backend application servers handling client requests.  Finally, a solid blue arrow extends from the rate limiter to a red, three-layered cube labeled 'Redis,' suggesting that the rate limiter uses Redis, an in-memory data store, to track and manage request rates.  The arrows indicate the unidirectional flow of requests, with the API Servers potentially sending responses back through the rate limiter to the client (though this return path isn't explicitly shown)."
                         width="550" height="217" loading="lazy">
                 </div>
@@ -1096,7 +1096,7 @@ X-Ratelimit-Retry-After: The number of seconds to wait until you can make a requ
             <figure>
                 <div>
                     <img class="img-fluid rounded shadow-sm"
-                        src="https://brijesh.work/cdn/rate-limiting/figure-4-13-G2VF2RCQ.png"
+                        src="https://brijesh.work/cdn/rate-limiter/figure-4-13-G2VF2RCQ.webp"
                         alt="Image represents a system architecture diagram illustrating API request handling and rate limiting.  A client (represented by laptop and phone icons) sends requests to a Rate Limiter middleware.  If the request is within the rate limits, the middleware labels it 'success' and forwards it to a CACHE, which contains 'Cached rules'. The CACHE forwards the request to a set of API Servers.  If the request is not cached, the API Servers process it and store the result in Redis.  If the request exceeds the rate limits, the middleware labels it 'rate limited' and the request is handled in one of two ways:  option 1, the request is dropped (represented by a circle), or option 2, the request is sent to a Message queue for later processing.  A 'Rules' box sits above the 'Workers' (which feed the CACHE), indicating that the rate limiting rules originate from this source.  The system returns a '429: too many requests' error to the client if rate limiting is exceeded."
                         width="750" height="595" loading="lazy">
                 </div>
@@ -1233,7 +1233,7 @@ X-Ratelimit-Retry-After: The number of seconds to wait until you can make a requ
             <figure>
                 <div>
                     <img class="img-fluid rounded shadow-sm"
-                        src="https://brijesh.work/cdn/rate-limiting/figure-4-15-Q55WVCBS.png"
+                        src="https://brijesh.work/cdn/rate-limiter/figure-4-15-Q55WVCBS.webp"
                         alt="Image represents two different system architectures for handling rate limiting.  The left side shows a simpler design where two clients (Client 1 and Client 2), each represented by a laptop and a mobile phone icon within a rounded rectangle labeled with the client number, independently connect to their respective rate limiters.  Each rate limiter, depicted as a light-blue hexagon labeled 'Rate limiter 1' and 'Rate limiter 2' respectively, processes requests from its assigned client.  A unidirectional arrow indicates the flow of requests from the client to the corresponding rate limiter. The right side illustrates a more complex architecture where the same two clients now connect to both rate limiters.  Client 1 sends requests to both 'Rate limiter 1' and 'Rate limiter 2,' and similarly, Client 2 sends requests to both rate limiters.  The connections are represented by unidirectional arrows showing the flow of requests from each client to both rate limiters.  The dashed lines around each system suggest separate deployments or logical groupings."
                         width="600" height="186" loading="lazy">
                 </div>
@@ -1251,7 +1251,7 @@ X-Ratelimit-Retry-After: The number of seconds to wait until you can make a requ
             <figure>
                 <div>
                     <img class="img-fluid rounded shadow-sm"
-                        src="https://brijesh.work/cdn/rate-limiting/figure-4-16-JQMOMJUG.png"
+                        src="https://brijesh.work/cdn/rate-limiter/figure-4-16-JQMOMJUG.webp"
                         alt="Image represents a system architecture diagram illustrating rate limiting using Redis.  Two clients, labeled 'Client 1' and 'Client 2,' each represented by icons of a laptop and a mobile phone within light-blue rectangular boxes, send requests. Each client's requests pass through a separate rate limiter, depicted as light-blue hexagons labeled 'Rate limiter 1' and 'Rate limiter 2' respectively.  Thick blue arrows indicate the flow of requests.  Both rate limiters then send information to a central Redis database, represented by a red, three-layered cube with geometric shapes on top, labeled 'Redis.'  The arrows show that both rate limiters send data to the same Redis instance.  The overall diagram shows a client-rate limiter-database architecture where the rate limiters manage the flow of requests from multiple clients to a shared Redis database, likely for managing request frequency and preventing abuse."
                         width="600" height="233" loading="lazy">
                 </div>
@@ -1278,7 +1278,7 @@ X-Ratelimit-Retry-After: The number of seconds to wait until you can make a requ
             <figure>
                 <div>
                     <img class="img-fluid rounded shadow-sm"
-                        src="https://brijesh.work/cdn/rate-limiting/figure-4-17-AWRJL2OI.png"
+                        src="https://brijesh.work/cdn/rate-limiter/figure-4-17-AWRJL2OI.webp"
                         alt="Image represents a simplified map, possibly of a geographical region, showing the distribution of data points or resources.  The map is primarily light blue, depicting landmasses with irregular boundaries. Scattered across these landmasses are numerous light purple circles with white outlines, suggesting locations of individual entities or data points.  A single, larger light purple circle with a white outline is located on one of the landmasses, and a dark grey circle is situated to its left. A black arrow points from the grey circle directly towards the larger light purple circle, indicating a flow of information or a connection between these two points. The grey circle might represent a source or origin, while the larger purple circle could be a destination or central point receiving data. The smaller purple circles are distributed across both landmasses, suggesting a network or cluster of related entities.  The overall arrangement suggests a client-server or data aggregation model, where data from multiple sources (smaller purple circles) might be collected and processed at a central location (larger purple circle), potentially originating from a specific source (grey circle)."
                         width="400" height="236" loading="lazy">
                 </div>
