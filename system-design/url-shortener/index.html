@@ -179,14 +179,14 @@
                 request, it changes the short URL to the long URL with a redirect.</p>
 
             <figure>
-                <img src="https://bytebytego.com/images/courses/system-design-interview/design-a-url-shortener/figure-8-1-GSSWK66W.svg"
+                <img src="https://brijesh.work/cdn/url-shortener/figure-8-1-GSSWK66W.svg"
                     alt="HTTP response headers showing a 301 redirect from tinyurl.com with a Location header pointing to the destination Amazon URL"
                     width="750" height="345" loading="lazy">
                 <figcaption>Figure 1 — HTTP 301 redirect response headers</figcaption>
             </figure>
 
             <figure>
-                <img src="https://bytebytego.com/_next/image?url=%2Fimages%2Fcourses%2Fsystem-design-interview%2Fdesign-a-url-shortener%2Ffigure-8-2-KMMJ65HT.png&w=1200&q=75"
+                <img src="https://brijesh.work/cdn/url-shortener/figure-8-2-KMMJ65HT.png"
                     alt="Sequence diagram showing client requesting short URL, tinyurl server responding with 301 and Location header, then client requesting the final Amazon URL"
                     width="500" height="509" loading="lazy">
                 <figcaption>Figure 2 — Client–server URL redirect flow</figcaption>
@@ -215,7 +215,7 @@
             </p>
 
             <figure>
-                <img src="https://bytebytego.com/images/courses/system-design-interview/design-a-url-shortener/figure-8-3-YHOCRGSP.svg"
+                <img src="https://brijesh.work/cdn/url-shortener/figure-8-3-YHOCRGSP.svg"
                     alt="Diagram showing longURL fed into hash function f(x) producing a short URL hash value"
                     width="301" height="231" loading="lazy">
                 <figcaption>Figure 3 — Hash function mapping longURL to hashValue</figcaption>
@@ -236,7 +236,7 @@
                 database.</p>
 
             <figure>
-                <img src="https://bytebytego.com/images/courses/system-design-interview/design-a-url-shortener/figure-8-4-3R6D55TD.svg"
+                <img src="https://brijesh.work/cdn/url-shortener/figure-8-4-3R6D55TD.svg"
                     alt="Database table schema with columns: id (primary key), shortURL, and longURL" width="161"
                     height="141" loading="lazy">
                 <figcaption>Figure 4 — URL database schema</figcaption>
@@ -337,7 +337,7 @@
                 collision exists, recursively append a predefined string and rehash until unique. See Figure 5.</p>
 
             <figure>
-                <img src="https://bytebytego.com/images/courses/system-design-interview/design-a-url-shortener/figure-8-5-KWG6EFZC.svg"
+                <img src="https://brijesh.work/cdn/url-shortener/figure-8-5-KWG6EFZC.svg"
                     alt="Flowchart: longURL → hash function → shortURL → check DB → if exists append suffix and retry, if not save to DB"
                     width="750" height="420" loading="lazy">
                 <figcaption>Figure 5 — Hash + collision resolution flowchart</figcaption>
@@ -358,7 +358,7 @@
             </ul>
 
             <figure>
-                <img src="https://bytebytego.com/images/courses/system-design-interview/design-a-url-shortener/figure-8-6-OHTOBFS7.svg"
+                <img src="https://brijesh.work/cdn/url-shortener/figure-8-6-OHTOBFS7.svg"
                     alt="Diagram showing repeated division of 11157 by 62, yielding remainders 59, 55, 2 which map to X, T, 2 in base 62"
                     width="500" height="224" loading="lazy">
                 <figcaption>Figure 6 — Base 62 conversion of 11157₁₀ → 2TX₆₂</figcaption>
@@ -400,7 +400,7 @@
             <p>We use base 62 conversion in our design. Figure 7 demonstrates the full shortening flow.</p>
 
             <figure>
-                <img src="https://bytebytego.com/images/courses/system-design-interview/design-a-url-shortener/figure-8-7-A3ZKM2XP.svg"
+                <img src="https://brijesh.work/cdn/url-shortener/figure-8-7-A3ZKM2XP.svg"
                     alt="Flowchart: input longURL → check DB → if exists return shortURL, else generate unique ID → convert to shortURL via base62 → save to DB"
                     width="500" height="382" loading="lazy">
                 <figcaption>Figure 7 — URL shortening deep-dive flow</figcaption>
@@ -447,7 +447,7 @@
             </p>
 
             <figure>
-                <img src="https://bytebytego.com/_next/image?url=%2Fimages%2Fcourses%2Fsystem-design-interview%2Fdesign-a-url-shortener%2Ffigure-8-8-VBPJ6PXY.png&w=1200&q=75"
+                <img src="https://brijesh.work/cdn/url-shortener/figure-8-8-VBPJ6PXY.png"
                     alt="Architecture diagram showing user request flowing to load balancer, then web servers, then checking cache before falling back to database, and returning the longURL"
                     width="700" height="264" loading="lazy">
                 <figcaption>Figure 8 — URL redirecting architecture with cache layer</figcaption>
