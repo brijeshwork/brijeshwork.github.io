@@ -1045,11 +1045,13 @@ nav ul li a {
 }
 
 #site-footer .social-icon {
-  color: #000000;
+  color: #333333;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 #site-footer .social-icon:hover {
-  color: #333333;
+  color: #ffffff;
+  background: #3b82f6;
 }
 
 #site-footer h5,
