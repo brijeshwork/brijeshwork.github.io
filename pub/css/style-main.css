@@ -3173,7 +3173,7 @@ nav ul li a {
    Magento Hero Section - Clean Light Design
    ============================================ */
 
-.magento-hero-section {
+.modern-hero-section {
   position: relative;
   display: flex;
   align-items: center;
@@ -3184,7 +3184,7 @@ nav ul li a {
 }
 
 /* Subtle dot-grid background overlay */
-.magento-hero-bg-grid {
+.modern-hero-bg-grid {
   position: absolute;
   inset: 0;
   background-image:
@@ -3194,13 +3194,13 @@ nav ul li a {
   z-index: 0;
 }
 
-.magento-hero-section .container {
+.modern-hero-section .container {
   position: relative;
   z-index: 1;
 }
 
 /* Main title */
-.magento-hero-title {
+.modern-hero-title {
   font-size: 3.2rem;
   font-weight: 800;
   color: #0f0f1a;
@@ -3209,7 +3209,7 @@ nav ul li a {
   margin-bottom: 18px;
 }
 
-.magento-hero-highlight {
+.modern-hero-highlight {
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -3217,7 +3217,7 @@ nav ul li a {
 }
 
 /* Subtitle */
-.magento-hero-subtitle {
+.modern-hero-subtitle {
   font-size: 1.1rem;
   color: #5a5a72;
   line-height: 1.65;
@@ -3226,14 +3226,14 @@ nav ul li a {
 }
 
 /* Feature pills row */
-.magento-hero-features {
+.modern-hero-features {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 32px;
 }
 
-.magento-hero-pill {
+.modern-hero-pill {
   display: inline-flex;
   align-items: center;
   padding: 6px 14px;
@@ -3247,13 +3247,13 @@ nav ul li a {
   white-space: nowrap;
 }
 
-.magento-hero-pill:hover {
+.modern-hero-pill:hover {
   background: rgba(99,102,241,0.14);
   border-color: rgba(99,102,241,0.35);
 }
 
 /* CTA Buttons */
-.magento-hero-actions {
+.modern-hero-actions {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -3261,7 +3261,7 @@ nav ul li a {
   flex-wrap: wrap;
 }
 
-.magento-hero-btn-primary {
+.modern-hero-btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -3277,7 +3277,7 @@ nav ul li a {
   letter-spacing: -0.01em;
 }
 
-.magento-hero-btn-primary:hover {
+.modern-hero-btn-primary:hover {
   background: #1e1e35;
   border-color: #1e1e35;
   color: #ffffff;
@@ -3285,15 +3285,15 @@ nav ul li a {
   box-shadow: 0 8px 24px rgba(15,15,26,0.2);
 }
 
-.magento-hero-btn-primary svg {
+.modern-hero-btn-primary svg {
   transition: transform 0.25s ease;
 }
 
-.magento-hero-btn-primary:hover svg {
+.modern-hero-btn-primary:hover svg {
   transform: translateX(4px);
 }
 
-.magento-hero-btn-secondary {
+.modern-hero-btn-secondary {
   display: inline-flex;
   align-items: center;
   padding: 13px 26px;
@@ -3308,14 +3308,14 @@ nav ul li a {
   letter-spacing: -0.01em;
 }
 
-.magento-hero-btn-secondary:hover {
+.modern-hero-btn-secondary:hover {
   border-color: #9090b0;
   color: #0f0f1a;
   transform: translateY(-2px);
 }
 
 /* Stats row */
-.magento-hero-stats {
+.modern-hero-stats {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -3324,16 +3324,16 @@ nav ul li a {
   border-top: 1px solid #e4e6ef;
 }
 
-.magento-stat-item {
+.modern-stat-item {
   text-align: left;
   padding: 12px 28px 12px 0;
 }
 
-.magento-stat-item:first-child {
+.modern-stat-item:first-child {
   padding-left: 0;
 }
 
-.magento-stat-item strong {
+.modern-stat-item strong {
   display: block;
   font-size: 1.9rem;
   font-weight: 800;
@@ -3343,7 +3343,7 @@ nav ul li a {
   margin-bottom: 3px;
 }
 
-.magento-stat-item span {
+.modern-stat-item span {
   font-size: 0.75rem;
   color: #8a8aa8;
   text-transform: uppercase;
@@ -3352,7 +3352,7 @@ nav ul li a {
   line-height: 1.2;
 }
 
-.magento-stat-divider {
+.modern-stat-divider {
   width: 1px;
   height: 36px;
   background: #d8d8e8;
@@ -3361,14 +3361,14 @@ nav ul li a {
 }
 
 /* Right side visual */
-.magento-hero-visual {
+.modern-hero-visual {
   position: relative;
   width: 300px;
   height: 300px;
   flex-shrink: 0;
 }
 
-.magento-hero-glow {
+.modern-hero-glow {
   position: absolute;
   inset: -20px;
   background: radial-gradient(circle at center, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.08) 50%, transparent 70%);
@@ -3382,7 +3382,7 @@ nav ul li a {
   to   { opacity: 1;   transform: scale(1.05); }
 }
 
-.magento-hero-icon-wrap {
+.modern-hero-icon-wrap {
   position: absolute;
   inset: 24px;
   background: #ffffff;
@@ -3400,7 +3400,7 @@ nav ul li a {
   50%       { transform: translateY(-10px); }
 }
 
-.magento-hero-icon-wrap svg {
+.modern-hero-icon-wrap svg {
   width: 100px;
   height: 100px;
   color: #4f46e5;
@@ -3408,7 +3408,7 @@ nav ul li a {
 }
 
 /* Floating badges */
-.magento-hero-floating-badge {
+.modern-hero-floating-badge {
   position: absolute;
   background: #ffffff;
   border: 1px solid #e0e2f0;
@@ -3423,13 +3423,13 @@ nav ul li a {
   animation: hero-badge-float 5s ease-in-out infinite;
 }
 
-.magento-hero-floating-badge.badge-top {
+.modern-hero-floating-badge.badge-top {
   top: 10px;
   right: -16px;
   animation-delay: 0s;
 }
 
-.magento-hero-floating-badge.badge-bottom {
+.modern-hero-floating-badge.badge-bottom {
   bottom: 24px;
   left: -16px;
   animation-delay: -2.5s;
@@ -3442,81 +3442,81 @@ nav ul li a {
 
 /* Responsive */
 @media (max-width: 992px) {
-  .magento-hero-section {
+  .modern-hero-section {
     padding: 60px 0 50px;
   }
 
-  .magento-hero-title {
+  .modern-hero-title {
     font-size: 2.8rem;
   }
 }
 
 @media (max-width: 768px) {
-  .magento-hero-section {
+  .modern-hero-section {
     padding: 50px 0 44px;
     text-align: center;
   }
 
-  .magento-hero-title {
+  .modern-hero-title {
     font-size: 2.2rem;
     letter-spacing: -0.025em;
   }
 
-  .magento-hero-subtitle {
+  .modern-hero-subtitle {
     font-size: 1rem;
     margin: 0 auto 24px;
     max-width: 480px;
   }
 
-  .magento-hero-features {
+  .modern-hero-features {
     justify-content: center;
   }
 
-  .magento-hero-actions {
+  .modern-hero-actions {
     justify-content: center;
   }
 
-  .magento-hero-stats {
+  .modern-hero-stats {
     justify-content: center;
     border-top: 1px solid #e4e6ef;
   }
 
-  .magento-stat-item {
+  .modern-stat-item {
     text-align: center;
     padding: 12px 16px;
   }
 
-  .magento-stat-item strong {
+  .modern-stat-item strong {
     font-size: 1.6rem;
   }
 }
 
 @media (max-width: 480px) {
-  .magento-hero-section {
+  .modern-hero-section {
     padding: 44px 0 36px;
   }
 
-  .magento-hero-title {
+  .modern-hero-title {
     font-size: 1.9rem;
   }
 
-  .magento-hero-pill {
+  .modern-hero-pill {
     font-size: 0.78rem;
     padding: 5px 12px;
   }
 
-  .magento-hero-actions {
+  .modern-hero-actions {
     flex-direction: column;
     width: 100%;
   }
 
-  .magento-hero-btn-primary,
-  .magento-hero-btn-secondary {
+  .modern-hero-btn-primary,
+  .modern-hero-btn-secondary {
     width: 100%;
     justify-content: center;
   }
 
-  .magento-stat-divider {
+  .modern-stat-divider {
     height: 28px;
   }
 }
