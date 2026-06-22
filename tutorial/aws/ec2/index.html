@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AWS EC2 Tutorial: Getting Started with Amazon EC2 | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/tutorial/aws/ec2/" />
+    <meta name="description" content="A practical guide to getting started with AWS EC2. Learn how to launch, connect, and manage Amazon EC2 instances. Includes setup steps, key concepts, and real-world tips.">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="AWS EC2 Tutorial: Getting Started with Amazon EC2 | Brijesh Patel" />
+    <meta property="og:description" content="A practical guide to getting started with AWS EC2. Learn how to launch, connect, and manage Amazon EC2 instances." />
+    <meta property="og:url" content="https://brijesh.work/tutorial/aws/ec2/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png" />
+    <meta property="og:image:width" content="192" />
+    <meta property="og:image:height" content="192" />
+    <meta property="og:image:type" content="image/png" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:title" content="AWS EC2 Tutorial: Getting Started with Amazon EC2 | Brijesh Patel" />
+    <meta name="twitter:description" content="A practical guide to getting started with AWS EC2. Learn how to launch, connect, and manage Amazon EC2 instances." />
+
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+    <style>
+        .section-bg {
+            background-color: #f8f9fa;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .code-block {
+            background-color: #1e2233;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        th, td { border: 1px solid #dee2e6; padding: 10px; text-align: left; }
+        th { background-color: #f1f5f9; font-weight: 600; }
+        h2 { margin-top: 36px; color: #1e293b; }
+        h3 { margin-top: 24px; color: #334155; }
+    </style>
+</head>
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+    <div class="container mt-5" style="max-width: 900px;">
+
+        <h1 class="mb-3">AWS EC2 Tutorial: Getting Started with Amazon EC2</h1>
+        <p class="lead">Amazon Elastic Compute Cloud (EC2) is one of the most widely used AWS services. It lets you run virtual servers in the cloud on demand. This tutorial walks you through the core concepts and practical steps to launch and manage your first EC2 instance.</p>
+
+        <nav class="section-bg mt-4">
+            <strong>Table of Contents</strong>
+            <ol class="mt-2">
+                <li><a href="#what-is-ec2">What is Amazon EC2?</a></li>
+                <li><a href="#key-concepts">Key Concepts</a></li>
+                <li><a href="#instance-types">Instance Types</a></li>
+                <li><a href="#launch-instance">How to Launch an EC2 Instance</a></li>
+                <li><a href="#connect">Connecting to Your Instance</a></li>
+                <li><a href="#security-groups">Security Groups</a></li>
+                <li><a href="#next-steps">Next Steps</a></li>
+            </ol>
+        </nav>
+
+        <section id="what-is-ec2" class="section-bg">
+            <h2>1. What is Amazon EC2?</h2>
+            <p>Amazon EC2 (Elastic Compute Cloud) provides resizable compute capacity in the cloud. Instead of buying and maintaining physical servers, you rent virtual machines (called <strong>instances</strong>) and pay only for what you use.</p>
+            <ul>
+                <li>Launch instances in minutes.</li>
+                <li>Scale up or down based on demand.</li>
+                <li>Choose from a variety of operating systems (Amazon Linux, Ubuntu, Windows Server, etc.).</li>
+                <li>Pay per second or per hour depending on the instance type.</li>
+            </ul>
+        </section>
+
+        <section id="key-concepts" class="section-bg">
+            <h2>2. Key Concepts</h2>
+            <table>
+                <thead>
+                    <tr><th>Term</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>AMI</strong> (Amazon Machine Image)</td><td>A pre-configured template for your instance (OS + software).</td></tr>
+                    <tr><td><strong>Instance Type</strong></td><td>Defines the CPU, memory, and storage (e.g., t2.micro, m5.large).</td></tr>
+                    <tr><td><strong>Key Pair</strong></td><td>SSH key used to securely connect to Linux instances.</td></tr>
+                    <tr><td><strong>Security Group</strong></td><td>A virtual firewall controlling inbound/outbound traffic.</td></tr>
+                    <tr><td><strong>Elastic IP</strong></td><td>A static public IP address you can attach to an instance.</td></tr>
+                    <tr><td><strong>EBS Volume</strong></td><td>Persistent block storage attached to an EC2 instance.</td></tr>
+                    <tr><td><strong>Region / AZ</strong></td><td>Physical data center location. AZ = Availability Zone within a region.</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="instance-types" class="section-bg">
+            <h2>3. Instance Types</h2>
+            <p>EC2 instances are grouped into families based on use case:</p>
+            <table>
+                <thead>
+                    <tr><th>Family</th><th>Use Case</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>General Purpose</td><td>Balanced CPU/memory for most workloads</td><td>t3.micro, m6i.large</td></tr>
+                    <tr><td>Compute Optimized</td><td>High CPU-intensive workloads</td><td>c6i.xlarge</td></tr>
+                    <tr><td>Memory Optimized</td><td>Large in-memory datasets (databases, caches)</td><td>r6i.2xlarge</td></tr>
+                    <tr><td>Storage Optimized</td><td>High I/O operations (NoSQL databases)</td><td>i3.large</td></tr>
+                    <tr><td>Accelerated Computing</td><td>GPU/ML workloads</td><td>p3.2xlarge, g4dn.xlarge</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Tip:</strong> For testing or the AWS Free Tier, use <code>t2.micro</code> or <code>t3.micro</code> (750 hours/month free).</p>
+        </section>
+
+        <section id="launch-instance" class="section-bg">
+            <h2>4. How to Launch an EC2 Instance</h2>
+            <h3>Step 1: Sign in to the AWS Console</h3>
+            <p>Go to <a href="https://console.aws.amazon.com/ec2/" target="_blank" rel="noopener">console.aws.amazon.com/ec2</a> and click <strong>Launch Instance</strong>.</p>
+
+            <h3>Step 2: Choose an AMI</h3>
+            <p>Select an operating system. For a LAMP stack, choose <strong>Amazon Linux 2023</strong> or <strong>Ubuntu 24.04 LTS</strong>.</p>
+
+            <h3>Step 3: Choose an Instance Type</h3>
+            <p>Select <code>t2.micro</code> (Free Tier eligible) for testing.</p>
+
+            <h3>Step 4: Configure Key Pair</h3>
+            <p>Create or select an existing key pair (.pem file). Download it — you'll need it to SSH into the instance.</p>
+
+            <h3>Step 5: Configure Security Group</h3>
+            <p>Allow at minimum:</p>
+            <ul>
+                <li><strong>Port 22</strong> (SSH) — your IP only</li>
+                <li><strong>Port 80</strong> (HTTP) — 0.0.0.0/0 for public web</li>
+                <li><strong>Port 443</strong> (HTTPS) — 0.0.0.0/0 for public web</li>
+            </ul>
+
+            <h3>Step 6: Launch</h3>
+            <p>Click <strong>Launch Instance</strong>. Your instance will be running in 1–2 minutes.</p>
+        </section>
+
+        <section id="connect" class="section-bg">
+            <h2>5. Connecting to Your Instance</h2>
+            <h3>Linux / macOS (SSH)</h3>
+            <div class="code-block">
+chmod 400 your-key.pem
+ssh -i "your-key.pem" ec2-user@your-public-ip
+</div>
+            <p>For Ubuntu AMIs, use <code>ubuntu</code> instead of <code>ec2-user</code>:</p>
+            <div class="code-block">
+ssh -i "your-key.pem" ubuntu@your-public-ip
+</div>
+
+            <h3>Windows (PuTTY)</h3>
+            <p>Convert your .pem key to .ppk using PuTTYgen, then connect via PuTTY using your instance's public IP.</p>
+
+            <h3>AWS Console (EC2 Instance Connect)</h3>
+            <p>From the EC2 dashboard, select your instance → click <strong>Connect</strong> → use the browser-based terminal.</p>
+        </section>
+
+        <section id="security-groups" class="section-bg">
+            <h2>6. Security Groups</h2>
+            <p>Security groups act as a virtual firewall. Rules are stateful — allowing inbound traffic also allows the response.</p>
+            <table>
+                <thead>
+                    <tr><th>Rule Type</th><th>Port</th><th>Source</th><th>Use Case</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>SSH</td><td>22</td><td>My IP</td><td>Admin access</td></tr>
+                    <tr><td>HTTP</td><td>80</td><td>0.0.0.0/0</td><td>Public website</td></tr>
+                    <tr><td>HTTPS</td><td>443</td><td>0.0.0.0/0</td><td>Secure website</td></tr>
+                    <tr><td>MySQL/Aurora</td><td>3306</td><td>Security group ID</td><td>DB from app servers only</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="next-steps" class="section-bg">
+            <h2>7. Next Steps</h2>
+            <ul>
+                <li><a href="/tutorial/aws/ec2/install-php-mysql/">Install PHP &amp; MySQL on EC2 (Amazon Linux)</a></li>
+                <li>Set up an Elastic IP for a static public address.</li>
+                <li>Configure an Application Load Balancer for high availability.</li>
+                <li>Use Auto Scaling groups to handle traffic spikes automatically.</li>
+                <li>Enable CloudWatch monitoring for CPU, network, and disk metrics.</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <script>includeHTML();</script>
+</body>
+</html>

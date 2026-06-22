@@ -1,58 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">    
-<title>Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel</title>
-<link rel="canonical" href="https://brijesh.work/" />
-<meta name="description" content="Brijesh Patel PHP Developer | Magento | Laravel">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Install PHP &amp; MySQL on Amazon Linux EC2 | Brijesh Patel</title>
+    <link rel="canonical" href="https://brijesh.work/tutorial/aws/ec2/install-php-mysql/" />
+    <meta name="description" content="Step-by-step guide to install Apache, PHP, and MySQL on an Amazon Linux EC2 instance. Covers yum/dnf commands, configuration, and testing your LAMP stack.">
 
-<link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://brijesh.work/pub/media/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://brijesh.work/pub/media/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://brijesh.work/pub/media/images/icon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://brijesh.work/pub/media/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://brijesh.work/pub/media/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://brijesh.work/pub/media/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://brijesh.work/pub/media/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://brijesh.work/pub/media/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://brijesh.work/pub/media/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://brijesh.work/pub/media/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://brijesh.work/pub/media/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://brijesh.work/pub/media/images/icon/favicon-16x16.png">
 
-<meta property="og:locale" content="en_US" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="Brijesh Patel Full Stack developer | Magento | Wordpress | Laravel" />
-<meta property="og:description" content="Brijesh Patel PHP Developer | Magento | Laravel" />
-<meta property="og:url" content="https://brijesh.work/" />
-<meta property="og:site_name" content="Brijesh Patel" />
-<meta property="og:image" content="https://brijesh.work/" />
-<meta property="og:image:width" content="960" />
-<meta property="og:image:height" content="640" />
-<meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Install PHP &amp; MySQL on Amazon Linux EC2 | Brijesh Patel" />
+    <meta property="og:description" content="Step-by-step guide to install Apache, PHP, and MySQL on an Amazon Linux EC2 instance. Build your LAMP stack on AWS." />
+    <meta property="og:url" content="https://brijesh.work/tutorial/aws/ec2/install-php-mysql/" />
+    <meta property="og:site_name" content="Brijesh Patel" />
+    <meta property="og:image" content="https://brijesh.work/pub/media/images/icon/android-icon-192x192.png" />
+    <meta property="og:image:width" content="192" />
+    <meta property="og:image:height" content="192" />
+    <meta property="og:image:type" content="image/png" />
 
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content="@brijeshwork" />
-<meta name="twitter:label1" content="Written by" />
-<meta name="twitter:data1" content="Brijesh Patel" />
-<meta name="twitter:label2" content="Est. reading time" />
-<meta name="twitter:data2" content="9 minutes" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:creator" content="@brijeshwork" />
+    <meta name="twitter:title" content="Install PHP &amp; MySQL on Amazon Linux EC2 | Brijesh Patel" />
+    <meta name="twitter:description" content="Step-by-step guide to install Apache, PHP, and MySQL on an Amazon Linux EC2 instance." />
 
-<link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
-<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+    <style>
+        .section-bg {
+            background-color: #f8f9fa;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .code-block {
+            background-color: #1e2233;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        h2 { margin-top: 36px; color: #1e293b; }
+        h3 { margin-top: 24px; color: #334155; }
+        .note {
+            background: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin: 16px 0;
+        }
+    </style>
 </head>
 <body>
-    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>        https://tecadmin.net/install-mysql-on-amazon-linux/
-        https://tecadmin.net/install-apache24-php7-on-amazon-linux/
-        
-        
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
 
-<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
-<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
-<!-- <script>includeHTML();</script> -->
+    <div class="container mt-5" style="max-width: 900px;">
+
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/tutorial/aws/ec2/">AWS EC2</a></li>
+                <li class="breadcrumb-item active">Install PHP &amp; MySQL</li>
+            </ol>
+        </nav>
+
+        <h1 class="mb-3">Install PHP &amp; MySQL on Amazon Linux EC2</h1>
+        <p class="lead">This guide walks you through setting up a LAMP stack (Linux, Apache, PHP, MySQL) on an Amazon Linux 2023 EC2 instance. By the end, you'll have a working web server with PHP and a MySQL database.</p>
+
+        <nav class="section-bg mt-4">
+            <strong>Table of Contents</strong>
+            <ol class="mt-2">
+                <li><a href="#prerequisites">Prerequisites</a></li>
+                <li><a href="#update-system">Update the System</a></li>
+                <li><a href="#install-apache">Install Apache</a></li>
+                <li><a href="#install-php">Install PHP</a></li>
+                <li><a href="#install-mysql">Install MySQL</a></li>
+                <li><a href="#secure-mysql">Secure MySQL</a></li>
+                <li><a href="#test-php">Test PHP</a></li>
+                <li><a href="#verify">Verify Installation</a></li>
+            </ol>
+        </nav>
+
+        <section id="prerequisites" class="section-bg">
+            <h2>1. Prerequisites</h2>
+            <ul>
+                <li>A running Amazon Linux 2023 EC2 instance.</li>
+                <li>SSH access to the instance (port 22 open in security group).</li>
+                <li>Port 80 open in the security group for HTTP traffic.</li>
+            </ul>
+            <p>Connect to your instance:</p>
+            <div class="code-block">ssh -i "your-key.pem" ec2-user@your-public-ip</div>
+        </section>
+
+        <section id="update-system" class="section-bg">
+            <h2>2. Update the System</h2>
+            <p>Always update packages before installing new software:</p>
+            <div class="code-block">sudo dnf update -y</div>
+            <div class="note"><strong>Note:</strong> Amazon Linux 2023 uses <code>dnf</code>. For Amazon Linux 2, use <code>yum</code>.</div>
+        </section>
+
+        <section id="install-apache" class="section-bg">
+            <h2>3. Install Apache (httpd)</h2>
+            <div class="code-block">sudo dnf install -y httpd
+sudo systemctl start httpd
+sudo systemctl enable httpd</div>
+            <p>Verify Apache is running:</p>
+            <div class="code-block">sudo systemctl status httpd</div>
+            <p>You should now see the Apache test page at <code>http://your-public-ip</code>.</p>
+        </section>
+
+        <section id="install-php" class="section-bg">
+            <h2>4. Install PHP</h2>
+            <p>Install PHP and common extensions:</p>
+            <div class="code-block">sudo dnf install -y php php-cli php-fpm php-mysqlnd php-xml php-mbstring php-curl php-zip php-json</div>
+            <p>Verify the PHP version:</p>
+            <div class="code-block">php -v</div>
+            <p>Restart Apache to load PHP:</p>
+            <div class="code-block">sudo systemctl restart httpd</div>
+        </section>
+
+        <section id="install-mysql" class="section-bg">
+            <h2>5. Install MySQL</h2>
+            <p>Install the MySQL community server:</p>
+            <div class="code-block">sudo dnf install -y mysql-community-server</div>
+            <p>Start and enable MySQL:</p>
+            <div class="code-block">sudo systemctl start mysqld
+sudo systemctl enable mysqld</div>
+            <p>Find the temporary root password generated on first start:</p>
+            <div class="code-block">sudo grep 'temporary password' /var/log/mysqld.log</div>
+        </section>
+
+        <section id="secure-mysql" class="section-bg">
+            <h2>6. Secure MySQL</h2>
+            <p>Run the built-in security script to set a root password and remove insecure defaults:</p>
+            <div class="code-block">sudo mysql_secure_installation</div>
+            <p>Follow the prompts to:</p>
+            <ul>
+                <li>Change the temporary root password.</li>
+                <li>Remove anonymous users.</li>
+                <li>Disallow remote root login.</li>
+                <li>Remove the test database.</li>
+            </ul>
+            <p>Log in to MySQL to verify:</p>
+            <div class="code-block">mysql -u root -p</div>
+        </section>
+
+        <section id="test-php" class="section-bg">
+            <h2>7. Test PHP</h2>
+            <p>Create a PHP info file to confirm PHP is working with Apache:</p>
+            <div class="code-block">echo "&lt;?php phpinfo(); ?&gt;" | sudo tee /var/www/html/info.php</div>
+            <p>Visit <code>http://your-public-ip/info.php</code> in a browser. You should see the PHP information page.</p>
+            <div class="note"><strong>Security tip:</strong> Delete this file after testing — it exposes server details. <code>sudo rm /var/www/html/info.php</code></div>
+        </section>
+
+        <section id="verify" class="section-bg">
+            <h2>8. Verify Installation</h2>
+            <p>Run a quick check on all services:</p>
+            <div class="code-block">sudo systemctl status httpd
+sudo systemctl status mysqld
+php -v
+mysql --version</div>
+            <p>Your LAMP stack is now ready. You can deploy PHP applications, WordPress, or Laravel on this EC2 instance.</p>
+            <p>Related: <a href="/tutorial/aws/ec2/">Back to AWS EC2 Tutorial</a></p>
+        </section>
+
+    </div>
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <script>includeHTML();</script>
 </body>
 </html>
-<script>includeHTML();</script>
