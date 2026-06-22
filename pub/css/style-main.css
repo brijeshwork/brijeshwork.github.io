@@ -1644,24 +1644,24 @@ nav ul li a {
 
 /* Stats Section */
 .fiverr-stats-section {
-  background: linear-gradient(90deg, #fff 60%, #f8f9fa 100%);
-  padding: 15px 0;
+  background: #ffffff;
+  padding: 40px 0;
 }
 
 .fiverr-stats-row {
-  color: var(--social-bg);
-  gap: 0 !important;
+  color: #1a1a1a;
 }
 
 .fiverr-stats-row>div {
-  padding: 0 10px;
+  padding: 10px;
 }
 
 .fiverr-stats-row .d-flex.w-100 {
   width: auto !important;
-  gap: 12px;
+  gap: 15px;
   display: inline-flex !important;
   align-items: center !important;
+  justify-content: center !important;
 }
 
 .fiverr-badge-link {
@@ -1669,37 +1669,47 @@ nav ul li a {
 }
 
 .fiverr-badge {
-  border: 1.5px solid #a259ff;
-  border-radius: 12px;
-  padding: 8px 20px;
+  border-radius: 8px;
+  padding: 12px 24px;
   display: inline-block;
-  background: rgba(30, 30, 40, 0.7);
-  min-width: 120px;
+  background: #6d6e75;
+  min-width: 140px;
+  transition: transform 0.2s ease;
+}
+
+.fiverr-badge:hover {
+  transform: translateY(-2px);
 }
 
 .fiverr-title {
-  font-size: 1.4rem;
-  color: #fff;
-  font-weight: 600;
-  letter-spacing: 1px;
+  font-size: 1.3rem;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
 }
 
 .fiverr-rating {
-  font-size: 1.2rem;
-  color: #fff;
-  margin: 2px 0 0 0;
+  font-size: 0.95rem;
+  color: #ffffff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .stars-svg {
-  margin-left: 2px;
+  height: 14px;
+  width: auto;
+  display: block;
 }
 
 /* Stats Numbers */
 .stat-number {
-  font-size: 3.5rem;
-  font-weight: 900;
-  letter-spacing: 0;
-  color: var(--social-bg);
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1a1a1a;
   display: inline-block;
   line-height: 1;
   margin: 0;
@@ -1707,28 +1717,29 @@ nav ul li a {
 }
 
 .stat-plus {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: 900;
   vertical-align: super;
   line-height: 0;
 }
 
 .stat-plus-small {
-  font-size: 32px;
+  font-size: 1.8rem;
   font-weight: 900;
   vertical-align: super;
   line-height: 0;
 }
 
 .stat-label {
-  font-size: 1.1rem;
-  color: var(--social-bg);
+  font-size: 1.05rem;
+  color: #64748b;
   text-align: left;
   margin: 0;
   padding: 0;
   display: inline-block;
   line-height: 1.3;
   vertical-align: middle;
+  font-weight: 600;
 }
 
 /* Technical Skills & Brand Section */
