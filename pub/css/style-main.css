@@ -2589,6 +2589,11 @@ nav ul li a {
   margin-top: 50px;
 }
 
+.about-section {
+  padding: 80px 0;
+  background-color: #fafbfc;
+}
+
 .about-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -2597,10 +2602,10 @@ nav ul li a {
 
 .experience-counter {
   text-align: center;
-  padding: 40px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 60px 40px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease;
 }
 
@@ -2608,40 +2613,68 @@ nav ul li a {
   transform: translateY(-5px);
 }
 
+.experience-number-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.experience-highlight-shape {
+  position: absolute;
+  top: -5px;
+  left: -15px;
+  right: -15px;
+  bottom: 5px;
+  background-color: #eef1fc;
+  border-radius: 16px;
+  z-index: 1;
+}
+
 .yearsofexperience {
-  font-size: 72px;
-  font-weight: 700;
-  color: var(--color-primary);
+  position: relative;
+  z-index: 2;
+  font-size: 90px;
+  font-weight: 800;
+  color: #1a1a1a;
   line-height: 1;
 }
 
 .experience-text {
-  font-size: 22px;
-  margin-top: 10px;
-  color: #333;
+  font-size: 20px;
+  margin-top: 15px;
+  color: #555;
+}
+
+.experience-text strong {
+  color: #1a1a1a;
+  font-weight: 700;
 }
 
 .about-content {
-  padding: 0 40px;
+  padding: 0 20px 0 60px;
 }
 
 .section-subtitle {
-  font-size: 18px;
-  color: var(--color-primary);
-  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 12px;
   display: block;
 }
 
 .section-title {
-  font-size: 35px;
-  font-weight: 700;
+  font-size: 38px;
+  font-weight: 800;
+  color: #1a1a1a;
   margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
 }
 
 .about-description {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.8;
-  color: #555;
+  color: #64748b;
   margin-bottom: 40px;
 }
 
@@ -2658,31 +2691,41 @@ nav ul li a {
 
 .detail-item {
   flex: 1;
+  display: flex;
+  align-items: center;
 }
 
 .detail-label {
-  font-weight: 600;
-  color: #333;
-  margin-right: 10px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-right: 12px;
+  min-width: 60px;
 }
 
 .detail-value {
-  color: #555;
+  color: #64748b;
+  font-size: 15px;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .detail-value:hover {
-  color: var(--color-primary);
+  color: #3b82f6;
+}
+
+@media (max-width: 992px) {
+  .about-content {
+    padding: 0 15px;
+  }
 }
 
 @media (max-width: 768px) {
   .about-section {
-    padding: 60px 0;
+    padding: 50px 0;
   }
 
   .about-content {
-    padding: 40px 20px 0;
+    padding: 30px 15px 0;
   }
 
   .detail-row {
