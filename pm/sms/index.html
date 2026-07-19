@@ -1,1712 +1,1591 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SMS — Social Media Scheduler | Product Specification</title>
-    <link rel="canonical" href="https://brijesh.work/pm/sms/" />
-    <meta name="description"
-        content="Complete enterprise product specification for SMS (Social Media Scheduler) — AI-powered Omnichannel scheduling platform for creators and agencies.">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://brijesh.work/pm/sms/" />
-    <meta property="og:title" content="SMS — Social Media Scheduler | Product Specification" />
-    <meta property="og:description" content="Complete enterprise product specification for SMS (Social Media Scheduler) — AI-powered Omnichannel scheduling platform for creators and agencies." />
-    <meta property="og:image" content="https://brijesh.work/pm/sms/og-image.png" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://brijesh.work/pm/sms/" />
-    <meta property="twitter:title" content="SMS — Social Media Scheduler | Product Specification" />
-    <meta property="twitter:description" content="Complete enterprise product specification for SMS (Social Media Scheduler) — AI-powered Omnichannel scheduling platform for creators and agencies." />
-    <meta property="twitter:image" content="https://brijesh.work/pm/sms/og-image.png" />
-
-    <!-- Include Bootstrap and Main Styles like HTML5 Tutorial -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
-    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="sms-style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMS — Social Media Scheduler | Product Specification</title>
+<link rel="canonical" href="https://brijesh.work/pm/sms/" />
+<meta name="description"
+content="Complete enterprise product specification for SMS (Social Media Scheduler) — AI-powered Omnichannel scheduling platform for creators and agencies.">
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://brijesh.work/pm/sms/" />
+<meta property="og:title" content="SMS — Social Media Scheduler | Product Specification" />
+<meta property="og:description"
+content="Complete enterprise product specification for SMS (Social Media Scheduler) — AI-powered Omnichannel scheduling platform for creators and agencies." />
+<meta property="og:image" content="https://brijesh.work/pm/sms/og-image.png" />
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://brijesh.work/pm/sms/" />
+<meta property="twitter:title" content="SMS — Social Media Scheduler | Product Specification" />
+<meta property="twitter:description"
+content="Complete enterprise product specification for SMS (Social Media Scheduler) — AI-powered Omnichannel scheduling platform for creators and agencies." />
+<meta property="twitter:image" content="https://brijesh.work/pm/sms/og-image.png" />
+<!-- Include Bootstrap and Main Styles like HTML5 Tutorial -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+<script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="sms-style.css">
 </head>
-
 <body class="bg-light">
-    <!-- Same header as tutorial page -->
-    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header shadow-sm bg-white" role="banner">
-    </header>
-
-    <main class="py-5" role="main">
-        <div class="container">
-            <div class="hero-modern">
-                <div class="hero-modern-left">
-                    <h1>Social Media Scheduler</h1>
-                    <p class="hero-modern-subtitle">Schedule, publish, and optimize social media content with AI from
-                        one intelligent workspace built for creators and agencies.</p>
-
-                    <div class="hero-features">
-                        <span class="badge-feature">🤖 AI Caption Generation</span>
-                        <span class="badge-feature">📅 Smart Scheduling</span>
-                        <span class="badge-feature">⚡ Queue Publishing</span>
-                        <span class="badge-feature">📊 Analytics</span>
-                        <span class="badge-feature">🔄 Omnichannel Ready</span>
-                    </div>
-
-
-
-                    <div class="hero-metrics-grid">
-                        <div class="hero-metric-item">
-                            <div class="label">My Role</div>
-                            <div class="value">Product Manager</div>
-                        </div>
-                        <div class="hero-metric-item">
-                            <div class="label">Timeline</div>
-                            <div class="value">6 Weeks</div>
-                        </div>
-                        <div class="hero-metric-item">
-                            <div class="label">Team Size</div>
-                            <div class="value">Solo</div>
-                        </div>
-                        <div class="hero-metric-item">
-                            <div class="label">Target Users</div>
-                            <div class="value">Creators &amp; Agencies</div>
-                        </div>
-                        <div class="hero-metric-item">
-                            <div class="label">Business Model</div>
-                            <div class="value">SaaS Subscription</div>
-                        </div>
-                        <div class="hero-metric-item">
-                            <div class="label">Status</div>
-                            <div class="value text-emerald">✅ MVP Active</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hero-modern-right">
-                    <div class="hero-browser-mockup">
-                        <img src="dashboard-mockup-hifi.png" alt="SMS Dashboard Mockup" class="hero-browser-img"
-                            loading="lazy">
-                        <div class="floating-card fc-1">
-                            <div class="fc-icon green">✓</div>
-                            <div class="fc-text">Post Scheduled</div>
-                        </div>
-                        <div class="floating-card fc-2">
-                            <div class="fc-icon purple">✨</div>
-                            <div class="fc-text">AI Caption Generated</div>
-                        </div>
-                        <div class="floating-card fc-3">
-                            <div class="fc-icon blue">📈</div>
-                            <div class="fc-text">Analytics +25%</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-            <!-- ===== EXECUTIVE SUMMARY ===== -->
-            <section id="exec-summary" class="tutorial-section" aria-labelledby="exec-title">
-                <div class="section-label">📋 Overview</div>
-                <h2 id="exec-title" class="section-title">Executive Summary</h2>
-                <div class="info-box blue">
-                    <p>SMS (Social Media Scheduler) is a multi-tenant SaaS platform solving the operational
-                        bottleneck of manual social media publishing for creators and agencies. This document
-                        covers the full product lifecycle: from problem discovery and user research through
-                        system architecture, API design, and delivery.</p>
-                </div>
-
-                <h3>Purpose</h3>
-                <p>Enable creators and agencies to manage every stage of their content lifecycle — from idea to
-                    publication to analytics — without manual intervention. SMS removes the need to publish
-                    content manually, remember posting schedules, or switch between multiple tools.</p>
-
-                <h3>Business Value</h3>
-                <div class="cards-4">
-                    <div class="card">
-                        <div class="card-icon">📈</div>
-                        <h4>Increased Productivity</h4>
-                        <p>Reduce scheduling time from 30 min to under 2 minutes per post using AI and
-                            drag-and-drop.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🤖</div>
-                        <h4>Automation</h4>
-                        <p>Zero manual publishing. Queue-based engine handles all publishing automatically.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">📊</div>
-                        <h4>Analytics</h4>
-                        <p>Track likes, reach, impressions, engagement rate per post and per account.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🔌</div>
-                        <h4>Multi-Account</h4>
-                        <p>Connect unlimited social accounts, each with its own timezone and publishing
-                            settings.</p>
-                    </div>
-                </div>
-
-                <div class="exec-summary-grid">
-                    <div class="exec-card">
-                        <div class="exec-card-header">
-                            <div class="exec-card-icon">🎯</div>
-                            <div class="exec-card-label">Problem</div>
-                        </div>
-                        <div class="exec-card-value">3–5 hrs/week lost to manual social posting,
-                            tool-switching, and missed publish windows</div>
-                    </div>
-                    <div class="exec-card">
-                        <div class="exec-card-header">
-                            <div class="exec-card-icon">👥</div>
-                            <div class="exec-card-label">Target Users</div>
-                        </div>
-                        <div class="exec-card-value">Solo content creators (1–5 accounts) and digital agencies
-                            (10+ client accounts)</div>
-                    </div>
-                    <div class="exec-card">
-                        <div class="exec-card-header">
-                            <div class="exec-card-icon">💡</div>
-                            <div class="exec-card-label">Solution</div>
-                        </div>
-                        <div class="exec-card-value">AI-powered scheduling platform with queue-based
-                            auto-publishing and analytics</div>
-                    </div>
-                    <div class="exec-card">
-                        <div class="exec-card-header">
-                            <div class="exec-card-icon">💰</div>
-                            <div class="exec-card-label">Business Opportunity</div>
-                        </div>
-                        <div class="exec-card-value">$17B social media management market. SaaS subscription
-                            model: Free / Pro / Agency tiers</div>
-                    </div>
-                    <div class="exec-card">
-                        <div class="exec-card-header">
-                            <div class="exec-card-icon">🏆</div>
-                            <div class="exec-card-label">Differentiation</div>
-                        </div>
-                        <div class="exec-card-value">Omnichannel OAuth + AI captions + queue-based
-                            publishing in one integrated platform</div>
-                    </div>
-                    <div class="exec-card">
-                        <div class="exec-card-header">
-                            <div class="exec-card-icon">📅</div>
-                            <div class="exec-card-label">Timeline</div>
-                        </div>
-                        <div class="exec-card-value">6-week MVP. Targeting Omnichannel agencies for beta
-                            launch in Q3 2026</div>
-                    </div>
-                </div>
-
-                <h3>Objectives</h3>
-                <ul class="checklist">
-                    <li>Launch MVP within 6 weeks targeting Omnichannel creators and agencies</li>
-                    <li>Achieve Product-Market Fit defined by &gt;40% retention at month 3</li>
-                    <li>Build queue-based engine capable of 10,000+ scheduled posts/day with &lt;0.1% failure
-                        rate</li>
-                    <li>Integrate AI natively into publishing flow to differentiate from legacy competitors</li>
-                    <li>Acquire 100 paid agency beta testers within 30 days of launch</li>
-                </ul>
-
-                <h3>Key Risks</h3>
-                <div class="pain-grid">
-                    <div class="pain-card">
-                        <div class="pain-icon">🔌</div>
-                        <h4>API Dependency</h4>
-                        <p>High reliance on Meta/Platform APIs. Rate limit changes or deprecations could
-                            disrupt core functionality.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">🏪</div>
-                        <h4>Market Saturation</h4>
-                        <p>Crowded space (Buffer, Hootsuite, Later). Must clearly articulate AI-driven UVP to
-                            drive adoption.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">⚡</div>
-                        <h4>Scalability</h4>
-                        <p>Improper handling of async media uploads and cron-based queues could cause missed
-                            publishing windows.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== PROBLEM STATEMENT ===== -->
-            <section id="problem" class="tutorial-section" aria-labelledby="problem-title">
-                <div class="section-label">🔴 Discovery</div>
-                <h2 id="problem-title" class="section-title">Problem Statement</h2>
-
-                <p class="problem-headline">"Managing Social Media manually wastes hours every week — and every
-                    missed post is a missed opportunity."</p>
-
-                <div class="info-box">
-                    <p>Social media managers and creators are forced to juggle multiple tools, remember posting
-                        schedules manually, and write captions from scratch — all while switching between
-                        accounts. The result: inconsistency, burnout, and poor performance.</p>
-                </div>
-
-                <h3>Pain Points — Individual Creators</h3>
-                <div class="pain-grid">
-                    <div class="pain-card">
-                        <div class="pain-icon">⏰</div>
-                        <h4>Manual Scheduling</h4>
-                        <p>Uses phone alarms and calendar reminders to post at optimal times. Forgets 30% of
-                            posts.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">✍️</div>
-                        <h4>Caption Writer's Block</h4>
-                        <p>Spends 20–40 min per post writing captions. No AI assistance. Often reposts old
-                            content.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">📊</div>
-                        <h4>No Analytics</h4>
-                        <p>Relies on Native Platform Analytics only. Can't compare performance across
-                            accounts easily.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">💸</div>
-                        <h4>Tool Cost</h4>
-                        <p>Buffer Pro costs $18/mo per user. Hootsuite starts at $99/mo. Too expensive for solo
-                            creators.</p>
-                    </div>
-                </div>
-
-                <h3>Pain Points — Agencies</h3>
-                <div class="pain-grid">
-                    <div class="pain-card">
-                        <div class="pain-icon">🔄</div>
-                        <h4>Context Switching</h4>
-                        <p>Managing 10+ client accounts across separate logins. 30% error rate on wrong-account
-                            posts.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">📁</div>
-                        <h4>No Media Library</h4>
-                        <p>Assets scattered across Dropbox, Drive, WhatsApp. No centralized approved content
-                            bank.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">🚫</div>
-                        <h4>Zero Automation</h4>
-                        <p>Every post published manually. Nights and weekends consumed by scheduling for
-                            different timezones.</p>
-                    </div>
-                    <div class="pain-card">
-                        <div class="pain-icon">📉</div>
-                        <h4>Poor Reporting</h4>
-                        <p>Monthly reports compiled manually from Platform Analytics. No automated client
-                            dashboards.</p>
-                    </div>
-                </div>
-
-                <div class="metric-grid">
-                    <div class="metric-card">
-                        <div class="metric-value">3–5h</div>
-                        <div class="metric-label">Hours/week lost to manual posting</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">30%</div>
-                        <div class="metric-label">Error rate on wrong-account posts</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">40min</div>
-                        <div class="metric-label">Average time writing one caption</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">$99+</div>
-                        <div class="metric-label">Monthly cost of existing tools (Hootsuite)</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== MARKET RESEARCH & COMPETITIVE ANALYSIS ===== -->
-            <section id="market" class="tutorial-section" aria-labelledby="market-title">
-                <div class="section-label">🔬 Discovery</div>
-                <h2 id="market-title" class="section-title">Market Research &amp; Competitive Analysis</h2>
-
-                <div class="cards-4">
-                    <div class="card">
-                        <div class="card-icon">💰</div>
-                        <h3>Market Size</h3>
-                        <p>$17.2B global social media management market (2024), growing at 23% CAGR through
-                            2030.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">📈</div>
-                        <h3>Omnichannel Reach</h3>
-                        <p>2B+ monthly active users. #1 platform for brand engagement. Creator economy growing
-                            20% YoY.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🤖</div>
-                        <h3>AI Gap</h3>
-                        <p>No Omnichannel tool combines OAuth-based scheduling + AI caption generation +
-                            queue engine in one product.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🎯</div>
-                        <h3>Our Opportunity</h3>
-                        <p>Mid-market agencies and solo creators underserved. Willing to pay $19–49/mo for a
-                            focused, reliable tool.</p>
-                    </div>
-                </div>
-
-                <h3>Competitive Feature Matrix</h3>
-                <div class="table-wrap">
-                    <table class="competitor-table">
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>SMS ✦</th>
-                                <th>Buffer</th>
-                                <th>Hootsuite</th>
-                                <th>Later</th>
-                                <th>Sprout Social</th>
-                                <th>Planoly</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="highlight-row">
-                                <td>Social-Native OAuth</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                            </tr>
-                            <tr>
-                                <td>AI Caption Generation</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-partial">🚧</td>
-                                <td class="check-partial">🚧</td>
-                                <td class="check-no">❌</td>
-                                <td class="check-no">❌</td>
-                                <td class="check-no">❌</td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Queue-Based Auto Publish</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-partial">🚧</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-partial">🚧</td>
-                            </tr>
-                            <tr>
-                                <td>Per-Account Timezone</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-no">❌</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-no">❌</td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Drag &amp; Drop Calendar</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-no">❌</td>
-                                <td class="check-partial">🚧</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                            </tr>
-                            <tr>
-                                <td>Media Library + Folders</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-no">❌</td>
-                                <td class="check-partial">🚧</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Retry Failed Jobs</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-no">❌</td>
-                                <td class="check-no">❌</td>
-                                <td class="check-no">❌</td>
-                                <td class="check-partial">🚧</td>
-                                <td class="check-no">❌</td>
-                            </tr>
-                            <tr>
-                                <td>Analytics Dashboard</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-partial">🚧</td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Multi-Account (10+)</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-partial">🚧</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-partial">🚧</td>
-                                <td class="check-yes">✅</td>
-                                <td class="check-no">❌</td>
-                            </tr>
-                            <tr>
-                                <td>Starting Price</td>
-                                <td><strong class="text-green">$19/mo</strong></td>
-                                <td>$18/mo</td>
-                                <td>$99/mo</td>
-                                <td>$18/mo</td>
-                                <td>$249/mo</td>
-                                <td>$14/mo</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="legend-text">✅ Fully supported &nbsp; 🚧 Partial / Beta &nbsp; ❌ Not available</p>
-
-                <div class="decision-log">
-                    <div class="dl-title">⚖️ Strategic Decision — Why Omnichannel First?</div>
-                    <p>SMS is designed as an omnichannel platform from day one, unifying LinkedIn, X, Pinterest,
-                        YouTube, and Social Networks.
-                        By centralizing content creation across all major networks, the most
-                        mature Graph API for content publishing, and is the #1 priority for 80% of our target
-                        agencies. Adding more platforms in MVP would split engineering focus and increase OAuth
-                        complexity 5x without proportional user value. They are planned for Phase 2.</p>
-                </div>
-            </section>
-
-
-            <h3>Technical Modules</h3>
-            <div class="cards">
-                <div class="card" onclick="window.location.href='instagram/index.html'"
-                    style="cursor:pointer; border: 1px solid var(--accent); background: linear-gradient(135deg, rgba(99,102,241,0.05) 0%, rgba(139,92,246,0.05) 100%);">
-                    <div class="card-icon">📸</div>
-                    <h4>Instagram Publishing Module</h4>
-                    <p>Deep-dive into the Platform APIs integration, OAuth flows, and queue-based publishing engine.</p>
-                    <span class="text-blue" style="font-weight: 500;">View Specification &rarr;</span>
-                </div>
-            </div>
-
-            <!-- ===== PRODUCT STRATEGY ===== -->
-            <section id="strategy" class="tutorial-section" aria-labelledby="strategy-title">
-                <div class="section-label">📦 Product</div>
-                <h2 id="strategy-title" class="section-title">Product Strategy</h2>
-
-                <div class="north-star">
-                    <div class="ns-label">⭐ North Star Metric</div>
-                    <div class="ns-metric">Scheduled Posts Successfully Published</div>
-                    <div class="ns-desc">This metric captures everything: users must connect an account, upload
-                        media, write a caption, schedule a time, and trust our queue engine to deliver. Every
-                        feature either helps users reach this metric or is deprioritized.</div>
-                </div>
-
-                <h3>Supporting Metrics</h3>
-                <div class="metric-grid">
-                    <div class="metric-card">
-                        <div class="metric-value">&lt;10m</div>
-                        <div class="metric-label">Time to first scheduled post</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">&gt;60%</div>
-                        <div class="metric-label">AI caption feature adoption</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">&gt;99%</div>
-                        <div class="metric-label">Publish success rate</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">&gt;40%</div>
-                        <div class="metric-label">Day-30 retention rate</div>
-                    </div>
-                </div>
-
-                <h3>Business Goals</h3>
-                <div class="cards-4">
-                    <div class="card">
-                        <div class="card-icon">🎯</div>
-                        <h4>Reliable Publishing Platform</h4>
-                        <p>Build an Omnichannel SaaS with 99.9% publish success rate as the core metric.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">📦</div>
-                        <h4>Scalable Architecture</h4>
-                        <p>Design a modular monolith ready to scale to microservices when user volume demands
-                            it.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🔮</div>
-                        <h4>Multi-Platform Readiness</h4>
-                        <p>Architecture supports adding additional Social Platforms with minimal changes in Phase 2.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">💰</div>
-                        <h4>SaaS Revenue Model</h4>
-                        <p>Foundation for subscription tiers: Free, Pro, Agency.</p>
-                    </div>
-                </div>
-
-                <h3>Technical Goals</h3>
-                <ul class="list-unstyled-custom">
-                    <li class="arch-list-item">
-                        ✅ API-first architecture — all features accessible via REST API</li>
-                    <li class="arch-list-item">
-                        ✅ Queue-based publishing — Redis workers handle all publish jobs</li>
-                    <li class="arch-list-item">
-                        ✅ UTC time storage with per-account timezone display</li>
-                    <li class="arch-list-item">
-                        ✅ Complete audit logging for all user and system events</li>
-                    <li class="arch-list-item">
-                        ✅ Docker-ready deployment with CI/CD pipeline support</li>
-                    <li class="arch-list-item border-0">✅ Stateless API layer enabling
-                        horizontal scaling</li>
-                </ul>
-
-                <h3 id="moscow">MoSCoW Prioritization</h3>
-                <div class="table-wrap">
-                    <table class="moscow-table">
-                        <thead>
-                            <tr>
-                                <th>Priority</th>
-                                <th>Feature</th>
-                                <th>Rationale</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="must-have">
-                                <td><span class="moscow-badge must">Must Have</span></td>
-                                <td>Social OAuth Connect</td>
-                                <td>Core prerequisite — nothing works without account connection</td>
-                            </tr>
-                            <tr class="must-have">
-                                <td><span class="moscow-badge must">Must Have</span></td>
-                                <td>Queue-Based Auto Publishing</td>
-                                <td>Primary value proposition — zero manual posting</td>
-                            </tr>
-                            <tr class="must-have">
-                                <td><span class="moscow-badge must">Must Have</span></td>
-                                <td>AI Caption Generation</td>
-                                <td>Key differentiator and primary delight moment</td>
-                            </tr>
-                            <tr class="must-have">
-                                <td><span class="moscow-badge must">Must Have</span></td>
-                                <td>Media Library (Upload/Preview)</td>
-                                <td>Required to attach content to posts</td>
-                            </tr>
-                            <tr class="must-have">
-                                <td><span class="moscow-badge must">Must Have</span></td>
-                                <td>Retry Failed Jobs</td>
-                                <td>Critical for trust and SLA — failed posts destroy retention</td>
-                            </tr>
-                            <tr class="should-have">
-                                <td><span class="moscow-badge should">Should Have</span></td>
-                                <td>Drag &amp; Drop Day Calendar</td>
-                                <td>High UX value — visual scheduling dramatically reduces friction</td>
-                            </tr>
-                            <tr class="should-have">
-                                <td><span class="moscow-badge should">Should Have</span></td>
-                                <td>Analytics Dashboard</td>
-                                <td>Needed for agency reporting and content decisions</td>
-                            </tr>
-                            <tr class="should-have">
-                                <td><span class="moscow-badge should">Should Have</span></td>
-                                <td>Push Notifications</td>
-                                <td>Publish success/failure alerts build trust</td>
-                            </tr>
-                            <tr class="could-have">
-                                <td><span class="moscow-badge could">Could Have</span></td>
-                                <td>Caption Templates Library</td>
-                                <td>Useful but AI generation covers the core need</td>
-                            </tr>
-                            <tr class="could-have">
-                                <td><span class="moscow-badge could">Could Have</span></td>
-                                <td>Post Duplication</td>
-                                <td>Nice UX shortcut but low critical impact</td>
-                            </tr>
-                            <tr class="wont-have">
-                                <td><span class="moscow-badge wont">Won't Have (MVP)</span></td>
-                                <td>Cross-Platform Integration</td>
-                                <td>Omnichannel focus. Multi-platform splits engineering focus 5x</td>
-                            </tr>
-                            <tr class="wont-have">
-                                <td><span class="moscow-badge wont">Won't Have (MVP)</span></td>
-                                <td>Team Collaboration &amp; Approval</td>
-                                <td>Complex workflow adds 4 weeks. Prioritized for Phase 2</td>
-                            </tr>
-                            <tr class="wont-have">
-                                <td><span class="moscow-badge wont">Won't Have (MVP)</span></td>
-                                <td>Mobile App (iOS/Android)</td>
-                                <td>Web-responsive first. Native app adds 12+ weeks</td>
-                            </tr>
-                            <tr class="wont-have">
-                                <td><span class="moscow-badge wont">Won't Have (MVP)</span></td>
-                                <td>Best Time to Post (AI)</td>
-                                <td>Requires data corpus. Available after 3 months of usage data</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>Pricing Strategy</h3>
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <div class="pricing-tier">Free</div>
-                        <div class="pricing-price">$0</div>
-                        <div class="pricing-period">forever</div>
-                        <ul class="pricing-features">
-                            <li>✓ 1 Social Profile</li>
-                            <li>✓ 10 scheduled posts/mo</li>
-                            <li>✓ 5 AI captions/mo</li>
-                            <li>✓ Basic analytics</li>
-                        </ul>
-                    </div>
-                    <div class="pricing-card featured">
-                        <div class="pricing-tier">Pro</div>
-                        <div class="pricing-price">$19</div>
-                        <div class="pricing-period">per month</div>
-                        <ul class="pricing-features">
-                            <li>✓ 5 Social Profiles</li>
-                            <li>✓ Unlimited scheduled posts</li>
-                            <li>✓ Unlimited AI captions</li>
-                            <li>✓ Full analytics + calendar</li>
-                        </ul>
-                    </div>
-                    <div class="pricing-card">
-                        <div class="pricing-tier">Agency</div>
-                        <div class="pricing-price">$49</div>
-                        <div class="pricing-period">per month</div>
-                        <ul class="pricing-features">
-                            <li>✓ Unlimited Accounts</li>
-                            <li>✓ Priority queue processing</li>
-                            <li>✓ Client reporting exports</li>
-                            <li>✓ Dedicated support</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-
-            <!-- ===== USER PERSONAS ===== -->
-            <section id="personas" class="tutorial-section" aria-labelledby="personas-title">
-                <div class="section-label">🔬 Discovery</div>
-                <h2 id="personas-title" class="section-title">User Personas</h2>
-                <p>Based on research with 25 creators and 12 agencies, two primary personas emerged. Every
-                    product decision is evaluated against their goals and frustrations.</p>
-
-                <div class="persona-grid">
-                    <!-- Persona 1 -->
-                    <div class="persona-card">
-                        <div class="persona-card-header">
-                            <div class="persona-avatar">👩</div>
-                            <div class="persona-info">
-                                <div class="name">Sarah Chen</div>
-                                <div class="role">Solo Content Creator</div>
-                                <div class="meta">Age 29 · Mumbai, India · Lifestyle & Wellness</div>
-                            </div>
-                        </div>
-                        <div class="persona-card-body">
-                            <div class="persona-row">
-                                <div>
-                                    <div class="persona-section-title">Goals</div>
-                                    <div class="persona-tags">
-                                        <span class="persona-tag green">Consistent posting schedule</span>
-                                        <span class="persona-tag green">Save 3h/week</span>
-                                        <span class="persona-tag green">Grow to 50K followers</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="persona-section-title">Frustrations</div>
-                                    <div class="persona-tags">
-                                        <span class="persona-tag red">Forgets to post</span>
-                                        <span class="persona-tag red">Caption writer's block</span>
-                                        <span class="persona-tag red">Buffer too expensive</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="persona-section-title">Current Tools</div>
-                                    <div class="persona-tags">
-                                        <span class="persona-tag">Notes app</span>
-                                        <span class="persona-tag">Phone reminders</span>
-                                        <span class="persona-tag">Canva</span>
-                                    </div>
-                                </div>
-                                <div class="persona-quote">"I post 3x a week but I'm always scrambling last
-                                    minute. I wish something just did it for me."</div>
-                                <div>
-                                    <div class="persona-section-title">Why SMS</div>
-                                    <p class="persona-why-text">Affordable pricing, AI caption generation, and
-                                        automatic publishing mean she sets up the week on Sunday and SMS handles
-                                        the rest.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Persona 2 -->
-                    <div class="persona-card">
-                        <div class="persona-card-header">
-                            <div class="persona-avatar avatar-gradient-alt">👨</div>
-                            <div class="persona-info">
-                                <div class="name">Marcus Rivera</div>
-                                <div class="role">Digital Agency Owner</div>
-                                <div class="meta">Age 36 · Bangalore, India · 15+ Client Brands</div>
-                            </div>
-                        </div>
-                        <div class="persona-card-body">
-                            <div class="persona-row">
-                                <div>
-                                    <div class="persona-section-title">Goals</div>
-                                    <div class="persona-tags">
-                                        <span class="persona-tag green">Manage 15+ accounts centrally</span>
-                                        <span class="persona-tag green">Zero missed posts</span>
-                                        <span class="persona-tag green">Client reporting</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="persona-section-title">Frustrations</div>
-                                    <div class="persona-tags">
-                                        <span class="persona-tag red">Team posts to wrong account</span>
-                                        <span class="persona-tag red">No centralized media library</span>
-                                        <span class="persona-tag red">Hootsuite costs $1,800/yr</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="persona-section-title">Current Tools</div>
-                                    <div class="persona-tags">
-                                        <span class="persona-tag">Hootsuite</span>
-                                        <span class="persona-tag">Google Drive</span>
-                                        <span class="persona-tag">WhatsApp</span>
-                                    </div>
-                                </div>
-                                <div class="persona-quote">"We manage 15 brands. One wrong post to the wrong
-                                    client account is a PR disaster."</div>
-                                <div>
-                                    <div class="persona-section-title">Why SMS</div>
-                                    <p class="persona-why-text">Multi-account management, per-account timezone
-                                        isolation, a central media library, and reliable auto-publishing
-                                        eliminates his biggest operational risk at a fraction of Hootsuite's
-                                        cost.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== USER JOURNEY MAP ===== -->
-            <section id="journey" class="tutorial-section" aria-labelledby="journey-title">
-                <div class="section-label">🔬 Discovery</div>
-                <h2 id="journey-title" class="section-title">User Journey Map</h2>
-                <p>The complete end-to-end experience from first discovery to repeat publishing. Emotions and
-                    opportunities mapped at every touchpoint.</p>
-
-                <div class="journey-grid-modern">
-                    <!-- Step 1 -->
-                    <div class="jg-card phase-onboard">
-                        <div class="jg-step-num">01</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">📝</div>
-                            <span class="jg-phase">Onboard</span>
-                        </div>
-                        <h3 class="jg-title">Signs Up</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">🤔</div>
-                            <p class="jg-pain">Cautious — has tried tools before</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="jg-card phase-onboard">
-                        <div class="jg-step-num">02</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">🔌</div>
-                            <span class="jg-phase">Onboard</span>
-                        </div>
-                        <h3 class="jg-title">Connects Social Account</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">😅</div>
-                            <p class="jg-pain">OAuth flow must be smooth and trustworthy</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="jg-card phase-create">
-                        <div class="jg-step-num">03</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">🖼️</div>
-                            <span class="jg-phase">Create</span>
-                        </div>
-                        <h3 class="jg-title">Uploads Media</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">😊</div>
-                            <p class="jg-pain">Drag-and-drop feels intuitive</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="jg-card phase-create">
-                        <div class="jg-step-num">04</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">🤖</div>
-                            <span class="jg-phase">Create</span>
-                        </div>
-                        <h3 class="jg-title">Generates AI Caption</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">🤩</div>
-                            <p class="jg-pain">Delight moment — saves 30 minutes</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 5 -->
-                    <div class="jg-card phase-create">
-                        <div class="jg-step-num">05</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">🗓️</div>
-                            <span class="jg-phase">Create</span>
-                        </div>
-                        <h3 class="jg-title">Picks Date &amp; Time</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">😌</div>
-                            <p class="jg-pain">Timezone shown clearly per account</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 6 -->
-                    <div class="jg-card phase-publish">
-                        <div class="jg-step-num">06</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">👁️</div>
-                            <span class="jg-phase">Publish</span>
-                        </div>
-                        <h3 class="jg-title">Previews Post</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">😊</div>
-                            <p class="jg-pain">Mobile preview builds confidence</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 7 -->
-                    <div class="jg-card phase-publish">
-                        <div class="jg-step-num">07</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">📤</div>
-                            <span class="jg-phase">Publish</span>
-                        </div>
-                        <h3 class="jg-title">Schedules Post</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">😌</div>
-                            <p class="jg-pain">One click to queue and forget</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 8 -->
-                    <div class="jg-card phase-publish">
-                        <div class="jg-step-num">08</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">🔔</div>
-                            <span class="jg-phase">Publish</span>
-                        </div>
-                        <h3 class="jg-title">Gets Notified</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">🎉</div>
-                            <p class="jg-pain">Success confirmation builds trust</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 9 -->
-                    <div class="jg-card phase-measure">
-                        <div class="jg-step-num">09</div>
-                        <div class="jg-header">
-                            <div class="jg-icon">📊</div>
-                            <span class="jg-phase">Measure</span>
-                        </div>
-                        <h3 class="jg-title">Views Analytics</h3>
-                        <div class="jg-body">
-                            <div class="jg-emotion">😃</div>
-                            <p class="jg-pain">Data drives next content decision</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="callout info">
-                    <div class="callout-icon">💡</div>
-                    <div class="callout-content"><strong>Key Insight</strong>
-                        <p>The delight moment is Step 5 — AI Caption Generation. Users who use AI in their first
-                            session have 3x higher 30-day retention. This is why AI is prominently placed in the
-                            Scheduler, not hidden in settings.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== PRODUCT STRATEGY ===== -->
-
-
-
-
-
-            <section id="userflow" class="tutorial-section" aria-labelledby="userflow-title">
-
-                <h2 id="userflow-title" class="section-title">User Flows</h2>
-
-                <h3>Primary Publishing Flow</h3>
-
-                <div class="flow-path">
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">🔐</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 01</div>
-                            <div class="flow-path-title">User Registers / Logs In</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">📊</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 02</div>
-                            <div class="flow-path-title">Views Dashboard</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">🔌</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 03</div>
-                            <div class="flow-path-title">Connects Social Account Account</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">🌍</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 04</div>
-                            <div class="flow-path-title">Configures Account Timezone</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">📁</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 05</div>
-                            <div class="flow-path-title">Uploads Media to Library</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">✍️</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 06</div>
-                            <div class="flow-path-title">Generates AI Caption</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">🗓️</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 07</div>
-                            <div class="flow-path-title">Selects Date &amp; Time</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">✅</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 08</div>
-                            <div class="flow-path-title">Reviews Post Preview</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">📤</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 09</div>
-                            <div class="flow-path-title">Submits → Validated → Queued</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">⚙️</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 10</div>
-                            <div class="flow-path-title">Worker Publishes Post</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">🔔</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 11</div>
-                            <div class="flow-path-title">Receives Success Notification</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">📈</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Step 12</div>
-                            <div class="flow-path-title">Views Analytics</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>Retry Flow (On Failure)</h3>
-                <div class="flow-path flow-path-wide">
-                    <div class="flow-path-step step-error">
-                        <div class="flow-path-icon icon-error">❌</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num num-error">Event</div>
-                            <div class="flow-path-title">Publishing Fails</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">📋</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Action 01</div>
-                            <div class="flow-path-title">Error Logged</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">🔔</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Action 02</div>
-                            <div class="flow-path-title">User Notified</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">⏱️</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">System Phase</div>
-                            <div class="flow-path-title">Exponential Backoff (1m → 5m → 15m)</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">🔄</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">System Phase</div>
-                            <div class="flow-path-title">Retry Attempt (max 3x)</div>
-                        </div>
-                    </div>
-                    <div class="flow-path-step">
-                        <div class="flow-path-icon">⚖️</div>
-                        <div class="flow-path-content">
-                            <div class="flow-path-num">Final Outcome</div>
-                            <div class="flow-path-title">✅ Published OR 🚫 Permanently Failed</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3>Navigation Structure</h3>
-
-                <div class="nav-grid">
-                    <div class="nav-card nav-card-dashboard">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">🏠</div>
-                            <div class="nav-card-title">Dashboard Overview</div>
-                        </div>
-                    </div>
-
-                    <div class="nav-card">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">📱</div>
-                            <div class="nav-card-title">Social Accounts</div>
-                        </div>
-                        <ul class="nav-card-list">
-                            <li>Connected Accounts List</li>
-                            <li>Connect New Account</li>
-                            <li>Account Settings (Timezone, Status)</li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-card">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">🖼️</div>
-                            <div class="nav-card-title">Media Library</div>
-                        </div>
-                        <ul class="nav-card-list">
-                            <li>All Media Grid</li>
-                            <li>Folders</li>
-                            <li>Upload</li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-card">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">✍️</div>
-                            <div class="nav-card-title">Caption Library</div>
-                        </div>
-                        <ul class="nav-card-list">
-                            <li>All Captions</li>
-                            <li>Favorites</li>
-                            <li>New Caption (Rich Editor + AI)</li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-card">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">📅</div>
-                            <div class="nav-card-title">Scheduler</div>
-                        </div>
-                        <ul class="nav-card-list">
-                            <li>Create Post</li>
-                            <li>Draft Posts</li>
-                            <li>Scheduled Posts</li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-card">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">🗓️</div>
-                            <div class="nav-card-title">Calendar (Day View)</div>
-                        </div>
-                        <ul class="nav-card-list">
-                            <li>Drag &amp; Drop Timeline</li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-card">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">📈</div>
-                            <div class="nav-card-title">Analytics</div>
-                        </div>
-                        <ul class="nav-card-list">
-                            <li>Overview Dashboard</li>
-                            <li>Per-Post Analytics</li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-card">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">🔔</div>
-                            <div class="nav-card-title">Notifications</div>
-                        </div>
-                        <ul class="nav-card-list">
-                            <li>View Alerts &amp; History</li>
-                        </ul>
-                    </div>
-
-                    <div class="nav-card">
-                        <div class="nav-card-header">
-                            <div class="nav-card-icon">⚙️</div>
-                            <div class="nav-card-title">Settings</div>
-                        </div>
-                        <ul class="nav-card-list">
-                            <li>Profile</li>
-                            <li>Password</li>
-                            <li>OpenAI API Key</li>
-                            <li>Notification Preferences</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <h3>Screen States</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>State</th>
-                                <th>Trigger</th>
-                                <th>UI Behavior</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="badge badge-blue">Loading</span></td>
-                                <td>Data fetch in progress</td>
-                                <td>Skeleton loaders, pulsing placeholders</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-gray">Empty</span></td>
-                                <td>No data available</td>
-                                <td>Illustration + CTA button (e.g., "Upload your first media")</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-green">Success</span></td>
-                                <td>Action completed</td>
-                                <td>Toast notification (bottom-right), green border flash</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-red">Error</span></td>
-                                <td>Action failed</td>
-                                <td>Inline error message + retry button</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-yellow">Warning</span></td>
-                                <td>Partial success / expiry</td>
-                                <td>Banner alert with action button</td>
-                            </tr>
-                            <tr>
-                                <td><span class="badge badge-purple">Confirmation</span></td>
-                                <td>Destructive action</td>
-                                <td>Modal dialog with confirm/cancel</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>Accessibility Requirements</h3>
-                <ul class="checklist">
-                    <li>All interactive elements have unique, descriptive ARIA labels</li>
-                    <li>Keyboard navigation supported for all forms and modals</li>
-                    <li>Color contrast ratio ≥ 4.5:1 for all text (WCAG AA)</li>
-                    <li>Focus indicators visible on all focusable elements</li>
-                    <li>Screen reader announcements for dynamic content changes</li>
-                    <li>Form inputs have associated labels (not just placeholder text)</li>
-                </ul>
-
-            </section>
-
-
-            <section id="ui-spec" class="tutorial-section" aria-labelledby="ui-spec-title">
-
-                <h2 id="ui-spec-title" class="section-title">UI Specification</h2>
-
-                <h3>Dashboard Page</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Component</th>
-                                <th>Type</th>
-                                <th>Purpose</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Stats Cards Row</td>
-                                <td>4-column grid</td>
-                                <td>Total Posts, Scheduled, Published, Failed counts</td>
-                            </tr>
-                            <tr>
-                                <td>Upcoming Posts</td>
-                                <td>List with avatars</td>
-                                <td>Next 5 scheduled posts with time and account</td>
-                            </tr>
-                            <tr>
-                                <td>Publishing Chart</td>
-                                <td>Line chart (7 days)</td>
-                                <td>Daily publish success/failure trend</td>
-                            </tr>
-                            <tr>
-                                <td>Connected Accounts</td>
-                                <td>Horizontal scroll pills</td>
-                                <td>Quick account switcher with status indicator</td>
-                            </tr>
-                            <tr>
-                                <td>Quick Actions</td>
-                                <td>CTA buttons</td>
-                                <td>Create Post, Upload Media, View Calendar</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>Scheduler Page</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Component</th>
-                                <th>Behavior</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Account Selector</td>
-                                <td>Dropdown with avatar, username, timezone indicator</td>
-                            </tr>
-                            <tr>
-                                <td>Media Picker</td>
-                                <td>Grid modal — show library, upload button, multi-select for carousel</td>
-                            </tr>
-                            <tr>
-                                <td>Caption Editor</td>
-                                <td>Rich textarea, character counter (0/2200), emoji picker, AI generate button
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Date &amp; Time Picker</td>
-                                <td>Calendar popup + time picker in account timezone (shows UTC equivalent)</td>
-                            </tr>
-                            <tr>
-                                <td>Post Preview</td>
-                                <td>Mobile frame preview showing final social post appearance</td>
-                            </tr>
-                            <tr>
-                                <td>Action Buttons</td>
-                                <td>Save Draft | Schedule Post — disabled until all required fields filled</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>Calendar Page</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Element</th>
-                                <th>Spec</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Timeline</td>
-                                <td>Hourly slots (00:00–23:00), current time red line indicator</td>
-                            </tr>
-                            <tr>
-                                <td>Post Cards</td>
-                                <td>Color-coded by status: Draft=gray, Scheduled=blue, Published=green,
-                                    Failed=red</td>
-                            </tr>
-                            <tr>
-                                <td>Drag &amp; Drop</td>
-                                <td>Drag post to new timeslot → confirm reschedule modal</td>
-                            </tr>
-                            <tr>
-                                <td>Date Nav</td>
-                                <td>Previous/Next day arrows + date picker popup</td>
-                            </tr>
-                            <tr>
-                                <td>Account Filter</td>
-                                <td>Multi-select filter by social account</td>
-                            </tr>
-                            <tr>
-                                <td>Status Filter</td>
-                                <td>Checkbox: All / Draft / Scheduled / Published / Failed</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>Media Library Page</h3>
-                <div class="cards-4">
-                    <div class="card">
-                        <h4>Grid View</h4>
-                        <p>Masonry grid, thumbnail cards with filename, size, type badge. Hover shows
-                            select/delete actions.</p>
-                    </div>
-                    <div class="card">
-                        <h4>Upload Zone</h4>
-                        <p>Drag-and-drop upload area. Supports multi-file. Shows upload progress bar per file.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <h4>Search Bar</h4>
-                        <p>Debounced search by filename or tag. Instant filter of grid results.</p>
-                    </div>
-                    <div class="card">
-                        <h4>Folder Tree</h4>
-                        <p>Left sidebar folder navigation. Create folder, rename, delete, move media.</p>
-                    </div>
-                </div>
-
-                <h3>Responsive Breakpoints</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Breakpoint</th>
-                                <th>Width</th>
-                                <th>Layout Changes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Mobile</td>
-                                <td>&lt; 768px</td>
-                                <td>Single column, bottom nav bar, sidebar hidden</td>
-                            </tr>
-                            <tr>
-                                <td>Tablet</td>
-                                <td>768–1024px</td>
-                                <td>2-column grid, collapsible sidebar</td>
-                            </tr>
-                            <tr>
-                                <td>Desktop</td>
-                                <td>&gt; 1024px</td>
-                                <td>3-column grid, persistent sidebar</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </section>
-
-            <section id="components" class="tutorial-section" aria-labelledby="components-title">
-
-                <h2 id="components-title" class="section-title">Component Specification</h2>
-
-                <h3>PostCard Component</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Prop</th>
-                                <th>Type</th>
-                                <th>Required</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>id</td>
-                                <td>string</td>
-                                <td>✅</td>
-                                <td>Unique post identifier</td>
-                            </tr>
-                            <tr>
-                                <td>status</td>
-                                <td>enum</td>
-                                <td>✅</td>
-                                <td>draft | scheduled | processing | published | failed</td>
-                            </tr>
-                            <tr>
-                                <td>scheduledAt</td>
-                                <td>Date</td>
-                                <td>✅</td>
-                                <td>Scheduled publish datetime in account timezone</td>
-                            </tr>
-                            <tr>
-                                <td>mediaUrl</td>
-                                <td>string</td>
-                                <td>✅</td>
-                                <td>Thumbnail image URL</td>
-                            </tr>
-                            <tr>
-                                <td>caption</td>
-                                <td>string</td>
-                                <td>❌</td>
-                                <td>Post caption preview (first 100 chars)</td>
-                            </tr>
-                            <tr>
-                                <td>accountName</td>
-                                <td>string</td>
-                                <td>✅</td>
-                                <td>social account username</td>
-                            </tr>
-                            <tr>
-                                <td>onEdit</td>
-                                <td>function</td>
-                                <td>❌</td>
-                                <td>Edit callback</td>
-                            </tr>
-                            <tr>
-                                <td>onDelete</td>
-                                <td>function</td>
-                                <td>❌</td>
-                                <td>Delete callback (shows confirm modal)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>CaptionEditor Component</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>State</th>
-                                <th>Behavior</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Default</td>
-                                <td>Empty textarea, char counter shows 0/2200</td>
-                            </tr>
-                            <tr>
-                                <td>Typing</td>
-                                <td>Counter updates, auto-save debounced 3s</td>
-                            </tr>
-                            <tr>
-                                <td>Over Limit</td>
-                                <td>Counter turns red, submit disabled</td>
-                            </tr>
-                            <tr>
-                                <td>AI Loading</td>
-                                <td>Textarea disabled, spinner, "Generating..." text</td>
-                            </tr>
-                            <tr>
-                                <td>AI Complete</td>
-                                <td>Generated text inserted, user can edit before saving</td>
-                            </tr>
-                            <tr>
-                                <td>Error</td>
-                                <td>Inline error below textarea, retry button</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3>AccountSelector Component</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Display</td>
-                                <td>Profile picture + username + timezone abbreviation</td>
-                            </tr>
-                            <tr>
-                                <td>Status Dot</td>
-                                <td>Green = active, Red = token expired, Gray = disconnected</td>
-                            </tr>
-                            <tr>
-                                <td>Disabled State</td>
-                                <td>Expired accounts shown with warning icon, cannot be selected</td>
-                            </tr>
-                            <tr>
-                                <td>Empty State</td>
-                                <td>"Connect Social Account" CTA when no accounts exist</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </section>
-
-            <!-- ===== WIREFRAMES ===== -->
-            <section id="wireframes" class="tutorial-section" aria-labelledby="wireframes-title">
-                <div class="section-label">🎨 UX / Design</div>
-                <h2 id="wireframes-title" class="section-title">Wireframes</h2>
-                <p>Lo-fidelity wireframes establish layout, hierarchy, and interaction patterns before any
-                    visual design is applied. These inform component specification and developer handoff.</p>
-
-                <div class="info-box blue">
-                    <p><strong>Design Progression:</strong> Lo-Fi Wireframe → Hi-Fi Prototype → Final UI. The
-                        wireframes below represent the Lo-Fi stage — focused on structure and flow, not visual
-                        polish.</p>
-                </div>
-
-                <h3>Dashboard — Lo-Fi Wireframe</h3>
-                <img src="wireframe-dashboard.png"
-                    alt="SMS Dashboard Lo-Fi Wireframe showing sidebar navigation, 4 stat cards, publishing activity chart, upcoming posts list and quick action buttons"
-                    class="wireframe-img" loading="lazy">
-                <p class="wireframe-caption">Key decisions: 4-card stat row at top for immediate health check →
-                    chart for trend → list for upcoming actions → quick CTAs for immediate next step.</p>
-
-                <h3>Scheduler — Lo-Fi Wireframe</h3>
-                <img src="wireframe-scheduler.png"
-                    alt="SMS Scheduler Lo-Fi Wireframe showing two-panel layout with post creation form on the left and live social post preview on the right"
-                    class="wireframe-img" loading="lazy">
-                <p class="wireframe-caption">Two-panel layout: creation form (65%) + live Instagram preview
-                    (35%). The preview pane is the most-requested feature from user testing — eliminates the
-                    need to post and delete to check appearance.</p>
-
-                <div class="decision-log">
-                    <div class="dl-title">⚖️ Design Decision — Why a Two-Panel Scheduler?</div>
-                    <p>Single-panel schedulers (like Buffer) require users to mentally simulate how their post
-                        will look. In user tests, 7/10 users asked "what will it actually look like on
-                        Social?" before scheduling. The live preview panel directly addresses this anxiety
-                        and reduces abandon rate during post creation.</p>
-                </div>
-            </section>
-
-
-            <section id="future" class="tutorial-section" aria-labelledby="future-title">
-
-                <h2 id="future-title" class="section-title">Future Improvements</h2>
-                <div class="cards">
-                    <div class="card">
-                        <h3>Phase 2: Multi-Platform</h3>
-                        <p>Add support for Facebook Pages, LinkedIn Company Pages, and X (Twitter) using the
-                            same queue architecture.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Phase 3: AI Intelligence</h3>
-                        <p>Implement "Best Time to Post" algorithms based on historical engagement data per
-                            account.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Phase 4: Team Collaboration</h3>
-                        <p>Add workspaces, role-based access control (Admin, Editor, Viewer), and post approval
-                            workflows.</p>
-                    </div>
-                </div>
-
-            </section>
-
-            <section id="related" class="tutorial-section" aria-labelledby="related-title">
-
-                <h2 id="related-title" class="section-title">Related Documents</h2>
-                <ul class="checklist">
-                    <li><a href="#" class="text-blue">API Reference Documentation (Swagger)</a></li>
-                    <li><a href="#" class="text-blue">Database ER Diagram &amp; Schema</a></li>
-                    <li><a href="#" class="text-blue">Figma UI/UX Prototypes</a></li>
-                    <li><a href="#" class="text-blue">Platform APIs Developer Docs</a></li>
-                </ul>
-
-            </section>
-
-            <section id="glossary" class="tutorial-section" aria-labelledby="glossary-title">
-
-                <h2 id="glossary-title" class="section-title">Glossary</h2>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Term</th>
-                                <th>Definition</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Idempotency Key</strong></td>
-                                <td>A unique string used to prevent duplicate publishing if a job is
-                                    accidentally run twice.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Exponential Backoff</strong></td>
-                                <td>A strategy where the wait time between retry attempts increases
-                                    exponentially (e.g., 1m, 5m, 15m).</td>
-                            </tr>
-                            <tr>
-                                <td><strong>IANA Timezone</strong></td>
-                                <td>Standard timezone format (e.g., "America/New_York", "Asia/Kolkata") used for
-                                    localization.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Soft Delete</strong></td>
-                                <td>Marking a database record as deleted using a timestamp instead of physically
-                                    removing it.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>JWT</strong></td>
-                                <td>JSON Web Token, used for stateless API authentication.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </section>
-
-            <section id="faq" class="tutorial-section" aria-labelledby="faq-title">
-
-                <h2 id="faq-title" class="section-title">Frequently Asked Questions</h2>
-                <div class="info-box">
-                    <p><strong class="text-main">Q: What happens if a user's Social OAuth token expires
-                            while posts are scheduled?</strong><br>A: The background worker will detect the
-                        invalid token, mark the job as Failed, and send an immediate email/in-app notification
-                        to the user to reconnect their account.</p>
-                </div>
-                <div class="info-box">
-                    <p><strong class="text-main">Q: How are daylight saving time (DST) changes
-                            handled?</strong><br>A: Since we store publish times in UTC and use the server's
-                        IANA timezone library to convert from the user's selected timezone, DST shifts are
-                        handled automatically without user intervention.</p>
-                </div>
-                <div class="info-box">
-                    <p><strong class="text-main">Q: Can users publish Carousels?</strong><br>A: Yes. The
-                        UI allows uploading up to 10 images/videos per post. The publishing worker uses the
-                        Platform APIs's carousel endpoints to group the media.</p>
-                </div>
-
-            </section>
-
-
-
-
-        </div>
-    </main>
-
-    <!-- Same footer as tutorial page -->
-    <footer loadhtml="https://brijesh.work/pub/inc/footer.html" class="bg-white shadow-sm" role="contentinfo"></footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+<!-- Same header as tutorial page -->
+<header loadhtml="https://brijesh.work/pub/inc/header.html" class="header shadow-sm bg-white" role="banner">
+</header>
+<main class="py-5" role="main">
+<div class="container">
+<div class="hero-modern">
+<div class="hero-modern-left">
+<h1>Social Media Scheduler</h1>
+<p class="hero-modern-subtitle">Schedule, publish, and optimize social media content with AI from
+one intelligent workspace built for creators and agencies.</p>
+<div class="hero-features">
+<span class="badge-feature">🤖 AI Caption Generation</span>
+<span class="badge-feature">📅 Smart Scheduling</span>
+<span class="badge-feature">⚡ Queue Publishing</span>
+<span class="badge-feature">📊 Analytics</span>
+<span class="badge-feature">🔄 Omnichannel Ready</span>
+</div>
+<div class="hero-metrics-grid">
+<div class="hero-metric-item">
+<div class="label">My Role</div>
+<div class="value">Product Manager</div>
+</div>
+<div class="hero-metric-item">
+<div class="label">Timeline</div>
+<div class="value">6 Weeks</div>
+</div>
+<div class="hero-metric-item">
+<div class="label">Team Size</div>
+<div class="value">Solo</div>
+</div>
+<div class="hero-metric-item">
+<div class="label">Target Users</div>
+<div class="value">Creators &amp; Agencies</div>
+</div>
+<div class="hero-metric-item">
+<div class="label">Business Model</div>
+<div class="value">SaaS Subscription</div>
+</div>
+<div class="hero-metric-item">
+<div class="label">Status</div>
+<div class="value text-emerald">✅ MVP Active</div>
+</div>
+</div>
+</div>
+<div class="hero-modern-right">
+<div class="hero-browser-mockup">
+<img src="dashboard-mockup-hifi.png" alt="SMS Dashboard Mockup" class="hero-browser-img"
+loading="lazy">
+<div class="floating-card fc-1">
+<div class="fc-icon green">✓</div>
+<div class="fc-text">Post Scheduled</div>
+</div>
+<div class="floating-card fc-2">
+<div class="fc-icon purple">✨</div>
+<div class="fc-text">AI Caption Generated</div>
+</div>
+<div class="floating-card fc-3">
+<div class="fc-icon blue">📈</div>
+<div class="fc-text">Analytics +25%</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===== EXECUTIVE SUMMARY ===== -->
+<section id="exec-summary" class="tutorial-section" aria-labelledby="exec-title">
+<div class="section-label">📋 Overview</div>
+<h2 id="exec-title" class="section-title">Executive Summary</h2>
+<div class="info-box blue">
+<p>SMS (Social Media Scheduler) is a multi-tenant SaaS platform solving the operational
+bottleneck of manual social media publishing for creators and agencies. This document
+covers the full product lifecycle: from problem discovery and user research through
+system architecture, API design, and delivery.</p>
+</div>
+<h3>Purpose</h3>
+<p>Enable creators and agencies to manage every stage of their content lifecycle — from idea to
+publication to analytics — without manual intervention. SMS removes the need to publish
+content manually, remember posting schedules, or switch between multiple tools.</p>
+<h3>Business Value</h3>
+<div class="cards-4">
+<div class="card">
+<div class="card-icon">📈</div>
+<h3>Increased Productivity</h3>
+<p>Reduce scheduling time from 30 min to under 2 minutes per post using AI and
+drag-and-drop.</p>
+</div>
+<div class="card">
+<div class="card-icon">🤖</div>
+<h3>Automation</h3>
+<p>Zero manual publishing. Queue-based engine handles all publishing automatically.</p>
+</div>
+<div class="card">
+<div class="card-icon">📊</div>
+<h3>Analytics</h3>
+<p>Track likes, reach, impressions, engagement rate per post and per account.</p>
+</div>
+<div class="card">
+<div class="card-icon">🔌</div>
+<h3>Multi-Account</h3>
+<p>Connect unlimited social accounts, each with its own timezone and publishing
+settings.</p>
+</div>
+</div>
+<div class="exec-summary-grid">
+<div class="exec-card">
+<div class="exec-card-header">
+<div class="exec-card-icon">🎯</div>
+<div class="exec-card-label">Problem</div>
+</div>
+<div class="exec-card-value">3–5 hrs/week lost to manual social posting,
+tool-switching, and missed publish windows</div>
+</div>
+<div class="exec-card">
+<div class="exec-card-header">
+<div class="exec-card-icon">👥</div>
+<div class="exec-card-label">Target Users</div>
+</div>
+<div class="exec-card-value">Solo content creators (1–5 accounts) and digital agencies
+(10+ client accounts)</div>
+</div>
+<div class="exec-card">
+<div class="exec-card-header">
+<div class="exec-card-icon">💡</div>
+<div class="exec-card-label">Solution</div>
+</div>
+<div class="exec-card-value">AI-powered scheduling platform with queue-based
+auto-publishing and analytics</div>
+</div>
+<div class="exec-card">
+<div class="exec-card-header">
+<div class="exec-card-icon">💰</div>
+<div class="exec-card-label">Business Opportunity</div>
+</div>
+<div class="exec-card-value">$17B social media management market. SaaS subscription
+model: Free / Pro / Agency tiers</div>
+</div>
+<div class="exec-card">
+<div class="exec-card-header">
+<div class="exec-card-icon">🏆</div>
+<div class="exec-card-label">Differentiation</div>
+</div>
+<div class="exec-card-value">Omnichannel OAuth + AI captions + queue-based
+publishing in one integrated platform</div>
+</div>
+<div class="exec-card">
+<div class="exec-card-header">
+<div class="exec-card-icon">📅</div>
+<div class="exec-card-label">Timeline</div>
+</div>
+<div class="exec-card-value">6-week MVP. Targeting Omnichannel agencies for beta
+launch in Q3 2026</div>
+</div>
+</div>
+<h3>Key Risks</h3>
+<div class="pain-grid">
+<div class="pain-card">
+<div class="pain-icon">🔌</div>
+<h3>API Dependency</h3>
+<p>High reliance on Meta/Platform APIs. Rate limit changes or deprecations could
+disrupt core functionality.</p>
+</div>
+<div class="pain-card">
+<div class="pain-icon">🏪</div>
+<h3>Market Saturation</h3>
+<p>Crowded space (Buffer, Hootsuite, Later). Must clearly articulate AI-driven UVP to
+drive adoption.</p>
+</div>
+<div class="pain-card">
+<div class="pain-icon">⚡</div>
+<h3>Scalability</h3>
+<p>Improper handling of async media uploads and cron-based queues could cause missed
+publishing windows.</p>
+</div>
+</div>
+</section>
+<!-- ===== PROBLEM STATEMENT ===== -->
+<section id="problem" class="tutorial-section" aria-labelledby="problem-title">
+<div class="section-label">🔴 Discovery</div>
+<h2 id="problem-title" class="section-title">Problem Statement</h2>
+<p class="problem-headline">"Managing Social Media manually wastes hours every week — and every
+missed post is a missed opportunity."</p>
+<div class="info-box">
+<p>Social media managers and creators are forced to juggle multiple tools, remember posting
+schedules manually, and write captions from scratch — all while switching between
+accounts. The result: inconsistency, burnout, and poor performance.</p>
+</div>
+<h3>Pain Points — Individual Creators</h3>
+<div class="pain-grid">
+<div class="pain-card">
+<div class="pain-icon">⏰</div>
+<h3>Manual Scheduling</h3>
+<p>Uses phone alarms and calendar reminders to post at optimal times. Forgets 30% of
+posts.</p>
+</div>
+<div class="pain-card">
+<div class="pain-icon">✍️</div>
+<h3>Caption Writer's Block</h3>
+<p>Spends 20–40 min per post writing captions. No AI assistance. Often reposts old
+content.</p>
+</div>
+<div class="pain-card">
+<div class="pain-icon">📊</div>
+<h3>No Analytics</h3>
+<p>Relies on Native Platform Analytics only. Can't compare performance across
+accounts easily.</p>
+</div>
+<div class="pain-card">
+<div class="pain-icon">💸</div>
+<h3>Tool Cost</h3>
+<p>Buffer Pro costs $18/mo per user. Hootsuite starts at $99/mo. Too expensive for solo
+creators.</p>
+</div>
+</div>
+<h3>Pain Points — Agencies</h3>
+<div class="pain-grid">
+<div class="pain-card">
+<div class="pain-icon">🔄</div>
+<h3>Context Switching</h3>
+<p>Managing 10+ client accounts across separate logins. 30% error rate on wrong-account
+posts.</p>
+</div>
+<div class="pain-card">
+<div class="pain-icon">📁</div>
+<h3>No Media Library</h3>
+<p>Assets scattered across Dropbox, Drive, WhatsApp. No centralized approved content
+bank.</p>
+</div>
+<div class="pain-card">
+<div class="pain-icon">🚫</div>
+<h3>Zero Automation</h3>
+<p>Every post published manually. Nights and weekends consumed by scheduling for
+different timezones.</p>
+</div>
+<div class="pain-card">
+<div class="pain-icon">📉</div>
+<h3>Poor Reporting</h3>
+<p>Monthly reports compiled manually from Platform Analytics. No automated client
+dashboards.</p>
+</div>
+</div>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-value">3–5h</div>
+<div class="metric-label">Hours/week lost to manual posting</div>
+</div>
+<div class="metric-card">
+<div class="metric-value">30%</div>
+<div class="metric-label">Error rate on wrong-account posts</div>
+</div>
+<div class="metric-card">
+<div class="metric-value">40min</div>
+<div class="metric-label">Average time writing one caption</div>
+</div>
+<div class="metric-card">
+<div class="metric-value">$99+</div>
+<div class="metric-label">Monthly cost of existing tools (Hootsuite)</div>
+</div>
+</div>
+</section>
+<!-- ===== MARKET RESEARCH & COMPETITIVE ANALYSIS ===== -->
+<section id="market" class="tutorial-section" aria-labelledby="market-title">
+<div class="section-label">🔬 Discovery</div>
+<h2 id="market-title" class="section-title">Market Research &amp; Competitive Analysis</h2>
+<div class="cards-4">
+<div class="card">
+<div class="card-icon">💰</div>
+<h3>Market Size</h3>
+<p>$17.2B global social media management market (2024), growing at 23% CAGR through
+2030.</p>
+</div>
+<div class="card">
+<div class="card-icon">📈</div>
+<h3>Omnichannel Reach</h3>
+<p>2B+ monthly active users. #1 platform for brand engagement. Creator economy growing
+20% YoY.</p>
+</div>
+<div class="card">
+<div class="card-icon">🤖</div>
+<h3>AI Gap</h3>
+<p>No Omnichannel tool combines OAuth-based scheduling + AI caption generation +
+queue engine in one product.</p>
+</div>
+<div class="card">
+<div class="card-icon">🎯</div>
+<h3>Our Opportunity</h3>
+<p>Mid-market agencies and solo creators underserved. Willing to pay $19–49/mo for a
+focused, reliable tool.</p>
+</div>
+</div>
+<h3>Competitive Feature Matrix</h3>
+<div class="table-wrap">
+<table class="competitor-table">
+<thead>
+<tr>
+<th>Feature</th>
+<th>SMS ✦</th>
+<th>Buffer</th>
+<th>Hootsuite</th>
+<th>Later</th>
+<th>Sprout Social</th>
+<th>Planoly</th>
+</tr>
+</thead>
+<tbody>
+<tr class="highlight-row">
+<td>Social-Native OAuth</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+</tr>
+<tr>
+<td>AI Caption Generation</td>
+<td class="check-yes">✅</td>
+<td class="check-partial">🚧</td>
+<td class="check-partial">🚧</td>
+<td class="check-no">❌</td>
+<td class="check-no">❌</td>
+<td class="check-no">❌</td>
+</tr>
+<tr class="highlight-row">
+<td>Queue-Based Auto Publish</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-partial">🚧</td>
+<td class="check-yes">✅</td>
+<td class="check-partial">🚧</td>
+</tr>
+<tr>
+<td>Per-Account Timezone</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-no">❌</td>
+<td class="check-yes">✅</td>
+<td class="check-no">❌</td>
+</tr>
+<tr class="highlight-row">
+<td>Drag &amp; Drop Calendar</td>
+<td class="check-yes">✅</td>
+<td class="check-no">❌</td>
+<td class="check-partial">🚧</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+</tr>
+<tr>
+<td>Media Library + Folders</td>
+<td class="check-yes">✅</td>
+<td class="check-no">❌</td>
+<td class="check-partial">🚧</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+</tr>
+<tr class="highlight-row">
+<td>Retry Failed Jobs</td>
+<td class="check-yes">✅</td>
+<td class="check-no">❌</td>
+<td class="check-no">❌</td>
+<td class="check-no">❌</td>
+<td class="check-partial">🚧</td>
+<td class="check-no">❌</td>
+</tr>
+<tr>
+<td>Analytics Dashboard</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-yes">✅</td>
+<td class="check-partial">🚧</td>
+</tr>
+<tr class="highlight-row">
+<td>Multi-Account (10+)</td>
+<td class="check-yes">✅</td>
+<td class="check-partial">🚧</td>
+<td class="check-yes">✅</td>
+<td class="check-partial">🚧</td>
+<td class="check-yes">✅</td>
+<td class="check-no">❌</td>
+</tr>
+<tr>
+<td>Starting Price</td>
+<td><strong class="text-green">$19/mo</strong></td>
+<td>$18/mo</td>
+<td>$99/mo</td>
+<td>$18/mo</td>
+<td>$249/mo</td>
+<td>$14/mo</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="legend-text">✅ Fully supported &nbsp; 🚧 Partial / Beta &nbsp; ❌ Not available</p>
+<div class="decision-log">
+<div class="dl-title">⚖️ Strategic Decision — Why Omnichannel First?</div>
+<p>SMS is designed as an omnichannel platform from day one, unifying LinkedIn, X, Pinterest,
+YouTube, and Social Networks.
+By centralizing content creation across all major networks, the most
+mature Graph API for content publishing, and is the #1 priority for 80% of our target
+agencies. Adding more platforms in MVP would split engineering focus and increase OAuth
+complexity 5x without proportional user value. They are planned for Phase 2.</p>
+</div>
+</section>
+<!-- ===== PRODUCT STRATEGY ===== -->
+<section id="strategy" class="tutorial-section" aria-labelledby="strategy-title">
+<div class="section-label">📦 Product</div>
+<h2 id="strategy-title" class="section-title">Product Strategy</h2>
+<div class="north-star">
+<div class="ns-label">⭐ North Star Metric</div>
+<div class="ns-metric">Scheduled Posts Successfully Published</div>
+<div class="ns-desc">This metric captures everything: users must connect an account, upload
+media, write a caption, schedule a time, and trust our queue engine to deliver. Every
+feature either helps users reach this metric or is deprioritized.</div>
+</div>
+<h3>Supporting Metrics</h3>
+<div class="metric-grid">
+<div class="metric-card">
+<div class="metric-value">&lt;10m</div>
+<div class="metric-label">Time to first scheduled post</div>
+</div>
+<div class="metric-card">
+<div class="metric-value">&gt;60%</div>
+<div class="metric-label">AI caption feature adoption</div>
+</div>
+<div class="metric-card">
+<div class="metric-value">&gt;99%</div>
+<div class="metric-label">Publish success rate</div>
+</div>
+<div class="metric-card">
+<div class="metric-value">&gt;40%</div>
+<div class="metric-label">Day-30 retention rate</div>
+</div>
+</div>
+<h3>Business Goals</h3>
+<div class="cards-4">
+<div class="card">
+<div class="card-icon">🎯</div>
+<h3>Reliable Publishing Platform</h3>
+<p>Build an Omnichannel SaaS with 99.9% publish success rate as the core metric.</p>
+</div>
+<div class="card">
+<div class="card-icon">📦</div>
+<h3>Scalable Architecture</h3>
+<p>Design a modular monolith ready to scale to microservices when user volume demands
+it.</p>
+</div>
+<div class="card">
+<div class="card-icon">🔮</div>
+<h3>Multi-Platform Readiness</h3>
+<p>Architecture supports adding additional Social Platforms with minimal changes in Phase 2.
+</p>
+</div>
+<div class="card">
+<div class="card-icon">💰</div>
+<h3>SaaS Revenue Model</h3>
+<p>Foundation for subscription tiers: Free, Pro, Agency.</p>
+</div>
+</div>
+<h3>Technical Goals</h3>
+<ul class="list-unstyled-custom">
+<li class="arch-list-item">
+✅ API-first architecture — all features accessible via REST API</li>
+<li class="arch-list-item">
+✅ Queue-based publishing — Redis workers handle all publish jobs</li>
+<li class="arch-list-item">
+✅ UTC time storage with per-account timezone display</li>
+<li class="arch-list-item">
+✅ Complete audit logging for all user and system events</li>
+<li class="arch-list-item">
+✅ Docker-ready deployment with CI/CD pipeline support</li>
+<li class="arch-list-item border-0">✅ Stateless API layer enabling
+horizontal scaling</li>
+</ul>
+<h3 id="moscow">MoSCoW Prioritization</h3>
+<div class="table-wrap">
+<table class="moscow-table">
+<thead>
+<tr>
+<th>Priority</th>
+<th>Feature</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="must-have">
+<td><span class="moscow-badge must">Must Have</span></td>
+<td>Social OAuth Connect</td>
+<td>Core prerequisite — nothing works without account connection</td>
+</tr>
+<tr class="must-have">
+<td><span class="moscow-badge must">Must Have</span></td>
+<td>Queue-Based Auto Publishing</td>
+<td>Primary value proposition — zero manual posting</td>
+</tr>
+<tr class="must-have">
+<td><span class="moscow-badge must">Must Have</span></td>
+<td>AI Caption Generation</td>
+<td>Key differentiator and primary delight moment</td>
+</tr>
+<tr class="must-have">
+<td><span class="moscow-badge must">Must Have</span></td>
+<td>Media Library (Upload/Preview)</td>
+<td>Required to attach content to posts</td>
+</tr>
+<tr class="must-have">
+<td><span class="moscow-badge must">Must Have</span></td>
+<td>Retry Failed Jobs</td>
+<td>Critical for trust and SLA — failed posts destroy retention</td>
+</tr>
+<tr class="should-have">
+<td><span class="moscow-badge should">Should Have</span></td>
+<td>Drag &amp; Drop Day Calendar</td>
+<td>High UX value — visual scheduling dramatically reduces friction</td>
+</tr>
+<tr class="should-have">
+<td><span class="moscow-badge should">Should Have</span></td>
+<td>Analytics Dashboard</td>
+<td>Needed for agency reporting and content decisions</td>
+</tr>
+<tr class="should-have">
+<td><span class="moscow-badge should">Should Have</span></td>
+<td>Push Notifications</td>
+<td>Publish success/failure alerts build trust</td>
+</tr>
+<tr class="could-have">
+<td><span class="moscow-badge could">Could Have</span></td>
+<td>Caption Templates Library</td>
+<td>Useful but AI generation covers the core need</td>
+</tr>
+<tr class="could-have">
+<td><span class="moscow-badge could">Could Have</span></td>
+<td>Post Duplication</td>
+<td>Nice UX shortcut but low critical impact</td>
+</tr>
+<tr class="wont-have">
+<td><span class="moscow-badge wont">Won't Have (MVP)</span></td>
+<td>Cross-Platform Integration</td>
+<td>Omnichannel focus. Multi-platform splits engineering focus 5x</td>
+</tr>
+<tr class="wont-have">
+<td><span class="moscow-badge wont">Won't Have (MVP)</span></td>
+<td>Team Collaboration &amp; Approval</td>
+<td>Complex workflow adds 4 weeks. Prioritized for Phase 2</td>
+</tr>
+<tr class="wont-have">
+<td><span class="moscow-badge wont">Won't Have (MVP)</span></td>
+<td>Mobile App (iOS/Android)</td>
+<td>Web-responsive first. Native app adds 12+ weeks</td>
+</tr>
+<tr class="wont-have">
+<td><span class="moscow-badge wont">Won't Have (MVP)</span></td>
+<td>Best Time to Post (AI)</td>
+<td>Requires data corpus. Available after 3 months of usage data</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Pricing Strategy</h3>
+<div class="pricing-grid">
+<div class="pricing-card">
+<div class="pricing-tier">Free</div>
+<div class="pricing-price">$0</div>
+<div class="pricing-period">forever</div>
+<ul class="pricing-features">
+<li>✓ 1 Social Profile</li>
+<li>✓ 10 scheduled posts/mo</li>
+<li>✓ 5 AI captions/mo</li>
+<li>✓ Basic analytics</li>
+</ul>
+</div>
+<div class="pricing-card featured">
+<div class="pricing-tier">Pro</div>
+<div class="pricing-price">$19</div>
+<div class="pricing-period">per month</div>
+<ul class="pricing-features">
+<li>✓ 5 Social Profiles</li>
+<li>✓ Unlimited scheduled posts</li>
+<li>✓ Unlimited AI captions</li>
+<li>✓ Full analytics + calendar</li>
+</ul>
+</div>
+<div class="pricing-card">
+<div class="pricing-tier">Agency</div>
+<div class="pricing-price">$49</div>
+<div class="pricing-period">per month</div>
+<ul class="pricing-features">
+<li>✓ Unlimited Accounts</li>
+<li>✓ Priority queue processing</li>
+<li>✓ Client reporting exports</li>
+<li>✓ Dedicated support</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- ===== USER PERSONAS ===== -->
+<section id="personas" class="tutorial-section" aria-labelledby="personas-title">
+<div class="section-label">🔬 Discovery</div>
+<h2 id="personas-title" class="section-title">User Personas</h2>
+<p>Based on research with 25 creators and 12 agencies, two primary personas emerged. Every
+product decision is evaluated against their goals and frustrations.</p>
+<div class="persona-grid">
+<!-- Persona 1 -->
+<div class="persona-card">
+<div class="persona-card-header">
+<div class="persona-avatar">👩</div>
+<div class="persona-info">
+<div class="name">Sarah Chen</div>
+<div class="role">Solo Content Creator</div>
+<div class="meta">Age 29 · Mumbai, India · Lifestyle & Wellness</div>
+</div>
+</div>
+<div class="persona-card-body">
+<div class="persona-row">
+<div>
+<div class="persona-section-title">Goals</div>
+<div class="persona-tags">
+<span class="persona-tag green">Consistent posting schedule</span>
+<span class="persona-tag green">Save 3h/week</span>
+<span class="persona-tag green">Grow to 50K followers</span>
+</div>
+</div>
+<div>
+<div class="persona-section-title">Frustrations</div>
+<div class="persona-tags">
+<span class="persona-tag red">Forgets to post</span>
+<span class="persona-tag red">Caption writer's block</span>
+<span class="persona-tag red">Buffer too expensive</span>
+</div>
+</div>
+<div>
+<div class="persona-section-title">Current Tools</div>
+<div class="persona-tags">
+<span class="persona-tag">Notes app</span>
+<span class="persona-tag">Phone reminders</span>
+<span class="persona-tag">Canva</span>
+</div>
+</div>
+<div class="persona-quote">"I post 3x a week but I'm always scrambling last
+minute. I wish something just did it for me."</div>
+<div>
+<div class="persona-section-title">Why SMS</div>
+<p class="persona-why-text">Affordable pricing, AI caption generation, and
+automatic publishing mean she sets up the week on Sunday and SMS handles
+the rest.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Persona 2 -->
+<div class="persona-card">
+<div class="persona-card-header">
+<div class="persona-avatar avatar-gradient-alt">👨</div>
+<div class="persona-info">
+<div class="name">Marcus Rivera</div>
+<div class="role">Digital Agency Owner</div>
+<div class="meta">Age 36 · Bangalore, India · 15+ Client Brands</div>
+</div>
+</div>
+<div class="persona-card-body">
+<div class="persona-row">
+<div>
+<div class="persona-section-title">Goals</div>
+<div class="persona-tags">
+<span class="persona-tag green">Manage 15+ accounts centrally</span>
+<span class="persona-tag green">Zero missed posts</span>
+<span class="persona-tag green">Client reporting</span>
+</div>
+</div>
+<div>
+<div class="persona-section-title">Frustrations</div>
+<div class="persona-tags">
+<span class="persona-tag red">Team posts to wrong account</span>
+<span class="persona-tag red">No centralized media library</span>
+<span class="persona-tag red">Hootsuite costs $1,800/yr</span>
+</div>
+</div>
+<div>
+<div class="persona-section-title">Current Tools</div>
+<div class="persona-tags">
+<span class="persona-tag">Hootsuite</span>
+<span class="persona-tag">Google Drive</span>
+<span class="persona-tag">WhatsApp</span>
+</div>
+</div>
+<div class="persona-quote">"We manage 15 brands. One wrong post to the wrong
+client account is a PR disaster."</div>
+<div>
+<div class="persona-section-title">Why SMS</div>
+<p class="persona-why-text">Multi-account management, per-account timezone
+isolation, a central media library, and reliable auto-publishing
+eliminates his biggest operational risk at a fraction of Hootsuite's
+cost.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ===== USER JOURNEY MAP ===== -->
+<section id="journey" class="tutorial-section" aria-labelledby="journey-title">
+<div class="section-label">🔬 Discovery</div>
+<h2 id="journey-title" class="section-title">User Journey Map</h2>
+<p>The complete end-to-end experience from first discovery to repeat publishing. Emotions and
+opportunities mapped at every touchpoint.</p>
+<div class="journey-grid-modern">
+<!-- Step 1 -->
+<div class="jg-card phase-onboard">
+<div class="jg-step-num">01</div>
+<div class="jg-header">
+<div class="jg-icon">📝</div>
+<span class="jg-phase">Onboard</span>
+</div>
+<h3 class="jg-title">Signs Up</h3>
+<div class="jg-body">
+<div class="jg-emotion">🤔</div>
+<p class="jg-pain">Cautious — has tried tools before</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="jg-card phase-onboard">
+<div class="jg-step-num">02</div>
+<div class="jg-header">
+<div class="jg-icon">🔌</div>
+<span class="jg-phase">Onboard</span>
+</div>
+<h3 class="jg-title">Connects Social Account</h3>
+<div class="jg-body">
+<div class="jg-emotion">😅</div>
+<p class="jg-pain">OAuth flow must be smooth and trustworthy</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="jg-card phase-create">
+<div class="jg-step-num">03</div>
+<div class="jg-header">
+<div class="jg-icon">🖼️</div>
+<span class="jg-phase">Create</span>
+</div>
+<h3 class="jg-title">Uploads Media</h3>
+<div class="jg-body">
+<div class="jg-emotion">😊</div>
+<p class="jg-pain">Drag-and-drop feels intuitive</p>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="jg-card phase-create">
+<div class="jg-step-num">04</div>
+<div class="jg-header">
+<div class="jg-icon">🤖</div>
+<span class="jg-phase">Create</span>
+</div>
+<h3 class="jg-title">Generates AI Caption</h3>
+<div class="jg-body">
+<div class="jg-emotion">🤩</div>
+<p class="jg-pain">Delight moment — saves 30 minutes</p>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="jg-card phase-create">
+<div class="jg-step-num">05</div>
+<div class="jg-header">
+<div class="jg-icon">🗓️</div>
+<span class="jg-phase">Create</span>
+</div>
+<h3 class="jg-title">Picks Date &amp; Time</h3>
+<div class="jg-body">
+<div class="jg-emotion">😌</div>
+<p class="jg-pain">Timezone shown clearly per account</p>
+</div>
+</div>
+<!-- Step 6 -->
+<div class="jg-card phase-publish">
+<div class="jg-step-num">06</div>
+<div class="jg-header">
+<div class="jg-icon">👁️</div>
+<span class="jg-phase">Publish</span>
+</div>
+<h3 class="jg-title">Previews Post</h3>
+<div class="jg-body">
+<div class="jg-emotion">😊</div>
+<p class="jg-pain">Mobile preview builds confidence</p>
+</div>
+</div>
+<!-- Step 7 -->
+<div class="jg-card phase-publish">
+<div class="jg-step-num">07</div>
+<div class="jg-header">
+<div class="jg-icon">📤</div>
+<span class="jg-phase">Publish</span>
+</div>
+<h3 class="jg-title">Schedules Post</h3>
+<div class="jg-body">
+<div class="jg-emotion">😌</div>
+<p class="jg-pain">One click to queue and forget</p>
+</div>
+</div>
+<!-- Step 8 -->
+<div class="jg-card phase-publish">
+<div class="jg-step-num">08</div>
+<div class="jg-header">
+<div class="jg-icon">🔔</div>
+<span class="jg-phase">Publish</span>
+</div>
+<h3 class="jg-title">Gets Notified</h3>
+<div class="jg-body">
+<div class="jg-emotion">🎉</div>
+<p class="jg-pain">Success confirmation builds trust</p>
+</div>
+</div>
+<!-- Step 9 -->
+<div class="jg-card phase-measure">
+<div class="jg-step-num">09</div>
+<div class="jg-header">
+<div class="jg-icon">📊</div>
+<span class="jg-phase">Measure</span>
+</div>
+<h3 class="jg-title">Views Analytics</h3>
+<div class="jg-body">
+<div class="jg-emotion">😃</div>
+<p class="jg-pain">Data drives next content decision</p>
+</div>
+</div>
+</div>
+<div class="callout info">
+<div class="callout-icon">💡</div>
+<div class="callout-content"><strong>Key Insight</strong>
+<p>The delight moment is Step 5 — AI Caption Generation. Users who use AI in their first
+session have 3x higher 30-day retention. This is why AI is prominently placed in the
+Scheduler, not hidden in settings.</p>
+</div>
+</div>
+</section>
+<!-- ===== PRODUCT STRATEGY ===== -->
+<section id="userflow" class="tutorial-section" aria-labelledby="userflow-title">
+<h2 id="userflow-title" class="section-title">User Flows</h2>
+<h3>Primary Publishing Flow</h3>
+<div class="flow-path">
+<div class="flow-path-step">
+<div class="flow-path-icon">🔐</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 01</div>
+<div class="flow-path-title">User Registers / Logs In</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">📊</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 02</div>
+<div class="flow-path-title">Views Dashboard</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">🔌</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 03</div>
+<div class="flow-path-title">Connects Social Account Account</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">🌍</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 04</div>
+<div class="flow-path-title">Configures Account Timezone</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">📁</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 05</div>
+<div class="flow-path-title">Uploads Media to Library</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">✍️</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 06</div>
+<div class="flow-path-title">Generates AI Caption</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">🗓️</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 07</div>
+<div class="flow-path-title">Selects Date &amp; Time</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">✅</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 08</div>
+<div class="flow-path-title">Reviews Post Preview</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">📤</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 09</div>
+<div class="flow-path-title">Submits → Validated → Queued</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">⚙️</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 10</div>
+<div class="flow-path-title">Worker Publishes Post</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">🔔</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 11</div>
+<div class="flow-path-title">Receives Success Notification</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">📈</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Step 12</div>
+<div class="flow-path-title">Views Analytics</div>
+</div>
+</div>
+</div>
+<h3>Retry Flow (On Failure)</h3>
+<div class="flow-path flow-path-wide">
+<div class="flow-path-step step-error">
+<div class="flow-path-icon icon-error">❌</div>
+<div class="flow-path-content">
+<div class="flow-path-num num-error">Event</div>
+<div class="flow-path-title">Publishing Fails</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">📋</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Action 01</div>
+<div class="flow-path-title">Error Logged</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">🔔</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Action 02</div>
+<div class="flow-path-title">User Notified</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">⏱️</div>
+<div class="flow-path-content">
+<div class="flow-path-num">System Phase</div>
+<div class="flow-path-title">Exponential Backoff (1m → 5m → 15m)</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">🔄</div>
+<div class="flow-path-content">
+<div class="flow-path-num">System Phase</div>
+<div class="flow-path-title">Retry Attempt (max 3x)</div>
+</div>
+</div>
+<div class="flow-path-step">
+<div class="flow-path-icon">⚖️</div>
+<div class="flow-path-content">
+<div class="flow-path-num">Final Outcome</div>
+<div class="flow-path-title">✅ Published OR 🚫 Permanently Failed</div>
+</div>
+</div>
+</div>
+<h3>Navigation Structure</h3>
+<div class="nav-grid">
+<div class="nav-card nav-card-dashboard">
+<div class="nav-card-header">
+<div class="nav-card-icon">🏠</div>
+<div class="nav-card-title">Dashboard Overview</div>
+</div>
+</div>
+<div class="nav-card">
+<div class="nav-card-header">
+<div class="nav-card-icon">📱</div>
+<div class="nav-card-title">Social Accounts</div>
+</div>
+<ul class="nav-card-list">
+<li>Connected Accounts List</li>
+<li>Connect New Account</li>
+<li>Account Settings (Timezone, Status)</li>
+</ul>
+</div>
+<div class="nav-card">
+<div class="nav-card-header">
+<div class="nav-card-icon">🖼️</div>
+<div class="nav-card-title">Media Library</div>
+</div>
+<ul class="nav-card-list">
+<li>All Media Grid</li>
+<li>Folders</li>
+<li>Upload</li>
+</ul>
+</div>
+<div class="nav-card">
+<div class="nav-card-header">
+<div class="nav-card-icon">✍️</div>
+<div class="nav-card-title">Caption Library</div>
+</div>
+<ul class="nav-card-list">
+<li>All Captions</li>
+<li>Favorites</li>
+<li>New Caption (Rich Editor + AI)</li>
+</ul>
+</div>
+<div class="nav-card">
+<div class="nav-card-header">
+<div class="nav-card-icon">📅</div>
+<div class="nav-card-title">Scheduler</div>
+</div>
+<ul class="nav-card-list">
+<li>Create Post</li>
+<li>Draft Posts</li>
+<li>Scheduled Posts</li>
+</ul>
+</div>
+<div class="nav-card">
+<div class="nav-card-header">
+<div class="nav-card-icon">🗓️</div>
+<div class="nav-card-title">Calendar (Day View)</div>
+</div>
+<ul class="nav-card-list">
+<li>Drag &amp; Drop Timeline</li>
+</ul>
+</div>
+<div class="nav-card">
+<div class="nav-card-header">
+<div class="nav-card-icon">📈</div>
+<div class="nav-card-title">Analytics</div>
+</div>
+<ul class="nav-card-list">
+<li>Overview Dashboard</li>
+<li>Per-Post Analytics</li>
+</ul>
+</div>
+<div class="nav-card">
+<div class="nav-card-header">
+<div class="nav-card-icon">🔔</div>
+<div class="nav-card-title">Notifications</div>
+</div>
+<ul class="nav-card-list">
+<li>View Alerts &amp; History</li>
+</ul>
+</div>
+<div class="nav-card">
+<div class="nav-card-header">
+<div class="nav-card-icon">⚙️</div>
+<div class="nav-card-title">Settings</div>
+</div>
+<ul class="nav-card-list">
+<li>Profile</li>
+<li>Password</li>
+<li>OpenAI API Key</li>
+<li>Notification Preferences</li>
+</ul>
+</div>
+</div>
+<h3>Screen States</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Trigger</th>
+<th>UI Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="badge badge-blue">Loading</span></td>
+<td>Data fetch in progress</td>
+<td>Skeleton loaders, pulsing placeholders</td>
+</tr>
+<tr>
+<td><span class="badge badge-gray">Empty</span></td>
+<td>No data available</td>
+<td>Illustration + CTA button (e.g., "Upload your first media")</td>
+</tr>
+<tr>
+<td><span class="badge badge-green">Success</span></td>
+<td>Action completed</td>
+<td>Toast notification (bottom-right), green border flash</td>
+</tr>
+<tr>
+<td><span class="badge badge-red">Error</span></td>
+<td>Action failed</td>
+<td>Inline error message + retry button</td>
+</tr>
+<tr>
+<td><span class="badge badge-yellow">Warning</span></td>
+<td>Partial success / expiry</td>
+<td>Banner alert with action button</td>
+</tr>
+<tr>
+<td><span class="badge badge-purple">Confirmation</span></td>
+<td>Destructive action</td>
+<td>Modal dialog with confirm/cancel</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Accessibility Requirements</h3>
+<ul class="checklist">
+<li>All interactive elements have unique, descriptive ARIA labels</li>
+<li>Keyboard navigation supported for all forms and modals</li>
+<li>Color contrast ratio ≥ 4.5:1 for all text (WCAG AA)</li>
+<li>Focus indicators visible on all focusable elements</li>
+<li>Screen reader announcements for dynamic content changes</li>
+<li>Form inputs have associated labels (not just placeholder text)</li>
+</ul>
+</section>
+<section id="ui-spec" class="tutorial-section" aria-labelledby="ui-spec-title">
+<h2 id="ui-spec-title" class="section-title">UI Specification</h2>
+<h3>Dashboard Page</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stats Cards Row</td>
+<td>4-column grid</td>
+<td>Total Posts, Scheduled, Published, Failed counts</td>
+</tr>
+<tr>
+<td>Upcoming Posts</td>
+<td>List with avatars</td>
+<td>Next 5 scheduled posts with time and account</td>
+</tr>
+<tr>
+<td>Publishing Chart</td>
+<td>Line chart (7 days)</td>
+<td>Daily publish success/failure trend</td>
+</tr>
+<tr>
+<td>Connected Accounts</td>
+<td>Horizontal scroll pills</td>
+<td>Quick account switcher with status indicator</td>
+</tr>
+<tr>
+<td>Quick Actions</td>
+<td>CTA buttons</td>
+<td>Create Post, Upload Media, View Calendar</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Scheduler Page</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Account Selector</td>
+<td>Dropdown with avatar, username, timezone indicator</td>
+</tr>
+<tr>
+<td>Media Picker</td>
+<td>Grid modal — show library, upload button, multi-select for carousel</td>
+</tr>
+<tr>
+<td>Caption Editor</td>
+<td>Rich textarea, character counter (0/2200), emoji picker, AI generate button
+</td>
+</tr>
+<tr>
+<td>Date &amp; Time Picker</td>
+<td>Calendar popup + time picker in account timezone (shows UTC equivalent)</td>
+</tr>
+<tr>
+<td>Post Preview</td>
+<td>Mobile frame preview showing final social post appearance</td>
+</tr>
+<tr>
+<td>Action Buttons</td>
+<td>Save Draft | Schedule Post — disabled until all required fields filled</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Calendar Page</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Spec</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timeline</td>
+<td>Hourly slots (00:00–23:00), current time red line indicator</td>
+</tr>
+<tr>
+<td>Post Cards</td>
+<td>Color-coded by status: Draft=gray, Scheduled=blue, Published=green,
+Failed=red</td>
+</tr>
+<tr>
+<td>Drag &amp; Drop</td>
+<td>Drag post to new timeslot → confirm reschedule modal</td>
+</tr>
+<tr>
+<td>Date Nav</td>
+<td>Previous/Next day arrows + date picker popup</td>
+</tr>
+<tr>
+<td>Account Filter</td>
+<td>Multi-select filter by social account</td>
+</tr>
+<tr>
+<td>Status Filter</td>
+<td>Checkbox: All / Draft / Scheduled / Published / Failed</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Media Library Page</h3>
+<div class="cards-4">
+<div class="card">
+<h3>Grid View</h3>
+<p>Masonry grid, thumbnail cards with filename, size, type badge. Hover shows
+select/delete actions.</p>
+</div>
+<div class="card">
+<h3>Upload Zone</h3>
+<p>Drag-and-drop upload area. Supports multi-file. Shows upload progress bar per file.
+</p>
+</div>
+<div class="card">
+<h3>Search Bar</h3>
+<p>Debounced search by filename or tag. Instant filter of grid results.</p>
+</div>
+<div class="card">
+<h3>Folder Tree</h3>
+<p>Left sidebar folder navigation. Create folder, rename, delete, move media.</p>
+</div>
+</div>
+<h3>Responsive Breakpoints</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Breakpoint</th>
+<th>Width</th>
+<th>Layout Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mobile</td>
+<td>&lt; 768px</td>
+<td>Single column, bottom nav bar, sidebar hidden</td>
+</tr>
+<tr>
+<td>Tablet</td>
+<td>768–1024px</td>
+<td>2-column grid, collapsible sidebar</td>
+</tr>
+<tr>
+<td>Desktop</td>
+<td>&gt; 1024px</td>
+<td>3-column grid, persistent sidebar</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="components" class="tutorial-section" aria-labelledby="components-title">
+<h2 id="components-title" class="section-title">Component Specification</h2>
+<h3>PostCard Component</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>✅</td>
+<td>Unique post identifier</td>
+</tr>
+<tr>
+<td>status</td>
+<td>enum</td>
+<td>✅</td>
+<td>draft | scheduled | processing | published | failed</td>
+</tr>
+<tr>
+<td>scheduledAt</td>
+<td>Date</td>
+<td>✅</td>
+<td>Scheduled publish datetime in account timezone</td>
+</tr>
+<tr>
+<td>mediaUrl</td>
+<td>string</td>
+<td>✅</td>
+<td>Thumbnail image URL</td>
+</tr>
+<tr>
+<td>caption</td>
+<td>string</td>
+<td>❌</td>
+<td>Post caption preview (first 100 chars)</td>
+</tr>
+<tr>
+<td>accountName</td>
+<td>string</td>
+<td>✅</td>
+<td>social account username</td>
+</tr>
+<tr>
+<td>onEdit</td>
+<td>function</td>
+<td>❌</td>
+<td>Edit callback</td>
+</tr>
+<tr>
+<td>onDelete</td>
+<td>function</td>
+<td>❌</td>
+<td>Delete callback (shows confirm modal)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>CaptionEditor Component</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default</td>
+<td>Empty textarea, char counter shows 0/2200</td>
+</tr>
+<tr>
+<td>Typing</td>
+<td>Counter updates, auto-save debounced 3s</td>
+</tr>
+<tr>
+<td>Over Limit</td>
+<td>Counter turns red, submit disabled</td>
+</tr>
+<tr>
+<td>AI Loading</td>
+<td>Textarea disabled, spinner, "Generating..." text</td>
+</tr>
+<tr>
+<td>AI Complete</td>
+<td>Generated text inserted, user can edit before saving</td>
+</tr>
+<tr>
+<td>Error</td>
+<td>Inline error below textarea, retry button</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>AccountSelector Component</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Display</td>
+<td>Profile picture + username + timezone abbreviation</td>
+</tr>
+<tr>
+<td>Status Dot</td>
+<td>Green = active, Red = token expired, Gray = disconnected</td>
+</tr>
+<tr>
+<td>Disabled State</td>
+<td>Expired accounts shown with warning icon, cannot be selected</td>
+</tr>
+<tr>
+<td>Empty State</td>
+<td>"Connect Social Account" CTA when no accounts exist</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- ===== WIREFRAMES ===== -->
+<section id="wireframes" class="tutorial-section" aria-labelledby="wireframes-title">
+<div class="section-label">🎨 UX / Design</div>
+<h2 id="wireframes-title" class="section-title">Wireframes</h2>
+<p>Lo-fidelity wireframes establish layout, hierarchy, and interaction patterns before any
+visual design is applied. These inform component specification and developer handoff.</p>
+<div class="info-box blue">
+<p><strong>Design Progression:</strong> Lo-Fi Wireframe → Hi-Fi Prototype → Final UI. The
+wireframes below represent the Lo-Fi stage — focused on structure and flow, not visual
+polish.</p>
+</div>
+<h3>Dashboard — Lo-Fi Wireframe</h3>
+<img src="wireframe-dashboard.png"
+alt="SMS Dashboard Lo-Fi Wireframe showing sidebar navigation, 4 stat cards, publishing activity chart, upcoming posts list and quick action buttons"
+class="wireframe-img" loading="lazy">
+<p class="wireframe-caption">Key decisions: 4-card stat row at top for immediate health check →
+chart for trend → list for upcoming actions → quick CTAs for immediate next step.</p>
+<h3>Scheduler — Lo-Fi Wireframe</h3>
+<img src="wireframe-scheduler.png"
+alt="SMS Scheduler Lo-Fi Wireframe showing two-panel layout with post creation form on the left and live social post preview on the right"
+class="wireframe-img" loading="lazy">
+<p class="wireframe-caption">Two-panel layout: creation form (65%) + live Instagram preview
+(35%). The preview pane is the most-requested feature from user testing — eliminates the
+need to post and delete to check appearance.</p>
+<div class="decision-log">
+<div class="dl-title">⚖️ Design Decision — Why a Two-Panel Scheduler?</div>
+<p>Single-panel schedulers (like Buffer) require users to mentally simulate how their post
+will look. In user tests, 7/10 users asked "what will it actually look like on
+Social?" before scheduling. The live preview panel directly addresses this anxiety
+and reduces abandon rate during post creation.</p>
+</div>
+</section>
+<section id="future" class="tutorial-section" aria-labelledby="future-title">
+<h2 id="future-title" class="section-title">Future Improvements</h2>
+<div class="cards">
+<div class="card">
+<h3>Phase 2: Multi-Platform</h3>
+<p>Add support for Facebook Pages, LinkedIn Company Pages, and X (Twitter) using the
+same queue architecture.</p>
+</div>
+<div class="card">
+<h3>Phase 3: AI Intelligence</h3>
+<p>Implement "Best Time to Post" algorithms based on historical engagement data per
+account.</p>
+</div>
+<div class="card">
+<h3>Phase 4: Team Collaboration</h3>
+<p>Add workspaces, role-based access control (Admin, Editor, Viewer), and post approval
+workflows.</p>
+</div>
+</div>
+</section>
+<section id="related" class="tutorial-section" aria-labelledby="related-title">
+<h2 id="related-title" class="section-title">Related Documents</h2>
+<ul class="checklist">
+<li><a href="#" class="text-blue">API Reference Documentation (Swagger)</a></li>
+<li><a href="#" class="text-blue">Database ER Diagram &amp; Schema</a></li>
+<li><a href="#" class="text-blue">Figma UI/UX Prototypes</a></li>
+<li><a href="#" class="text-blue">Platform APIs Developer Docs</a></li>
+</ul>
+</section>
+<section id="glossary" class="tutorial-section" aria-labelledby="glossary-title">
+<h2 id="glossary-title" class="section-title">Glossary</h2>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Idempotency Key</strong></td>
+<td>A unique string used to prevent duplicate publishing if a job is
+accidentally run twice.</td>
+</tr>
+<tr>
+<td><strong>Exponential Backoff</strong></td>
+<td>A strategy where the wait time between retry attempts increases
+exponentially (e.g., 1m, 5m, 15m).</td>
+</tr>
+<tr>
+<td><strong>IANA Timezone</strong></td>
+<td>Standard timezone format (e.g., "America/New_York", "Asia/Kolkata") used for
+localization.</td>
+</tr>
+<tr>
+<td><strong>Soft Delete</strong></td>
+<td>Marking a database record as deleted using a timestamp instead of physically
+removing it.</td>
+</tr>
+<tr>
+<td><strong>JWT</strong></td>
+<td>JSON Web Token, used for stateless API authentication.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="faq" class="tutorial-section" aria-labelledby="faq-title">
+<h2 id="faq-title" class="section-title">Frequently Asked Questions</h2>
+<div class="info-box">
+<p><strong class="text-main">Q: What happens if a user's Social OAuth token expires
+while posts are scheduled?</strong><br>A: The background worker will detect the
+invalid token, mark the job as Failed, and send an immediate email/in-app notification
+to the user to reconnect their account.</p>
+</div>
+<div class="info-box">
+<p><strong class="text-main">Q: How are daylight saving time (DST) changes
+handled?</strong><br>A: Since we store publish times in UTC and use the server's
+IANA timezone library to convert from the user's selected timezone, DST shifts are
+handled automatically without user intervention.</p>
+</div>
+<div class="info-box">
+<p><strong class="text-main">Q: Can users publish Carousels?</strong><br>A: Yes. The
+UI allows uploading up to 10 images/videos per post. The publishing worker uses the
+Platform APIs's carousel endpoints to group the media.</p>
+</div>
+</section>
+<section class="tutorial-section mt-5 pt-4">
+<h2 class="section-title text-center mb-4">Technical Integration Specs</h2>
+<div class="d-flex gap-3 flex-wrap justify-content-center">
+<a href="instagram/" class="btn-secondary-modern">
+<span class="me-2">📸</span> Instagram API Spec
+</a>
+<a href="facebook/" class="btn-secondary-modern">
+<span class="me-2">👥</span> Facebook API Spec
+</a>
+<a href="linkedin/" class="btn-secondary-modern">
+<span class="me-2">💼</span> LinkedIn API Spec
+</a>
+</div>
+</section>
+</div>
+</main>
+<!-- Same footer as tutorial page -->
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html" class="bg-white shadow-sm" role="contentinfo"></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
 </body>
-
 </html>
 <script>includeHTML();</script>
