@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Scale From Zero To Millions Of Users | System Design Tutorial | Brijesh Patel</title>
+    <title>Scale From Zero To Millions Of Users | Brijesh Patel</title>
     <meta name="description"
         content="Complete guide to scaling from zero to millions of users. Learn load balancing, CDNs, databases, caching, microservices, and system design architecture.">
     <meta name="keywords"
@@ -18,6 +18,31 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
 
+
+<!-- E-E-A-T TechArticle & Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Scale From Zero To Millions Of Users | Brijesh Patel",
+  "description": "Complete guide to scaling from zero to millions of users. Learn load balancing, CDNs, databases, caching, microservices, and system design architecture.",
+  "url": "https://brijesh.work/system-design/scale-from-zero-to-millions-of-users/",
+  "author": {
+    "@type": "Person",
+    "name": "Brijesh Patel",
+    "jobTitle": "AI & Web Product Engineer",
+    "url": "https://brijesh.work/about/"
+  },
+  "datePublished": "2026-01-15",
+  "dateModified": "2026-09-09",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Brijesh Work",
+    "url": "https://brijesh.work/"
+  }
+}
+</script>
+
 </head>
 
 <body>
@@ -28,28 +53,28 @@
                     <li>
                         <p>
                             <a style="padding:0;margin: 0;color: #ffffff;" href="https://brijesh.work/">
-                                <img style="width:40px;" src="https://brijesh.work/pub/media/img/brijesh-work-logo.png"
-                                    alt="Brijesh Work Logo">
+                                <img loading="lazy" style="width:40px;" src="https://brijesh.work/pub/media/img/brijesh-work-logo.png"
+                                    alt="Brijesh Work Logo" width="40" height="40">
                             </a>
                         </p>
                     </li>
                     <li>
-                        <p><a target="_blank" href="https://twitter.com/brijeshwork/" rel="noopener nofollow"><img
+                        <p><a target="_blank" href="https://twitter.com/brijeshwork/" rel="noopener nofollow"><img loading="lazy"
                                     align="left" alt="Brijesh Patel Twitter" width="28px"
                                     src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/twitter.svg"
-                                    style="max-width: 100%;"></a></p>
+                                    style="max-width: 100%;" height="500"></a></p>
                     </li>
                     <li>
                         <p><a target="_blank" href="https://www.linkedin.com/in/brijeshwork/"
-                                rel="noopener nofollow"><img align="left" alt="Brijesh Patel LinkedIn" width="28px"
+                                rel="noopener nofollow"><img loading="lazy" align="left" alt="Brijesh Patel LinkedIn" width="28px"
                                     src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg"
-                                    style="max-width: 100%;"></a></p>
+                                    style="max-width: 100%;" height="500"></a></p>
                     </li>
                     <li>
-                        <p><a target="_blank" href="https://github.com/brijeshwork/" rel="noopener nofollow"><img
+                        <p><a target="_blank" href="https://github.com/brijeshwork/" rel="noopener nofollow"><img loading="lazy"
                                     align="left" alt="Brijesh Patel Github" width="28px"
                                     src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg"
-                                    style="max-width: 100%;"></a></p>
+                                    style="max-width: 100%;" height="500"></a></p>
                     </li>
                     <li class="pullRight"><a href="https://brijesh.work/about/"> About</a></li>
                     <li class="pullRight"><a href="https://brijesh.work/portfolio/">Work</a></li>
@@ -62,6 +87,16 @@
     <div class="container">
 
         <h1>Scale From Zero To Millions Of Users</h1>
+
+<!-- E-E-A-T Author Byline & Verification Block -->
+<div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 my-4 border">
+  <img src="https://brijesh.work/pub/media/img/brijesh-patel-pic.webp" alt="Brijesh Patel" width="48" height="48" class="rounded-circle shadow-sm" loading="lazy">
+  <div>
+    <div class="fw-bold text-dark mb-0">Written by <a href="https://brijesh.work/about/" class="text-primary text-decoration-none">Brijesh Patel</a></div>
+    <div class="small text-muted"><i class="fas fa-user-check text-success me-1"></i> AI & Web Product Engineer • <i class="far fa-calendar-check me-1"></i> Last Reviewed: September 2026</div>
+  </div>
+</div>
+
         <p>Designing a system that supports millions of users is challenging, and it is a journey that requires
             continuous refinement and endless improvement. In this chapter, we build a system that supports a single
             user and gradually scale it up to serve millions of users. After reading this chapter, you will master a
@@ -71,8 +106,8 @@
             start with something simple, everything is running on a single server. Figure 1 shows the illustration of a
             single server setup where everything is running on one server: web app, database, cache, etc.</p>
         <figure class="image-wrapper">
-            <img src="https://www.designinggreatproducts.com/img/one-server.svg"
-                alt="Illustration of a Single Server Setup (Source: Designing Great Products)">
+            <img loading="lazy" src="https://www.designinggreatproducts.com/img/one-server.svg"
+                alt="Illustration of a Single Server Setup (Source: Designing Great Products)" width="800" height="500">
             <figcaption>Figure 1: Illustration of a Single Server Setup <span class="source">(Source: Designing Great
                     Products)</span></figcaption>
         </figure>
@@ -80,8 +115,8 @@
             at the request flow (Figure 2).</p>
 
         <figure class="image-wrapper">
-            <img src="https://www.designinggreatproducts.com/img/request-flow-one-server.svg"
-                alt="Illustration of Request Flow in a Single Server Setup">
+            <img loading="lazy" src="https://www.designinggreatproducts.com/img/request-flow-one-server.svg"
+                alt="Illustration of Request Flow in a Single Server Setup" width="800" height="500">
             <figcaption>Figure 2: Request Flow in a Single Server Setup <span class="source">(Source: Designing Great
                     Products)</span></figcaption>
         </figure>
@@ -177,8 +212,8 @@
             set.</p>
         <p>Figure 4 shows how a load balancer works.</p>
         <figure class="image-wrapper">
-            <img src="https://www.designinggreatproducts.com/img/load-balancer.svg"
-                alt="Illustration of Request Flow with a Load Balancer">
+            <img loading="lazy" src="https://www.designinggreatproducts.com/img/load-balancer.svg"
+                alt="Illustration of Request Flow with a Load Balancer" width="800" height="500">
             <figcaption>Figure 4: Request Flow with a Load Balancer <span class="source">(Source: Designing Great
                     Products)</span></figcaption>
         </figure>
@@ -253,7 +288,7 @@
             Figure 6 shows the system design after adding the load balancer and database replication.
         </p>
         <figure>
-            <img src="../image/system-design-from-zero-to-millions-of-users/fig6.png" alt="Figure 6">
+            <img loading="lazy" src="https://brijesh.work/image/system-design-from-zero-to-millions-of-users/fig6.png" alt="Figure 6" width="800" height="500">
             <figcaption>Figure 6: Database Replication</figcaption>
         </figure>
         <p>
@@ -491,8 +526,8 @@
             servers, called consumers/subscribers, connect to the queue, and perform actions defined by the messages.
             The model is shown in Figure 17.
 
-            <img src="https://github.com/brijeshwork/brijeshwork.github.io/assets/154925672/50549227-2061-49f4-80f6-41f15d77fa73"
-                alt="Producer-Consumer Architecture using a Message Queue">
+            <img loading="lazy" src="https://github.com/brijeshwork/brijeshwork.github.io/assets/154925672/50549227-2061-49f4-80f6-41f15d77fa73"
+                alt="Producer-Consumer Architecture using a Message Queue" width="800" height="500">
             Figure 17
             Decoupling makes the message queue a preferred architecture for building a scalable and reliable
             application.
@@ -507,8 +542,8 @@
             independently. When the size of the queue becomes large, more workers are added to reduce the processing
             time. However, if the queue is empty most of the time, the number of workers can be reduced.
 
-            <img src="https://github.com/brijeshwork/brijeshwork.github.io/assets/154925672/8e17cd3b-48cd-4239-872e-17e232780452"
-                alt="System Architecture Diagram Illustrating a Message Queue Used for Photo Processing">
+            <img loading="lazy" src="https://github.com/brijeshwork/brijeshwork.github.io/assets/154925672/8e17cd3b-48cd-4239-872e-17e232780452"
+                alt="System Architecture Diagram Illustrating a Message Queue Used for Photo Processing" width="800" height="500">
             Figure 18
             Image represents a system architecture diagram illustrating a message queue used for photo processing. On
             the left, a group of three vertically stacked green rectangles labeled 'Producer' and further described as
@@ -734,7 +769,25 @@
 
 
 
-        <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+        
+<!-- Contextual Internal Link Callout -->
+<div class="container my-5">
+    <div class="p-4 rounded-4 shadow-sm" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #f8fafc; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <span class="badge bg-primary px-3 py-2 rounded-pill mb-2"><i class="fas fa-microchip me-1"></i> Technical Deep Dive</span>
+                <h3 class="h4 text-white fw-bold mb-2">Building Scalable Web Products or Custom APIs?</h3>
+                <p class="text-white-50 mb-0">Explore how we architect high-throughput systems, browser extensions, and SaaS tools, or partner with us for dedicated AI product engineering.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <a href="https://brijesh.work/portfolio/backlinkstools/" class="btn btn-outline-light btn-sm rounded-pill me-2 mb-2"><i class="fas fa-folder-open me-1"></i> Case Studies</a>
+                <a href="https://brijesh.work/service/ai-product-development-for-founders/" class="btn btn-primary btn-sm rounded-pill mb-2"><i class="fas fa-rocket me-1"></i> AI Services</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
         <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>

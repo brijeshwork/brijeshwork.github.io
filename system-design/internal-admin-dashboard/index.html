@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Internal Admin Dashboard System Design | Brijesh Patel</title>
+  <meta name="description" content="System design guide for internal admin dashboards. Architecture for RBAC, audit logging, real-time telemetry, database read-replicas, and low-latency.">>
+  <meta name="keywords"
+    content="system design, admin dashboard, rbac, audit logging, internal tools, telemetry, web architecture">
+  <meta name="author" content="Brijesh Patel">
+  <link rel="canonical" href="https://brijesh.work/system-design/internal-admin-dashboard/" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+  <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+  <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+
+  <style>
+    .hero-section {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: white;
+      padding: 4rem 0;
+      margin-bottom: 2rem;
+    }
+    .hero-subtitle {
+      color: #bae6fd;
+      font-size: 1.25rem;
+    }
+    .sidebar-sticky {
+      position: sticky;
+      top: 2rem;
+    }
+    .diagram-box {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: monospace;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      white-space: pre;
+      overflow-x: auto;
+    }
+  </style>
+
+<!-- E-E-A-T TechArticle & Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Internal Admin Dashboard System Design | Brijesh Patel",
+  "description": "System design guide for internal admin dashboards. Architecture for RBAC, audit logging, real-time telemetry, database read-replicas, and low-latency.",
+  "url": "https://brijesh.work/system-design/internal-admin-dashboard/",
+  "author": {
+    "@type": "Person",
+    "name": "Brijesh Patel",
+    "jobTitle": "AI & Web Product Engineer",
+    "url": "https://brijesh.work/about/"
+  },
+  "datePublished": "2026-01-15",
+  "dateModified": "2026-09-09",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Brijesh Work",
+    "url": "https://brijesh.work/"
+  }
+}
+</script>
+
+</head>
+
+<body>
+  <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header"></header>
+
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <span class="badge bg-light text-dark mb-2">System Design Architecture</span>
+          <h1 class="display-5 fw-bold mb-3">Internal Admin Dashboard System Design</h1>
+
+<!-- E-E-A-T Author Byline & Verification Block -->
+<div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 my-4 border">
+  <img src="https://brijesh.work/pub/media/img/brijesh-patel-pic.webp" alt="Brijesh Patel" width="48" height="48" class="rounded-circle shadow-sm" loading="lazy">
+  <div>
+    <div class="fw-bold text-dark mb-0">Written by <a href="https://brijesh.work/about/" class="text-primary text-decoration-none">Brijesh Patel</a></div>
+    <div class="small text-muted"><i class="fas fa-user-check text-success me-1"></i> AI & Web Product Engineer • <i class="far fa-calendar-check me-1"></i> Last Reviewed: September 2026</div>
+  </div>
+</div>
+
+          <p class="hero-subtitle mb-0">Designing scalable, secure internal control panels for enterprise data operations, role-based access, and real-time monitoring.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container pb-5">
+    <div class="row">
+      <div class="col-lg-8">
+        <section id="overview" class="mb-5">
+          <h2>1. Overview</h2>
+          <p>An internal admin dashboard provides operators, customer support, and system administrators control over core business data, user state, system flags, and operations. Unlike public applications, internal admin panels demand strict Role-Based Access Control (RBAC), immutable audit logging, read-replica query isolation, and rate-limited write paths.</p>
+        </section>
+
+        <section id="architecture" class="mb-5">
+          <h2>2. High-Level Architecture</h2>
+          <p>Admin dashboards should never query production primary databases directly for heavy analytical reporting. Separate read-replicas or dedicated search indexes (Elasticsearch/OpenSearch) handle filtering and pagination while write commands pass through authenticated API gateways.</p>
+          <div class="diagram-box">
++---------------------+      +---------------------+      +-----------------------+
+|  Admin Frontend UI  | ---> |  Admin API Gateway  | ---> | Authentication Service|
++---------------------+      +---------------------+      +-----------------------+
+                                        |                            |
+                                        v                            v
+                             +---------------------+      +-----------------------+
+                             | RBAC Middleware     | ---> | Immutable Audit Logs  |
+                             +---------------------+      +-----------------------+
+                                  /           \
+                                 v             v
+                     +---------------+     +--------------------+
+                     | Read Replica  |     | Primary DB (Writes)|
+                     +---------------+     +--------------------+
+          </div>
+        </section>
+
+        <section id="rbac-security" class="mb-5">
+          <h2>3. Security & RBAC Controls</h2>
+          <ul>
+            <li><strong>Fine-Grained RBAC:</strong> Assign permissions based on user role (Support, Moderator, SuperAdmin, Finance).</li>
+            <li><strong>Audit Logging:</strong> Every write or mutation action must record timestamp, actor ID, action type, IP address, and previous state delta.</li>
+            <li><strong>MFA & SSO Enforcement:</strong> Mandatory multi-factor authentication (SAML 2.0 / OIDC with Google Workspace or Okta).</li>
+          </ul>
+        </section>
+
+        <section id="summary" class="mb-5">
+          <h2>4. Key Takeaways</h2>
+          <p>Building a robust admin dashboard requires separating read traffic from production write paths, enforcing strict permission boundaries, maintaining complete audit trails, and securing sensitive data views.</p>
+        </section>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card p-3 shadow-sm sidebar-sticky">
+          <h5 class="fw-bold mb-3">System Design Hub</h5>
+          <ul class="list-unstyled mb-0">
+            <li class="mb-2"><a href="https://brijesh.work/system-design/" class="text-decoration-none">&larr; Back to System Design Index</a></li>
+            <li class="mb-2"><a href="https://brijesh.work/system-design/rbac/" class="text-decoration-none">&bull; Role-Based Access Control (RBAC)</a></li>
+            <li class="mb-2"><a href="https://brijesh.work/system-design/logging-monitoring/" class="text-decoration-none">&bull; Logging & Monitoring Systems</a></li>
+            <li class="mb-2"><a href="https://brijesh.work/system-design/secure-api-gateway/" class="text-decoration-none">&bull; Secure API Gateway Architecture</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>if(typeof includeHTML === 'function') { includeHTML(); }</script>
+
+<!-- Contextual Internal Link Callout -->
+<div class="container my-5">
+    <div class="p-4 rounded-4 shadow-sm" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #f8fafc; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <span class="badge bg-primary px-3 py-2 rounded-pill mb-2"><i class="fas fa-microchip me-1"></i> Technical Deep Dive</span>
+                <h3 class="h4 text-white fw-bold mb-2">Building Scalable Web Products or Custom APIs?</h3>
+                <p class="text-white-50 mb-0">Explore how we architect high-throughput systems, browser extensions, and SaaS tools, or partner with us for dedicated AI product engineering.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <a href="https://brijesh.work/portfolio/backlinkstools/" class="btn btn-outline-light btn-sm rounded-pill me-2 mb-2"><i class="fas fa-folder-open me-1"></i> Case Studies</a>
+                <a href="https://brijesh.work/service/ai-product-development-for-founders/" class="btn btn-primary btn-sm rounded-pill mb-2"><i class="fas fa-rocket me-1"></i> AI Services</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

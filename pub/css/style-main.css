@@ -1780,7 +1780,7 @@ nav ul li a {
 
 /* Hero Image & Layout */
 .hero-image-bg {
-  background-image: url('https://brijesh.work/pub/media/img/brijesh-patel-pic.png');
+  background-image: url('https://brijesh.work/pub/media/img/brijesh-patel-pic.webp');
 }
 
 /* Utility Classes */
@@ -5688,4 +5688,90 @@ TECH SKILLS - NEW DESIGN============================================*/
 .premium-service-card:hover .service-link {
   opacity: 1;
   gap: 8px; /* Arrow moves slightly right */
+}
+
+/* ============================================
+   ACCESSIBILITY & WCAG AA ENHANCEMENTS
+   ============================================ */
+
+/* High-Contrast Focus Indicator */
+:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.btn:focus-visible,
+.button:focus-visible {
+  outline: 3px solid #0056b3 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.25) !important;
+}
+
+/* WCAG AA Compliant Text Contrast Overrides */
+.text-muted,
+.muted-text {
+  color: #495057 !important;
+}
+
+.text-secondary {
+  color: #343a40 !important;
+}
+
+.fiverr-green,
+.brand-green {
+  color: #107544 !important;
+}
+
+/* Touch Target Minimum Sizing */
+a, button, input[type="button"], input[type="submit"], select {
+  min-height: 24px;
+  min-width: 24px;
+}
+
+.nav-link,
+.footer-link,
+.btn {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Visually Hidden Skip Link Styling */
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.visually-hidden-focusable:focus,
+.visually-hidden-focusable:focus-within {
+  position: fixed !important;
+  top: 10px !important;
+  left: 10px !important;
+  z-index: 9999 !important;
+  padding: 12px 20px !important;
+  background-color: #0056b3 !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+  text-decoration: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Prefers Reduced Motion Rule */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
