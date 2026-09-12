@@ -51,9 +51,14 @@ function includeHTML() {
         xhttp.send();
         /* Exit the function: */
         return;
-      }
     }
   }
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", includeHTML);
+} else {
+  includeHTML();
+}
 
 (function(c,l,a,r,i,t,y){
 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
