@@ -1,3 +1,3 @@
-<script>
-includeHTML();
-</script>
+if (typeof includeHTML === 'function') {
+  includeHTML();
+}

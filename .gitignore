@@ -5,3 +5,5 @@
 *.md
 
 website-audit.md
+
+/plan/*

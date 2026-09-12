@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Design a Backlink Monitor | System Design Interview Guide | Brijesh Patel</title>
+    <meta name="description"
+        content="A comprehensive system design guide for building a scalable Backlink Monitoring platform: MySQL schema, Vitess sharding, fetch coalescing, Kafka event streams, CDC to ClickHouse, and object storage at 1M to 100M scale.">
+    <meta name="author" content="Brijesh Patel">
+    <meta name="keywords"
+        content="backlink monitor system design, backlink checker architecture, web crawler, database sharding, Vitess, ClickHouse CDC, fetch coalescing, transactional outbox, system design interview">
+    <link rel="canonical" href="https://brijesh.work/system-design/backlink-monitor/" />
+    <meta property="og:title" content="Design a Backlink Monitor | System Design Guide | Brijesh Patel">
+    <meta property="og:description"
+        content="Learn how to architect a production-grade Backlink Monitor scaling from 1M to 100M backlink edges: fetch coalescing, Vitess sharding, CDC streams to ClickHouse, and object storage.">
+    <meta property="og:url" content="https://brijesh.work/system-design/backlink-monitor/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Brijesh Patel">
+    <meta property="og:image" content="https://brijesh.work/pub/media/img/brijesh-patel-pic.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Design a Backlink Monitor | System Design Guide | Brijesh Patel">
+    <meta name="twitter:description"
+        content="Learn how to architect a production-grade Backlink Monitor scaling from 1M to 100M backlink edges: fetch coalescing, Vitess sharding, CDC streams to ClickHouse, and object storage.">
+    <meta name="twitter:creator" content="@brijeshwork">
+    <meta name="twitter:image" content="https://brijesh.work/pub/media/img/brijesh-patel-pic.webp">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "headline": "Design a Backlink Monitor System",
+          "description": "A comprehensive system design guide for building a scalable Backlink Monitoring platform scaling from 1M to 100M edges.",
+          "url": "https://brijesh.work/system-design/backlink-monitor/",
+          "mainEntityOfPage": "https://brijesh.work/system-design/backlink-monitor/",
+          "author": {
+            "@type": "Person",
+            "name": "Brijesh Patel",
+            "url": "https://brijesh.work/about/",
+            "sameAs": [
+              "https://github.com/brijeshwork",
+              "https://linkedin.com/in/brijeshwork",
+              "https://x.com/brijeshwork"
+            ]
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Brijesh Patel",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://brijesh.work/pub/media/img/brijesh-patel-pic.webp"
+            }
+          },
+          "datePublished": "2026-09-12",
+          "dateModified": "2026-09-12"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://brijesh.work/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "System Design",
+              "item": "https://brijesh.work/system-design/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Design a Backlink Monitor",
+              "item": "https://brijesh.work/system-design/backlink-monitor/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css">
+    <link rel="stylesheet" href="https://brijesh.work/pub/css/style-premium.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://brijesh.work/pub/js/global.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
+    <main id="main-content">
+    <section class="sd-hero" aria-label="Page header">
+        <h1>Design a Backlink Monitor System</h1>
+        <p class="lead">A complete architectural blueprint — rolling verification schedules, fetch coalescing, transactional outboxes, Vitess database sharding, CDC to ClickHouse, and 1M to 100M edge capacity planning.</p>
+        <div class="sd-hero-badges">
+            <span class="sd-badge">🔗 Edge Tracking</span>
+            <span class="sd-badge">⚡ Fetch Coalescing</span>
+            <span class="sd-badge">🗄️ Vitess Sharding</span>
+            <span class="sd-badge">📊 CDC &amp; ClickHouse</span>
+            <span class="sd-badge">⏱️ Distributed Scheduler</span>
+        </div>
+    </section>
+
+    <div class="sd-layout d-block w-100">
+        <!-- Table of Contents (First, Full Width) -->
+        <nav class="sd-toc w-100 mb-4 position-static" aria-label="Table of contents">
+            <h5 class="fw-bold text-uppercase text-muted small mb-3"><i class="fas fa-list-ul me-2"></i>Contents</h5>
+            <ol class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-2 mb-0 ps-0 list-unstyled">
+                <li class="col"><a href="#step-1" class="d-flex align-items-center p-2 rounded text-decoration-none text-dark bg-white border shadow-sm h-100">Understand the Problem</a></li>
+                <li class="col"><a href="#step-2" class="d-flex align-items-center p-2 rounded text-decoration-none text-dark bg-white border shadow-sm h-100">Back-of-the-Envelope Estimation</a></li>
+                <li class="col"><a href="#step-3" class="d-flex align-items-center p-2 rounded text-decoration-none text-dark bg-white border shadow-sm h-100">High-Level Architecture</a></li>
+                <li class="col"><a href="#step-4" class="d-flex align-items-center p-2 rounded text-decoration-none text-dark bg-white border shadow-sm h-100">Database Design &amp; Placement</a></li>
+                <li class="col"><a href="#step-5" class="d-flex align-items-center p-2 rounded text-decoration-none text-dark bg-white border shadow-sm h-100">Cron, Scheduler &amp; Worker Flow</a></li>
+                <li class="col"><a href="#step-6" class="d-flex align-items-center p-2 rounded text-decoration-none text-dark bg-white border shadow-sm h-100">Multi-Tenant Identity Boundary</a></li>
+                <li class="col"><a href="#step-7" class="d-flex align-items-center p-2 rounded text-decoration-none text-dark bg-white border shadow-sm h-100">Scaling to 100M Backlinks</a></li>
+                <li class="col"><a href="#step-8" class="d-flex align-items-center p-2 rounded text-decoration-none text-dark bg-white border shadow-sm h-100">Summary &amp; Key Takeaways</a></li>
+            </ol>
+        </nav>
+
+        <!-- Main Content Card (Second, Full Width) -->
+        <article class="sd-content w-100">
+            <p class="lead">
+                In Search Engine Optimization (SEO) and web analytics, tracking external backlinks pointing to a customer's website is vital for authority building, risk auditing, and competitor analysis. In this chapter, we design an enterprise-grade distributed <strong>Backlink Monitoring System</strong> capable of monitoring millions to 100 million active backlink edges continuously.
+            </p>
+
+            <!-- STEP 1 -->
+            <h2 id="step-1" class="mt-5"><strong>1. Understand the Problem &amp; Scope</strong></h2>
+            <p>A backlink is a directed logical edge from a <em>source URL</em> (referring web page) to a <em>target URL</em> (monitored customer page). Designing a backlink monitoring system differs significantly from building a general web crawler: rather than recursively discovering the entire web graph, a backlink monitor performs <strong>targeted, scheduled revalidation</strong> of known edges, tracking state transitions over time.</p>
+
+            <h3 class="mt-4">Clarifying Questions &amp; Scope Confirmation</h3>
+            <div class="bg-white border p-3 rounded mb-3 shadow-sm">
+                <strong>Candidate:</strong> What is the core functionality of the backlink monitoring system?
+            </div>
+            <div class="bg-light p-3 rounded mb-3 border-start border-4 border-primary">
+                <strong>Interviewer:</strong> The system allows customers to monitor backlinks pointing to their domains. It must detect state changes: New, Lost, Recovered, Redirected, NoFollow tag changes, or target page status changes (e.g., 404, 500, indexability).
+            </div>
+
+            <div class="bg-white border p-3 rounded mb-3 shadow-sm">
+                <strong>Candidate:</strong> What scale are we targeting?
+            </div>
+            <div class="bg-light p-3 rounded mb-3 border-start border-4 border-primary">
+                <strong>Interviewer:</strong> Design for a 10 million backlink baseline initially, with a clear architectural roadmap to scale up to 100 million backlink edges.
+            </div>
+
+            <div class="bg-white border p-3 rounded mb-3 shadow-sm">
+                <strong>Candidate:</strong> How often should each backlink be verified?
+            </div>
+            <div class="bg-light p-3 rounded mb-3 border-start border-4 border-primary">
+                <strong>Interviewer:</strong> Every eligible backlink edge should be checked at least once during a rolling 7-day window. Missing backlinks should be confirmed within 2 hours under normal load.
+            </div>
+
+            <div class="bg-white border p-3 rounded mb-3 shadow-sm">
+                <strong>Candidate:</strong> How long should raw HTML and observation history be stored?
+            </div>
+            <div class="bg-light p-3 rounded mb-3 border-start border-4 border-primary">
+                <strong>Interviewer:</strong> Transactional state stores current status and recent changes. Historical observation analytics follow the tenant's contractual retention policy and deletion obligations, while raw HTML content is deduplicated and normally expires after 30 days.
+            </div>
+
+            <h3 class="mt-4">Functional &amp; Non-Functional Requirements</h3>
+            <div class="row g-4 my-2">
+                <div class="col-12 col-md-6">
+                    <div class="card h-100 border-0 bg-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary"><i class="fas fa-check-circle me-2"></i>Functional Requirements</h5>
+                            <ul class="mb-0 ps-3">
+                                <li>Track durable availability states (<code>UNKNOWN</code>, <code>LIVE</code>, <code>LOST</code>) separately from transition events (<code>NEW</code>, <code>LOST</code>, <code>RECOVERED</code>) and link properties such as redirects.</li>
+                                <li>Monitor anchor text, <code>rel</code> flags (<code>nofollow</code>, <code>ugc</code>, <code>sponsored</code>), and DOM location.</li>
+                                <li>Support source and target HTTP evaluation, including <code>X-Robots-Tag</code>, the HTTP <code>Link</code> canonical relation, and HTML canonical elements.</li>
+                                <li>Provide configurable multi-channel alert delivery (Email, Slack, Webhooks).</li>
+                                <li>Support bulk candidate imports from third-party SEO data providers.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card h-100 border-0 bg-light shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-success"><i class="fas fa-cogs me-2"></i>Non-Functional Requirements</h5>
+                            <ul class="mb-0 ps-3">
+                                <li><strong>High Efficiency:</strong> Shared fetching so one source URL is requested only once per window even if monitored by multiple projects.</li>
+                                <li><strong>Idempotency:</strong> No duplicate alerts or lost status transitions during worker retries or failures.</li>
+                                <li><strong>Low Dashboard Latency:</strong> Transactional queries for customer dashboards complete in &lt; 50ms without scanning full history.</li>
+                                <li><strong>Politeness &amp; Safety:</strong> Strict per-host crawling rate limits and obey <code>robots.txt</code>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mt-4">MVP Boundary</h3>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>In Scope for MVP</th><th>Deferred Until a Capacity Gate</th></tr></thead>
+                    <tbody>
+                        <tr><td>Projects, target definitions, manual/API/provider candidate imports, scheduled source verification, target health, current-state dashboards, alerts, and auditable observations</td><td>A proprietary web-scale discovery index, browser rendering by default, multi-region active-active writes, and Vitess sharding before measured single-writer limits justify it</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="mt-4">Acceptance Criteria and Measurement Points</h3>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Requirement</th><th>Testable Acceptance Criterion</th></tr></thead>
+                    <tbody>
+                        <tr><td>Weekly coverage</td><td>At least 99.9% of eligible source URLs receive complete validation within seven rolling days. “Eligible” means active, admitted within quota, permitted by policy/robots, and not blocked by an explicitly reported host-capacity exception.</td></tr>
+                        <tr><td>Missing-link confirmation</td><td>p95 confirmation completes within two hours measured from the first complete missing-link observation, under normal admitted load.</td></tr>
+                        <tr><td>Dashboard latency</td><td>p95 API service time is below 50 ms for defined current-state list and summary queries, excluding client network time.</td></tr>
+                        <tr><td>Alert latency</td><td>p95 first delivery attempt occurs within five minutes of a committed transition; duplicate delivery rate is below 0.01% when receivers honor the idempotency key.</td></tr>
+                        <tr><td>Availability and recovery</td><td>Customer API availability is 99.9% monthly; initial recovery objectives are RPO ≤ 5 minutes and RTO ≤ 60 minutes, validated by restore drills.</td></tr>
+                        <tr><td>Evidence safety</td><td>No truncated parse, network failure, target outage, or unavailable artifact may increment the source-link miss counter or produce a lost transition.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="mt-4">Minimum API Contract</h3>
+            <p>The MVP exposes versioned tenant-scoped APIs for <code>POST/GET /v1/projects</code>, <code>POST/GET/DELETE /v1/projects/{project_id}/targets</code>, <code>POST /v1/projects/{project_id}/imports</code>, <code>GET /v1/projects/{project_id}/backlinks</code>, <code>GET /v1/backlinks/{backlink_id}/observations</code>, and alert-rule management. List APIs use stable cursor pagination, reject cross-tenant identifiers before database access, support an <code>Idempotency-Key</code> header on mutations, and return a request ID plus machine-readable error code. OpenAPI and event schemas are versioned artifacts and form part of acceptance testing.</p>
+
+            <!-- STEP 2 -->
+            <h2 id="step-2" class="mt-5"><strong>2. Back-of-the-Envelope Estimation</strong></h2>
+            <p>Network fetch volume is determined by the number of <em>distinct source URLs</em> after deduplication, rather than the raw edge count.</p>
+
+            <div class="card bg-light border-0 shadow-sm my-4">
+                <div class="card-body p-3 p-md-4">
+                    <h5 class="card-title mb-3">1M, 10M &amp; 100M Edge Capacity Envelopes</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle mb-0 bg-white">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Scale Stage</th>
+                                    <th>Distinct Source Ratio Scenario</th>
+                                    <th>Distinct Source URLs</th>
+                                    <th>Daily Source Validations</th>
+                                    <th>Avg QPS</th>
+                                    <th>Recommended Peak Capacity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="2" class="align-middle fw-bold">1 Million Edges (7-day window)</td>
+                                    <td>Base Case (1.6:1)</td>
+                                    <td>625,000</td>
+                                    <td>89,300 / day</td>
+                                    <td>1.03 req/sec</td>
+                                    <td>5–10 req/sec</td>
+                                </tr>
+                                <tr>
+                                    <td>One Source per Edge (1:1)</td>
+                                    <td>1.0 Million</td>
+                                    <td>142,850 / day</td>
+                                    <td>1.65 req/sec</td>
+                                    <td>10–15 req/sec</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3" class="align-middle fw-bold">10 Million Edges (7-day window)</td>
+                                    <td>Strong Source Reuse (3:1)</td>
+                                    <td>3.33 Million</td>
+                                    <td>476,200 / day</td>
+                                    <td>5.51 req/sec</td>
+                                    <td>25–40 req/sec</td>
+                                </tr>
+                                <tr class="table-primary">
+                                    <td><strong>Base Case (1.6:1)</strong></td>
+                                    <td><strong>6.25 Million</strong></td>
+                                    <td><strong>893,000 / day</strong></td>
+                                    <td><strong>10.34 req/sec</strong></td>
+                                    <td><strong>50–75 req/sec</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>One Source per Edge (1:1)</td>
+                                    <td>10.0 Million</td>
+                                    <td>1.43 Million / day</td>
+                                    <td>16.5 req/sec</td>
+                                    <td>75–125 req/sec</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2" class="align-middle fw-bold">100 Million Edges (7-day window)</td>
+                                    <td>Base Case (1.6:1)</td>
+                                    <td>62.5 Million</td>
+                                    <td>8.93 Million / day</td>
+                                    <td>103.34 req/sec</td>
+                                    <td>500–750 req/sec</td>
+                                </tr>
+                                <tr>
+                                    <td>One Source per Edge (1:1)</td>
+                                    <td>100.0 Million</td>
+                                    <td>14.29 Million / day</td>
+                                    <td>165.0 req/sec</td>
+                                    <td>750–1,250 req/sec</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mt-4">Bandwidth &amp; Conditional GET Savings</h3>
+            <p>Assuming an average compressed HTML response body of 250 KB per referring page:</p>
+            <ul>
+                <li><strong>Full-Body Transfer without caching:</strong> At 1M edges (625K URLs/week) = <code>156 GB / week</code>; at 10M edges (6.25M URLs/week) = <code>1.56 TB / week</code>; at 100M edges (62.5M URLs/week) = <code>15.6 TB / week</code>.</li>
+                <li><strong>With Conditional Headers (<code>ETag</code> / <code>If-Modified-Since</code>):</strong> Assuming a 70% <code>304 Not Modified</code> rate across weekly recrawls, response-body bandwidth drops to approximately <strong>47 GB / week</strong> at 1M edges, <strong>469 GB / week</strong> at 10M edges, and <strong>4.69 TB / week</strong> at 100M edges.</li>
+            </ul>
+            <p class="small text-muted">These are successful source-page body transfers only. Production capacity must separately budget for redirects, robots requests, confirmation and network retries, target-page checks, browser assets, object-storage traffic, Kafka replication, and CDC. Size workers and brokers from measured p95/p99 service time and maintain at least 2× recovery headroom over the forecast peak.</p>
+
+            <h3 class="mt-4">Storage Growth Math</h3>
+            <ul>
+                <li><strong>Current Edge State (base-row floor):</strong> 1M edges = <strong>~500 MB</strong>; 10M edges = <strong>~5 GB</strong>; 100M edges = <strong>~50 GB</strong> at 500 bytes per logical row. Capacity planning must add secondary indexes, URL/domain dictionaries, occurrences, jobs, rollups, free space, backups, and replica copies; validate the multiplier with production-shaped data.</li>
+                <li><strong>Immutable Observations (ClickHouse planning baseline):</strong> 1M edges = <strong>52M rows / year</strong>; 10M edges = <strong>520M rows / year</strong>; 100M edges = <strong>5.2B rows / year</strong>. Byte estimates must be benchmarked with real anchor-text and metadata distributions rather than treated as a fixed compression ratio.</li>
+            </ul>
+
+            <!-- STEP 3 -->
+            <h2 id="step-3" class="mt-5"><strong>3. High-Level Architecture</strong></h2>
+            <p>The system decouples network fetching, raw body storage, offline HTML parsing, project matching, and alert processing into separate asynchronous pipeline stages connected via message queues and an event backbone.</p>
+
+            <!-- Topology Diagram -->
+            <div class="card bg-dark text-white my-4 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-sitemap me-2"></i>Distributed Pipeline &amp; Data Flow Topology</div>
+                <div class="card-body p-3">
+                    <pre class="bg-black text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.4;">
+ [ Cron / Trigger ] ──► [ Global Scheduler ] ──► [ Jobs Ledger ]
+                              │
+                              ▼
+                [ Fetch Queue (Kafka / Broker) ]
+                              │
+                              ▼
+                [ Distributed HTTP Fetchers ]
+                              │
+           ┌──────────────────┴──────────────────┐
+           ▼                                     ▼
+ [ Compressed HTML Storage ]           [ DOM / Link Parsers ]
+                                                 │
+                                                 ▼
+                                     [ Project Matcher Workers ]
+                                                 │
+               ┌─────────────────────────────────┴─────────────────────────────────┐
+               ▼                                                                   ▼
+ [ Project State MySQL Shards ]                           [ ClickHouse Analytics Engine ]
+(Current Edges & Alerts Outbox)                          (Immutable Fact Stream via CDC)
+               │
+               ▼
+ [ Alert Dispatch Workers ] ──► Email / Slack / Webhook
+                    </pre>
+                </div>
+            </div>
+
+            <h3 class="mt-4">Pipeline Execution Stages</h3>
+            <ol class="lh-lg">
+                <li><strong>Scheduler:</strong> Scans due projects and target source URLs, creating fetch tasks without creating duplicate network jobs.</li>
+                <li><strong>Fetch Coalescer:</strong> Groups pending checks by public source URL, ensuring multiple projects monitoring links on the same external page trigger only <em>one</em> HTTP request.</li>
+                <li><strong>Source Fetch Workers:</strong> Perform HTTP/HTTPS requests with conditional headers (<code>If-None-Match</code>, <code>If-Modified-Since</code>), handling redirects, timeouts, and rate limits. Save changed source bodies to Object Storage.</li>
+                <li><strong>Target Validation Workers:</strong> Coalesce distinct monitored target URLs into lightweight validation jobs that record status, redirect destination, canonical identity, and indexability. Target failures do not prove that a source backlink is missing.</li>
+                <li><strong>Offline Parsers:</strong> Parse DOM trees from stored HTML snapshots, extract outgoing anchor tags, canonical tags, meta directives, and write a light link manifest.</li>
+                <li><strong>Project Matchers:</strong> Compare extracted target links against target rules for subscribing projects. Calculate availability transitions (for example, <code>LIVE ➔ LOST</code>) and emit transition events separately.</li>
+                <li><strong>Transactional Outbox &amp; CDC:</strong> Commit edge state changes into MySQL. An outbox worker emits notification events while MySQL Binlog CDC streams facts into ClickHouse.</li>
+            </ol>
+
+            <!-- STEP 4 -->
+            <h2 id="step-4" class="mt-5"><strong>4. Database Design &amp; Storage Placement (Developer PRD Spec)</strong></h2>
+            <p>To deliver sub-50ms dashboard response times while maintaining complete historical audit trails, data is tier-placed across <strong>MySQL 8.0+ / Vitess</strong> (System of Record for current state and transactional queues), <strong>ClickHouse</strong> (Analytics engine for immutable observation history), and <strong>Object Storage</strong> (Raw compressed HTML snapshots). Identifiers use application-generated <strong>UUIDv7</strong> stored as <code>BINARY(16)</code> for sequential primary key locality.</p>
+
+            <!-- DOMAIN 1 -->
+            <h3 class="mt-5 text-primary"><i class="fas fa-layer-group me-2"></i>Domain 1: Control Plane, Projects &amp; Operational Quotas</h3>
+            <p>Manages tenant projects, canonical URLs, monitored targets, bulk URL imports, and daily operational quota enforcement.</p>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: projects</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE projects (
+  id                       BINARY(16) PRIMARY KEY,
+  tenant_id                BINARY(16) NOT NULL,
+  name                     VARCHAR(255) NOT NULL,
+  timezone                 VARCHAR(64) NOT NULL DEFAULT 'UTC',
+  recrawl_interval_seconds INT UNSIGNED NOT NULL DEFAULT 86400,
+  next_crawl_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  last_crawl_at            TIMESTAMP(6) NULL,
+  is_active                BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at               TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at               TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                             ON UPDATE CURRENT_TIMESTAMP(6),
+  CONSTRAINT projects_recrawl_positive CHECK (recrawl_interval_seconds > 0),
+  UNIQUE KEY projects_tenant_name_uniq (tenant_id, name),
+  UNIQUE KEY projects_tenant_id_uniq (tenant_id, id),
+  KEY projects_due_idx (is_active, next_crawl_at, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: tenant_crawl_limits</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE tenant_crawl_limits (
+  tenant_id                BINARY(16) PRIMARY KEY,
+  daily_page_check_limit   INT UNSIGNED NOT NULL,
+  max_concurrent_checks    INT UNSIGNED NOT NULL DEFAULT 10,
+  max_active_jobs          INT UNSIGNED NOT NULL DEFAULT 10000,
+  max_targets_per_project  INT UNSIGNED NOT NULL DEFAULT 300,
+  max_links_per_page       INT UNSIGNED NOT NULL DEFAULT 10000,
+  daily_browser_seconds    INT UNSIGNED NOT NULL DEFAULT 0,
+  scheduler_weight         TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  updated_at               TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                             ON UPDATE CURRENT_TIMESTAMP(6)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: tenant_crawl_usage_daily</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE tenant_crawl_usage_daily (
+  tenant_id                BINARY(16) NOT NULL,
+  usage_date               DATE NOT NULL,
+  page_checks_reserved     BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  page_checks_completed    BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  network_fetches          BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  bytes_downloaded         BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  browser_render_ms        BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  provider_rows_ingested   BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  updated_at               TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                             ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (tenant_id, usage_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: domains</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE domains (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  hostname              VARCHAR(253) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  registrable_domain    VARCHAR(253) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  public_suffix         VARCHAR(253) CHARACTER SET ascii COLLATE ascii_general_ci,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  UNIQUE KEY domains_hostname_uniq (hostname)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: urls</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE urls (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  domain_id             BIGINT UNSIGNED NOT NULL,
+  normalized_url        VARCHAR(2048) COLLATE utf8mb4_bin NOT NULL,
+  normalization_version SMALLINT UNSIGNED NOT NULL,
+  url_hash              BINARY(32) NOT NULL,
+  scheme                ENUM('http', 'https') NOT NULL,
+  path                  VARCHAR(2048) COLLATE utf8mb4_bin NOT NULL DEFAULT '/',
+  query_string          TEXT COLLATE utf8mb4_bin,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT urls_domain_fk FOREIGN KEY (domain_id) REFERENCES domains(id),
+  UNIQUE KEY urls_hash_uniq (url_hash)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: project_targets</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE project_targets (
+  id                    BINARY(16) PRIMARY KEY,
+  project_id            BINARY(16) NOT NULL,
+  scope                 ENUM('domain', 'subdomain', 'url_prefix', 'exact_url') NOT NULL,
+  domain_id             BIGINT UNSIGNED,
+  url_id                BIGINT UNSIGNED,
+  url_prefix            VARCHAR(2048) COLLATE utf8mb4_bin,
+  target_key            BINARY(32) NOT NULL,
+  include_subdomains    BOOLEAN NOT NULL DEFAULT TRUE,
+  is_active             BOOLEAN NOT NULL DEFAULT TRUE,
+  is_primary            BOOLEAN NOT NULL DEFAULT FALSE,
+  paused_at             TIMESTAMP(6) NULL,
+  deleted_at            TIMESTAMP(6) NULL,
+  active_target_key     BINARY(32) GENERATED ALWAYS AS
+                          (CASE WHEN deleted_at IS NULL THEN target_key ELSE NULL END) STORED,
+  primary_project_id    BINARY(16) GENERATED ALWAYS AS
+                          (CASE WHEN is_primary = TRUE AND deleted_at IS NULL
+                                THEN project_id ELSE NULL END) STORED,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT project_targets_project_fk FOREIGN KEY (project_id)
+    REFERENCES projects(id) ON DELETE CASCADE,
+  CONSTRAINT project_targets_domain_fk FOREIGN KEY (domain_id) REFERENCES domains(id),
+  CONSTRAINT project_targets_url_fk FOREIGN KEY (url_id) REFERENCES urls(id),
+  UNIQUE KEY project_targets_active_identity_uniq (project_id, active_target_key),
+  UNIQUE KEY one_primary_target_per_project (primary_project_id),
+  UNIQUE KEY project_targets_project_id_uniq (project_id, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: target_import_batches</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE target_import_batches (
+  id                    BINARY(16) PRIMARY KEY,
+  project_id            BINARY(16) NOT NULL,
+  submitted_count       INT UNSIGNED NOT NULL,
+  accepted_count        INT UNSIGNED NOT NULL DEFAULT 0,
+  duplicate_count       INT UNSIGNED NOT NULL DEFAULT 0,
+  invalid_count         INT UNSIGNED NOT NULL DEFAULT 0,
+  status                ENUM('processing', 'completed', 'failed') NOT NULL DEFAULT 'processing',
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  completed_at          TIMESTAMP(6) NULL,
+  CONSTRAINT target_import_batches_project_fk FOREIGN KEY (project_id)
+    REFERENCES projects(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: target_import_items</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE target_import_items (
+  batch_id              BINARY(16) NOT NULL,
+  row_number            INT UNSIGNED NOT NULL,
+  raw_url               TEXT NOT NULL,
+  url_id                BIGINT UNSIGNED,
+  project_target_id     BINARY(16),
+  result                ENUM('accepted', 'duplicate', 'invalid') NOT NULL,
+  error_code            VARCHAR(64),
+  PRIMARY KEY (batch_id, row_number),
+  CONSTRAINT target_import_items_batch_fk FOREIGN KEY (batch_id)
+    REFERENCES target_import_batches(id) ON DELETE CASCADE,
+  CONSTRAINT target_import_items_url_fk FOREIGN KEY (url_id) REFERENCES urls(id),
+  CONSTRAINT target_import_items_target_fk FOREIGN KEY (project_target_id)
+    REFERENCES project_targets(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <!-- DOMAIN 2 -->
+            <h3 class="mt-5 text-primary"><i class="fas fa-network-wired me-2"></i>Domain 2: Crawl Scheduler, Shared Fetching &amp; Parse Pipeline</h3>
+            <p>Manages execution runs, fair worker leases, public HTTP fetch coalescing, compressed HTML body metadata, and reusable offline parser manifests.</p>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: crawl_runs</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE crawl_runs (
+  id                    BINARY(16) PRIMARY KEY,
+  tenant_id             BINARY(16) NOT NULL,
+  project_id            BINARY(16) NOT NULL,
+  idempotency_key       BINARY(32) NOT NULL,
+  run_type              ENUM('discovery', 'verification', 'confirmation', 'metrics') NOT NULL,
+  status                ENUM('queued', 'running', 'completed', 'partial', 'failed', 'cancelled')
+                          NOT NULL DEFAULT 'queued',
+  scheduled_at          TIMESTAMP(6) NOT NULL,
+  started_at            TIMESTAMP(6) NULL,
+  completed_at          TIMESTAMP(6) NULL,
+  pages_planned         INT UNSIGNED NOT NULL DEFAULT 0,
+  pages_completed       INT UNSIGNED NOT NULL DEFAULT 0,
+  pages_failed          INT UNSIGNED NOT NULL DEFAULT 0,
+  expansion_completed   BOOLEAN NOT NULL DEFAULT FALSE,
+  expansion_completed_at TIMESTAMP(6) NULL,
+  error_summary         JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT crawl_runs_project_fk FOREIGN KEY (tenant_id, project_id)
+    REFERENCES projects(tenant_id, id) ON DELETE CASCADE,
+  UNIQUE KEY crawl_runs_idempotency_uniq (idempotency_key),
+  UNIQUE KEY crawl_runs_tenant_project_id_uniq (tenant_id, project_id, id),
+  KEY crawl_runs_finalize_idx (status, expansion_completed, scheduled_at, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: crawl_pages</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE crawl_pages (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  tenant_id             BINARY(16) NOT NULL,
+  project_id            BINARY(16) NOT NULL,
+  crawl_run_id          BINARY(16) NOT NULL,
+  source_url_id         BIGINT UNSIGNED NOT NULL,
+  status                ENUM('waiting_fetch', 'waiting_parse', 'queued', 'leased', 'completed', 'failed')
+                          NOT NULL DEFAULT 'waiting_fetch',
+  priority              SMALLINT NOT NULL DEFAULT 0,
+  available_at          TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  lease_owner           VARCHAR(128),
+  leased_until          TIMESTAMP(6) NULL,
+  attempts              SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  completed_at          TIMESTAMP(6) NULL,
+  CONSTRAINT crawl_pages_run_fk FOREIGN KEY (tenant_id, project_id, crawl_run_id)
+    REFERENCES crawl_runs(tenant_id, project_id, id) ON DELETE CASCADE,
+  CONSTRAINT crawl_pages_source_url_fk FOREIGN KEY (source_url_id) REFERENCES urls(id),
+  UNIQUE KEY crawl_pages_run_url_uniq (crawl_run_id, source_url_id),
+  KEY crawl_pages_claim_idx (status, available_at, priority, id),
+  KEY crawl_pages_expired_lease_idx (status, leased_until, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: page_content_snapshots</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE page_content_snapshots (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  content_hash          BINARY(32) NOT NULL,
+  object_key            VARCHAR(1024) NOT NULL,
+  status                ENUM('pending', 'available', 'quarantined', 'deleted') NOT NULL DEFAULT 'pending',
+  content_type          VARCHAR(255),
+  storage_encoding      ENUM('gzip', 'zstd', 'identity') NOT NULL,
+  uncompressed_bytes    BIGINT UNSIGNED NOT NULL,
+  stored_bytes          BIGINT UNSIGNED NOT NULL,
+  retention_until       TIMESTAMP(6) NULL,
+  last_referenced_at    TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  UNIQUE KEY page_content_hash_uniq (content_hash),
+  UNIQUE KEY page_content_object_key_uniq (object_key),
+  KEY page_content_retention_idx (status, retention_until, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: page_fetch_jobs</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE page_fetch_jobs (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  source_url_id         BIGINT UNSIGNED NOT NULL,
+  fetch_profile_hash    BINARY(32) NOT NULL,
+  render_mode           ENUM('http', 'browser') NOT NULL DEFAULT 'http',
+  validation_deadline   TIMESTAMP(6) NOT NULL,
+  coalescing_key        BINARY(32) NOT NULL,
+  status                ENUM('queued', 'leased', 'completed', 'failed') NOT NULL DEFAULT 'queued',
+  priority              SMALLINT NOT NULL DEFAULT 0,
+  available_at          TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  attempts              SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  lease_owner           VARCHAR(128),
+  leased_until          TIMESTAMP(6) NULL,
+  fetched_at            TIMESTAMP(6) NULL,
+  http_status           SMALLINT UNSIGNED,
+  validation_method     ENUM('full_body', 'not_modified', 'no_body'),
+  final_url_id          BIGINT UNSIGNED,
+  content_snapshot_id   BIGINT UNSIGNED,
+  etag                  VARCHAR(1024),
+  last_modified_at      TIMESTAMP(6) NULL,
+  response_headers      JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  response_time_ms      INT UNSIGNED,
+  failure_code          VARCHAR(64),
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT page_fetch_jobs_source_fk FOREIGN KEY (source_url_id) REFERENCES urls(id),
+  CONSTRAINT page_fetch_jobs_final_url_fk FOREIGN KEY (final_url_id) REFERENCES urls(id),
+  CONSTRAINT page_fetch_jobs_content_fk FOREIGN KEY (content_snapshot_id)
+    REFERENCES page_content_snapshots(id),
+  UNIQUE KEY page_fetch_jobs_coalescing_uniq (coalescing_key),
+  KEY page_fetch_jobs_claim_idx (status, available_at, priority, id),
+  KEY page_fetch_jobs_expired_lease_idx (status, leased_until, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: target_validation_jobs</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE target_validation_jobs (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  target_url_id         BIGINT UNSIGNED NOT NULL,
+  validation_window     TIMESTAMP(6) NOT NULL,
+  coalescing_key        BINARY(32) NOT NULL,
+  status                ENUM('queued', 'leased', 'completed', 'failed') NOT NULL DEFAULT 'queued',
+  priority              SMALLINT NOT NULL DEFAULT 0,
+  available_at          TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  attempts              SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  lease_owner           VARCHAR(128),
+  leased_until          TIMESTAMP(6) NULL,
+  validated_at          TIMESTAMP(6) NULL,
+  http_status           SMALLINT UNSIGNED,
+  final_url_id          BIGINT UNSIGNED,
+  robots_indexable      BOOLEAN,
+  canonical_url_id      BIGINT UNSIGNED,
+  content_snapshot_id   BIGINT UNSIGNED,
+  response_headers      JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  response_time_ms      INT UNSIGNED,
+  failure_code          VARCHAR(64),
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT target_validation_url_fk FOREIGN KEY (target_url_id) REFERENCES urls(id),
+  CONSTRAINT target_validation_final_url_fk FOREIGN KEY (final_url_id) REFERENCES urls(id),
+  CONSTRAINT target_validation_canonical_url_fk FOREIGN KEY (canonical_url_id) REFERENCES urls(id),
+  CONSTRAINT target_validation_content_fk FOREIGN KEY (content_snapshot_id)
+    REFERENCES page_content_snapshots(id),
+  UNIQUE KEY target_validation_coalescing_uniq (coalescing_key),
+  KEY target_validation_claim_idx (status, available_at, priority, id),
+  KEY target_validation_expired_lease_idx (status, leased_until, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: crawl_page_fetch_consumers</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE crawl_page_fetch_consumers (
+  crawl_page_id         BIGINT UNSIGNED PRIMARY KEY,
+  page_fetch_job_id     BIGINT UNSIGNED NOT NULL,
+  required_validated_after TIMESTAMP(6) NOT NULL,
+  validation_deadline   TIMESTAMP(6) NOT NULL,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT crawl_page_fetch_consumer_page_fk FOREIGN KEY (crawl_page_id)
+    REFERENCES crawl_pages(id) ON DELETE CASCADE,
+  CONSTRAINT crawl_page_fetch_consumer_job_fk FOREIGN KEY (page_fetch_job_id)
+    REFERENCES page_fetch_jobs(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: url_revalidation_state</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE url_revalidation_state (
+  source_url_id         BIGINT UNSIGNED NOT NULL,
+  fetch_profile_hash    BINARY(32) NOT NULL,
+  latest_fetch_job_id   BIGINT UNSIGNED,
+  last_validated_at     TIMESTAMP(6) NULL,
+  next_global_due_at    TIMESTAMP(6) NULL,
+  consecutive_failures  SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  updated_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                          ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (source_url_id, fetch_profile_hash),
+  CONSTRAINT url_revalidation_state_url_fk FOREIGN KEY (source_url_id) REFERENCES urls(id),
+  CONSTRAINT url_revalidation_state_fetch_fk FOREIGN KEY (latest_fetch_job_id)
+    REFERENCES page_fetch_jobs(id) ON DELETE SET NULL,
+  KEY url_revalidation_due_idx (next_global_due_at, source_url_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: page_parse_results</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE page_parse_results (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  content_snapshot_id   BIGINT UNSIGNED NOT NULL,
+  base_url_id           BIGINT UNSIGNED NOT NULL,
+  parser_version        VARCHAR(64) NOT NULL,
+  manifest_schema_version SMALLINT UNSIGNED NOT NULL,
+  status                ENUM('queued', 'leased', 'completed', 'failed') NOT NULL DEFAULT 'queued',
+  priority              SMALLINT NOT NULL DEFAULT 0,
+  available_at          TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  attempts              SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  lease_owner           VARCHAR(128),
+  leased_until          TIMESTAMP(6) NULL,
+  link_manifest_key     VARCHAR(1024),
+  link_manifest_hash    BINARY(32),
+  links_found           INT UNSIGNED,
+  parse_complete        BOOLEAN NOT NULL DEFAULT FALSE,
+  is_truncated          BOOLEAN NOT NULL DEFAULT FALSE,
+  failure_code          VARCHAR(64),
+  completed_at          TIMESTAMP(6) NULL,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT page_parse_results_content_fk FOREIGN KEY (content_snapshot_id)
+    REFERENCES page_content_snapshots(id),
+  CONSTRAINT page_parse_results_base_url_fk FOREIGN KEY (base_url_id) REFERENCES urls(id),
+  UNIQUE KEY page_parse_results_identity_uniq
+    (content_snapshot_id, base_url_id, parser_version, manifest_schema_version),
+  KEY page_parse_results_claim_idx (status, available_at, priority, id),
+  KEY page_parse_results_expired_lease_idx (status, leased_until, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: crawl_page_parse_consumers</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE crawl_page_parse_consumers (
+  crawl_page_id         BIGINT UNSIGNED PRIMARY KEY,
+  page_parse_result_id  BIGINT UNSIGNED NOT NULL,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT crawl_page_parse_consumer_page_fk FOREIGN KEY (crawl_page_id)
+    REFERENCES crawl_pages(id) ON DELETE CASCADE,
+  CONSTRAINT crawl_page_parse_consumer_result_fk FOREIGN KEY (page_parse_result_id)
+    REFERENCES page_parse_results(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <!-- DOMAIN 3 -->
+            <h3 class="mt-5 text-primary"><i class="fas fa-link me-2"></i>Domain 3: Materialized Backlink State, Occurrences &amp; Observations</h3>
+            <p>Holds the latest current edge state for fast UI queries, multi-target attribution matches, DOM occurrences, and an immutable observation evidence ledger.</p>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: backlinks</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE backlinks (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  project_id            BINARY(16) NOT NULL,
+  source_url_id         BIGINT UNSIGNED NOT NULL,
+  target_url_id         BIGINT UNSIGNED NOT NULL,
+  first_discovery_source ENUM('crawler', 'provider_import', 'search_console', 'manual', 'api') NOT NULL,
+  current_state         ENUM('unknown', 'live', 'lost') NOT NULL DEFAULT 'unknown',
+  source_fetch_health   ENUM('unknown', 'ok', 'blocked', 'error') NOT NULL DEFAULT 'unknown',
+  target_fetch_health   ENUM('unknown', 'ok', 'blocked', 'error') NOT NULL DEFAULT 'unknown',
+  is_redirected         BOOLEAN NOT NULL DEFAULT FALSE,
+  state_version         BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  first_seen_at         TIMESTAMP(6) NOT NULL,
+  last_checked_at       TIMESTAMP(6) NOT NULL,
+  next_check_at         TIMESTAMP(6) NOT NULL,
+  check_priority        SMALLINT NOT NULL DEFAULT 0,
+  last_seen_live_at     TIMESTAMP(6) NULL,
+  lost_at               TIMESTAMP(6) NULL,
+  consecutive_failures  SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  source_http_status    SMALLINT UNSIGNED,
+  target_http_status    SMALLINT UNSIGNED,
+  final_target_url_id   BIGINT UNSIGNED,
+  target_robots_indexable BOOLEAN,
+  anchor_text           TEXT,
+  link_count            SMALLINT UNSIGNED NOT NULL DEFAULT 1,
+  rel_nofollow          BOOLEAN NOT NULL DEFAULT FALSE,
+  rel_sponsored         BOOLEAN NOT NULL DEFAULT FALSE,
+  rel_ugc               BOOLEAN NOT NULL DEFAULT FALSE,
+  is_image_link         BOOLEAN NOT NULL DEFAULT FALSE,
+  is_sitewide           BOOLEAN NOT NULL DEFAULT FALSE,
+  placement             ENUM('content', 'header', 'footer', 'sidebar', 'unknown'),
+  language_code         VARCHAR(16),
+  updated_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                          ON UPDATE CURRENT_TIMESTAMP(6),
+  CONSTRAINT backlinks_project_fk FOREIGN KEY (project_id)
+    REFERENCES projects(id) ON DELETE CASCADE,
+  CONSTRAINT backlinks_source_url_fk FOREIGN KEY (source_url_id) REFERENCES urls(id),
+  CONSTRAINT backlinks_target_url_fk FOREIGN KEY (target_url_id) REFERENCES urls(id),
+  CONSTRAINT backlinks_final_target_url_fk FOREIGN KEY (final_target_url_id) REFERENCES urls(id),
+  UNIQUE KEY backlinks_project_edge_uniq (project_id, source_url_id, target_url_id),
+  UNIQUE KEY backlinks_project_id_uniq (project_id, id),
+  KEY backlinks_due_idx (project_id, next_check_at, check_priority, source_url_id),
+  KEY backlinks_state_idx (project_id, current_state, last_checked_at, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: backlink_target_matches</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE backlink_target_matches (
+  project_id            BINARY(16) NOT NULL,
+  backlink_id           BIGINT UNSIGNED NOT NULL,
+  project_target_id     BINARY(16) NOT NULL,
+  first_matched_at      TIMESTAMP(6) NOT NULL,
+  last_matched_at       TIMESTAMP(6) NOT NULL,
+  is_active             BOOLEAN NOT NULL DEFAULT TRUE,
+  ended_at              TIMESTAMP(6) NULL,
+  PRIMARY KEY (backlink_id, project_target_id),
+  CONSTRAINT backlink_target_matches_backlink_fk
+    FOREIGN KEY (project_id, backlink_id)
+    REFERENCES backlinks(project_id, id) ON DELETE CASCADE,
+  CONSTRAINT backlink_target_matches_target_fk
+    FOREIGN KEY (project_id, project_target_id)
+    REFERENCES project_targets(project_id, id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: backlink_occurrences</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE backlink_occurrences (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  backlink_id           BIGINT UNSIGNED NOT NULL,
+  occurrence_key        BINARY(32) NOT NULL,
+  locator_hash          BINARY(32),
+  anchor_text           TEXT,
+  rel_nofollow          BOOLEAN NOT NULL DEFAULT FALSE,
+  rel_sponsored         BOOLEAN NOT NULL DEFAULT FALSE,
+  rel_ugc               BOOLEAN NOT NULL DEFAULT FALSE,
+  is_image_link         BOOLEAN NOT NULL DEFAULT FALSE,
+  placement             ENUM('content', 'header', 'footer', 'sidebar', 'unknown'),
+  first_seen_at         TIMESTAMP(6) NOT NULL,
+  last_seen_at          TIMESTAMP(6) NOT NULL,
+  is_live               BOOLEAN NOT NULL DEFAULT TRUE,
+  CONSTRAINT backlink_occurrences_backlink_fk FOREIGN KEY (backlink_id)
+    REFERENCES backlinks(id) ON DELETE CASCADE,
+  UNIQUE KEY backlink_occurrences_identity_uniq (backlink_id, occurrence_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: backlink_observations</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE backlink_observations (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  backlink_id           BIGINT UNSIGNED NOT NULL,
+  crawl_run_id          BINARY(16),
+  page_fetch_job_id     BIGINT UNSIGNED,
+  target_validation_job_id BIGINT UNSIGNED,
+  page_parse_result_id  BIGINT UNSIGNED,
+  idempotency_key       BINARY(32) NOT NULL,
+  observed_at           TIMESTAMP(6) NOT NULL,
+  evidence_complete     BOOLEAN NOT NULL DEFAULT FALSE,
+  evidence_reason       VARCHAR(64),
+  state                 ENUM('unknown', 'live', 'lost') NOT NULL,
+  transition_event      ENUM('none', 'new', 'lost', 'recovered') NOT NULL DEFAULT 'none',
+  source_fetch_health   ENUM('unknown', 'ok', 'blocked', 'error') NOT NULL DEFAULT 'unknown',
+  target_fetch_health   ENUM('unknown', 'ok', 'blocked', 'error') NOT NULL DEFAULT 'unknown',
+  is_redirected         BOOLEAN NOT NULL DEFAULT FALSE,
+  state_version         BIGINT UNSIGNED NOT NULL,
+  source_http_status    SMALLINT UNSIGNED,
+  target_http_status    SMALLINT UNSIGNED,
+  final_target_url_id   BIGINT UNSIGNED,
+  anchor_text           TEXT,
+  link_count            SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  rel_nofollow          BOOLEAN NOT NULL DEFAULT FALSE,
+  rel_sponsored         BOOLEAN NOT NULL DEFAULT FALSE,
+  rel_ugc               BOOLEAN NOT NULL DEFAULT FALSE,
+  is_image_link         BOOLEAN NOT NULL DEFAULT FALSE,
+  placement             VARCHAR(32),
+  page_title            TEXT,
+  html_lang             VARCHAR(16),
+  canonical_url_id      BIGINT UNSIGNED,
+  source_robots_indexable BOOLEAN,
+  target_robots_indexable BOOLEAN,
+  response_time_ms      INT UNSIGNED,
+  failure_code          VARCHAR(64),
+  metadata              JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  CONSTRAINT observations_backlink_fk FOREIGN KEY (backlink_id)
+    REFERENCES backlinks(id) ON DELETE CASCADE,
+  CONSTRAINT observations_run_fk FOREIGN KEY (crawl_run_id)
+    REFERENCES crawl_runs(id) ON DELETE SET NULL,
+  CONSTRAINT observations_fetch_job_fk FOREIGN KEY (page_fetch_job_id)
+    REFERENCES page_fetch_jobs(id),
+  CONSTRAINT observations_target_validation_job_fk FOREIGN KEY (target_validation_job_id)
+    REFERENCES target_validation_jobs(id),
+  CONSTRAINT observations_parse_result_fk FOREIGN KEY (page_parse_result_id)
+    REFERENCES page_parse_results(id),
+  CONSTRAINT observations_lost_requires_complete_chk
+    CHECK (state <> 'lost' OR evidence_complete = TRUE),
+  UNIQUE KEY observations_idempotency_uniq (idempotency_key),
+  KEY observations_backlink_time_idx (backlink_id, observed_at, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <!-- DOMAIN 4 -->
+            <h3 class="mt-5 text-primary"><i class="fas fa-chart-line me-2"></i>Domain 4: Metrics, External Provider Candidate Imports &amp; Multi-Channel Alerts</h3>
+            <p>Handles third-party API credentials, domain/page authority score history, bulk provider candidate discovery, and alert event delivery queues.</p>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: domain_metric_snapshots</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE domain_metric_snapshots (
+  domain_id             BIGINT UNSIGNED NOT NULL,
+  measured_at           TIMESTAMP(6) NOT NULL,
+  provider              VARCHAR(64) NOT NULL,
+  authority_score       DECIMAL(6,2),
+  spam_score            DECIMAL(6,2),
+  referring_domains     BIGINT UNSIGNED,
+  backlinks             BIGINT UNSIGNED,
+  estimated_traffic     BIGINT UNSIGNED,
+  organic_keywords      BIGINT UNSIGNED,
+  metadata              JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  PRIMARY KEY (domain_id, provider, measured_at),
+  CONSTRAINT domain_metrics_domain_fk FOREIGN KEY (domain_id) REFERENCES domains(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: page_metric_snapshots</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE page_metric_snapshots (
+  url_id                BIGINT UNSIGNED NOT NULL,
+  measured_at           TIMESTAMP(6) NOT NULL,
+  provider              VARCHAR(64) NOT NULL,
+  authority_score       DECIMAL(6,2),
+  estimated_traffic     BIGINT UNSIGNED,
+  outgoing_links        INT UNSIGNED,
+  metadata              JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  PRIMARY KEY (url_id, provider, measured_at),
+  CONSTRAINT page_metrics_url_fk FOREIGN KEY (url_id) REFERENCES urls(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: provider_connections</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE provider_connections (
+  id                    BINARY(16) PRIMARY KEY,
+  tenant_id             BINARY(16) NOT NULL,
+  provider              VARCHAR(64) NOT NULL,
+  secret_reference      VARCHAR(1024) NOT NULL, -- Secret Manager key reference
+  status                ENUM('active', 'disabled', 'error') NOT NULL DEFAULT 'active',
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  UNIQUE KEY provider_connections_tenant_uniq (tenant_id, provider),
+  UNIQUE KEY provider_connections_tenant_id_uniq (tenant_id, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: import_runs</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE import_runs (
+  id                     BINARY(16) PRIMARY KEY,
+  tenant_id              BINARY(16) NOT NULL,
+  project_id             BINARY(16) NOT NULL,
+  provider_connection_id BINARY(16),
+  provider               VARCHAR(64) NOT NULL,
+  status                 ENUM('queued', 'running', 'completed', 'partial', 'failed', 'cancelled')
+                           NOT NULL DEFAULT 'queued',
+  cursor                 TEXT,
+  rows_received          INT UNSIGNED NOT NULL DEFAULT 0,
+  rows_accepted          INT UNSIGNED NOT NULL DEFAULT 0,
+  created_at             TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT import_runs_project_fk FOREIGN KEY (tenant_id, project_id)
+    REFERENCES projects(tenant_id, id) ON DELETE CASCADE,
+  CONSTRAINT import_runs_connection_fk FOREIGN KEY (tenant_id, provider_connection_id)
+    REFERENCES provider_connections(tenant_id, id) ON DELETE RESTRICT,
+  UNIQUE KEY import_runs_tenant_id_uniq (tenant_id, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: backlink_discoveries</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE backlink_discoveries (
+  id                     BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  tenant_id              BINARY(16) NOT NULL,
+  project_id             BINARY(16) NOT NULL,
+  backlink_id            BIGINT UNSIGNED NOT NULL,
+  discovery_key          BINARY(32) NOT NULL,
+  source                 ENUM('crawler', 'provider_import', 'search_console', 'manual', 'api') NOT NULL,
+  provider               VARCHAR(64),
+  first_discovered_at    TIMESTAMP(6) NOT NULL,
+  last_discovered_at     TIMESTAMP(6) NOT NULL,
+  CONSTRAINT backlink_discoveries_project_fk FOREIGN KEY (tenant_id, project_id)
+    REFERENCES projects(tenant_id, id) ON DELETE CASCADE,
+  CONSTRAINT backlink_discoveries_backlink_fk FOREIGN KEY (project_id, backlink_id)
+    REFERENCES backlinks(project_id, id) ON DELETE CASCADE,
+  UNIQUE KEY backlink_discoveries_key_uniq (discovery_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: alert_rules</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE alert_rules (
+  id                    BINARY(16) PRIMARY KEY,
+  project_id            BINARY(16) NOT NULL,
+  name                  VARCHAR(255) NOT NULL,
+  event_types           JSON NOT NULL,
+  filters               JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  channels              JSON NOT NULL DEFAULT (JSON_ARRAY()),
+  cooldown_seconds      INT UNSIGNED NOT NULL DEFAULT 3600,
+  is_active             BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT alert_rules_project_fk FOREIGN KEY (project_id)
+    REFERENCES projects(id) ON DELETE CASCADE,
+  UNIQUE KEY alert_rules_project_id_uniq (project_id, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: alert_events</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE alert_events (
+  id                    BINARY(16) PRIMARY KEY,
+  project_id            BINARY(16) NOT NULL,
+  alert_rule_id         BINARY(16),
+  backlink_id           BIGINT UNSIGNED,
+  event_type            VARCHAR(64) NOT NULL,
+  deduplication_key     BINARY(32) NOT NULL,
+  payload               JSON NOT NULL,
+  occurred_at           TIMESTAMP(6) NOT NULL,
+  aggregate_delivery_status ENUM('pending', 'partial', 'delivered', 'failed', 'cancelled')
+                          NOT NULL DEFAULT 'pending',
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT alert_events_project_fk FOREIGN KEY (project_id)
+    REFERENCES projects(id) ON DELETE CASCADE,
+  CONSTRAINT alert_events_rule_fk FOREIGN KEY (project_id, alert_rule_id)
+    REFERENCES alert_rules(project_id, id) ON DELETE RESTRICT,
+  CONSTRAINT alert_events_backlink_fk FOREIGN KEY (project_id, backlink_id)
+    REFERENCES backlinks(project_id, id) ON DELETE CASCADE,
+  UNIQUE KEY alert_events_dedupe_uniq (deduplication_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: alert_deliveries</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE alert_deliveries (
+  id                    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  alert_event_id        BINARY(16) NOT NULL,
+  channel               ENUM('email', 'slack', 'webhook') NOT NULL,
+  destination_hash      BINARY(32) NOT NULL,
+  status                ENUM('pending', 'leased', 'delivered', 'failed', 'cancelled')
+                          NOT NULL DEFAULT 'pending',
+  attempts              SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  available_at          TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  lease_owner           VARCHAR(128),
+  leased_until          TIMESTAMP(6) NULL,
+  delivered_at          TIMESTAMP(6) NULL,
+  last_error_code       VARCHAR(64),
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  CONSTRAINT alert_deliveries_event_fk FOREIGN KEY (alert_event_id)
+    REFERENCES alert_events(id) ON DELETE CASCADE,
+  UNIQUE KEY alert_delivery_destination_uniq
+    (alert_event_id, channel, destination_hash),
+  KEY alert_deliveries_claim_idx (status, available_at, id),
+  KEY alert_deliveries_expired_lease_idx (status, leased_until, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <!-- DOMAIN 5 -->
+            <h3 class="mt-5 text-primary"><i class="fas fa-server me-2"></i>Domain 5: Cron Job Locks, Transactional Outbox &amp; Dashboard Rollups</h3>
+            <p>Guarantees single-execution locks for distributed cron instances, transactional outbox bridging to Kafka/SQS, and incremental dashboard summaries for &lt;50ms response times.</p>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: scheduled_job_runs</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE scheduled_job_runs (
+  id                    BINARY(16) PRIMARY KEY,
+  job_name              VARCHAR(64) NOT NULL,
+  scheduled_for         TIMESTAMP(6) NOT NULL,
+  status                ENUM('running', 'completed', 'failed') NOT NULL DEFAULT 'running',
+  lease_owner           VARCHAR(128),
+  leased_until          TIMESTAMP(6) NULL,
+  started_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  completed_at          TIMESTAMP(6) NULL,
+  stats                 JSON NOT NULL DEFAULT (JSON_OBJECT()),
+  error_code            VARCHAR(64),
+  UNIQUE KEY scheduled_job_slot_uniq (job_name, scheduled_for),
+  KEY scheduled_job_lease_idx (status, leased_until, job_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: transactional_outbox</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE transactional_outbox (
+  id                    BINARY(16) PRIMARY KEY,
+  event_key             BINARY(32) NOT NULL,
+  topic                 VARCHAR(128) NOT NULL,
+  partition_key         VARBINARY(128) NOT NULL,
+  payload               JSON NOT NULL,
+  status                ENUM('pending', 'leased', 'published', 'failed')
+                          NOT NULL DEFAULT 'pending',
+  attempts              SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  available_at          TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  lease_owner           VARCHAR(128),
+  leased_until          TIMESTAMP(6) NULL,
+  published_at          TIMESTAMP(6) NULL,
+  last_error_code       VARCHAR(64),
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  UNIQUE KEY transactional_outbox_event_uniq (event_key),
+  KEY transactional_outbox_claim_idx (status, available_at, id),
+  KEY transactional_outbox_expired_lease_idx (status, leased_until, id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: project_backlink_daily_stats</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE project_backlink_daily_stats (
+  project_id            BINARY(16) NOT NULL,
+  stat_date             DATE NOT NULL,
+  observations_count    BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  new_count             BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  lost_count            BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  recovered_count       BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  updated_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                          ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (project_id, stat_date),
+  CONSTRAINT project_daily_stats_project_fk FOREIGN KEY (project_id)
+    REFERENCES projects(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: project_referring_domain_stats</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE project_referring_domain_stats (
+  project_id            BINARY(16) NOT NULL,
+  source_domain_id      BIGINT UNSIGNED NOT NULL,
+  live_backlinks        BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  lost_backlinks        BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  first_seen_at         TIMESTAMP(6) NULL,
+  last_seen_at          TIMESTAMP(6) NULL,
+  updated_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                          ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (project_id, source_domain_id),
+  CONSTRAINT project_domain_stats_project_fk FOREIGN KEY (project_id)
+    REFERENCES projects(id) ON DELETE CASCADE,
+  CONSTRAINT project_domain_stats_domain_fk FOREIGN KEY (source_domain_id)
+    REFERENCES domains(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: project_target_current_stats</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE project_target_current_stats (
+  project_id            BINARY(16) NOT NULL,
+  project_target_id     BINARY(16) NOT NULL,
+  live_backlinks        BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  lost_backlinks        BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  referring_domains     BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  updated_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                          ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (project_id, project_target_id),
+  CONSTRAINT project_target_stats_target_fk FOREIGN KEY (project_id, project_target_id)
+    REFERENCES project_targets(project_id, id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <!-- DOMAIN 6 -->
+            <h3 class="mt-5 text-primary"><i class="fas fa-chart-bar me-2"></i>Domain 6: ClickHouse Analytics Fact Schema &amp; Partitioning</h3>
+            <p>Committed observation changes stream through a CDC enrichment processor before ClickHouse ingestion. The processor resolves <code>project_id</code> and URL hashes, converts nullable fields explicitly, and emits a versioned analytics event. It never requires ClickHouse to join against transactional MySQL tables at query time.</p>
+            <div class="card bg-dark text-white mb-4 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>ClickHouse Table: backlink_observations_fact</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.85rem;"><code class="language-sql">CREATE TABLE backlink_observations_fact (
+    observation_id       UInt64,
+    project_id           UUID,
+    backlink_id          UInt64,
+    source_url_hash      FixedString(32),
+    target_url_hash      FixedString(32),
+    state                Enum8('unknown'=0, 'live'=1, 'lost'=2),
+    transition_event     Enum8('none'=0, 'new'=1, 'lost'=2, 'recovered'=3),
+    source_fetch_health  Enum8('unknown'=0, 'ok'=1, 'blocked'=2, 'error'=3),
+    target_fetch_health  Enum8('unknown'=0, 'ok'=1, 'blocked'=2, 'error'=3),
+    is_redirected        UInt8,
+    source_robots_indexable Nullable(UInt8),
+    target_robots_indexable Nullable(UInt8),
+    source_http_status   Nullable(UInt16),
+    target_http_status   Nullable(UInt16),
+    rel_nofollow         UInt8,
+    rel_sponsored        UInt8,
+    rel_ugc              UInt8,
+    anchor_text          Nullable(String),
+    response_time_ms     Nullable(UInt32),
+    observed_at          DateTime64(6, 'UTC'),
+    ingest_version       UInt64
+) ENGINE = ReplacingMergeTree(ingest_version)
+PARTITION BY toYYYYMM(observed_at)
+ORDER BY (project_id, observation_id)
+SETTINGS index_granularity = 8192;</code></pre>
+                </div>
+            </div>
+            <p class="small text-muted">The CDC connector uses <code>observation_id</code> as the idempotency identity and assigns a monotonic <code>ingest_version</code>. Historical queries avoid <code>FINAL</code> on large ranges by using deduplicated views or periodic compaction where immediate deduplication is required.</p>
+
+            <!-- STEP 5 -->
+            <h2 id="step-5" class="mt-5"><strong>5. Cron, Scheduler &amp; Worker Flow</strong></h2>
+            <p>Cron is strictly a lightweight trigger mechanism—it initiates job reservations and exits immediately. All scheduler instances route writes to the authoritative database primary; row locking and renewable leases prevent duplicate ownership across regions.</p>
+
+            <h3 class="mt-4">Job Reservation with <code>SKIP LOCKED</code></h3>
+            <p>To safely claim due project jobs across multiple concurrent scheduler instances, workers execute atomic batch claims:</p>
+
+            <div class="card bg-dark text-white mb-4 shadow-sm">
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.85rem;"><code class="language-sql">START TRANSACTION;
+
+SELECT id, recrawl_interval_seconds
+FROM projects
+WHERE is_active = TRUE 
+  AND next_crawl_at <= UTC_TIMESTAMP(6)
+ORDER BY next_crawl_at ASC
+LIMIT 100
+FOR UPDATE SKIP LOCKED;
+
+-- For each selected project, insert the deterministic crawl_runs row here.
+-- A duplicate idempotency key is treated as an already-created run.
+
+-- Reserve the next schedule before releasing the row lock. GREATEST skips a
+-- catch-up storm while preserving the prior cadence when only slightly late.
+UPDATE projects 
+SET next_crawl_at = GREATEST(
+  DATE_ADD(next_crawl_at, INTERVAL recrawl_interval_seconds SECOND),
+  DATE_ADD(UTC_TIMESTAMP(6), INTERVAL recrawl_interval_seconds SECOND)
+)
+WHERE id IN (...claimed_ids...);
+
+COMMIT;</code></pre>
+                </div>
+            </div>
+
+            <h3 class="mt-4">Fetch Coalescing &amp; Outbox Publisher Flow</h3>
+            <div class="row align-items-center g-3 bg-light p-3 rounded border my-3">
+                <div class="col-12 col-md-7">
+                    <h6>How Fetch Coalescing Prevents Redundant HTTP Requests:</h6>
+                    <p class="small text-muted mb-0">
+                        When 10 projects monitor backlinks located on <code>https://popular-blog.com/top-100-tools</code>, the scheduler generates 10 internal checks. The <strong>Fetch Coalescer</strong> hashes the public source URL and aggregates all 10 checks under a single <code>page_fetch_job</code> row. A single HTTP fetcher downloads the page once, saves the HTML snapshot, and fans the resulting DOM manifest out to all 10 projects.
+                    </p>
+                </div>
+                <div class="col-12 col-md-5 text-center">
+                    <div class="p-3 bg-white border rounded shadow-sm">
+                        <span class="badge bg-primary mb-2">10 Project Subscriptions</span>
+                        <div class="fs-4 text-secondary">➔ <code>1 HTTP Request</code> ➔</div>
+                        <span class="badge bg-success mt-2">1 Shared Manifest</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Recurring Jobs -->
+            <h3 class="mt-5">Default Recurring Background Jobs</h3>
+            <p>Cron is only the trigger. Each job below runs globally — one process finds all due rows by indexed timestamps; no per-customer cron instance is needed.</p>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered table-sm align-middle mb-0 bg-white">
+                    <thead class="table-dark">
+                        <tr><th>Job</th><th>Default Cadence</th><th>Responsibility</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Project scheduler</td><td>Every minute</td><td>Create verification runs for due projects</td></tr>
+                        <tr><td>Confirmation scheduler</td><td>Every minute</td><td>Create priority runs for due missing-link confirmations</td></tr>
+                        <tr><td>Run expander</td><td>Every minute or event-driven</td><td>Turn runs into unique source-page jobs</td></tr>
+                        <tr><td>Target health scheduler</td><td>Every minute</td><td>Coalesce and queue due monitored target URLs independently from source-link verification</td></tr>
+                        <tr><td>Expired lease recovery</td><td>Every minute</td><td>Requeue abandoned crawl and delivery jobs</td></tr>
+                        <tr><td>Run finalizer</td><td>Every minute</td><td>Close runs with no outstanding page jobs</td></tr>
+                        <tr><td>Provider discovery sync</td><td>Hourly, plan-dependent</td><td>Import candidate backlinks from configured providers</td></tr>
+                        <tr><td>Metric refresh scheduler</td><td>Hourly</td><td>Queue only domains/pages whose metrics are due</td></tr>
+                        <tr><td>Alert dispatcher</td><td>Continuous or every minute</td><td>Deliver pending alert jobs</td></tr>
+                        <tr><td>Outbox publisher</td><td>Continuous</td><td>Publish committed work to the message broker</td></tr>
+                        <tr><td>CDC pipeline</td><td>Continuous</td><td>Stream committed history into ClickHouse</td></tr>
+                        <tr><td>Daily digest builder</td><td>Daily per tenant timezone</td><td>Aggregate eligible events into one digest</td></tr>
+                        <tr><td>Weekly digest builder</td><td>Weekly per tenant timezone</td><td>Build weekly summary</td></tr>
+                        <tr><td>Reporting rollups</td><td>Every 15 minutes</td><td>Refresh project and referring-domain summaries</td></tr>
+                        <tr><td>Retention / archive</td><td>Daily during low traffic</td><td>Archive/purge old observations in bounded batches</td></tr>
+                        <tr><td>Batch-audit cleanup</td><td>Daily</td><td>Remove expired raw bulk-import audit items</td></tr>
+                        <tr><td>Artifact reconciler</td><td>Hourly</td><td>Repair or remove orphaned/pending objects and manifests</td></tr>
+                        <tr><td>Job-ledger cleanup</td><td>Weekly</td><td>Remove old successful scheduler audit rows</td></tr>
+                        <tr><td>Public Suffix List update</td><td>Weekly</td><td>Refresh domain parsing rules after validation</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 10-Step Verification Cycle -->
+            <h3 class="mt-5">Step-by-Step Verification Cycle</h3>
+            <p>Each verification run follows a deterministic 10-step pipeline. Every step is idempotent and safe to retry after a crash.</p>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 1 — Trigger One Scheduler Slot</h5>
+            <p>An external cron starts <code>project_scheduler</code> every minute. It rounds the current UTC time to the minute and inserts one row into <code>scheduled_job_runs</code> with <code>job_name = 'project_scheduler'</code> and <code>scheduled_for = current minute</code>. The winner records a short renewable lease. A competing instance exits only while that lease is valid; after expiry, a recovery instance atomically reclaims the same slot. This avoids a permanently stuck minute when the first process crashes.</p>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 2 — Claim Due Projects</h5>
+            <p>In a short transaction, select a small batch of active projects ordered by urgency. No network calls may occur while this transaction is open.</p>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-code me-2"></i>Claim Due Projects — SKIP LOCKED</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code class="language-sql">START TRANSACTION;
+
+SELECT id, next_crawl_at, recrawl_interval_seconds
+FROM projects
+WHERE is_active = TRUE
+  AND next_crawl_at &lt;= UTC_TIMESTAMP(6)
+ORDER BY next_crawl_at
+LIMIT 100
+FOR UPDATE SKIP LOCKED;
+
+-- Keep this transaction open only for local database writes. For every row,
+-- insert the deterministic crawl run and advance next_crawl_at. Then COMMIT.
+-- Do not perform network or broker calls in this transaction.
+
+COMMIT;</code></pre>
+                </div>
+            </div>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 3 — Create an Idempotent Crawl Run</h5>
+            <p>For each locked project, calculate a deterministic run key, insert a <code>crawl_runs</code> row, and advance <code>next_crawl_at</code> before the same transaction commits. The unique key on <code>idempotency_key</code> makes uncertain retries harmless. Normally advance from the previous scheduled value; when it remains overdue, move it to one interval after the current time so recovery creates at most one catch-up run rather than an unbounded storm.</p>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-key me-2"></i>Run Idempotency Key Formula</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code>run_key = SHA-256(project_id + ':verification:' + scheduled_slot)</code></pre>
+                </div>
+            </div>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 4 — Expand the Run into Unique Page Checks</h5>
+            <p>The run expander groups backlinks due for verification by <strong>source URL</strong>. One source page linking to 50 monitored URLs generates only <em>one</em> page check. Each consumer records <code>required_validated_after</code> and <code>validation_deadline</code>. The coalescing key prevents two projects from triggering two HTTP fetches for the same source page.</p>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-code me-2"></i>Run Expansion Query</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code class="language-sql">SELECT b.source_url_id, MAX(b.check_priority) AS priority
+FROM backlinks AS b
+WHERE b.project_id = ?
+  AND b.next_check_at &lt;= UTC_TIMESTAMP(6)
+  AND EXISTS (
+    SELECT 1
+    FROM backlink_target_matches AS m
+    JOIN project_targets AS t ON t.id = m.project_target_id
+    WHERE m.backlink_id = b.id
+      AND m.is_active = TRUE
+      AND t.is_active = TRUE
+      AND t.deleted_at IS NULL
+  )
+GROUP BY b.source_url_id
+ORDER BY priority DESC;</code></pre>
+                </div>
+            </div>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-key me-2"></i>Fetch Coalescing Key Formula</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code>coalescing_key = SHA-256(source_url_id + ':' + fetch_profile_hash + ':' + validation_window)</code></pre>
+                </div>
+            </div>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 5 — Workers Lease Shared Fetch Jobs</h5>
+            <p>Each fetch worker claims a small batch without blocking others. A typical lease is 2–5 minutes. The HTTP fetch occurs <em>after</em> commit. The worker loads the most recent successful validation and sends conditional headers when available.</p>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-code me-2"></i>Worker Lease Claim</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code class="language-sql">START TRANSACTION;
+
+SELECT id
+FROM page_fetch_jobs
+WHERE status = 'queued'
+  AND available_at &lt;= UTC_TIMESTAMP(6)
+ORDER BY priority DESC, available_at
+LIMIT 25
+FOR UPDATE SKIP LOCKED;
+
+-- Update the selected IDs:
+-- status = 'leased', lease_owner = worker_id
+-- leased_until = UTC_TIMESTAMP(6) + lease_duration
+-- attempts = attempts + 1
+
+COMMIT;</code></pre>
+                </div>
+            </div>
+            <div class="row g-3 my-2">
+                <div class="col-12 col-md-4">
+                    <div class="card border-success h-100">
+                        <div class="card-body p-3">
+                            <h6 class="text-success"><i class="fas fa-check-circle me-1"></i>HTTP 200 — New Body</h6>
+                            <p class="small mb-0">Compress HTML, store in object storage, insert <code>page_content_snapshots</code> using SHA-256 body hash. Duplicate hash reuses existing snapshot — no second upload.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card border-info h-100">
+                        <div class="card-body p-3">
+                            <h6 class="text-info"><i class="fas fa-recycle me-1"></i>HTTP 304 — Not Modified</h6>
+                            <p class="small mb-0">Create a new validation result referencing the previous snapshot. No HTML is downloaded or stored again. If referenced content is missing, retry once unconditionally.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="card border-warning h-100">
+                        <div class="card-body p-3">
+                            <h6 class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>Error / Non-HTML</h6>
+                            <p class="small mb-0">Record metadata and failure policy. Never create an HTML snapshot. Retain previous live/lost state — a network error is not evidence of a missing backlink.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-bullseye me-2"></i>Target-Page Health Checks</h5>
+            <p>Source verification and target health are independent signals. A <code>target_validation_job</code> is coalesced by normalized target URL and validation window, uses the same SSRF, redirect, timeout, robots-policy, and global per-host controls as source fetching, and never downloads a body unless canonical or indexability evaluation requires it. Its result populates <code>target_http_status</code>, <code>final_target_url_id</code>, target fetch health, and target indexability. A target outage may create a target-health event, but it cannot create a source-link <code>lost</code> transition.</p>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 6 — Apply Safe Fetch Controls (SSRF Prevention)</h5>
+            <ol class="lh-lg">
+                <li>Permit only <code>http</code> and <code>https</code> schemes.</li>
+                <li>Resolve DNS and reject loopback, private, link-local, metadata-service, and other forbidden IP ranges.</li>
+                <li>Revalidate redirect destinations with the same SSRF rules.</li>
+                <li>Apply <code>robots.txt</code> and product-policy rules.</li>
+                <li>Acquire a per-host rate-limit token from Redis — global across all workers, not local to one process.</li>
+                <li>Enforce connect timeout, response timeout, body-size limit, redirect-count limit, and total-time limit.</li>
+                <li>Use a clear crawler user-agent string with a contact URL.</li>
+            </ol>
+            <div class="alert alert-warning border-start border-4 border-warning my-3">
+                <strong><i class="fas fa-shield-alt me-2"></i>Browser Rendering Tier:</strong> Raw HTTP fetching is the default. Browser rendering is a separate quota-controlled fetch profile used only when project policy requests it or heuristics indicate JavaScript-rendered content is necessary. Browser workers run in a hardened sandbox with no tenant cookies. Downloaded HTML is data — never execute it in the ordinary parser process.
+            </div>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 7 — Parse the Stored Snapshot Offline</h5>
+            <p>After a successful fetch, create or reuse <code>page_parse_results</code> identified by <code>(content_snapshot_id, base_url_id, parser_version)</code>. The parser downloads the compressed object internally, extracts raw and resolved links, anchors, <code>rel</code> attributes, image-link status, placement, canonical data, and indexability, then writes a compact compressed link manifest back to object storage.</p>
+            <div class="bg-light border p-3 rounded my-3">
+                <p class="mb-2"><strong>URL resolution base matters:</strong> Identical HTML served from two different URLs may contain relative links that resolve to different absolute targets — the base URL is part of the parse identity.</p>
+                <p class="mb-0"><strong>Truncation rule:</strong> Hitting body, decompression, parse-time, DOM-node, or extracted-link limits produces <code>is_truncated = TRUE</code>. A truncated result can confirm links that were found, but it <strong>can never prove</strong> that a previously known link is absent.</p>
+            </div>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 8 — Record Observations Atomically</h5>
+            <p>In one database transaction for one project consuming the parsed page, perform all of the following steps atomically:</p>
+            <ol class="lh-lg">
+                <li>Upsert any newly encountered domains and URLs by their hashes.</li>
+                <li>Upsert the logical <code>backlinks</code> edge using <code>(project_id, source_url_id, target_url_id)</code>.</li>
+                <li>Insert one immutable <code>backlink_observations</code> row per edge.</li>
+                <li>Maintain <code>backlink_target_matches</code> for every active target definition matched by the edge.</li>
+                <li>Update individual <code>backlink_occurrences</code>; the immutable link manifest remains the detailed historical evidence.</li>
+                <li>Reference the source fetch job, optional target validation job, and parse result so every observation has reproducible evidence.</li>
+                <li>Use an observation idempotency key: <code>SHA-256(crawl_run_id + ':' + source_url_id + ':' + target_url_id)</code>.</li>
+                <li>Update the current backlink row and <code>next_check_at</code>.</li>
+                <li>Insert any alert event, its channel delivery rows, and required broker events in the transactional outbox.</li>
+                <li>Mark the project-scoped <code>crawl_pages</code> consumer as completed. Then commit.</li>
+            </ol>
+            <div class="alert alert-info border-start border-4 border-info my-3">
+                <strong><i class="fas fa-sync me-2"></i>Idempotent Retries:</strong> If the worker retries after an uncertain database response, the observation, backlink edge, and alert unique keys prevent duplicates. The system is deliberately <strong>at-least-once</strong>; exactly-once network execution is not realistic at scale.
+            </div>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 9 — Handle Missing Links vs Fetch Failures Differently</h5>
+            <p>A successful page fetch where the expected link is absent is evidence of potential loss. A timeout, DNS failure, or server error is <strong>not</strong> the same evidence.</p>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Signal</th><th>Action</th><th>Retry Window</th></tr></thead>
+                    <tbody>
+                        <tr><td>Successful page, link missing</td><td>Increment <code>consecutive_failures</code>, schedule confirmation check</td><td>30–120 minutes with jitter</td></tr>
+                        <tr><td>Second confirmed miss after retry window</td><td>Change state to <code>lost</code>, set <code>lost_at</code>, emit <code>backlink.lost</code></td><td>—</td></tr>
+                        <tr><td>Fetch / network failure</td><td>Retain previous live/lost state, record error observation, retry with backoff</td><td>5 min → 24 hours (exponential)</td></tr>
+                        <tr><td>HTTP 404/410 source page</td><td>Stronger evidence but still use configured confirmation policy</td><td>Configurable</td></tr>
+                        <tr><td>Link returns after loss</td><td>Change durable state to <code>live</code>, reset failures, increment the state version, and emit <code>backlink.recovered</code></td><td>—</td></tr>
+                        <tr><td>Stable lost link (30+ days)</td><td>Progressively reduce checking frequency to weekly under product policy</td><td>Weekly</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-danger border-start border-4 border-danger my-3">
+                <strong><i class="fas fa-ban me-2"></i>Critical Rule:</strong> Only complete, non-truncated fetch and parse evidence may advance <code>consecutive_failures</code> or create a lost transition. Network and parser failures update operational retry counters instead.
+            </div>
+
+            <h5 class="mt-4 text-primary"><i class="fas fa-step-forward me-2"></i>Step 10 — Finalize the Run</h5>
+            <p>Workers increment <code>pages_completed</code> or <code>pages_failed</code> exactly once when a consumer reaches a terminal state. The run finalizer does not repeatedly count large job tables.</p>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-flag-checkered me-2"></i>Run Completion Condition</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code>IF expansion_completed = TRUE
+  AND (pages_completed + pages_failed) = pages_planned:
+
+    status = 'completed'  -- all jobs succeeded
+    status = 'partial'    -- some jobs exhausted retries
+    Set completed_at
+    Update projects.last_crawl_at for verification runs</code></pre>
+                </div>
+            </div>
+
+            <!-- Section 5: New-Backlink Discovery Flow -->
+            <h3 class="mt-5">New-Backlink Discovery Flow</h3>
+            <p>Verifying known source pages cannot discover every new backlink on the web. Adding 300 target URLs does not tell the system which external pages link to them. Discovery needs at least one candidate source:</p>
+            <div class="row g-3 my-2">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-primary h-100">
+                        <div class="card-body p-3 text-center">
+                            <i class="fas fa-plug fa-2x text-primary mb-2"></i>
+                            <h6>Provider Import</h6>
+                            <p class="small mb-0">Third-party SEO data providers. Hourly import scheduler with cursor-safe pagination and idempotent import runs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-success h-100">
+                        <div class="card-body p-3 text-center">
+                            <i class="fas fa-search fa-2x text-success mb-2"></i>
+                            <h6>Search Console</h6>
+                            <p class="small mb-0">Google Search Console or another owner-authorized source with verified property ownership.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-warning h-100">
+                        <div class="card-body p-3 text-center">
+                            <i class="fas fa-globe fa-2x text-warning mb-2"></i>
+                            <h6>Proprietary Crawl Index</h6>
+                            <p class="small mb-0">A shared crawl/index built by the product. Source pages are anonymous public responses shared safely across tenants.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="card border-info h-100">
+                        <div class="card-body p-3 text-center">
+                            <i class="fas fa-upload fa-2x text-info mb-2"></i>
+                            <h6>Manual / API Upload</h6>
+                            <p class="small mb-0">CSV or API upload of known referring pages. Validated, deduplicated, and queued for immediate verification.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-3">The hourly provider scheduler creates an idempotent <code>import_runs</code> row. Import workers page through provider results using the stored cursor, normalize and deduplicate source and target URLs, upsert backlink candidates, record each provider/source in <code>backlink_discoveries</code>, and queue immediate verification by setting <code>next_check_at</code> to the current time. New projects should run discovery first — a verification run with no known backlink candidates should complete successfully with zero page jobs.</p>
+
+            <!-- Section 5: Alert Flow -->
+            <h3 class="mt-5">Alert Flow</h3>
+            <h5 class="mt-3">Immediate Alerts</h5>
+            <p>The observation transaction creates one <code>alert_events</code> row per meaningful state transition and one <code>alert_deliveries</code> row per configured channel/destination. Deduplication keys include the rule, backlink, event type, and state-transition version.</p>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Provider Response</th><th>Action</th></tr></thead>
+                    <tbody>
+                        <tr><td>Permanent config / auth error</td><td>Mark failed, notify administrator through an independent channel</td></tr>
+                        <tr><td>Rate limit or temporary provider error</td><td>Reschedule with exponential backoff and jitter</td></tr>
+                        <tr><td>Timeout after uncertain webhook response</td><td>Retry with a stable outbound idempotency header</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>The <code>alert_events.aggregate_delivery_status</code> is derived from child delivery rows: <code>pending</code> while none have finished; <code>partial</code> when outcomes are mixed; <code>delivered</code> when all required deliveries succeed; <code>failed</code> when all terminal deliveries fail; <code>cancelled</code> only when intentionally suppressed.</p>
+            <h5 class="mt-3">Digests</h5>
+            <p>Daily/weekly digest builders run globally and calculate each tenant's due window in its configured timezone. A unique digest key prevents duplicate summaries during daylight-saving transitions or retries. All event times are stored in UTC.</p>
+
+            <h5 class="mt-3">Outbox Ownership</h5>
+            <p>Each database shard owns a local <code>transactional_outbox</code>. The same transaction that changes backlink state inserts its versioned broker event; a publisher later sends it and marks it published. Alert delivery rows remain the durable delivery queue and are not recreated from Kafka. This gives one unambiguous path: the outbox bridges committed state to Kafka, while <code>alert_deliveries</code> controls email, Slack, and webhook retries.</p>
+
+            <!-- Section 5: Lease Recovery -->
+            <h3 class="mt-5">Lease Recovery</h3>
+            <p>Every minute, a recovery job finds fetch work whose lease has expired and requeues it. The same pattern applies to <code>target_validation_jobs</code>, <code>page_parse_results</code>, project match work in <code>crawl_pages</code>, <code>alert_deliveries</code>, and the transactional outbox. Always process limited ID batches — never update an unbounded number of rows at once.</p>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-redo me-2"></i>Expired Lease Recovery SQL</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code class="language-sql">-- Requeue expired leases under retry limit:
+UPDATE page_fetch_jobs
+SET status       = 'queued',
+    lease_owner  = NULL,
+    leased_until = NULL,
+    available_at = UTC_TIMESTAMP(6) + INTERVAL 1 MINUTE
+WHERE status      = 'leased'
+  AND leased_until &lt; UTC_TIMESTAMP(6)
+  AND attempts    &lt; 5
+LIMIT 500;
+
+-- Mark permanently failed once max attempts reached:
+UPDATE page_fetch_jobs
+SET status = 'failed'
+WHERE status      = 'leased'
+  AND leased_until &lt; UTC_TIMESTAMP(6)
+  AND attempts   &gt;= 5
+LIMIT 500;</code></pre>
+                </div>
+            </div>
+
+            <!-- Section 5: Retention & Maintenance -->
+            <h3 class="mt-5">Retention &amp; Maintenance Policy</h3>
+            <p>Object storage and MySQL cannot commit atomically. Use this artifact lifecycle for every compressed HTML body and link manifest:</p>
+            <ol class="lh-lg">
+                <li>Create or claim a <code>pending</code> content record with a deterministic content-addressed key. Reuse is allowed only for anonymous public responses with compatible fetch profiles and encryption policy.</li>
+                <li>Upload to a temporary or final key with server-side encryption.</li>
+                <li>Read metadata and checksum back from storage.</li>
+                <li>Mark the snapshot <code>available</code> only after verification.</li>
+                <li>Allow parsers to consume only <code>available</code> objects.</li>
+                <li>Have the artifact reconciler repair or delete stale pending rows and orphaned objects.</li>
+                <li>On every reuse, atomically update <code>last_referenced_at</code> and extend <code>retention_until</code> with <code>GREATEST</code>.</li>
+                <li>Delete an object only after <code>retention_until</code> has passed and no retained fetch, parse, observation, legal-hold, or export reference remains.</li>
+            </ol>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Data Class</th><th>Retention Policy</th></tr></thead>
+                    <tbody>
+                        <tr><td>Current <code>backlinks</code> rows</td><td>Keep while project exists</td></tr>
+                        <tr><td>Hot observations (MySQL)</td><td>7–30 days, then archive to ClickHouse before deletion</td></tr>
+                        <tr><td>ClickHouse observation history</td><td>Tenant-contract retention; deletion tombstones and completion reconciliation are required</td></tr>
+                        <tr><td>Raw HTML bodies (object storage)</td><td>7–30 days; compressed with Zstandard</td></tr>
+                        <tr><td>Parsed link manifests</td><td>Longer than HTML when useful for parser re-runs</td></tr>
+                        <tr><td>Failed job runs</td><td>Keep longer than successful audit rows</td></tr>
+                        <tr><td>Scheduler audit rows</td><td>Purge after weekly cleanup job</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 5: Concurrency & Idempotency Table -->
+            <h3 class="mt-5">Concurrency &amp; Idempotency Guarantees</h3>
+            <p>The system is deliberately <strong>at-least-once</strong>. Every risk below has a corresponding database-level protection that makes retries safe without creating duplicates.</p>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Risk</th><th>Protection Mechanism</th></tr></thead>
+                    <tbody>
+                        <tr><td>Two cron instances run simultaneously</td><td>Unique <code>(job_name, scheduled_for)</code> on <code>scheduled_job_runs</code></td></tr>
+                        <tr><td>Scheduler retries a project slot</td><td>Unique crawl-run <code>idempotency_key</code></td></tr>
+                        <tr><td>Run expansion retries</td><td>Unique <code>(crawl_run_id, source_url_id)</code> on <code>crawl_pages</code></td></tr>
+                        <tr><td>Multiple projects request the same URL</td><td>Unique fetch <code>coalescing_key</code> on <code>page_fetch_jobs</code></td></tr>
+                        <tr><td>Unchanged page is revalidated</td><td>Conditional GET reuses existing content snapshot (HTTP 304)</td></tr>
+                        <tr><td>Parser or deployment retries</td><td>Unique <code>(content_snapshot_id, base_url_id, parser_version)</code> on parse results</td></tr>
+                        <tr><td>Two workers claim work simultaneously</td><td><code>FOR UPDATE SKIP LOCKED</code> plus a time-bounded lease</td></tr>
+                        <tr><td>Worker commits but misses the response</td><td>Observation idempotency key: SHA-256 of run+source+target</td></tr>
+                        <tr><td>Same backlink seen repeatedly</td><td>Unique <code>(project_id, source_url_id, target_url_id)</code> edge</td></tr>
+                        <tr><td>Same state event evaluated twice</td><td>Unique alert-event deduplication key per rule+backlink+transition</td></tr>
+                        <tr><td>Alert delivery retries</td><td>Unique event/channel/destination plus outbound idempotency header</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 5: Operational Limits -->
+            <h3 class="mt-5">Operational Limits &amp; Tenant Fairness</h3>
+            <p>Start with these limits and tune from measurements. Large projects must not monopolize the queue — weighted fair scheduling selects runnable consumers across tenants first, then by priority and age within each tenant.</p>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Operation</th><th>Starting Limit</th></tr></thead>
+                    <tbody>
+                        <tr><td>Project scheduler claim per transaction</td><td>100 projects</td></tr>
+                        <tr><td>Run expansion per transaction</td><td>1,000–5,000 source pages</td></tr>
+                        <tr><td>Fetch-worker claim per transaction</td><td>10–25 URLs</td></tr>
+                        <tr><td>Parser-worker claim per transaction</td><td>10–50 snapshots (based on body size)</td></tr>
+                        <tr><td>Per-host concurrency</td><td>1–2 requests by default</td></tr>
+                        <tr><td>Maximum links extracted per page</td><td>Configurable; mark truncated if exceeded</td></tr>
+                        <tr><td>Daily page checks per tenant</td><td>Reserved atomically in <code>tenant_crawl_usage_daily</code></td></tr>
+                        <tr><td>Browser-rendering time budget</td><td>Separate quota-controlled tier</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 5: Monitoring Metrics -->
+            <h3 class="mt-5">Monitoring, Backup &amp; Recovery</h3>
+            <p>Page the operations team when queue age or expired leases exceed a threshold — not merely when a single fetch fails.</p>
+            <div class="row g-0 my-2">
+                <div class="col-12 col-md-6">
+                    <ul class="lh-lg">
+                        <li>Scheduler delay: current time minus oldest due project</li>
+                        <li>Queued, leased, expired, completed, and failed page jobs</li>
+                        <li>Crawl duration percentiles by host and response class</li>
+                        <li>Runs stuck without a recent heartbeat</li>
+                        <li>Retry and permanent-failure rates</li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-6">
+                    <ul class="lh-lg">
+                        <li>Observations and state transitions per minute</li>
+                        <li>Alert delivery latency and failure rate</li>
+                        <li>MySQL lock-wait time, deadlocks, replica lag, and table growth</li>
+                        <li>ClickHouse CDC watermark vs MySQL deletion boundary</li>
+                        <li>Object storage upload error rate and orphaned artifact backlog</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="alert alert-info border-start border-4 border-info my-3">
+                <strong><i class="fas fa-database me-2"></i>Backup Requirements:</strong> Maintain automated encrypted MySQL backups with point-in-time binary-log recovery and object-storage versioning. Run scheduled restore drills that verify both database rows and referenced artifacts. Schema migrations must be backward-compatible with running workers, use online DDL where possible, and have an explicit roll-forward or rollback procedure.
+            </div>
+
+            <!-- STEP 6 -->
+            <h2 id="step-6" class="mt-5"><strong>6. Multi-Tenant Identity &amp; Access Boundary (Developer PRD Spec)</strong></h2>
+            <p>To keep the backlink analytics system clean and prevent coupling with authentication credentials, user profiles, tenant organizations, RBAC memberships, and invitations reside in an isolated <strong>Identity &amp; Access Database</strong>. The backlink monitoring database stores only an opaque <code>tenant_id</code> (corresponding to <code>organizations.id</code>).</p>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Identity Table: users</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE users (
+  id                    BINARY(16) PRIMARY KEY,
+  auth_subject          VARCHAR(255) NOT NULL,
+  email                 VARCHAR(320) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  display_name          VARCHAR(255),
+  status                ENUM('active', 'suspended', 'deleted') NOT NULL DEFAULT 'active',
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                          ON UPDATE CURRENT_TIMESTAMP(6),
+  UNIQUE KEY users_auth_subject_uniq (auth_subject),
+  UNIQUE KEY users_email_uniq (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Identity Table: organizations</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE organizations (
+  id                    BINARY(16) PRIMARY KEY,
+  name                  VARCHAR(255) NOT NULL,
+  slug                  VARCHAR(191) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  plan_code             VARCHAR(64) NOT NULL DEFAULT 'free',
+  status                ENUM('active', 'suspended', 'closed') NOT NULL DEFAULT 'active',
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                          ON UPDATE CURRENT_TIMESTAMP(6),
+  UNIQUE KEY organizations_slug_uniq (slug)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Identity Table: organization_members</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE organization_members (
+  organization_id       BINARY(16) NOT NULL,
+  user_id               BINARY(16) NOT NULL,
+  role                  ENUM('owner', 'admin', 'analyst', 'viewer') NOT NULL,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                          ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (organization_id, user_id),
+  CONSTRAINT organization_members_org_fk FOREIGN KEY (organization_id)
+    REFERENCES organizations(id) ON DELETE CASCADE,
+  CONSTRAINT organization_members_user_fk FOREIGN KEY (user_id)
+    REFERENCES users(id) ON DELETE CASCADE,
+  KEY organization_members_user_idx (user_id, organization_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Identity Table: organization_invitations</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size: 0.82rem; line-height: 1.45;"><code class="language-sql">CREATE TABLE organization_invitations (
+  id                    BINARY(16) PRIMARY KEY,
+  organization_id       BINARY(16) NOT NULL,
+  email                 VARCHAR(320) COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  role                  ENUM('owner', 'admin', 'analyst', 'viewer') NOT NULL,
+  token_hash            BINARY(32) NOT NULL,
+  status                ENUM('pending', 'accepted', 'revoked', 'expired')
+                          NOT NULL DEFAULT 'pending',
+  invited_by_user_id    BINARY(16) NOT NULL,
+  accepted_by_user_id   BINARY(16),
+  expires_at            TIMESTAMP(6) NOT NULL,
+  accepted_at           TIMESTAMP(6) NULL,
+  created_at            TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  pending_email         VARCHAR(320) COLLATE utf8mb4_0900_ai_ci GENERATED ALWAYS AS
+                          (CASE WHEN status = 'pending' THEN email ELSE NULL END) STORED,
+  CONSTRAINT organization_invitations_org_fk FOREIGN KEY (organization_id)
+    REFERENCES organizations(id) ON DELETE CASCADE,
+  CONSTRAINT organization_invitations_inviter_fk FOREIGN KEY (invited_by_user_id)
+    REFERENCES users(id),
+  CONSTRAINT organization_invitations_acceptor_fk FOREIGN KEY (accepted_by_user_id)
+    REFERENCES users(id),
+  UNIQUE KEY organization_invitations_token_uniq (token_hash),
+  UNIQUE KEY one_pending_invitation_per_org_email (organization_id, pending_email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;</code></pre>
+                </div>
+            </div>
+
+            <!-- STEP 7 -->
+            <h2 id="step-7" class="mt-5"><strong>7. Scaling to 100 Million Edges</strong></h2>
+            <p>At 100 million backlink edges (~14.3M checks/day), a single monolithic MySQL instance becomes a bottleneck for writes and index updates. The system activates a distributed sharded architecture using <strong>Vitess</strong> and <strong>Kafka</strong>.</p>
+
+            <h3 class="mt-4">Vitess Keyspace Sharding Strategy</h3>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Keyspace Domain</th>
+                            <th>Sharding Vindex / Routing Key</th>
+                            <th>Stored Entities &amp; Responsibility</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-bold">Control Plane Keyspace</td>
+                            <td>Unsharded / Global Replicated</td>
+                            <td>Tenant plans, crawl policies, project metadata, shard maps.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Source-Fetch Keyspace</td>
+                            <td><code>source_url_key</code> (Hash Vindex)</td>
+                            <td>Global source URL revalidation queue, HTTP cache headers, public content manifests. Guarantees 1 validation per source URL globally.</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold">Project-State Keyspace</td>
+                            <td><code>(tenant_id, project_id)</code> (Lookup Vindex)</td>
+                            <td>Current backlink state, occurrences, target matches, alert outbox. All dashboard queries hit exactly one shard.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="mt-4">Physical Inversion at 100M Scale</h3>
+            <p>Rather than having projects pull source pages, scheduling is physically inverted: <strong>Source-shard schedulers</strong> iterate over due source URLs, perform validation, parse outgoing links, and publish committed edge updates to Kafka topics partitioned by <code>backlink_key</code>. Project-state shards consume these event topics asynchronously, applying local updates idempotently.</p>
+
+            <!-- Section 7: Production Topology -->
+            <h3 class="mt-5">Production Topology at 100M Scale</h3>
+            <p>At 100M edges, the architecture physically inverts: source-shard schedulers own the fetch schedule and fan results out through Kafka to project-state shards. One source URL validation serves all subscribing projects simultaneously.</p>
+            <div class="card bg-dark text-white my-4 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-sitemap me-2"></i>Distributed 100M Pipeline — Kafka-Backed Topology</div>
+                <div class="card-body p-3">
+                    <pre class="bg-black text-light p-3 m-0 font-monospace" style="font-size:0.78rem;line-height:1.5"> [ Control-plane MySQL ] ──► [ Target &amp; Policy Events ]
+ [ Discovery Imports   ] ──► [ Kafka / Event Backbone ]
+                                          │
+                          ┌───────────────┴───────────────┐
+                          ▼                               ▼
+              [ Source Subscription Index ]   [ Global Source Scheduler ]
+                                                          │
+                                               [ Fetch Topic (Kafka) ]
+                                                          │
+                                           [ HTTP / Browser Fetch Workers ]
+                                                          │
+                            ┌─────────────────────────────┴──────────┐
+                            ▼                                        ▼
+                  [ Object Storage ]                   [ Parse Topic (Kafka) ]
+                  (HTML + Manifests)                               │
+                                                     [ Offline Parser Workers ]
+                                                                │
+                                                     [ Match Topic (Kafka) ]
+                                                                │
+                                              [ Source-Centric Matcher Workers ]
+                                                                │
+                                             [ Backlink State Topic (Kafka) ]
+                                                                │
+                           ┌────────────────────────────────────┤
+                           ▼                                    ▼
+             [ Project-State MySQL Shards ]        [ ClickHouse History Engine ]
+             (Current Edges + Alert Outbox)         (Immutable Fact Stream via CDC)
+                           │
+                           ▼
+              [ API &amp; Rollup Readers ]</pre>
+                </div>
+            </div>
+
+            <!-- Section 7: Source-Centric Subscription Model -->
+            <h3 class="mt-4">Source-Centric Subscription Model</h3>
+            <p>At 100M edges, repeatedly creating one project match job for each source page wastes work. Instead, a source-sharded subscription index maps each source URL to all projects that monitor it:</p>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-code-branch me-2"></i>Subscription Index Structure</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code>source_url_key
+  → tenant_id
+  → project_id
+  → expected target URL/domain identities
+  → freshness requirement and priority</code></pre>
+                </div>
+            </div>
+            <ol class="lh-lg">
+                <li>A provider discovery or target change emits a subscription event.</li>
+                <li>The source shard idempotently updates the watch subscription.</li>
+                <li>The source scheduler calculates the intersection of consumer freshness windows.</li>
+                <li>One source validation is scheduled for the compatible consumer group.</li>
+                <li>HTML is fetched once and parsed once.</li>
+                <li>The matcher loads all subscriptions for that source in bounded pages.</li>
+                <li>Found and missing results are emitted individually, keyed by backlink.</li>
+                <li>Project-state consumers apply ordered transitions to the correct project shard.</li>
+            </ol>
+
+            <!-- Section 7: Sharded DDL Tables -->
+            <h3 class="mt-4">Sharded DDL Tables (Vitess Keyspaces)</h3>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: source_watch_subscriptions (Source-Fetch Keyspace)</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code class="language-sql">-- Source-fetch keyspace; primary routing key is source_url_key.
+CREATE TABLE source_watch_subscriptions (
+  source_url_key          BINARY(16) NOT NULL,
+  subscription_key        BINARY(16) NOT NULL,
+  tenant_id               BINARY(16) NOT NULL,
+  project_id              BINARY(16) NOT NULL,
+  backlink_key            BINARY(16) NOT NULL,
+  target_identity_key     BINARY(16) NOT NULL,
+  fetch_profile_hash      BINARY(32) NOT NULL,
+  next_due_at             TIMESTAMP(6) NOT NULL,
+  validation_deadline     TIMESTAMP(6) NOT NULL,
+  priority                SMALLINT NOT NULL DEFAULT 0,
+  status                  ENUM('active', 'paused', 'deleted') NOT NULL DEFAULT 'active',
+  subscription_version    BIGINT UNSIGNED NOT NULL,
+  updated_at              TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                            ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (source_url_key, subscription_key),
+  KEY source_subscription_due_idx (next_due_at, source_url_key)
+);</code></pre>
+                </div>
+            </div>
+            <div class="card bg-dark text-white mb-3 shadow-sm">
+                <div class="card-header bg-secondary text-warning font-monospace small"><i class="fas fa-table me-2"></i>Table: backlink_current_sharded (Project-State Keyspace)</div>
+                <div class="card-body p-0">
+                    <pre class="bg-dark text-light p-3 m-0 font-monospace" style="font-size:0.82rem;line-height:1.45"><code class="language-sql">-- Project-state keyspace; primary routing is tenant/project plus edge bucket.
+CREATE TABLE backlink_current_sharded (
+  tenant_id                         BINARY(16) NOT NULL,
+  project_id                        BINARY(16) NOT NULL,
+  edge_bucket                       SMALLINT UNSIGNED NOT NULL,
+  backlink_key                      BINARY(16) NOT NULL,
+  source_url_key                    BINARY(16) NOT NULL,
+  target_url_key                    BINARY(16) NOT NULL,
+  current_state                     ENUM('unknown','live','lost') NOT NULL,
+  source_fetch_health               ENUM('unknown','ok','blocked','error') NOT NULL,
+  target_fetch_health               ENUM('unknown','ok','blocked','error') NOT NULL,
+  is_redirected                     BOOLEAN NOT NULL DEFAULT FALSE,
+  subscription_version              BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  last_applied_validation_sequence  BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  state_version                     BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  first_seen_at                     TIMESTAMP(6) NOT NULL,
+  last_checked_at                   TIMESTAMP(6) NOT NULL,
+  next_check_at                     TIMESTAMP(6) NOT NULL,
+  updated_at                        TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+                                      ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (tenant_id, project_id, edge_bucket, backlink_key),
+  KEY backlink_project_state_idx
+    (tenant_id, project_id, current_state, last_checked_at DESC)
+);</code></pre>
+                </div>
+            </div>
+
+            <!-- Section 7: Kafka Topics Table -->
+            <h3 class="mt-4">Kafka Event Topics</h3>
+            <p>Every consumer is at-least-once and idempotent. Poison events go to a dead-letter topic with the original payload, schema version, failure reason, and retry history. Use a schema registry with compatibility checks.</p>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Topic</th><th>Partition Key</th><th>Purpose</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>target-policy-events</code></td><td>project ID</td><td>Add / pause / delete target definitions</td></tr>
+                        <tr><td><code>discovery-events</code></td><td>source URL key</td><td>Upsert source subscriptions</td></tr>
+                        <tr><td><code>fetch-jobs</code></td><td>source URL key</td><td>Distributed fetch dispatch; host limits coordinated separately</td></tr>
+                        <tr><td><code>fetch-results</code></td><td>source URL key</td><td>Produce/reuse immutable snapshots</td></tr>
+                        <tr><td><code>parse-results</code></td><td>source URL key</td><td>Publish manifest evidence</td></tr>
+                        <tr><td><code>target-validation-jobs</code></td><td>target URL key</td><td>Dispatch coalesced target status, redirect, canonical, and indexability checks</td></tr>
+                        <tr><td><code>target-validation-results</code></td><td>target URL key</td><td>Publish target health independently from source-link availability</td></tr>
+                        <tr><td><code>backlink-state-events</code></td><td>backlink key</td><td>Ordered per-edge transitions — all state changes for one edge stay in partition order</td></tr>
+                        <tr><td><code>alert-events</code></td><td>project ID</td><td>Evaluate and deliver notifications</td></tr>
+                        <tr><td><code>rollup-events</code></td><td>project ID</td><td>Maintain current project and referring-domain summaries</td></tr>
+                        <tr><td><code>deletion-events</code></td><td>tenant ID</td><td>Orchestrate tenant/project erasure across all planes</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 7: Rollout Path -->
+            <h3 class="mt-4">Rollout Path to 100M</h3>
+            <p>Activate the distributed architecture <em>before</em> any single MySQL writer or project queue approaches its tested capacity limit.</p>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Stage</th><th>Edge Target</th><th>What Gets Enabled</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>1</strong></td><td>100,000 edges</td><td>Full production pipeline — monolithic MySQL, full scheduler, fetch coalescing, CDC, alerts</td></tr>
+                        <tr><td><strong>2</strong></td><td>1 million edges</td><td>Validate cost, source-domain distribution, <code>304</code> rates, and parser throughput</td></tr>
+                        <tr><td><strong>3</strong></td><td>3–10 million edges</td><td>Enable Kafka broker, CDC to ClickHouse, source-centric scheduling, and backpressure</td></tr>
+                        <tr><td><strong>4</strong></td><td>10–30 million edges</td><td>Split control, source-fetch, and project-state keyspaces; exercise live shard split/resharding</td></tr>
+                        <tr><td><strong>5</strong></td><td>100 million edges</td><td>Admit only after a 62.5M distinct-source base-case test passes the weekly SLO with required failure headroom</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 7: SLOs & Capacity Gates -->
+            <h3 class="mt-4">SLOs &amp; Capacity Gates</h3>
+            <div class="table-responsive my-3 shadow-sm rounded-3">
+                <table class="table table-bordered align-middle mb-0 bg-white">
+                    <thead class="table-dark"><tr><th>Area</th><th>SLO / Gate</th></tr></thead>
+                    <tbody>
+                        <tr><td>Weekly coverage</td><td>Eligible source validated before its hard 7-day deadline</td></tr>
+                        <tr><td>Confirmation latency</td><td>Normal missing-link confirmation completes within 2 hours</td></tr>
+                        <tr><td>Scheduler health</td><td>Oldest unscheduled due source remains inside rolling horizon</td></tr>
+                        <tr><td>Fetch broker</td><td>p99 queue age remains below consumer deadline slack</td></tr>
+                        <tr><td>State stream</td><td>Per-partition lag remains bounded and drains after bursts</td></tr>
+                        <tr><td>MySQL shard</td><td>Write latency, lock waits, buffer hit rate, storage, replica lag, and backup duration below tested limits</td></tr>
+                        <tr><td>CDC / ClickHouse</td><td>Durable watermark remains ahead of MySQL deletion boundary</td></tr>
+                        <tr><td>Artifact integrity</td><td>No observation references unavailable required evidence</td></tr>
+                        <tr><td>Tenant fairness</td><td>Small-tenant progress remains healthy during a dominant-tenant spike</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 7: Scenarios Accordion -->
+            <h3 class="mt-5">Major Failure Scenarios &amp; Responses</h3>
+            <p>The following scenarios cover the most critical edge cases at 100M scale. Each has a defined system response that preserves correctness without violating host rate limits or producing false link-loss events.</p>
+            <div class="accordion mb-4" id="scenariosAccordion">
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scA"><span class="badge bg-secondary me-2">A</span> 100M Backlinks Across Many Tenants</button></h2><div id="scA" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Shard project state by tenant/project and apply weighted fairness. Shared fetches are anonymous public responses. One tenant's jobs, queries, imports, or exports cannot consume all shard or worker capacity.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scB"><span class="badge bg-secondary me-2">B</span> One Tenant Owns Most of the 100M</button></h2><div id="scB" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">A simple tenant-only shard key creates a hotspot. Subshard that tenant by project or stable edge bucket. Send large exports to ClickHouse/object storage instead of querying all transactional shards synchronously.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scC"><span class="badge bg-secondary me-2">C</span> One Project Owns All 100M</button></h2><div id="scC" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Use a project plus edge-bucket routing key. All full-project counts come from rollups — never scatter-count raw rows interactively. List queries include the relevant bucket plan or use a merge service over bounded shard cursors.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scD"><span class="badge bg-secondary me-2">D</span> One Referring Domain Has Millions of Pages</button></h2><div id="scD" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Per-host politeness makes the weekly SLA infeasible at low permitted rates. Calculate projected completion continuously, prioritize valuable/change-prone pages, reduce low-value checks under explicit policy, and show limited coverage. Never evade host rate limits.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scE"><span class="badge bg-secondary me-2">E</span> Viral Discovery Spike</button></h2><div id="scE" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">A target gains millions of candidate backlinks in hours. Deduplicate before queueing, cap admission by tenant budget, verify in priority tiers, and keep provider discovery separate from verified live state.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scF"><span class="badge bg-secondary me-2">F</span> Provider Sends a Full Duplicate Export</button></h2><div id="scF" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Use provider discovery keys and import-run idempotency. Update <code>last_discovered_at</code> without recreating current edges, subscriptions, or verification jobs.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scG"><span class="badge bg-secondary me-2">G</span> Widespread CDN or DNS Outage</button></h2><div id="scG" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Network failures never mean "lost." Open a domain-level incident, suppress link-loss transitions, extend retries with jitter, and avoid an alert storm.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scH"><span class="badge bg-secondary me-2">H</span> Mass Genuine Link Removal</button></h2><div id="scH" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Require complete evidence and confirmation policy, then aggregate notifications into digests/incidents. Apply alert fan-out budgets rather than sending millions of individual emails.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scI"><span class="badge bg-secondary me-2">I</span> Parser Bug After Deployment</button></h2><div id="scI" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Pin parser version in every manifest and observation. Stop affected consumers, deploy a fixed parser, and reparse retained HTML offline. Emit corrected state events with higher versions — do not refetch unnecessarily.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scJ"><span class="badge bg-secondary me-2">J</span> URL Normalization Rule Changes</button></h2><div id="scJ" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Create a new normalization version. Dual-read/dual-resolve during backfill, produce identity-remap events, merge only after collision and ownership verification, then retire the old version. Never rewrite 100 million identities in place.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scK"><span class="badge bg-secondary me-2">K</span> JavaScript-Only Backlinks</button></h2><div id="scK" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">HTTP parsing remains the default. Browser rendering is a separately budgeted tier triggered by policy or heuristics. Cache rendered snapshots and cap render time, memory, scripts, and network destinations.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scL"><span class="badge bg-secondary me-2">L</span> Infinite URL / Query Traps</button></h2><div id="scL" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Apply normalization rules, query-parameter policies, per-domain URL cardinality limits, path-depth limits, content fingerprinting, and crawl-frontier budgets. Quarantine domains producing explosive low-value URL variants.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scM"><span class="badge bg-secondary me-2">M</span> Decompression Bomb or Malicious HTML</button></h2><div id="scM" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Enforce compressed and expanded byte limits, ratio limits, parser CPU/memory deadlines, sandboxing, and no script execution in ordinary parsers. Mark evidence incomplete on any limit hit.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scN"><span class="badge bg-secondary me-2">N</span> Object-Storage Outage</button></h2><div id="scN" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Pause parse dispatch, retain fetch job state, apply bounded retry, and exert backpressure before fetching additional bodies that cannot be stored. Do not mark links missing.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scO"><span class="badge bg-secondary me-2">O</span> Kafka Partition Lag or Outage</button></h2><div id="scO" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Keep transactional outbox rows until acknowledged, stop hot-history deletion, monitor per-partition lag, and scale/rebalance consumers. Ordering remains keyed by backlink — retries do not bypass a blocked edge with a newer event.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scP"><span class="badge bg-secondary me-2">P</span> ClickHouse Outage or Lag</button></h2><div id="scP" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Current state continues in MySQL shards. Pause MySQL hot-history deletion when the analytics watermark falls behind. Historical dashboards expose stale-data status explicitly.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scQ"><span class="badge bg-secondary me-2">Q</span> MySQL Shard Primary Failure</button></h2><div id="scQ" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Fail over to a replica using the tested orchestration path. Consumers retry idempotently. Do not acknowledge broker events until the state transaction commits.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scR"><span class="badge bg-secondary me-2">R</span> Hot Project Shard</button></h2><div id="scR" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Throttle expensive exports, route reads to replicas when consistency allows, split the project using stable edge buckets, and move analytical queries to ClickHouse.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scS"><span class="badge bg-secondary me-2">S</span> Tenant / Project Deletion</button></h2><div id="scS" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Write a deletion workflow record, stop new schedules, emit tombstones to every plane, delete project-shard state, remove subscriptions, expire artifacts when no references remain, and verify completion with reconciliation. Keep only legally permitted audit proof.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scT"><span class="badge bg-secondary me-2">T</span> Alert Storm</button></h2><div id="scT" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Apply event deduplication, per-rule cooldown, per-tenant delivery budgets, grouping, digest fallback, and incident-level notifications. Crawl correctness must not depend on notification success.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scU"><span class="badge bg-secondary me-2">U</span> Region Outage</button></h2><div id="scU" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Keep project-to-home-region routing explicit. Restore/fail over control and project shards according to the recovery objective, replay broker events, and avoid active-active writes to one edge unless conflict resolution is formally designed.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scV"><span class="badge bg-secondary me-2">V</span> Clock Skew or Late / Out-of-Order Events</button></h2><div id="scV" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Order state using monotonic <code>state_version</code>, not wall-clock time alone. Reject stale versions, retain event time for reporting, and synchronize infrastructure clocks.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scW"><span class="badge bg-secondary me-2">W</span> Robots Policy Changes</button></h2><div id="scW" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Version cached robots decisions. On a new disallow rule, stop future fetches, set fetch health to <code>blocked</code>, and retain the previous availability state rather than declaring the link lost. On allow, resume through normal scheduling.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scX"><span class="badge bg-secondary me-2">X</span> Cached 304 Points to Deleted Content</button></h2><div id="scX" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Verify artifact availability before accepting reuse. If unavailable, retry once without conditional headers and create a fresh snapshot.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scY"><span class="badge bg-secondary me-2">Y</span> Scheduler Outage and Catch-Up Storm</button></h2><div id="scY" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">After recovery, rebuild only the short rolling horizon, order work by hard deadline and value, and enforce admission limits. Do not immediately enqueue every missed slot. Record coverage debt and drain it within available host and tenant budgets.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scZ"><span class="badge bg-secondary me-2">Z</span> Discovery Provider Outage or Rate-Limit Exhaustion</button></h2><div id="scZ" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Continue verifying already known backlinks. Pause or slow discovery imports with cursor-safe retry, expose discovery freshness separately from verification freshness, and never interpret absent provider data as lost backlinks.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scAA"><span class="badge bg-secondary me-2">AA</span> Huge CSV / API Export</button></h2><div id="scAA" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Run exports asynchronously from ClickHouse into object storage, with a stable snapshot time, progress tracking, expiry, authorization recheck, and downloadable artifact. Never hold an API connection while scanning project-state shards.</div></div></div>
+                <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#scAB"><span class="badge bg-secondary me-2">AB</span> Live Shard Split or Resharding</button></h2><div id="scAB" class="accordion-collapse collapse" data-bs-parent="#scenariosAccordion"><div class="accordion-body">Use the sharding layer's supported copy/catch-up/switch workflow, verify row counts and event watermarks, pause destructive cleanup until rollback expires, and load-test resharding before urgent capacity pressure. Keep routing keys immutable.</div></div></div>
+            </div>
+
+            <!-- STEP 8 -->
+
+            <h2 id="step-8" class="mt-5"><strong>8. Summary &amp; Key Takeaways</strong></h2>
+            <div class="card bg-primary text-white my-4 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-3"><i class="fas fa-trophy me-2"></i>Architectural Summary Checklist</h4>
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <ul class="mb-0 ps-3">
+                                <li><strong>Fetch Coalescing:</strong> Deduplicates requests across projects for the same referring source URL.</li>
+                                <li><strong>Tiered Storage:</strong> MySQL for current state, ClickHouse for immutable analytics, Object Storage for compressed HTML.</li>
+                                <li><strong>Conditional GETs:</strong> Saves up to 70% network traffic with <code class="bg-dark text-warning px-2 py-1 rounded me-1 font-monospace">ETag</code> / <code class="bg-dark text-warning px-2 py-1 rounded font-monospace">304 Not Modified</code>.</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <ul class="mb-0 ps-3">
+                                <li><strong>Reliable Alerts:</strong> Transactional outbox prevents duplicate or missed notifications.</li>
+                                <li><strong>Vitess Sharding:</strong> Scales from 10M to 100M edges by splitting project state from source scheduling.</li>
+                                <li><strong>Decoupled Auth:</strong> Opaque <code class="bg-dark text-warning px-2 py-1 rounded me-1 font-monospace">tenant_id</code> keeps user identity separate from crawl data.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container my-5">
+        <div class="p-4 p-md-5 rounded-4 shadow-sm" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid rgba(255,255,255,0.1);">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge bg-primary bg-opacity-25 text-primary mb-2 px-3 py-2 rounded-pill fw-semibold">Need Architecture or Engineering Help?</span>
+                    <h3 class="h4 text-white fw-bold mb-2">Building Scalable Web Products or Custom APIs?</h3>
+                    <p class="text-white-50 mb-0">Explore how we architect high-throughput systems, browser extensions, and SaaS tools, or partner with us for dedicated AI product engineering.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <a href="https://brijesh.work/portfolio/backlinkstools/" class="btn btn-outline-light btn-sm rounded-pill me-2 mb-2"><i class="fas fa-folder-open me-1"></i> Case Studies</a>
+                    <a href="https://brijesh.work/service/ai-product-development-for-founders/" class="btn btn-primary btn-sm rounded-pill mb-2"><i class="fas fa-rocket me-1"></i> AI Services</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+
+    <footer loadhtml="https://brijesh.work/pub/inc/footer.html"></footer>
+
+    <!-- Back to Top Button -->
+    <button type="button" class="btn btn-primary btn-floating btn-lg" id="btn-back-to-top" title="Back to top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
+    <script>
+        document.querySelectorAll('#scenariosAccordion [data-bs-toggle="collapse"]').forEach((button, index) => {
+            const panelId = button.getAttribute('data-bs-target')?.replace(/^#/, '');
+            const header = button.closest('.accordion-header');
+            const panel = panelId ? document.getElementById(panelId) : null;
+            if (!panelId || !header || !panel) return;
+            const headerId = `scenario-heading-${index + 1}`;
+            header.id = headerId;
+            button.setAttribute('aria-controls', panelId);
+            button.setAttribute('aria-expanded', 'false');
+            panel.setAttribute('aria-labelledby', headerId);
+        });
+        const btn = document.getElementById('btn-back-to-top');
+        if (btn) {
+            window.addEventListener('scroll', () => { btn.style.display = window.scrollY > 300 ? 'flex' : 'none'; });
+            btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+        const headings = document.querySelectorAll('.sd-content h2[id], .sd-content h3[id]');
+        const tocLinks = document.querySelectorAll('.sd-toc a');
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    tocLinks.forEach(l => l.classList.remove('active'));
+                    const lk = document.querySelector('.sd-toc a[href="#'+e.target.id+'"]');
+                    if (lk) lk.classList.add('active');
+                }
+            });
+        }, { rootMargin: '0px 0px -60% 0px' });
+        headings.forEach(h => obs.observe(h));
+    </script>
+</body>
+
+</html>
