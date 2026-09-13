@@ -773,12 +773,13 @@ button,
 
   /* Keep hero action buttons (Hire Me, X, LinkedIn) on one line on mobile */
   .hero-actions-wrapper .hireme-btn {
-    width: auto;
-    flex: 0 0 auto;
+    width: auto !important;
+    flex: 0 0 auto !important;
+    margin-bottom: 0 !important;
   }
 
   .hero-actions-wrapper {
-    flex-wrap: nowrap;
+    flex-wrap: nowrap !important;
     gap: 10px;
   }
 

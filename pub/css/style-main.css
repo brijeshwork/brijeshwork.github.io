@@ -236,6 +236,19 @@ section {
     margin-bottom: 1rem;
   }
 
+  /* Hero section: keep Hire Me, X, LinkedIn in one row on mobile */
+  .hero-actions-wrapper .hireme-btn {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  .hero-actions-wrapper {
+    flex-wrap: nowrap !important;
+    gap: 10px;
+    align-items: center;
+  }
+
   .hireme-icon-btn {
     width: 50px !important;
     margin-bottom: 0;
@@ -4595,6 +4608,18 @@ img {
   .hireme-btn {
     width: 100% !important;
     justify-content: center !important;
+  }
+
+  /* Hero section exception: keep Hire Me, X, LinkedIn in one row */
+  .hero-actions-wrapper .hireme-btn {
+    width: auto !important;
+    flex: 0 0 auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  .hero-actions-wrapper {
+    flex-wrap: nowrap !important;
+    gap: 10px !important;
   }
 }
 
