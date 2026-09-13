@@ -51,8 +51,9 @@ function includeHTML() {
         xhttp.send();
         /* Exit the function: */
         return;
+      }
     }
-  }
+}
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", includeHTML);
