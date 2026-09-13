@@ -236,22 +236,33 @@ section {
     margin-bottom: 1rem;
   }
 
-  /* Hero section: keep Hire Me, X, LinkedIn in one row on mobile */
-  .hero-actions-wrapper .hireme-btn {
-    width: auto !important;
-    flex: 0 0 auto !important;
+  /* Hero section: Line 1 About Me (full width), Line 2 Social Icons in 1 row */
+  .hero-actions-wrapper {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .hero-actions-wrapper .hero-about-btn {
+    width: 100% !important;
+    justify-content: center !important;
     margin-bottom: 0 !important;
   }
 
-  .hero-actions-wrapper {
+  .hero-social-icons {
+    display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 10px;
-    align-items: center;
+    gap: 10px !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
   }
 
-  .hireme-icon-btn {
+  .hero-social-icons .hireme-icon-btn {
     width: 50px !important;
-    margin-bottom: 0;
+    height: 50px !important;
+    flex: 0 0 50px !important;
+    margin-bottom: 0 !important;
   }
 }
 
@@ -4610,16 +4621,33 @@ img {
     justify-content: center !important;
   }
 
-  /* Hero section exception: keep Hire Me, X, LinkedIn in one row */
-  .hero-actions-wrapper .hireme-btn {
-    width: auto !important;
-    flex: 0 0 auto !important;
+  /* Hero section: Line 1 About Me, Line 2 Social icons */
+  .hero-actions-wrapper {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .hero-actions-wrapper .hero-about-btn {
+    width: 100% !important;
+    justify-content: center !important;
     margin-bottom: 0 !important;
   }
 
-  .hero-actions-wrapper {
+  .hero-social-icons {
+    display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
     gap: 10px !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+
+  .hero-social-icons .hireme-icon-btn {
+    width: 50px !important;
+    height: 50px !important;
+    flex: 0 0 50px !important;
+    margin-bottom: 0 !important;
   }
 }
 

@@ -771,16 +771,33 @@ button,
     text-align: center;
   }
 
-  /* Keep hero action buttons (Hire Me, X, LinkedIn) on one line on mobile */
-  .hero-actions-wrapper .hireme-btn {
-    width: auto !important;
-    flex: 0 0 auto !important;
+  /* Hero section: Line 1 About Me (full width), Line 2 Social Icons in 1 row */
+  .hero-actions-wrapper {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .hero-actions-wrapper .hero-about-btn {
+    width: 100% !important;
+    justify-content: center !important;
     margin-bottom: 0 !important;
   }
 
-  .hero-actions-wrapper {
+  .hero-social-icons {
+    display: flex !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
-    gap: 10px;
+    gap: 10px !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+
+  .hero-social-icons .hireme-icon-btn {
+    width: 50px !important;
+    height: 50px !important;
+    flex: 0 0 50px !important;
+    margin-bottom: 0 !important;
   }
 
   .social-icons-container {
