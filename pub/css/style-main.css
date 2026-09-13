@@ -272,17 +272,20 @@ section {
   justify-content: center;
   width: 45px;
   height: 45px;
-  background: #d0d0d0;
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
   border-radius: 50%;
-  color: white;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .social-icon:hover {
-  transform: translateY(-2px);
-  background: #333333;
-  color: white;
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #000000;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================
@@ -1053,16 +1056,21 @@ nav ul li a {
 
 #site-footer .social-icon svg {
   display: block;
+  fill: currentColor;
 }
 
 #site-footer .social-icon {
-  color: #333333;
-  background: rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+  background: #000000;
+  border: 2px solid #000000;
 }
 
 #site-footer .social-icon:hover {
-  color: #ffffff;
-  background: #3b82f6;
+  color: #000000;
+  background: #ffffff;
+  border: 2px solid #000000;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 #site-footer h5,
