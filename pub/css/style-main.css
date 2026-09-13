@@ -613,28 +613,30 @@ img {
   float: right;
 }
 
-.col-lg-3 {
-  flex: 0 0 auto;
-  width: 25%;
-  padding: 15px;
-}
+@media (min-width: 992px) {
+  .col-lg-3 {
+    flex: 0 0 auto;
+    width: 25%;
+    padding: 15px;
+  }
 
-.col-lg-4 {
-  flex: 0 0 auto;
-  width: 33.33333333%;
-  padding: 15px;
-}
+  .col-lg-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+    padding: 15px;
+  }
 
-.col-lg-6 {
-  flex: 0 0 auto;
-  width: 50%;
-  padding: 15px;
-}
+  .col-lg-6 {
+    flex: 0 0 auto;
+    width: 50%;
+    padding: 15px;
+  }
 
-.col-lg-8 {
-  flex: 0 0 auto;
-  width: 66.66666667%;
-  padding: 15px;
+  .col-lg-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%;
+    padding: 15px;
+  }
 }
 
 
@@ -856,19 +858,21 @@ section {
   float: right;
 }
 
-.col-lg-4 {
-  flex: 0 0 auto;
-  width: 33.33333333%
-}
+@media (min-width: 992px) {
+  .col-lg-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+  }
 
-.col-lg-6 {
-  flex: 0 0 auto;
-  width: 50%
-}
+  .col-lg-6 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
 
-.col-lg-8 {
-  flex: 0 0 auto;
-  width: 66.66666667%
+  .col-lg-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%;
+  }
 }
 
 .clearfix::after {
@@ -5914,10 +5918,12 @@ select {
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
     border-color: #000000 !important;
   }
+
   50% {
     box-shadow: 0 22px 48px rgba(0, 0, 0, 0.3), 0 0 24px rgba(0, 0, 0, 0.45);
     border-color: #334155 !important;
   }
+
   100% {
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
     border-color: #000000 !important;
@@ -5973,10 +5979,12 @@ select {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.18);
     border-color: #000000 !important;
   }
+
   50% {
     box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28), 0 0 22px rgba(0, 0, 0, 0.4);
     border-color: #334155 !important;
   }
+
   100% {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.18);
     border-color: #000000 !important;
@@ -6026,10 +6034,12 @@ select {
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
     border-color: #000000 !important;
   }
+
   50% {
     box-shadow: 0 22px 48px rgba(0, 0, 0, 0.3), 0 0 24px rgba(0, 0, 0, 0.45);
     border-color: #334155 !important;
   }
+
   100% {
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
     border-color: #000000 !important;
