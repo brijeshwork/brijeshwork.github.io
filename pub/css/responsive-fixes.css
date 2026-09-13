@@ -771,6 +771,17 @@ button,
     text-align: center;
   }
 
+  /* Keep hero action buttons (Hire Me, X, LinkedIn) on one line on mobile */
+  .hero-actions-wrapper .hireme-btn {
+    width: auto;
+    flex: 0 0 auto;
+  }
+
+  .hero-actions-wrapper {
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
   .social-icons-container {
     width: 100%;
     justify-content: center;
