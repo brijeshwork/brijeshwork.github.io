@@ -148,7 +148,7 @@ section {
 .hero-subtitle {
   font-size: clamp(1.5rem, 3.5vw, 2.25rem);
   font-weight: 700;
-  color: var(--bs-primary, #0d6efd);
+  color: #0f172a;
   line-height: 1.2;
 }
 
@@ -1599,7 +1599,7 @@ nav ul li a {
 .verified-stat-card .stat-number {
   font-size: 22px;
   font-weight: 700;
-  color: #0d6efd;
+  color: #0f172a;
   margin: 0;
   line-height: 1;
   white-space: nowrap;
@@ -1915,10 +1915,9 @@ nav ul li a {
 .hero-content .hero-subtitle {
   font-size: clamp(1.5rem, 3.5vw, 2.25rem);
   font-weight: 700;
-  color: #0d6efd;
+  color: #0f172a;
   line-height: 1.2;
   margin-bottom: 1rem;
-  color: #666666;
   max-width: 100%;
   margin: 0;
 }
@@ -5840,7 +5839,7 @@ select {
   }
 }
 
-/* Dynamic Interactive Cards - Hover Blink & Glow Animation */
+/* Dynamic Interactive Cards - Hover Blink & Glow Animation (Black & White Theme) */
 .interactive-card {
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
   border: 1px solid #e2e8f0 !important;
@@ -5852,23 +5851,23 @@ select {
 
 .interactive-card:hover {
   transform: translateY(-8px) scale(1.015);
-  border-color: #0d6efd !important;
+  border-color: #000000 !important;
   animation: cardBlinkGlow 1.4s infinite alternate ease-in-out;
   z-index: 2;
 }
 
 @keyframes cardBlinkGlow {
   0% {
-    box-shadow: 0 12px 28px rgba(13, 110, 253, 0.18), 0 0 10px rgba(13, 110, 253, 0.25);
-    border-color: #0d6efd !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
+    border-color: #000000 !important;
   }
   50% {
-    box-shadow: 0 22px 48px rgba(13, 110, 253, 0.38), 0 0 24px rgba(13, 110, 253, 0.6);
-    border-color: #3b82f6 !important;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.3), 0 0 24px rgba(0, 0, 0, 0.45);
+    border-color: #334155 !important;
   }
   100% {
-    box-shadow: 0 12px 28px rgba(13, 110, 253, 0.18), 0 0 10px rgba(13, 110, 253, 0.25);
-    border-color: #0d6efd !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
+    border-color: #000000 !important;
   }
 }
 
@@ -5878,19 +5877,22 @@ select {
   padding: 1.25rem 1.5rem;
 }
 
-.interactive-card:hover .btn-primary {
-  background: #0b5ed7 !important;
-  border-color: #0a58ca !important;
-  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.45);
+.interactive-card:hover .btn-primary,
+.interactive-card:hover .btn-dark {
+  background: #000000 !important;
+  border-color: #000000 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
-.interactive-card:hover .btn-outline-primary {
-  background: #0d6efd !important;
+.interactive-card:hover .btn-outline-primary,
+.interactive-card:hover .btn-outline-dark {
+  background: #000000 !important;
   color: #ffffff !important;
-  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.35);
+  border-color: #000000 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
-/* Product Execution Process Custom Modern UI/UX */
+/* Product Execution Process Custom Modern UI/UX (Black & White) */
 .process-flow-wrapper {
   position: relative;
 }
@@ -5908,23 +5910,23 @@ select {
 
 .process-step-card:hover {
   transform: translateY(-8px) scale(1.02);
-  border-color: #0d6efd !important;
-  box-shadow: 0 20px 40px rgba(13, 110, 253, 0.2), 0 0 15px rgba(13, 110, 253, 0.3);
+  border-color: #000000 !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.25);
   animation: processBlinkGlow 1.4s infinite alternate ease-in-out;
 }
 
 @keyframes processBlinkGlow {
   0% {
-    box-shadow: 0 10px 25px rgba(13, 110, 253, 0.15), 0 0 8px rgba(13, 110, 253, 0.2);
-    border-color: #0d6efd !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.18);
+    border-color: #000000 !important;
   }
   50% {
-    box-shadow: 0 22px 45px rgba(13, 110, 253, 0.35), 0 0 22px rgba(13, 110, 253, 0.55);
-    border-color: #3b82f6 !important;
+    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28), 0 0 22px rgba(0, 0, 0, 0.4);
+    border-color: #334155 !important;
   }
   100% {
-    box-shadow: 0 10px 25px rgba(13, 110, 253, 0.15), 0 0 8px rgba(13, 110, 253, 0.2);
-    border-color: #0d6efd !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.18);
+    border-color: #000000 !important;
   }
 }
 
@@ -5934,23 +5936,23 @@ select {
   justify-content: center;
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #0d6efd 0%, #0056b3 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #ffffff;
   font-weight: 800;
   font-size: 1.15rem;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   margin-bottom: 1.25rem;
   transition: all 0.3s ease;
 }
 
 .process-step-card:hover .process-number-badge {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-  box-shadow: 0 6px 18px rgba(13, 110, 253, 0.5);
+  background: linear-gradient(135deg, #000000 0%, #334155 100%);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
   transform: scale(1.1);
 }
 
-/* Flagship Case Studies Premium UI/UX */
+/* Flagship Case Studies Premium UI/UX (Black & White) */
 .case-study-card {
   background: #ffffff;
   border: 1px solid #e2e8f0 !important;
@@ -5962,22 +5964,22 @@ select {
 
 .case-study-card:hover {
   transform: translateY(-8px) scale(1.015);
-  border-color: #0d6efd !important;
+  border-color: #000000 !important;
   animation: caseStudyBlinkGlow 1.4s infinite alternate ease-in-out;
 }
 
 @keyframes caseStudyBlinkGlow {
   0% {
-    box-shadow: 0 12px 28px rgba(13, 110, 253, 0.18), 0 0 10px rgba(13, 110, 253, 0.25);
-    border-color: #0d6efd !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
+    border-color: #000000 !important;
   }
   50% {
-    box-shadow: 0 22px 48px rgba(13, 110, 253, 0.38), 0 0 24px rgba(13, 110, 253, 0.6);
-    border-color: #3b82f6 !important;
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.3), 0 0 24px rgba(0, 0, 0, 0.45);
+    border-color: #334155 !important;
   }
   100% {
-    box-shadow: 0 12px 28px rgba(13, 110, 253, 0.18), 0 0 10px rgba(13, 110, 253, 0.25);
-    border-color: #0d6efd !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
+    border-color: #000000 !important;
   }
 }
 
@@ -6001,7 +6003,7 @@ select {
 }
 
 .case-study-card .btn-case-study {
-  background: #0d6efd;
+  background: #0f172a;
   color: #ffffff;
   border: none;
   border-radius: 50rem;
@@ -6011,8 +6013,8 @@ select {
 }
 
 .case-study-card:hover .btn-case-study {
-  background: #0b5ed7;
-  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.45);
+  background: #000000;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
   transform: translateY(-2px);
 }
 
@@ -6031,10 +6033,10 @@ select {
   width: 500px;
   max-width: 90vw;
   background: #ffffff;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #000000;
   border-radius: 14px;
   padding: 10px;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25), 0 0 24px rgba(13, 110, 253, 0.3);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -6051,7 +6053,7 @@ select {
   transform: translateX(-50%);
   border-width: 8px;
   border-style: solid;
-  border-color: transparent transparent #ffffff transparent;
+  border-color: transparent transparent #000000 transparent;
 }
 
 .hover-preview-wrapper:hover .hover-preview-card {
@@ -6072,8 +6074,8 @@ select {
 .hover-preview-card .preview-caption {
   display: block;
   font-size: 12px;
-  font-weight: 700;
-  color: #0d6efd;
+  font-weight: 800;
+  color: #000000;
   text-align: center;
   margin-top: 8px;
   text-transform: uppercase;
