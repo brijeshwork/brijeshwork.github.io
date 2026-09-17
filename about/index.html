@@ -73,6 +73,175 @@
 
   <link rel="stylesheet" href="https://brijesh.work/pub/css/bootstrap.css">
   <link rel="stylesheet" href="https://brijesh.work/pub/css/style-main.css?v=3.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* Certifications UI/UX Styles */
+    .cert-search-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .cert-search-wrapper .search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .cert-search-input {
+      padding-left: 2.4rem;
+      border-radius: 50rem;
+      font-size: 0.875rem;
+      border: 1px solid #cbd5e1;
+      background-color: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .cert-search-input:focus {
+      background-color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    .cert-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .cert-filter-btn {
+      background-color: #ffffff;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+      border-radius: 50rem;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.825rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .cert-filter-btn:hover {
+      background-color: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .cert-filter-btn.active {
+      background-color: #0d6efd;
+      color: #ffffff;
+      border-color: #0d6efd;
+    }
+
+    .cert-filter-btn.active .badge {
+      background-color: rgba(255, 255, 255, 0.25) !important;
+      color: #ffffff !important;
+    }
+
+    .cert-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.85rem;
+      padding: 1.15rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .cert-card:hover {
+      border-color: #0d6efd;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -6px rgba(13, 110, 253, 0.14);
+    }
+
+    .cert-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .provider-tag {
+      font-size: 0.725rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 0.375rem;
+      letter-spacing: 0.02em;
+    }
+
+    .tag-google { background-color: #e8f0fe; color: #1a73e8; }
+    .tag-ibm { background-color: #edf5ff; color: #0062ff; }
+    .tag-aws { background-color: #fff4e5; color: #d97706; }
+    .tag-meta { background-color: #e7f5ff; color: #0084ff; }
+    .tag-microsoft { background-color: #e6f7ff; color: #00a4ef; }
+
+    .cert-type {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .cert-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.45;
+      margin-bottom: 0.85rem;
+      color: #1e293b;
+    }
+
+    .cert-title a {
+      color: #1e293b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .cert-title a:hover {
+      color: #0d6efd;
+    }
+
+    .cert-link-icon {
+      font-size: 0.75rem;
+      opacity: 0.5;
+      margin-left: 0.25rem;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      display: inline-block;
+    }
+
+    .cert-title a:hover .cert-link-icon {
+      opacity: 1;
+      transform: translate(2px, -2px);
+      color: #0d6efd;
+    }
+
+    .cert-footer {
+      border-top: 1px solid #f1f5f9;
+      padding-top: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .verify-badge {
+      font-size: 0.725rem;
+      font-weight: 500;
+      color: #10b981;
+      display: inline-flex;
+      align-items: center;
+    }
+  </style>
 </head>
 
 <body>
@@ -144,7 +313,7 @@
             <div class="d-flex gap-2">
               <a href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91" target="_blank" rel="noopener nofollow"
                 class="btn btn-primary fw-bold">Book a Project Call</a>
-              <a href="mailto:brijesh@brijesh.work" class="btn btn-outline-dark fw-bold">Email Brijesh</a>
+              <a href="&#109;&#97;&#105;&#108;&#116;&#108;&#58;&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;" onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';" class="btn btn-outline-dark fw-bold">Email Brijesh</a>
             </div>
           </div>
         </div>
@@ -292,9 +461,745 @@
               <p class="small mb-3">Looking for a senior full-stack engineer to build or scale your web product?</p>
               <a href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91" target="_blank" rel="noopener nofollow"
                 class="btn btn-light fw-bold me-2 mb-2">Book a Project Call</a>
-              <a href="mailto:brijesh@brijesh.work" class="btn btn-outline-light fw-bold mb-2">Email Brijesh</a>
+              <a href="&#109;&#97;&#105;&#108;&#116;&#108;&#58;&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;" onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';" class="btn btn-outline-light fw-bold mb-2">Email Brijesh</a>
             </div>
           </div>
+        </div>
+      </div>
+    <!-- Licenses & Certifications Section -->
+    <section class="py-5 bg-light border-top">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+          <div>
+            <h2 class="h3 fw-bold text-primary mb-1"><i class="bi bi-patch-check-fill text-primary me-2"></i>Licenses &amp; Certifications</h2>
+            <p class="text-secondary small mb-0">Verified professional credentials &amp; specializations (<span id="cert-count">32</span>)</p>
+          </div>
+        </div>
+
+        <!-- Provider Filters -->
+        <div class="cert-filter-bar mb-4">
+          <button type="button" class="cert-filter-btn active" data-filter="all">All <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">32</span></button>
+          <button type="button" class="cert-filter-btn" data-filter="google">Google <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">13</span></button>
+          <button type="button" class="cert-filter-btn" data-filter="ibm">IBM <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">7</span></button>
+          <button type="button" class="cert-filter-btn" data-filter="meta">Meta <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">6</span></button>
+          <button type="button" class="cert-filter-btn" data-filter="aws">AWS <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">5</span></button>
+          <button type="button" class="cert-filter-btn" data-filter="microsoft">Microsoft <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">1</span></button>
+        </div>
+
+        <!-- Certifications Grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3" id="certGrid">
+
+          <!-- Google IT Support -->
+          <div class="col cert-item" data-provider="google" data-title="google it support professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/EOF8YW1HWCHC" target="_blank" rel="noopener noreferrer">
+                    Google IT Support Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IBM Product Owner -->
+          <div class="col cert-item" data-provider="ibm" data-title="ibm product owner professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/CA6JCEXMW26U" target="_blank" rel="noopener noreferrer">
+                    IBM Product Owner Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google AI -->
+          <div class="col cert-item" data-provider="google" data-title="google ai professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/949GYC29Y4DB" target="_blank" rel="noopener noreferrer">
+                    Google AI Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google AI Essentials -->
+          <div class="col cert-item" data-provider="google" data-title="google ai essentials specialization">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/IFV2XS5PUKQY" target="_blank" rel="noopener noreferrer">
+                    Google AI Essentials Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Prompting Essentials -->
+          <div class="col cert-item" data-provider="google" data-title="google prompting essentials specialization">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/DPMJKGH0IM7Q" target="_blank" rel="noopener noreferrer">
+                    Google Prompting Essentials Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google UX Design -->
+          <div class="col cert-item" data-provider="google" data-title="google ux design professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/7GHVSUDRZ2DY" target="_blank" rel="noopener noreferrer">
+                    Google UX Design Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IBM Product Manager -->
+          <div class="col cert-item" data-provider="ibm" data-title="ibm product manager professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/XJYJ6REJUU6A" target="_blank" rel="noopener noreferrer">
+                    IBM Product Manager Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Microsoft AI Product Manager -->
+          <div class="col cert-item" data-provider="microsoft" data-title="microsoft ai product manager professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-microsoft"><i class="bi bi-microsoft me-1"></i> Microsoft</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/7IVTCEEAO7WR" target="_blank" rel="noopener noreferrer">
+                    Microsoft AI Product Manager Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IBM AI Product Manager -->
+          <div class="col cert-item" data-provider="ibm" data-title="ibm ai product manager professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/BWJTZSSNFV7X" target="_blank" rel="noopener noreferrer">
+                    IBM AI Product Manager Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IBM IT Project Manager -->
+          <div class="col cert-item" data-provider="ibm" data-title="ibm it project manager professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/SOPS5KACM24Q" target="_blank" rel="noopener noreferrer">
+                    IBM IT Project Manager Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IBM DevOps Foundations -->
+          <div class="col cert-item" data-provider="ibm" data-title="ibm devops, cloud, and agile foundations specialization">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/8ZV6DY7Z3QJF" target="_blank" rel="noopener noreferrer">
+                    IBM DevOps, Cloud, and Agile Foundations Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AWS Cloud Solutions Architect -->
+          <div class="col cert-item" data-provider="aws" data-title="aws cloud solutions architect professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G9FXY6HSHRNH" target="_blank" rel="noopener noreferrer">
+                    AWS Cloud Solutions Architect Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AWS Fundamentals -->
+          <div class="col cert-item" data-provider="aws" data-title="aws fundamentals specialization">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/BWF84XTVN49F" target="_blank" rel="noopener noreferrer">
+                    AWS Fundamentals Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Starting Your Career with AWS Cloud -->
+          <div class="col cert-item" data-provider="aws" data-title="starting your career with aws cloud specialization">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3LRNNC8Y4GS4" target="_blank" rel="noopener noreferrer">
+                    Starting Your Career with AWS Cloud Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DevOps on AWS -->
+          <div class="col cert-item" data-provider="aws" data-title="devops on aws specialization">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G3XKLMFNNG84" target="_blank" rel="noopener noreferrer">
+                    DevOps on AWS Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Developing Applications on AWS -->
+          <div class="col cert-item" data-provider="aws" data-title="developing applications on aws specialization">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/EZNQ4XRB2PMR" target="_blank" rel="noopener noreferrer">
+                    Developing Applications on AWS Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google IT Automation -->
+          <div class="col cert-item" data-provider="google" data-title="google it automation with python professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/M357632H69FM" target="_blank" rel="noopener noreferrer">
+                    Google IT Automation with Python Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Workspace -->
+          <div class="col cert-item" data-provider="google" data-title="getting started with google workspace specialization">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/LAXMUF6PJLMC" target="_blank" rel="noopener noreferrer">
+                    Getting started with Google Workspace Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Meta Social Media Marketing -->
+          <div class="col cert-item" data-provider="meta" data-title="meta social media marketing professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/66HR5TP3J92E" target="_blank" rel="noopener noreferrer">
+                    Meta Social Media Marketing Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Meta Marketing Analytics -->
+          <div class="col cert-item" data-provider="meta" data-title="meta marketing analytics professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/5YU2LBVDQCCM" target="_blank" rel="noopener noreferrer">
+                    Meta Marketing Analytics Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Business Intelligence -->
+          <div class="col cert-item" data-provider="google" data-title="google business intelligence professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/69WE3K7AE35L" target="_blank" rel="noopener noreferrer">
+                    Google Business Intelligence Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IBM DevOps and Software Engineering -->
+          <div class="col cert-item" data-provider="ibm" data-title="ibm devops and software engineering professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/AJ3UP1Y1456Q" target="_blank" rel="noopener noreferrer">
+                    IBM DevOps and Software Engineering Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- IBM Back-End Development -->
+          <div class="col cert-item" data-provider="ibm" data-title="ibm back-end development professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/SELHGPSC5GWX" target="_blank" rel="noopener noreferrer">
+                    IBM Back-End Development Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Cybersecurity -->
+          <div class="col cert-item" data-provider="google" data-title="google cybersecurity professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G3KXTKYBLMZL" target="_blank" rel="noopener noreferrer">
+                    Google Cybersecurity Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Meta Database Engineer -->
+          <div class="col cert-item" data-provider="meta" data-title="meta database engineer professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3JZVDVLU485X" target="_blank" rel="noopener noreferrer">
+                    Meta Database Engineer Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Meta Android Developer -->
+          <div class="col cert-item" data-provider="meta" data-title="meta android developer professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/GZMV72VPLPPG" target="_blank" rel="noopener noreferrer">
+                    Meta Android Developer Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Advanced Data Analytics -->
+          <div class="col cert-item" data-provider="google" data-title="google advanced data analytics professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/PCV7KDHMX5PW" target="_blank" rel="noopener noreferrer">
+                    Google Advanced Data Analytics Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Meta Back-End Developer -->
+          <div class="col cert-item" data-provider="meta" data-title="meta back-end developer professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3VZRUNZA9VPQ" target="_blank" rel="noopener noreferrer">
+                    Meta Back-End Developer Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Data Analytics -->
+          <div class="col cert-item" data-provider="google" data-title="google data analytics professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/LAY6DX7MYUB8" target="_blank" rel="noopener noreferrer">
+                    Google Data Analytics Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Meta Front-End Developer -->
+          <div class="col cert-item" data-provider="meta" data-title="meta front-end developer professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/YUVD3SZ6AM7G" target="_blank" rel="noopener noreferrer">
+                    Meta Front-End Developer Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Digital Marketing -->
+          <div class="col cert-item" data-provider="google" data-title="google digital marketing & e-commerce professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/QP2YLK5M8E7Y" target="_blank" rel="noopener noreferrer">
+                    Google Digital Marketing &amp; E-commerce Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Project Management -->
+          <div class="col cert-item" data-provider="google" data-title="google project management professional certificate">
+            <div class="cert-card">
+              <div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/B667U2R7NJS8" target="_blank" rel="noopener noreferrer">
+                    Google Project Management Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+              <div class="cert-footer">
+                <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
+                <span>Coursera</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- No Results Found Fallback -->
+        <div id="noCertsFound" class="text-center py-5 d-none">
+          <i class="bi bi-search display-5 text-muted mb-3 d-block"></i>
+          <p class="text-secondary fw-medium">No certificates found matching your query.</p>
+          <button class="btn btn-sm btn-outline-primary rounded-pill px-3" id="resetCertFilter">Reset Search &amp; Filters</button>
         </div>
       </div>
     </section>
@@ -324,7 +1229,7 @@
           </svg>
         </a>
         <a class="button hireme-btn me-2" href="https://brijesh.work/portfolio/">My Work </a>
-        <a class="button hireme-btn" href="mailto:brijesh@brijesh.work">Email Brijesh</a>
+        <a class="button hireme-btn" href="&#109;&#97;&#105;&#108;&#116;&#108;&#58;&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;" onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';">Email Brijesh</a>
       </div>
 
       <div class="cta-stats" role="list" aria-label="platform stats">
@@ -446,6 +1351,74 @@
   </div>
 </div>
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var searchInput = document.getElementById('certSearchInput');
+      var filterBtns = document.querySelectorAll('.cert-filter-btn');
+      var certItems = document.querySelectorAll('.cert-item');
+      var certCountDisplay = document.getElementById('cert-count');
+      var noCertsMsg = document.getElementById('noCertsFound');
+      var resetBtn = document.getElementById('resetCertFilter');
+
+      var currentFilter = 'all';
+
+      function filterCertificates() {
+        var query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        var visibleCount = 0;
+
+        certItems.forEach(function (item) {
+          var provider = item.getAttribute('data-provider') || '';
+          var title = item.getAttribute('data-title') || '';
+
+          var matchesFilter = (currentFilter === 'all' || provider === currentFilter);
+          var matchesSearch = !query || title.indexOf(query) !== -1 || provider.indexOf(query) !== -1;
+
+          if (matchesFilter && matchesSearch) {
+            item.classList.remove('d-none');
+            visibleCount++;
+          } else {
+            item.classList.add('d-none');
+          }
+        });
+
+        if (certCountDisplay) {
+          certCountDisplay.textContent = visibleCount;
+        }
+
+        if (noCertsMsg) {
+          if (visibleCount === 0) {
+            noCertsMsg.classList.remove('d-none');
+          } else {
+            noCertsMsg.classList.add('d-none');
+          }
+        }
+      }
+
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filterBtns.forEach(function (b) { b.classList.remove('active'); });
+          this.classList.add('active');
+          currentFilter = this.getAttribute('data-filter');
+          filterCertificates();
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', filterCertificates);
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+          if (searchInput) searchInput.value = '';
+          currentFilter = 'all';
+          filterBtns.forEach(function (b) { b.classList.remove('active'); });
+          var allBtn = document.querySelector('.cert-filter-btn[data-filter="all"]');
+          if (allBtn) allBtn.classList.add('active');
+          filterCertificates();
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>
