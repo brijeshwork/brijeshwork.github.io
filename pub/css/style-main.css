@@ -2385,6 +2385,8 @@ nav ul li a {
   color: #ffffff;
   border: none;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary::before {
@@ -2396,6 +2398,7 @@ nav ul li a {
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.6s ease;
+  pointer-events: none;
 }
 
 .btn-primary:hover {
@@ -2437,6 +2440,7 @@ nav ul li a {
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.6s ease;
+  pointer-events: none;
 }
 
 .chrome-footer-btn:hover {
@@ -5917,25 +5921,8 @@ select {
 .interactive-card:hover {
   transform: translateY(-8px) scale(1.015);
   border-color: #000000 !important;
-  animation: cardBlinkGlow 1.4s infinite alternate ease-in-out;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.2);
   z-index: 2;
-}
-
-@keyframes cardBlinkGlow {
-  0% {
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
-    border-color: #000000 !important;
-  }
-
-  50% {
-    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.3), 0 0 24px rgba(0, 0, 0, 0.45);
-    border-color: #334155 !important;
-  }
-
-  100% {
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
-    border-color: #000000 !important;
-  }
 }
 
 .interactive-card .card-header {
@@ -5979,24 +5966,6 @@ select {
   transform: translateY(-8px) scale(1.02);
   border-color: #000000 !important;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 0, 0, 0.25);
-  animation: processBlinkGlow 1.4s infinite alternate ease-in-out;
-}
-
-@keyframes processBlinkGlow {
-  0% {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.18);
-    border-color: #000000 !important;
-  }
-
-  50% {
-    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28), 0 0 22px rgba(0, 0, 0, 0.4);
-    border-color: #334155 !important;
-  }
-
-  100% {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 8px rgba(0, 0, 0, 0.18);
-    border-color: #000000 !important;
-  }
 }
 
 .process-number-badge {
@@ -6034,24 +6003,7 @@ select {
 .case-study-card:hover {
   transform: translateY(-8px) scale(1.015);
   border-color: #000000 !important;
-  animation: caseStudyBlinkGlow 1.4s infinite alternate ease-in-out;
-}
-
-@keyframes caseStudyBlinkGlow {
-  0% {
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
-    border-color: #000000 !important;
-  }
-
-  50% {
-    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.3), 0 0 24px rgba(0, 0, 0, 0.45);
-    border-color: #334155 !important;
-  }
-
-  100% {
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.2);
-    border-color: #000000 !important;
-  }
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
 }
 
 .case-study-card .card-header {
