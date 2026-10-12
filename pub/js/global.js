@@ -55,10 +55,55 @@ function includeHTML() {
     }
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", includeHTML);
-} else {
+function initHoverPreviews() {
+  var wrappers = document.querySelectorAll('.hover-preview-wrapper');
+  if (!wrappers.length) return;
+
+  wrappers.forEach(function (wrapper) {
+    wrapper.addEventListener('mouseenter', function () {
+      var card = wrapper.querySelector('.hover-preview-card');
+      if (!card) return;
+
+      var wrapperRect = wrapper.getBoundingClientRect();
+      var cardHeight = card.offsetHeight || 240;
+
+      // If not enough room above link in viewport, flip it below
+      if (wrapperRect.top < cardHeight + 20) {
+        card.classList.add('preview-bottom');
+      } else {
+        card.classList.remove('preview-bottom');
+      }
+
+      // Horizontal edge protection: clamp within viewport margins
+      card.style.left = '50%';
+      var cardRect = card.getBoundingClientRect();
+      if (cardRect.left < 16) {
+        var offset = 16 - cardRect.left;
+        card.style.left = 'calc(50% + ' + offset + 'px)';
+      } else if (cardRect.right > window.innerWidth - 16) {
+        var offsetRight = cardRect.right - (window.innerWidth - 16);
+        card.style.left = 'calc(50% - ' + offsetRight + 'px)';
+      }
+    });
+
+    wrapper.addEventListener('mouseleave', function () {
+      var card = wrapper.querySelector('.hover-preview-card');
+      if (card) {
+        card.style.left = '';
+      }
+    });
+  });
+}
+
+function initGlobal() {
   includeHTML();
+  initHoverPreviews();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initGlobal);
+} else {
+  initGlobal();
 }
 
 (function(c,l,a,r,i,t,y){
