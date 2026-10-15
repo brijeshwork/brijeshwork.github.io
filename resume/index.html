@@ -57,6 +57,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
     /* Resume Theme (Professional Navy/Slate) */
     :root {
@@ -70,171 +74,482 @@
       /* Slate 50 */
     }
 
+    /* Dark Editorial Hero (Reference Matching) */
     .resume-hero {
-      background: linear-gradient(135deg, var(--theme-primary) 0%, #1e293b 100%);
-      color: white;
-      padding: 5rem 0 4rem 0;
-      margin-bottom: 3rem;
-      border-bottom: 4px solid var(--theme-accent);
+      background: #18191b;
+      background: linear-gradient(180deg, #18191b 0%, #202226 100%);
+      color: #ffffff;
+      padding: 4.75rem 0 4rem 0;
+      margin-bottom: 2.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .resume-icon-list {
-      list-style: none;
-      padding: 0;
+    .available-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 50rem;
+      padding: 0.38rem 0.95rem;
+      font-size: 0.725rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #f97316;
+      box-shadow: 0 0 8px rgba(249, 115, 22, 0.85);
+      display: inline-block;
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    .resume-hero-title {
+      font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      font-size: 3.5rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-top: 1rem;
+      margin-bottom: 0.85rem;
+      line-height: 1.1;
+    }
+
+    .resume-hero-subtitle {
+      font-size: 1.15rem;
+      color: #9ca3af;
+      max-width: 820px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .btn-pdf-view {
+      background-color: #ffffff;
+      color: #111827 !important;
+      border: 1px solid #ffffff;
+      border-radius: 50rem;
+      padding: 0.65rem 1.4rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-pdf-view:hover {
+      background-color: #f3f4f6;
+      color: #000000 !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-pdf-download {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #f3f4f6 !important;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 50rem;
+      padding: 0.65rem 1.4rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-pdf-download:hover {
+      background-color: rgba(255, 255, 255, 0.18);
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .resume-hero-email {
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      font-weight: 400;
+    }
+
+    .resume-hero-email:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    /* Candidate Document Paper Card */
+    .resume-paper-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 1.25rem;
+      padding: 2.75rem 3rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s ease;
+    }
+
+    .resume-paper-card:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .resume-paper-name {
+      font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #111827;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .resume-paper-role {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.95rem;
+      color: #4b5563;
+      font-weight: 500;
+      margin-top: 0.35rem;
+    }
+
+    .resume-paper-contact {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.85rem;
+      color: #4b5563;
+      line-height: 1.7;
+    }
+
+    .resume-paper-contact a {
+      color: #111827;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    .resume-paper-contact a:hover {
+      color: #2563eb;
+    }
+
+    .resume-paper-divider {
+      border: 0;
+      border-top: 1px solid #e5e7eb;
+      margin: 1.75rem 0 1.5rem 0;
+      opacity: 1;
+    }
+
+    .resume-paper-label {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.775rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #6b7280;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+
+    .resume-paper-text {
+      color: #374151;
+      font-size: 0.985rem;
+      line-height: 1.75;
+      font-weight: 400;
+    }
+
+    /* Single Column Resume Container */
+    .resume-container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Section Headers */
+    .resume-section-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-icon-badge {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 0.75rem;
+      background: rgba(37, 99, 235, 0.08);
+      color: #2563eb;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      border: 1px solid rgba(37, 99, 235, 0.15);
+    }
+
+    .section-heading {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--theme-primary);
+      letter-spacing: -0.015em;
+    }
+
+    .section-subheading {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    /* Experience Redesign (1-Column Modern Executive Layout) */
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .experience-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 1.85rem 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .experience-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .experience-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--theme-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
+    }
+
+    .experience-company-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .company-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    .employment-badge {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.2rem 0.65rem;
+      border-radius: 50rem;
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
+
+    .location-badge {
+      font-size: 0.825rem;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .experience-date-badge {
+      font-size: 0.825rem;
+      font-weight: 500;
+      color: #475569;
+      background: #f8fafc;
+      padding: 0.4rem 0.9rem;
+      border-radius: 50rem;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .experience-desc {
+      color: #334155;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .experience-desc .lead-summary {
+      color: #1e293b;
+      font-weight: 500;
+      font-size: 0.975rem;
+    }
+
+    .experience-bullets {
+      padding-left: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    .experience-bullets li {
+      margin-bottom: 0.55rem;
+      color: #475569;
+    }
+
+    .experience-bullets li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Skills Redesign */
+    .skill-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 1.5rem 1.65rem;
+      height: 100%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s ease;
+    }
+
+    .skill-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .skill-card-header h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--theme-primary);
       margin: 0;
     }
 
-    .resume-icon-list li {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-      color: #cbd5e1;
-    }
-
-    .resume-icon-list i {
-      color: var(--theme-accent);
-    }
-
-    #main-content .section-title {
-      color: var(--theme-primary);
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    #main-content .section-title i {
-      color: var(--theme-accent);
-    }
-
-    #main-content .skill-card {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 0.5rem;
-      padding: 1.25rem;
-      height: auto;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    #main-content .skill-card h3 {
-      font-size: 1rem;
-      color: var(--theme-secondary);
-      font-weight: 600;
-      margin-bottom: 1rem;
+    .skill-card-icon {
+      font-size: 1.2rem;
+      color: #2563eb;
     }
 
     .skill-badge {
-      background: var(--theme-light);
-      color: var(--theme-secondary);
+      background: #f8fafc;
+      color: #334155;
       border: 1px solid #e2e8f0;
-      padding: 0.35rem 0.75rem;
+      padding: 0.38rem 0.8rem;
       border-radius: 2rem;
       font-size: 0.85rem;
       font-weight: 500;
       display: inline-block;
-      margin: 0 0.25rem 0.5rem 0;
+      margin: 0 0.3rem 0.5rem 0;
+      transition: all 0.2s ease;
     }
 
-    .experience-card {
-      position: relative;
-      padding-left: 2rem;
-      margin-bottom: 2.5rem;
+    .skill-badge:hover {
+      background: #ffffff;
+      border-color: #3b82f6;
+      color: #2563eb;
+      transform: translateY(-1px);
     }
 
-    .experience-card::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: -2.5rem;
-      width: 2px;
-      background: #e2e8f0;
+    /* Education Redesign */
+    .education-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 1.65rem;
+      height: 100%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      transition: all 0.25s ease;
     }
 
-    .experience-card:last-child::before {
-      bottom: 0;
+    .education-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.06);
+      transform: translateY(-2px);
     }
 
-    .experience-dot {
-      position: absolute;
-      left: -0.4rem;
-      top: 0.25rem;
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      background: var(--theme-accent);
-      border: 3px solid white;
-      box-shadow: 0 0 0 2px var(--theme-accent);
+    .education-icon-box {
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: 0.85rem;
+      background: #eff6ff;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      border: 1px solid rgba(37, 99, 235, 0.12);
     }
 
-    .experience-title {
-      font-size: 1.2rem;
+    .education-card h3 {
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--theme-primary);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.01em;
     }
 
-    .experience-meta {
-      color: #64748b;
-      font-size: 0.95rem;
+    .education-degree {
+      color: #334155;
       font-weight: 500;
-      margin-bottom: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .experience-desc {
-      color: #475569;
-    }
-
-    .experience-desc ul {
-      padding-left: 1.25rem;
-      margin-bottom: 0;
-    }
-
-    .experience-desc li {
+      font-size: 0.95rem;
       margin-bottom: 0.5rem;
     }
 
-    .credential-list {
-      columns: 2;
-      column-gap: 2.5rem;
-      padding-left: 1.25rem;
-      margin-bottom: 0;
-    }
-
-    .credential-list li {
-      break-inside: avoid;
-      color: #334155;
-      margin-bottom: 0.85rem;
-      padding-left: 0.25rem;
-    }
-
-    .credential-list small {
+    .education-years {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.825rem;
+      font-weight: 500;
       color: #64748b;
-      display: block;
-    }
-
-    .credential-list a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .credential-list a:hover {
-      color: #2563eb;
-      text-decoration: underline;
+      background: #f8fafc;
+      padding: 0.25rem 0.7rem;
+      border-radius: 50rem;
+      border: 1px solid #e2e8f0;
     }
 
     @media (max-width: 767.98px) {
-      .credential-list {
-        columns: 1;
+      .resume-hero {
+        padding: 3.5rem 0 3rem 0;
+      }
+      .resume-hero-title {
+        font-size: 2.5rem;
+      }
+      .resume-paper-card {
+        padding: 1.75rem 1.25rem;
+      }
+      .resume-paper-name {
+        font-size: 1.55rem;
+        letter-spacing: 0.02em;
+      }
+      .experience-card {
+        padding: 1.35rem 1.25rem;
+      }
+      .skill-card {
+        padding: 1.25rem;
+      }
+      .education-card {
+        padding: 1.25rem;
       }
     }
 
@@ -457,153 +772,131 @@
 
     <!-- Hero Section -->
     <section class="resume-hero">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-8">
-            <span
-              class="badge bg-primary bg-opacity-25 text-white border border-light border-opacity-25 mb-3 px-3 py-2 rounded-pill">Technical
-              Product Manager &amp; SaaS Founder</span>
-            <h1 class="display-4 fw-bold mb-2">Brijesh Patel</h1>
-            <p class="fs-4 text-white-50 mb-4">Product Strategy &middot; SaaS Architecture &middot; Technical Execution
-            </p>
-            <ul class="resume-icon-list d-flex flex-wrap gap-4">
-              <li><i class="bi bi-envelope-fill"></i> <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;" class="text-white-50" onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';">&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;</a></li>
-              <li><i class="bi bi-geo-alt-fill"></i> Remote / Product Consulting</li>
-              <li><i class="bi bi-briefcase-fill"></i> 11+ Years of Experience</li>
-              <li><i class="bi bi-linkedin"></i><a class="text-white-50" href="https://www.linkedin.com/in/brijeshwork/"
-                  target="_blank" rel="noopener noreferrer">LinkedIn Profile</a></li>
-            </ul>
-          </div>
+      <div class="container resume-container">
+        <div class="available-badge mb-3">
+          <span class="status-dot"></span> AVAILABLE FOR WORK
+        </div>
+        <h1 class="resume-hero-title">Resume</h1>
+        <p class="resume-hero-subtitle">
+          Brijesh Patel &middot; Technical Product Manager &amp; SaaS Founder with 11+ years crafting scalable SaaS products, AI workflows, and cloud architectures.
+        </p>
+        <div class="resume-hero-actions d-flex align-items-center flex-wrap gap-3">
+          <a href="brijesh-patel-resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-pdf-view">
+            Open PDF in new tab <i class="bi bi-arrow-up-right ms-1"></i>
+          </a>
+          <a href="brijesh-patel-resume.pdf" download="Brijesh-Patel-Resume.pdf" class="btn-pdf-download">
+            Download PDF <i class="bi bi-arrow-down ms-1"></i>
+          </a>
+          <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;" class="resume-hero-email ms-md-2" onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';">&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;</a>
         </div>
       </div>
     </section>
 
-    <!-- Content Sections -->
+    <!-- Main Resume Content (Single Column Layout) -->
     <section class="pb-5">
-      <div class="container">
-        <div class="row">
+      <div class="container resume-container">
 
-          <!-- Core Competencies Sidebar -->
-          <div class="col-lg-4 mb-5 mb-lg-0 pr-lg-5">
-            <h2 class="section-title"><i class="bi bi-diagram-3"></i> Skills</h2>
-            <p class="text-secondary small mb-3">Selected from 72 skills listed on LinkedIn.</p>
+        <!-- Candidate Document Header & Professional Summary -->
+        <div class="resume-paper-card mb-5">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-2">
+            <div>
+              <h2 class="resume-paper-name mb-1">BRIJESH PATEL</h2>
+              <p class="resume-paper-role mb-0">Technical Product Manager / SaaS Founder</p>
+            </div>
+            <div class="resume-paper-contact text-md-end">
+              <div>New Delhi, India</div>
+              <div><a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;" onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';">&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;</a></div>
+              <div><a href="https://www.linkedin.com/in/brijeshwork/" target="_blank" rel="noopener noreferrer">linkedin.com/in/brijeshwork</a></div>
+            </div>
+          </div>
+          <hr class="resume-paper-divider">
+          <div class="resume-paper-section">
+            <h3 class="resume-paper-label">PROFESSIONAL SUMMARY</h3>
+            <p class="resume-paper-text mb-0">
+              Technical Product Manager &amp; SaaS Founder with 11+ years of experience building, launching, and scaling digital products, SEO automation platforms, and growth systems across 65+ projects. Skilled in translating business goals into production-ready SaaS MVPs, PRDs, and scalable architectures spanning Laravel, Python REST APIs, and AWS cloud infrastructure. Founder of Backlinks.Tools and proven leader collaborating closely with cross-functional engineering, design, and growth teams to deliver high-impact software from 0 to 1.
+            </p>
+          </div>
+        </div>
 
-            <div class="row g-3">
-              <div class="col-12">
-                <div class="skill-card">
-                  <h3>Product Management</h3>
-                  <div>
-                    <span class="skill-badge">Product Management</span>
-                    <span class="skill-badge">Product Strategy</span>
-                    <span class="skill-badge">Product Discovery</span>
-                    <span class="skill-badge">AI Product Strategy</span>
-                    <span class="skill-badge">User Research</span>
-                    <span class="skill-badge">Project Management</span>
-                    <span class="skill-badge">Project Planning</span>
-                    <span class="skill-badge">Product Marketing</span>
-                    <span class="skill-badge">Data Analytics</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="skill-card">
-                  <h3>SaaS &amp; Growth</h3>
-                  <div>
-                    <span class="skill-badge">Software as a Service (SaaS)</span>
-                    <span class="skill-badge">Roadmaps</span>
-                    <span class="skill-badge">SEO Automation</span>
-                    <span class="skill-badge">Growth Workflows</span>
-                    <span class="skill-badge">Marketing</span>
-                    <span class="skill-badge">E-Commerce</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="skill-card">
-                  <h3>Engineering</h3>
-                  <div>
-                    <span class="skill-badge">Software Development</span>
-                    <span class="skill-badge">PHP / Laravel</span>
-                    <span class="skill-badge">Python</span>
-                    <span class="skill-badge">API Development</span>
-                    <span class="skill-badge">Magento 2</span>
-                    <span class="skill-badge">WordPress</span>
-                    <span class="skill-badge">Shopify</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="skill-card">
-                  <h3>Data &amp; Cloud</h3>
-                  <div>
-                    <span class="skill-badge">AWS Cloud</span>
-                    <span class="skill-badge">MySQL</span>
-                    <span class="skill-badge">DevOps</span>
-                    <span class="skill-badge">Business Intelligence</span>
-                    <span class="skill-badge">Cybersecurity</span>
-                  </div>
-                </div>
+        <!-- 1st: Experience -->
+        <div class="resume-section-wrap mb-5">
+          <div class="resume-section-header">
+            <div class="d-flex align-items-center gap-3">
+              <span class="section-icon-badge"><i class="bi bi-briefcase-fill"></i></span>
+              <div>
+                <h2 class="section-heading mb-0">Experience</h2>
+                <p class="section-subheading mb-0">11+ years leading product development, SaaS roadmaps &amp; technical execution</p>
               </div>
             </div>
           </div>
 
-          <!-- Experience Main Column -->
-          <div class="col-lg-8">
-            <h2 class="section-title"><i class="bi bi-briefcase"></i> Experience</h2>
-
+          <div class="experience-list">
+            <!-- Backlinks Tools -->
             <div class="experience-card">
-              <div class="experience-dot"></div>
-              <h3 class="experience-title">Product Builder</h3>
-              <div class="experience-meta">
-                <span><i class="bi bi-building me-1"></i> Backlinks Tools &middot; Full-time</span>
-                <span><i class="bi bi-calendar-event me-1"></i> Jun 2026 - Sep 2026</span>
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-2">
+                <div>
+                  <h3 class="experience-title mb-1">Product Builder</h3>
+                  <div class="experience-company-wrap">
+                    <span class="company-name"><i class="bi bi-building me-1"></i>Backlinks Tools</span>
+                    <span class="employment-badge">Full-time</span>
+                  </div>
+                </div>
+                <div class="experience-date-badge">
+                  <i class="bi bi-calendar3"></i> Jun 2026 - Sep 2026
+                </div>
               </div>
-              <div class="experience-desc">
-                <p class="mb-3">Building an SEO automation SaaS platform for founders, marketers, agencies, and SEO
-                  teams.</p>
-                <ul>
-                  <li>Own the product end to end, from user problems and product scope to roadmaps, requirements,
-                    development coordination, testing, feedback, and iteration.</li>
-                  <li>Designed workflows for backlink monitoring, rank tracking, website audits, keyword insights, and
-                    SEO utilities.</li>
+              <div class="experience-desc mt-3">
+                <p class="lead-summary mb-3">Building an SEO automation SaaS platform for founders, marketers, agencies, and SEO teams.</p>
+                <ul class="experience-bullets">
+                  <li>Own the product end to end, from user problems and product scope to roadmaps, requirements, development coordination, testing, feedback, and iteration.</li>
+                  <li>Designed workflows for backlink monitoring, rank tracking, website audits, keyword insights, and SEO utilities.</li>
                   <li>Manage product strategy, UX flows, technical planning, analytics, and go-to-market execution.</li>
                 </ul>
               </div>
             </div>
 
+            <!-- Upwork -->
             <div class="experience-card">
-              <div class="experience-dot"></div>
-              <h3 class="experience-title">Technical Product Builder / Full-Stack Consultant</h3>
-              <div class="experience-meta">
-                <span><i class="bi bi-building me-1"></i> Upwork &middot; Freelance</span>
-                <span><i class="bi bi-calendar-event me-1"></i> Sep 2017 - Jun 2026</span>
-                <span><i class="bi bi-geo-alt me-1"></i> Remote</span>
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-2">
+                <div>
+                  <h3 class="experience-title mb-1">Technical Product Builder / Full-Stack Consultant</h3>
+                  <div class="experience-company-wrap">
+                    <span class="company-name"><i class="bi bi-building me-1"></i>Upwork</span>
+                    <span class="employment-badge">Freelance</span>
+                    <span class="location-badge"><i class="bi bi-geo-alt"></i> Remote</span>
+                  </div>
+                </div>
+                <div class="experience-date-badge">
+                  <i class="bi bi-calendar3"></i> Sep 2017 - Jun 2026
+                </div>
               </div>
-              <div class="experience-desc">
-                <ul>
+              <div class="experience-desc mt-3">
+                <ul class="experience-bullets">
                   <li>Built and delivered 65+ web, e-commerce, SaaS, and automation projects for 45+ clients.</li>
-                  <li>Owned requirements discovery, product scoping, technical planning, development, launch, and
-                    iteration.</li>
+                  <li>Owned requirements discovery, product scoping, technical planning, development, launch, and iteration.</li>
                   <li>Led a team of 12+ across development, cloud infrastructure, and marketing.</li>
-                  <li>Delivered solutions using Magento, WordPress, Shopify, Laravel, PHP, AWS, APIs, analytics, and SEO
-                    automation.</li>
+                  <li>Delivered solutions using Magento, WordPress, Shopify, Laravel, PHP, AWS, APIs, analytics, and SEO automation.</li>
                 </ul>
               </div>
             </div>
 
+            <!-- V Technologies & Education -->
             <div class="experience-card">
-              <div class="experience-dot"></div>
-              <h3 class="experience-title">Web Designer</h3>
-              <div class="experience-meta">
-                <span><i class="bi bi-building me-1"></i> V Technologies &amp; Education &middot; Full-time</span>
-                <span><i class="bi bi-calendar-event me-1"></i> Apr 2015 - Aug 2017</span>
-                <span><i class="bi bi-geo-alt me-1"></i> Varanasi, Uttar Pradesh, India &middot; On-site</span>
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-2">
+                <div>
+                  <h3 class="experience-title mb-1">Web Designer</h3>
+                  <div class="experience-company-wrap">
+                    <span class="company-name"><i class="bi bi-building me-1"></i>V Technologies &amp; Education</span>
+                    <span class="employment-badge">Full-time</span>
+                    <span class="location-badge"><i class="bi bi-geo-alt"></i> Varanasi, Uttar Pradesh, India &middot; On-site</span>
+                  </div>
+                </div>
+                <div class="experience-date-badge">
+                  <i class="bi bi-calendar3"></i> Apr 2015 - Aug 2017
+                </div>
               </div>
-              <div class="experience-desc">
-                <ul>
+              <div class="experience-desc mt-3">
+                <ul class="experience-bullets">
                   <li>Worked on graphic design and web development projects.</li>
                   <li>Designed and developed websites using Photoshop, HTML, CSS, JavaScript, and WordPress.</li>
                   <li>Created custom landing pages, microsites, and WordPress themes.</li>
@@ -612,65 +905,191 @@
               </div>
             </div>
 
+            <!-- Shreeji Softs -->
             <div class="experience-card">
-              <div class="experience-dot"></div>
-              <h3 class="experience-title">Web Designer</h3>
-              <div class="experience-meta">
-                <span><i class="bi bi-building me-1"></i> Shreeji Softs &middot; Full-time</span>
-                <span><i class="bi bi-calendar-event me-1"></i> Nov 2014 - Mar 2015</span>
-                <span><i class="bi bi-geo-alt me-1"></i> Varanasi, Uttar Pradesh, India</span>
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-2">
+                <div>
+                  <h3 class="experience-title mb-1">Web Designer</h3>
+                  <div class="experience-company-wrap">
+                    <span class="company-name"><i class="bi bi-building me-1"></i>Shreeji Softs</span>
+                    <span class="employment-badge">Full-time</span>
+                    <span class="location-badge"><i class="bi bi-geo-alt"></i> Varanasi, Uttar Pradesh, India</span>
+                  </div>
+                </div>
+                <div class="experience-date-badge">
+                  <i class="bi bi-calendar3"></i> Nov 2014 - Mar 2015
+                </div>
               </div>
-              <div class="experience-desc">
-                <ul>
+              <div class="experience-desc mt-3">
+                <ul class="experience-bullets">
                   <li>Created graphic and web designs for client projects.</li>
                   <li>Used Photoshop and Dreamweaver to create concepts and prepare digital assets.</li>
                   <li>Converted visual designs into functional HTML and CSS prototypes.</li>
                 </ul>
               </div>
             </div>
-
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Education and Certifications -->
-    <section class="pb-5">
-      <div class="container">
-        <div class="row g-4">
-          <div class="col-lg-4">
-            <h2 class="section-title"><i class="bi bi-mortarboard"></i> Education</h2>
-            <div class="skill-card mb-3">
-              <h3>Mahatma Gandhi Kashi Vidyapeeth</h3>
-              <p class="mb-1">Bachelor of Arts (B.A.), Economics</p>
-              <small class="text-secondary">2012 - 2015</small>
-            </div>
-            <div class="skill-card">
-              <h3>A N G Inter College</h3>
-              <small class="text-secondary">2010 - 2011</small>
+        <!-- 2nd: Skills -->
+        <div class="resume-section-wrap mb-5">
+          <div class="resume-section-header">
+            <div class="d-flex align-items-center gap-3">
+              <span class="section-icon-badge"><i class="bi bi-diagram-3-fill"></i></span>
+              <div>
+                <h2 class="section-heading mb-0">Skills &amp; Competencies</h2>
+                <p class="section-subheading mb-0">Selected from 72 skills listed on LinkedIn across product, growth, engineering &amp; cloud</p>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-8">
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
-              <div>
-                <h2 class="section-title mb-1"><i class="bi bi-patch-check-fill text-primary me-2"></i>Licenses &amp; Certifications</h2>
-                <p class="text-secondary small mb-0">Verified professional credentials &amp; specializations (<span id="cert-count">32</span>)</p>
+          <div class="row g-4">
+            <div class="col-12 col-md-6">
+              <div class="skill-card">
+                <div class="skill-card-header">
+                  <i class="bi bi-kanban skill-card-icon"></i>
+                  <h3>Product Management</h3>
+                </div>
+                <div>
+                  <span class="skill-badge">Product Management</span>
+                  <span class="skill-badge">Product Strategy</span>
+                  <span class="skill-badge">Product Discovery</span>
+                  <span class="skill-badge">AI Product Strategy</span>
+                  <span class="skill-badge">User Research</span>
+                  <span class="skill-badge">Project Management</span>
+                  <span class="skill-badge">Project Planning</span>
+                  <span class="skill-badge">Product Marketing</span>
+                  <span class="skill-badge">Data Analytics</span>
+                </div>
               </div>
             </div>
 
-            <!-- Provider Filters -->
-            <div class="cert-filter-bar mb-4">
-              <button type="button" class="cert-filter-btn active" data-filter="all">All <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">32</span></button>
-              <button type="button" class="cert-filter-btn" data-filter="google">Google <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">13</span></button>
-              <button type="button" class="cert-filter-btn" data-filter="ibm">IBM <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">7</span></button>
-              <button type="button" class="cert-filter-btn" data-filter="meta">Meta <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">6</span></button>
-              <button type="button" class="cert-filter-btn" data-filter="aws">AWS <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">5</span></button>
-              <button type="button" class="cert-filter-btn" data-filter="microsoft">Microsoft <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">1</span></button>
+            <div class="col-12 col-md-6">
+              <div class="skill-card">
+                <div class="skill-card-header">
+                  <i class="bi bi-graph-up-arrow skill-card-icon"></i>
+                  <h3>SaaS &amp; Growth</h3>
+                </div>
+                <div>
+                  <span class="skill-badge">Software as a Service (SaaS)</span>
+                  <span class="skill-badge">Roadmaps</span>
+                  <span class="skill-badge">SEO Automation</span>
+                  <span class="skill-badge">Growth Workflows</span>
+                  <span class="skill-badge">Marketing</span>
+                  <span class="skill-badge">E-Commerce</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Certifications Grid -->
-            <div class="row row-cols-1 row-cols-md-2 g-3" id="certGrid">
+            <div class="col-12 col-md-6">
+              <div class="skill-card">
+                <div class="skill-card-header">
+                  <i class="bi bi-code-slash skill-card-icon"></i>
+                  <h3>Engineering</h3>
+                </div>
+                <div>
+                  <span class="skill-badge">Software Development</span>
+                  <span class="skill-badge">PHP / Laravel</span>
+                  <span class="skill-badge">Python</span>
+                  <span class="skill-badge">API Development</span>
+                  <span class="skill-badge">Magento 2</span>
+                  <span class="skill-badge">WordPress</span>
+                  <span class="skill-badge">Shopify</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="skill-card">
+                <div class="skill-card-header">
+                  <i class="bi bi-cloud-check skill-card-icon"></i>
+                  <h3>Data &amp; Cloud</h3>
+                </div>
+                <div>
+                  <span class="skill-badge">AWS Cloud</span>
+                  <span class="skill-badge">MySQL</span>
+                  <span class="skill-badge">DevOps</span>
+                  <span class="skill-badge">Business Intelligence</span>
+                  <span class="skill-badge">Cybersecurity</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3rd: Education -->
+        <div class="resume-section-wrap mb-5">
+          <div class="resume-section-header">
+            <div class="d-flex align-items-center gap-3">
+              <span class="section-icon-badge"><i class="bi bi-mortarboard-fill"></i></span>
+              <div>
+                <h2 class="section-heading mb-0">Education</h2>
+                <p class="section-subheading mb-0">Academic background and formal studies</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-12 col-md-6">
+              <div class="education-card">
+                <div class="education-icon-box">
+                  <i class="bi bi-mortarboard"></i>
+                </div>
+                <div>
+                  <h3>Mahatma Gandhi Kashi Vidyapeeth</h3>
+                  <p class="education-degree">Bachelor of Arts (B.A.), Economics</p>
+                  <span class="education-years"><i class="bi bi-calendar-event me-1"></i> 2012 - 2015</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <div class="education-card">
+                <div class="education-icon-box">
+                  <i class="bi bi-award"></i>
+                </div>
+                <div>
+                  <h3>A N G Inter College</h3>
+                  <p class="education-degree">High School / Intermediate Studies</p>
+                  <span class="education-years"><i class="bi bi-calendar-event me-1"></i> 2010 - 2011</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4th: Licenses & Certifications -->
+        <div class="resume-section-wrap certs-section-wrap">
+          <div class="resume-section-header">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+              <div class="d-flex align-items-center gap-3">
+                <span class="section-icon-badge"><i class="bi bi-patch-check-fill"></i></span>
+                <div>
+                  <h2 class="section-heading mb-0">Licenses &amp; Certifications</h2>
+                  <p class="section-subheading mb-0">Verified professional credentials &amp; specializations (<span id="cert-count">32</span>)</p>
+                </div>
+              </div>
+
+              <!-- Search Bar -->
+              <div class="cert-search-wrapper">
+                <i class="bi bi-search search-icon"></i>
+                <input type="text" id="certSearchInput" class="form-control cert-search-input" placeholder="Search 32 credentials...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Provider Filters -->
+          <div class="cert-filter-bar mb-4">
+            <button type="button" class="cert-filter-btn active" data-filter="all">All <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">32</span></button>
+            <button type="button" class="cert-filter-btn" data-filter="google">Google <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">13</span></button>
+            <button type="button" class="cert-filter-btn" data-filter="ibm">IBM <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">7</span></button>
+            <button type="button" class="cert-filter-btn" data-filter="meta">Meta <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">6</span></button>
+            <button type="button" class="cert-filter-btn" data-filter="aws">AWS <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">5</span></button>
+            <button type="button" class="cert-filter-btn" data-filter="microsoft">Microsoft <span class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">1</span></button>
+          </div>
+
+          <!-- Certifications Grid -->
+          <div class="row row-cols-1 row-cols-md-2 g-3" id="certGrid">
 
               <!-- Google IT Support -->
               <div class="col cert-item" data-provider="google" data-title="google it support professional certificate">
@@ -1384,7 +1803,6 @@
               <p class="text-secondary fw-medium">No certificates found matching your query.</p>
               <button class="btn btn-sm btn-outline-primary rounded-pill px-3" id="resetCertFilter">Reset Search &amp; Filters</button>
             </div>
-          </div>
         </div>
       </div>
     </section>
