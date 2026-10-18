@@ -53,6 +53,7 @@ function includeHTML() {
         return;
       }
     }
+    initLocalhostLinks();
 }
 
 function initHoverPreviews() {
@@ -95,9 +96,28 @@ function initHoverPreviews() {
   });
 }
 
+function initLocalhostLinks() {
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    var locPath = window.location.pathname;
+    var repoIdx = locPath.indexOf("/github/brijeshwork.github.io/");
+    var basePrefix = repoIdx !== -1 ? locPath.substring(0, repoIdx) + "/github/brijeshwork.github.io/" : "/";
+    document.querySelectorAll('a[href^="https://brijesh.work/"]').forEach(function (a) {
+      var href = a.getAttribute("href");
+      var rel = href.replace("https://brijesh.work/", "");
+      a.setAttribute("href", basePrefix + rel);
+    });
+    document.querySelectorAll('img[src^="https://brijesh.work/"]').forEach(function (img) {
+      var src = img.getAttribute("src");
+      var rel = src.replace("https://brijesh.work/", "");
+      img.setAttribute("src", basePrefix + rel);
+    });
+  }
+}
+
 function initGlobal() {
   includeHTML();
   initHoverPreviews();
+  initLocalhostLinks();
 }
 
 if (document.readyState === "loading") {
