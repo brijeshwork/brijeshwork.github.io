@@ -166,11 +166,9 @@
       border: 1px solid #e2e8f0;
       box-shadow: 0 18px 40px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.03);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
     }
     .browser-frame:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 50px -12px rgba(37, 99, 235, 0.22), 0 0 0 1px rgba(37, 99, 235, 0.3);
+      box-shadow: 0 22px 46px -12px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(37, 99, 235, 0.2);
     }
     .browser-frame-header {
       background: #f8fafc;
@@ -219,28 +217,6 @@
       width: 100%;
       height: auto;
       display: block;
-      transition: transform 0.4s ease;
-    }
-    .browser-frame:hover .browser-img-wrap img {
-      transform: scale(1.02);
-    }
-    .browser-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(2px);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 0.95rem;
-      gap: 8px;
-    }
-    .browser-frame:hover .browser-overlay {
-      opacity: 1;
     }
 
     /* Quick jump pill nav */
@@ -260,109 +236,6 @@
       color: #ffffff;
       border-color: #2563eb;
       transform: translateY(-2px);
-    }
-
-    /* Lightbox Modal */
-    .lightbox-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.88);
-      backdrop-filter: blur(8px);
-      z-index: 1050;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .lightbox-modal.active {
-      display: flex;
-    }
-    .lightbox-content {
-      position: relative;
-      max-width: 1100px;
-      width: 100%;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: zoomIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    @keyframes zoomIn {
-      from { opacity: 0; transform: scale(0.94); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    .lightbox-img-wrapper {
-      position: relative;
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 6px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-      max-height: 80vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .lightbox-img-wrapper img {
-      max-width: 100%;
-      max-height: 75vh;
-      object-fit: contain;
-      border-radius: 8px;
-      display: block;
-    }
-    .lightbox-caption {
-      color: #ffffff;
-      margin-top: 14px;
-      font-size: 1.05rem;
-      font-weight: 500;
-      text-align: center;
-    }
-    .lightbox-close {
-      position: absolute;
-      top: -45px;
-      right: 0;
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      color: #fff;
-      font-size: 1.6rem;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .lightbox-close:hover {
-      background: rgba(255, 255, 255, 0.4);
-    }
-    .lightbox-nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      color: #fff;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      z-index: 2;
-    }
-    .lightbox-nav-btn:hover {
-      background: rgba(255, 255, 255, 0.4);
-      transform: translateY(-50%) scale(1.08);
-    }
-    .lightbox-prev { left: -60px; }
-    .lightbox-next { right: -60px; }
-    @media (max-width: 768px) {
-      .lightbox-prev { left: 8px; }
-      .lightbox-next { right: 8px; }
-      .lightbox-close { top: -40px; right: 10px; }
     }
 
     .gallery-badge {
@@ -830,7 +703,7 @@
               <p class="text-secondary mb-3">
                 Designed for maximum data throughput and zero input friction. A clean, high-capacity textarea accepts raw clipboard dumps—handling up to 500+ URLs at once. The real-time counter immediately parses and validates the link count, with an instant toggle for automatic duplicate removal and whitespace trimming.
               </p>
-              <div class="d-flex flex-column gap-2 mb-4">
+              <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-primary fw-bold">✓</span>
                   <span><strong>Real-Time Link Counter:</strong> Instantaneous regex syntax validation and active count feedback.</span>
@@ -844,13 +717,9 @@
                   <span><strong>One-Click Execution:</strong> Initiates the asynchronous delay queue engine with a single click.</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3" onclick="openLightbox(0)">
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                Inspect Full Screen (1280×800)
-              </button>
             </div>
             <div class="col-lg-7">
-              <div class="browser-frame" onclick="openLightbox(0)" title="Click to view full screen">
+              <div class="browser-frame">
                 <div class="browser-frame-header">
                   <div class="browser-dots">
                     <span class="browser-dot dot-red"></span>
@@ -863,10 +732,6 @@
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/opner.png" alt="Multi URL Opener - Main Opener Dashboard" loading="lazy">
-                  <div class="browser-overlay">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                    Click to Enlarge Full Screen
-                  </div>
                 </div>
               </div>
             </div>
@@ -882,7 +747,7 @@
               <p class="text-secondary mb-3">
                 A core product principle was eliminating context-switching. Link builders and researchers should never have to leave their current active tab to fire a quick batch of 5–20 competitor links. Clicking the extension icon opens a compact, distraction-free popup ready for immediate pasting and execution.
               </p>
-              <div class="d-flex flex-column gap-2 mb-4">
+              <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-info fw-bold">✓</span>
                   <span><strong>Zero Context Switching:</strong> Trigger link batches directly from Chrome's browser toolbar.</span>
@@ -896,13 +761,9 @@
                   <span><strong>Quick Expansion:</strong> Single click expands into the full-screen manager whenever needed.</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-info btn-sm fw-bold rounded-pill px-3" onclick="openLightbox(1)">
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                Inspect Full Screen (1280×800)
-              </button>
             </div>
             <div class="col-lg-7">
-              <div class="browser-frame" onclick="openLightbox(1)" title="Click to view full screen">
+              <div class="browser-frame">
                 <div class="browser-frame-header">
                   <div class="browser-dots">
                     <span class="browser-dot dot-red"></span>
@@ -915,10 +776,6 @@
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/Extension-Popup.png" alt="Multi URL Opener - Extension Toolbar Popup" loading="lazy">
-                  <div class="browser-overlay">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                    Click to Enlarge Full Screen
-                  </div>
                 </div>
               </div>
             </div>
@@ -934,7 +791,7 @@
               <p class="text-secondary mb-3">
                 Different workflows require different pacing. A quick QA smoke check on 5 links needs 0.1s instant opening, while a massive 150-link backlink audit needs 2.5s delay to prevent server rate-limiting. This popup sub-panel exposes critical delay overrides directly without forcing users into deep option menus.
               </p>
-              <div class="d-flex flex-column gap-2 mb-4">
+              <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-warning fw-bold">✓</span>
                   <span><strong>Granular Interval Slider:</strong> Set delay spacing from 0.1s to 10.0s in 100ms increments.</span>
@@ -948,13 +805,9 @@
                   <span><strong>Instant Persistence:</strong> Changes write immediately to <code>chrome.storage.local</code>.</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-warning text-dark btn-sm fw-bold rounded-pill px-3" onclick="openLightbox(2)">
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                Inspect Full Screen (1280×800)
-              </button>
             </div>
             <div class="col-lg-7">
-              <div class="browser-frame" onclick="openLightbox(2)" title="Click to view full screen">
+              <div class="browser-frame">
                 <div class="browser-frame-header">
                   <div class="browser-dots">
                     <span class="browser-dot dot-red"></span>
@@ -967,10 +820,6 @@
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/Extension-Settings-Popup.png" alt="Multi URL Opener - Quick Settings Popup" loading="lazy">
-                  <div class="browser-overlay">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                    Click to Enlarge Full Screen
-                  </div>
                 </div>
               </div>
             </div>
@@ -986,7 +835,7 @@
               <p class="text-secondary mb-3">
                 Controls how Chrome handles memory and thread allocation during high-volume batch launches. Users can enforce background tab loading so their active window doesn't steal focus, randomize interval delays with micro-jitter to bypass anti-bot heuristics, and specify tab opening order.
               </p>
-              <div class="d-flex flex-column gap-2 mb-4">
+              <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-success fw-bold">✓</span>
                   <span><strong>Background Tab Loading:</strong> Loads tabs silently in the background without stealing active focus.</span>
@@ -1000,13 +849,9 @@
                   <span><strong>Anti-Bot Delay Jitter:</strong> Adds subtle ±200ms randomized pacing to emulate human navigation.</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-success btn-sm fw-bold rounded-pill px-3" onclick="openLightbox(3)">
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                Inspect Full Screen (1280×952)
-              </button>
             </div>
             <div class="col-lg-7">
-              <div class="browser-frame" onclick="openLightbox(3)" title="Click to view full screen">
+              <div class="browser-frame">
                 <div class="browser-frame-header">
                   <div class="browser-dots">
                     <span class="browser-dot dot-red"></span>
@@ -1019,10 +864,6 @@
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/General.png" alt="Multi URL Opener - General Preferences" loading="lazy">
-                  <div class="browser-overlay">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                    Click to Enlarge Full Screen
-                  </div>
                 </div>
               </div>
             </div>
@@ -1038,7 +879,7 @@
               <p class="text-secondary mb-3">
                 Link builders and SEOs repeatedly check the same batches of competitor domains, indexing targets, and client dashboards every single day. The Saved URLs collection panel turns repetitive copy-paste friction into a single-click launch action stored securely in local device memory.
               </p>
-              <div class="d-flex flex-column gap-2 mb-4">
+              <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-secondary fw-bold">✓</span>
                   <span><strong>Named Preset Lists:</strong> Create and store reusable lists (e.g. "Morning Routine", "Client Audits").</span>
@@ -1052,13 +893,9 @@
                   <span><strong>Zero Cloud Transmission:</strong> Stored strictly in local Chrome storage to protect private client data.</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-secondary btn-sm fw-bold rounded-pill px-3" onclick="openLightbox(4)">
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                Inspect Full Screen (1280×800)
-              </button>
             </div>
             <div class="col-lg-7">
-              <div class="browser-frame" onclick="openLightbox(4)" title="Click to view full screen">
+              <div class="browser-frame">
                 <div class="browser-frame-header">
                   <div class="browser-dots">
                     <span class="browser-dot dot-red"></span>
@@ -1071,10 +908,6 @@
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/Saved-URLs.png" alt="Multi URL Opener - Saved URL Collections" loading="lazy">
-                  <div class="browser-overlay">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                    Click to Enlarge Full Screen
-                  </div>
                 </div>
               </div>
             </div>
@@ -1090,7 +923,7 @@
               <p class="text-secondary mb-3">
                 Moving beyond isolated URL lists, the Session Manager enables project-level grouping. A user managing multiple clients or research themes can group URLs into dedicated workspace sessions, launching entire multi-tab environments in an isolated window tailored for that specific project.
               </p>
-              <div class="d-flex flex-column gap-2 mb-4">
+              <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-primary fw-bold">✓</span>
                   <span><strong>Dedicated Window Launch:</strong> Opens session groups into a fresh, isolated Chrome window.</span>
@@ -1104,13 +937,9 @@
                   <span><strong>Session Metadata:</strong> View total URL counts, timestamps, and last-opened dates.</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-primary btn-sm fw-bold rounded-pill px-3" onclick="openLightbox(5)">
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                Inspect Full Screen (1280×800)
-              </button>
             </div>
             <div class="col-lg-7">
-              <div class="browser-frame" onclick="openLightbox(5)" title="Click to view full screen">
+              <div class="browser-frame">
                 <div class="browser-frame-header">
                   <div class="browser-dots">
                     <span class="browser-dot dot-red"></span>
@@ -1123,10 +952,6 @@
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/Saved-URLs-Sessions.png" alt="Multi URL Opener - Session Presets" loading="lazy">
-                  <div class="browser-overlay">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                    Click to Enlarge Full Screen
-                  </div>
                 </div>
               </div>
             </div>
@@ -1142,7 +967,7 @@
               <p class="text-secondary mb-3">
                 Built for developer and power-user speed. Provides custom keyboard shortcut bindings (e.g. <kbd class="bg-light text-dark border">Alt+Shift+U</kbd> to trigger instant paste-and-launch), UI theme toggles, input regex sanitization rules, and full JSON export/import for seamless workspace backup across devices.
               </p>
-              <div class="d-flex flex-column gap-2 mb-4">
+              <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-dark fw-bold">✓</span>
                   <span><strong>Keyboard Shortcut Triggers:</strong> Headless execution without clicking extension buttons.</span>
@@ -1156,13 +981,9 @@
                   <span><strong>Sanitization Engine:</strong> Protocol auto-detection, UTM parameter cleaning, and whitespace trimming.</span>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-dark btn-sm fw-bold rounded-pill px-3" onclick="openLightbox(6)">
-                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                Inspect Full Screen (1280×1123)
-              </button>
             </div>
             <div class="col-lg-7">
-              <div class="browser-frame" onclick="openLightbox(6)" title="Click to view full screen">
+              <div class="browser-frame">
                 <div class="browser-frame-header">
                   <div class="browser-dots">
                     <span class="browser-dot dot-red"></span>
@@ -1175,10 +996,6 @@
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/Settings-Preferences.png" alt="Multi URL Opener - Advanced Preferences" loading="lazy">
-                  <div class="browser-overlay">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                    Click to Enlarge Full Screen
-                  </div>
                 </div>
               </div>
             </div>
@@ -1252,110 +1069,9 @@
 
   </main>
 
-  <!-- Interactive Lightbox Modal -->
-  <div id="galleryLightbox" class="lightbox-modal" onclick="handleLightboxBackdrop(event)">
-    <div class="lightbox-content">
-      <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close Lightbox">&times;</button>
-      <button class="lightbox-nav-btn lightbox-prev" onclick="prevLightboxImage()" aria-label="Previous Image">&#10094;</button>
-      <div class="lightbox-img-wrapper">
-        <img id="lightboxImg" src="" alt="Enlarged screenshot">
-      </div>
-      <button class="lightbox-nav-btn lightbox-next" onclick="nextLightboxImage()" aria-label="Next Image">&#10095;</button>
-      <div id="lightboxCaption" class="lightbox-caption"></div>
-    </div>
-  </div>
-
   <footer loadhtml="https://brijesh.work/pub/inc/footer.html" class="footer" role="contentinfo"></footer>
   <script src="https://brijesh.work/pub/js/footer.js" crossorigin="anonymous"></script>
   <script>includeHTML();</script>
-
-  <!-- Lightbox Gallery Script -->
-  <script>
-    var galleryData = [
-      {
-        src: "https://brijesh.work/pub/media/products/opner.png",
-        caption: "Screen 1 • Main Opener Dashboard — Clean high-capacity input with live URL counting and duplicate removal toggle."
-      },
-      {
-        src: "https://brijesh.work/pub/media/products/Extension-Popup.png",
-        caption: "Screen 2 • Toolbar Quick Popup — Lightweight browser popup for rapid link launching without tab switching."
-      },
-      {
-        src: "https://brijesh.work/pub/media/products/Extension-Settings-Popup.png",
-        caption: "Screen 3 • Quick Settings Popup — Pacing delay adjustments, new window toggles, and instant overrides."
-      },
-      {
-        src: "https://brijesh.work/pub/media/products/General.png",
-        caption: "Screen 4 • General Preferences — Background tab loading, reverse order launch, and delay duration parameters."
-      },
-      {
-        src: "https://brijesh.work/pub/media/products/Saved-URLs.png",
-        caption: "Screen 5 • Saved URL Collections — Persistent storage for daily and recurring backlink audit lists."
-      },
-      {
-        src: "https://brijesh.work/pub/media/products/Saved-URLs-Sessions.png",
-        caption: "Screen 6 • Session Presets & Grouping — Group links into named workspace bundles for one-click setup."
-      },
-      {
-        src: "https://brijesh.work/pub/media/products/Settings-Preferences.png",
-        caption: "Screen 7 • Settings & Preferences — Shortcut keys, themes, export/import, and link parsing sanitization rules."
-      }
-    ];
-
-    var currentLightboxIndex = 0;
-    var modal = document.getElementById("galleryLightbox");
-    var imgEl = document.getElementById("lightboxImg");
-    var capEl = document.getElementById("lightboxCaption");
-
-    function openLightbox(index) {
-      currentLightboxIndex = index;
-      updateLightboxContent();
-      modal.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeLightbox() {
-      modal.classList.remove("active");
-      document.body.style.overflow = "";
-    }
-
-    function handleLightboxBackdrop(e) {
-      if (e.target === modal) {
-        closeLightbox();
-      }
-    }
-
-    function updateLightboxContent() {
-      var item = galleryData[currentLightboxIndex];
-      var resolvedSrc = item.src;
-      if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-        var locPath = window.location.pathname;
-        var repoIdx = locPath.indexOf("/github/brijeshwork.github.io/");
-        var basePrefix = repoIdx !== -1 ? locPath.substring(0, repoIdx) + "/github/brijeshwork.github.io/" : "/";
-        resolvedSrc = basePrefix + item.src.replace("https://brijesh.work/", "");
-      }
-      imgEl.src = resolvedSrc;
-      imgEl.alt = item.caption;
-      capEl.textContent = item.caption;
-    }
-
-    function prevLightboxImage() {
-      currentLightboxIndex = (currentLightboxIndex - 1 + galleryData.length) % galleryData.length;
-      updateLightboxContent();
-    }
-
-    function nextLightboxImage() {
-      currentLightboxIndex = (currentLightboxIndex + 1) % galleryData.length;
-      updateLightboxContent();
-    }
-
-    document.addEventListener("keydown", function(e) {
-      if (!modal.classList.contains("active")) return;
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") prevLightboxImage();
-      if (e.key === "ArrowRight") nextLightboxImage();
-    });
-  </script>
 </body>
 
 </html>
