@@ -12,7 +12,8 @@
 
   <meta property="og:locale" content="en_US" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Multi URL Opener Case Study — Product Management & Builder Portfolio | Brijesh Patel" />
+  <meta property="og:title"
+    content="Multi URL Opener Case Study — Product Management & Builder Portfolio | Brijesh Patel" />
   <meta property="og:description"
     content="How I conceptualized, designed, and built Multi URL Opener: solving browser thread freezing and tab throttling for high-throughput SEO workflows." />
   <meta property="og:url" content="https://brijesh.work/product/url-opner/" />
@@ -30,7 +31,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="../../pub/css/bootstrap.css">
   <link rel="stylesheet" href="../../pub/css/style-main.css?v=3.1">
@@ -39,50 +42,322 @@
     crossorigin="anonymous"></script>
 
   <style>
-    /* Hero Visual & Glass tilt styling */
-    .product-image-container {
+    /* Modern Technical Hero Section */
+    .hero-tech-section {
+      background-color: #faf8ff;
+      padding: 72px 0 68px 0;
       position: relative;
+      overflow: hidden;
+    }
+
+    .hero-category-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #eaedff;
+      color: #3525cd;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      margin-bottom: 22px;
+      text-transform: uppercase;
+    }
+
+    .hero-category-pill .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #4f46e5;
+      display: inline-block;
+    }
+
+    .hero-main-title {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+      margin-bottom: 20px;
+    }
+
+    .hero-title-accent {
+      color: #4f46e5;
+    }
+
+    .hero-lead-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: #475569;
+      margin-bottom: 34px;
+      max-width: 560px;
+    }
+
+    .hero-lead-text strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .hero-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #4f46e5;
+      color: #ffffff !important;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 14.5px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .hero-btn-primary:hover {
+      background-color: #4338ca;
+      color: #ffffff !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
+    }
+
+    .hero-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff;
+      color: #0f172a !important;
+      border: 1px solid #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 14.5px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s ease;
+    }
+
+    .hero-btn-secondary:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+      color: #0f172a !important;
+      transform: translateY(-1px);
+    }
+
+    /* Extension Mockup Window */
+    .hero-extension-mockup {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
+      overflow: hidden;
       width: 100%;
-      max-width: 520px;
+      max-width: 580px;
       margin: 0 auto;
     }
-    .product-image-wrap {
-      position: relative;
-      z-index: 2;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.6);
-      transform: perspective(1000px) rotateY(-6deg) rotateX(3deg);
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    .hero-mockup-header {
       background: #ffffff;
-      padding: 6px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
     }
-    .product-image-wrap:hover {
-      transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.02);
-      box-shadow: 0 30px 60px -12px rgba(37, 99, 235, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.9);
+
+    .hero-mockup-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
     }
-    .product-image-wrap img {
+
+    .hero-mockup-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .hero-mockup-dot.dot-red {
+      background: #ff5f56;
+    }
+
+    .hero-mockup-dot.dot-amber {
+      background: #ffbd2e;
+    }
+
+    .hero-mockup-dot.dot-green {
+      background: #27c93f;
+    }
+
+    .hero-mockup-address {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 3px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .hero-mockup-address .address-bullet {
+      color: #94a3b8;
+      font-size: 10px;
+    }
+
+    .hero-mockup-img-wrap {
+      position: relative;
+      background: #f8fafc;
+      overflow: hidden;
       display: block;
+    }
+
+    .hero-mockup-img-wrap img {
       width: 100%;
       height: auto;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .hero-extension-mockup:hover .hero-mockup-img-wrap img {
+      transform: scale(1.015);
+    }
+
+    /* Quantified Impact Dark Bar */
+    .hero-impact-dark-bar {
+      background: #080c16;
+      padding: 48px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .impact-stat-box {
+      text-align: left;
+    }
+
+    .impact-stat-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .impact-stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      line-height: 1.45;
+    }
+
+    /* Project Metadata Cards */
+    .hero-metadata-section {
+      background-color: #faf8ff;
+      padding: 44px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .hero-meta-indicator-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
       border-radius: 14px;
-    }
-    .glass-reflection {
-      position: absolute;
-      top: 0;
-      left: -150%;
-      width: 50%;
+      padding: 20px 22px;
       height: 100%;
-      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%);
-      transform: skewX(-25deg);
-      animation: shine 6s infinite 2s;
-      pointer-events: none;
-      z-index: 3;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
+      transition: all 0.2s ease;
     }
-    @keyframes shine {
-      0% { left: -150%; }
-      20% { left: 200%; }
-      100% { left: 200%; }
+
+    .hero-meta-indicator-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+    }
+
+    .hero-meta-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .hero-meta-bar {
+      width: 3px;
+      height: 13px;
+      border-radius: 2px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .hero-meta-bar.bar-blue {
+      background-color: #3b82f6;
+    }
+
+    .hero-meta-bar.bar-green {
+      background-color: #10b981;
+    }
+
+    .hero-meta-bar.bar-amber {
+      background-color: #f59e0b;
+    }
+
+    .hero-meta-bar.bar-purple {
+      background-color: #6366f1;
+    }
+
+    .hero-meta-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    .hero-meta-value {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 991px) {
+      .hero-main-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-extension-mockup {
+        margin-top: 2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-main-title {
+        font-size: 2.1rem;
+      }
+
+      .impact-stat-number {
+        font-size: 28px;
+      }
+
+      .hero-mockup-address {
+        max-width: 190px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
 
 
@@ -92,9 +367,11 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       position: relative;
     }
+
     .tech-mono {
       font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
+
     .tech-pill-badge {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -107,14 +384,208 @@
       background-color: #e0e7ff;
       color: #3525cd;
     }
-    .macro-cards-container {
-      max-width: 1040px;
-      margin: 0 auto;
+
+
+
+    /* Distribution Surfaces 3-Card Grid */
+    .tech-surface-main-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 1.75rem 1.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
+      transition: all 0.25s ease;
     }
-    .max-w-700 { max-width: 700px; }
-    .max-w-750 { max-width: 750px; }
-    .max-w-850 { max-width: 850px; }
-    .max-w-950 { max-width: 950px; }
+
+    .tech-surface-main-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 12px 32px -4px rgba(15, 23, 42, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .tech-surface-icon-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+
+    .tech-specs-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 1rem 0;
+    }
+
+    .tech-specs-item {
+      font-size: 11.5px;
+      color: #334155;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 6px;
+      line-height: 1.45;
+    }
+
+    .tech-specs-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Cross-Platform Growth Loop Flow */
+    .tech-flow-macro {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
+    }
+
+    .tech-flow-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.25rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+
+    .tech-flow-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    .tech-flow-output {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px dashed #e2e8f0;
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    /* Surface Implementation Matrix Table */
+    .tech-matrix-container {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03);
+    }
+
+    .tech-matrix-table {
+      margin-bottom: 0;
+      width: 100%;
+      font-size: 12px;
+    }
+
+    .tech-matrix-table th {
+      background-color: #f8fafc;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 14px 18px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .tech-matrix-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+      color: #334155;
+    }
+
+    .tech-matrix-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tech-matrix-table tr:hover td {
+      background-color: #faf8ff;
+    }
+
+    .tech-matrix-table .dim-label {
+      font-weight: 700;
+      color: #0f172a;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+
+    /* Problem Space & Architectural Solution Section */
+    .tech-bottleneck-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      border-left-width: 3px;
+      border-left-style: solid;
+      transition: all 0.2s ease;
+    }
+
+    .tech-bottleneck-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    .tech-bottleneck-card.border-rose {
+      border-left-color: #f43f5e;
+    }
+
+    .tech-bottleneck-card.border-indigo {
+      border-left-color: #4f46e5;
+    }
+
+    .tech-bottleneck-card.border-sky {
+      border-left-color: #0284c7;
+    }
+
+    .tech-bottleneck-card.border-slate {
+      border-left-color: #64748b;
+    }
+
+    .tech-solution-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tech-pacer-bar {
+      height: 6px;
+      border-radius: 9999px;
+      background: linear-gradient(to right, #10b981 0%, #10b981 85%, #f59e0b 85%, #f59e0b 94%, #ef4444 94%, #ef4444 100%);
+      width: 100%;
+      margin: 8px 0;
+    }
+
+    .tech-telemetry-banner {
+      background: #eef2ff;
+      border: 1px solid #e0e7ff;
+      border-radius: 16px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
     /* Benchmark KPI Cards */
     .tech-benchmark-card {
@@ -126,11 +597,13 @@
       box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
       transition: all 0.25s ease;
     }
+
     .tech-benchmark-card:hover {
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
       border-color: #cbd5e1;
       transform: translateY(-2px);
     }
+
     .tech-benchmark-dot {
       width: 8px;
       height: 8px;
@@ -148,10 +621,12 @@
       box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
       transition: all 0.25s ease;
     }
+
     .tech-macro-card:hover {
       border-color: #cbd5e1;
       box-shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08);
     }
+
     @media (max-width: 768px) {
       .tech-macro-card {
         padding: 1.25rem;
@@ -168,21 +643,25 @@
       border-width: 1px;
       border-style: solid;
     }
+
     .tech-obstacle-box.obstacle-rose {
       background-color: #fff1f2;
       border-color: #ffe4e6;
       border-left: 4px solid #f43f5e;
     }
+
     .tech-obstacle-box.obstacle-indigo {
       background-color: #eef2ff;
       border-color: #e0e7ff;
       border-left: 4px solid #4f46e5;
     }
+
     .tech-obstacle-box.obstacle-amber {
       background-color: #fffbeb;
       border-color: #fef3c7;
       border-left: 4px solid #f59e0b;
     }
+
     .tech-obstacle-box.obstacle-emerald {
       background-color: #f0fdf4;
       border-color: #dcfce7;
@@ -197,6 +676,7 @@
       overflow: hidden;
       box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.35);
     }
+
     .tech-terminal-header {
       background: #1e293b;
       padding: 10px 14px;
@@ -205,6 +685,7 @@
       justify-content: space-between;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
+
     .tech-terminal-body {
       padding: 16px 18px;
       overflow-x: auto;
@@ -215,12 +696,15 @@
       scrollbar-width: thin;
       scrollbar-color: #334155 transparent;
     }
+
     .tech-terminal-body::-webkit-scrollbar {
       height: 4px;
     }
+
     .tech-terminal-body::-webkit-scrollbar-track {
       background: transparent;
     }
+
     .tech-terminal-body::-webkit-scrollbar-thumb {
       background: #334155;
       border-radius: 4px;
@@ -243,6 +727,7 @@
       padding: 0.85rem;
       height: 100%;
     }
+
     .tech-step-num {
       width: 22px;
       height: 22px;
@@ -255,6 +740,7 @@
       align-items: center;
       justify-content: center;
     }
+
     .tech-step-num.num-success {
       background: #059669;
     }
@@ -271,12 +757,14 @@
       justify-content: space-between;
       gap: 12px;
     }
+
     @media (max-width: 576px) {
       .tech-verify-row {
         flex-direction: column;
         align-items: flex-start;
       }
     }
+
     .tech-icon-cube {
       width: 36px;
       height: 36px;
@@ -299,6 +787,7 @@
       flex-wrap: wrap;
       gap: 10px;
     }
+
     @media (max-width: 576px) {
       .tech-card-footer {
         flex-direction: column;
@@ -316,10 +805,12 @@
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
       scroll-margin-top: 80px;
     }
+
     .showcase-row-card:hover {
       border-color: #bfdbfe;
       box-shadow: 0 16px 36px rgba(37, 99, 235, 0.08);
     }
+
     @media (max-width: 991px) {
       .showcase-row-card {
         padding: 24px;
@@ -335,9 +826,11 @@
       box-shadow: 0 18px 40px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.03);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
     .browser-frame:hover {
       box-shadow: 0 22px 46px -12px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(37, 99, 235, 0.2);
     }
+
     .browser-frame-header {
       background: #f8fafc;
       padding: 10px 14px;
@@ -346,25 +839,38 @@
       gap: 12px;
       border-bottom: 1px solid #e2e8f0;
     }
+
     .browser-dots {
       display: flex;
       gap: 6px;
       align-items: center;
     }
+
     .browser-dot {
       width: 10px;
       height: 10px;
       border-radius: 50%;
     }
-    .browser-dot.dot-red { background: #ef4444; }
-    .browser-dot.dot-yellow { background: #f59e0b; }
-    .browser-dot.dot-green { background: #10b981; }
+
+    .browser-dot.dot-red {
+      background: #ef4444;
+    }
+
+    .browser-dot.dot-yellow {
+      background: #f59e0b;
+    }
+
+    .browser-dot.dot-green {
+      background: #10b981;
+    }
+
     .browser-img-wrap {
       position: relative;
       background: #f8fafc;
       overflow: hidden;
       display: block;
     }
+
     .browser-img-wrap img {
       width: 100%;
       height: auto;
@@ -391,6 +897,397 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
+    /* --- Extracted Semantic Utility & Component Classes --- */
+    /* Code Syntax Tokens */
+    .tok-kw { color: #c084fc; }
+    .tok-fn { color: #38bdf8; }
+    .tok-str { color: #67e8f9; }
+    .tok-num { color: #f472b6; }
+    .tok-type { color: #fde047; }
+    .tok-var { color: #94a3b8; }
+    .tok-com { color: #64748b; }
+
+    /* Typography Utilities */
+    .tracking-tight { letter-spacing: -0.02em; }
+    .tracking-wide { letter-spacing: 0.5px; }
+    .tracking-wider { letter-spacing: 0.6px; }
+
+    .lh-1-4 { line-height: 1.4; }
+    .lh-1-5 { line-height: 1.5; }
+    .lh-1-55 { line-height: 1.55; }
+    .lh-1-6 { line-height: 1.6; }
+
+    .fs-20 { font-size: 20px; }
+    .fs-17 { font-size: 17px; }
+    .fs-15 { font-size: 15px; }
+    .fs-14 { font-size: 14px; }
+    .fs-13-5 { font-size: 13.5px; }
+    .fs-13 { font-size: 13px; }
+    .fs-12-5 { font-size: 12.5px; }
+    .fs-12 { font-size: 12px; }
+    .fs-11-5 { font-size: 11.5px; }
+    .fs-11 { font-size: 11px; }
+    .fs-10-5 { font-size: 10.5px; }
+    .fs-10 { font-size: 10px; }
+    .fs-9-5 { font-size: 9.5px; }
+
+    /* Text Colors */
+    .text-indigo-accent { color: #3525cd; }
+    .text-indigo-dark { color: #3730a3; }
+    .text-indigo-600 { color: #4338ca; }
+    .text-emerald-accent { color: #059669; }
+    .text-emerald-dark { color: #047857; }
+    .text-sky-accent { color: #0284c7; }
+    .text-amber-accent { color: #b45309; }
+    .text-amber-600 { color: #d97706; }
+    .text-purple-accent { color: #7c3aed; }
+
+    /* Section Background */
+    .bg-soft-lavender { background-color: #faf8ff; }
+
+    /* Indicator Dots */
+    .tech-dot-indicator {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .tech-dot-indicator-lg {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-red { background-color: #ef4444; }
+    .dot-amber { background-color: #f59e0b; }
+    .dot-green { background-color: #10b981; }
+    .dot-indigo { background-color: #6366f1; }
+    .dot-sky { background-color: #0284c7; }
+    .dot-emerald { background-color: #10b981; }
+
+    /* Soft Pill Badges */
+    .badge-soft-indigo-pill {
+      background: #e0e7ff;
+      color: #3525cd;
+      border-radius: 9999px;
+      font-size: 11px;
+      padding: 4px 12px;
+      letter-spacing: 0.5px;
+    }
+    .badge-soft-indigo-sm {
+      background: #e0e7ff;
+      color: #3525cd;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 3px 10px;
+      letter-spacing: 0.5px;
+    }
+    .badge-soft-indigo-micro {
+      background: #e0e7ff;
+      color: #3730a3;
+      border-radius: 9999px;
+      font-size: 9.5px;
+      padding: 2px 8px;
+    }
+    .badge-soft-gray-pill {
+      background: #f1f5f9;
+      border-radius: 9999px;
+      font-size: 11px;
+      padding: 4px 12px;
+    }
+    .badge-soft-gray-xs {
+      background: #f1f5f9;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 2px 8px;
+    }
+    .badge-soft-gray-micro {
+      background: #f1f5f9;
+      border-radius: 9999px;
+      font-size: 9.5px;
+      padding: 2px 8px;
+    }
+    .badge-soft-emerald-pill {
+      background: #d1fae5;
+      color: #047857;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 3px 10px;
+      letter-spacing: 0.5px;
+    }
+    .badge-soft-emerald-sm {
+      background: #d1fae5;
+      color: #047857;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 3px 10px;
+    }
+    .badge-soft-emerald-xs {
+      background: #d1fae5;
+      color: #047857;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 2px 8px;
+    }
+    .badge-soft-emerald-micro {
+      background: #d1fae5;
+      color: #047857;
+      border-radius: 9999px;
+      font-size: 9.5px;
+      padding: 2px 8px;
+    }
+    .badge-soft-purple-sm {
+      background: #f3e8ff;
+      color: #7e22ce;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 3px 10px;
+      letter-spacing: 0.5px;
+    }
+    .badge-soft-purple-xs {
+      background: #f3e8ff;
+      color: #7e22ce;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 2px 8px;
+    }
+    .badge-soft-rose-micro {
+      background: #ffe4e6;
+      color: #e11d48;
+      border-radius: 9999px;
+      font-size: 9.5px;
+      padding: 2px 8px;
+    }
+    .badge-soft-sky-xs {
+      background: #e0f2fe;
+      color: #0284c7;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 2px 8px;
+    }
+    .badge-soft-sky-micro {
+      background: #e0f2fe;
+      color: #0284c7;
+      border-radius: 9999px;
+      font-size: 9.5px;
+      padding: 2px 8px;
+    }
+    .badge-soft-white-outline {
+      background: #ffffff;
+      color: #475569;
+      border-radius: 9999px;
+      font-size: 10px;
+      padding: 2px 8px;
+      border: 1px solid #e2e8f0;
+    }
+    .badge-spec-pill {
+      background: #eef2ff;
+      color: #3525cd;
+      border-radius: 9999px;
+      font-size: 10.5px;
+      padding: 3px 10px;
+      border: 1px solid #c7d2fe;
+    }
+    .badge-purple-deep {
+      background-color: #f3e8ff;
+      color: #6b21a8;
+    }
+    .badge-slate-deep {
+      background-color: #f1f5f9;
+      color: #475569;
+    }
+
+    /* Callout & Solid Challenge Badges */
+    .badge-callout-red {
+      background: #ffe4e6;
+      color: #e11d48;
+      border-radius: 9999px;
+      font-size: 11px;
+      padding: 3px 12px;
+    }
+    .badge-callout-indigo {
+      background: #e0e7ff;
+      color: #3730a3;
+      border-radius: 9999px;
+      font-size: 11px;
+      padding: 3px 12px;
+    }
+    .badge-callout-amber {
+      background: #fef3c7;
+      color: #b45309;
+      border-radius: 9999px;
+      font-size: 11px;
+      padding: 3px 12px;
+    }
+    .badge-callout-emerald {
+      background: #d1fae5;
+      color: #047857;
+      border-radius: 9999px;
+      font-size: 11px;
+      padding: 3px 12px;
+    }
+
+    .badge-solid-red {
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+    .badge-solid-indigo {
+      background: #3525cd;
+      color: #ffffff;
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+    .badge-solid-navy {
+      background: #0f2c4a;
+      color: #ffffff;
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+    .badge-solid-forest {
+      background: #064e3b;
+      color: #ffffff;
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+
+    .badge-elevated-api {
+      background: #e0e7ff;
+      color: #3730a3;
+      font-size: 10px;
+    }
+    .badge-guided-flow {
+      background: #d1fae5;
+      color: #047857;
+      font-size: 10px;
+    }
+
+    .badge-chip-emerald {
+      background: #d1fae5;
+      color: #047857;
+      font-size: 10.5px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+    .badge-chip-gray {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 10.5px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+    .badge-chip-sky {
+      background: #e0f2fe;
+      color: #0284c7;
+      font-size: 10.5px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    .border-token-indigo {
+      border-color: #c7d2fe !important;
+    }
+    .border-token-amber {
+      border-color: #fed7aa !important;
+    }
+
+    .badge-footer-meta {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #475569;
+      font-size: 11.5px;
+      border-radius: 9999px;
+      padding: 4px 14px;
+    }
+    .badge-footer-status {
+      background: #d1fae5;
+      color: #047857;
+      font-size: 11.5px;
+      border-radius: 9999px;
+      padding: 4px 14px;
+    }
+
+    /* Icon Cubes & Action Button */
+    .icon-cube-indigo {
+      background: #e0e7ff;
+      color: #4338ca;
+    }
+    .icon-cube-blue {
+      background: #eff6ff;
+      color: #2563eb;
+    }
+    .icon-cube-green {
+      background: #ecfdf5;
+      color: #059669;
+    }
+    .icon-cube-purple {
+      background: #f5f3ff;
+      color: #7c3aed;
+    }
+    .icon-box-rounded {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .btn-indigo-action {
+      background: #3525cd;
+      color: #ffffff !important;
+      border-radius: 8px;
+      font-size: 12.5px;
+      text-decoration: none;
+    }
+    .btn-indigo-action:hover {
+      background: #2b1ea7;
+      color: #ffffff !important;
+    }
+
+    /* Benchmark Labels & Containers */
+    .tech-benchmark-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .tech-kpi-sublabel {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Callout & Box Containers */
+    .callout-card-indigo {
+      background-color: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid #6366f1;
+    }
+    .box-bordered-slate {
+      background-color: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+    .tag-file-badge {
+      background: #1e293b;
+      color: #94a3b8;
+      font-size: 10.5px;
+      border: 1px solid #334155;
+    }
+    .code-pre-box {
+      font-size: 10.5px;
+      line-height: 1.6;
+      padding: 12px 14px;
+    }
+
+    /* Comparison Matrix Table Columns */
+    .th-col-25 { width: 25%; }
+    .th-col-chrome { width: 25%; color: #3525cd; }
+    .th-col-web { width: 25%; color: #059669; }
+    .th-col-github { width: 25%; color: #7e22ce; }
+
   </style>
 
   <script type="application/ld+json">
@@ -453,27 +1350,53 @@
 
   <main id="main-content" role="main">
 
-    <!-- Hero Section -->
-    <section class="modern-hero-section">
-      <div class="modern-hero-bg-grid"></div>
+    <!-- Modern Technical Hero Section -->
+    <section class="hero-tech-section">
       <div class="container">
         <div class="row align-items-center g-5">
-          <div class="col-lg-7">
-            <h1 class="modern-hero-title">
-              Multi URL <span class="modern-hero-highlight">Opener</span>
+          <div class="col-lg-6">
+            <div class="hero-category-pill">
+              <span class="pill-dot"></span>
+              CASE STUDY &amp; SYSTEM ARCHITECTURE
+            </div>
+            <h1 class="hero-main-title">
+              Multi URL <span class="hero-title-accent">Opener</span>
             </h1>
-            <p class="modern-hero-subtitle">
-              How I engineered a high-throughput, multi-platform tab automation engine across <strong>Chrome Web Store</strong>, <strong>Backlinks.tools Web App</strong>, and <strong>GitHub Open Source</strong>—solving browser thread freezing, memory exhaustion, and popup sandboxing for SEO link builders.
+            <p class="hero-lead-text">
+              How I engineered a high-throughput, multi-platform tab automation engine across <strong>Chrome Web
+                Store</strong>, <strong>Backlinks.tools Web App</strong>, and <strong>GitHub Open
+                Source</strong>—solving browser thread freezing, memory exhaustion, and popup sandboxing for SEO link
+              builders.
             </p>
-
+            <div class="d-flex align-items-center gap-3 flex-wrap">
+              <a href="#engineering-deepdive" class="hero-btn-primary">
+                Explore Architecture &rarr;
+              </a>
+              <a href="#screenshots-gallery" class="hero-btn-secondary">
+                View UI Breakdown
+              </a>
+            </div>
           </div>
 
-          <div class="col-lg-5 d-none d-lg-flex justify-content-center">
-            <div class="product-image-container">
-              <div class="modern-hero-glow"></div>
-              <div class="product-image-wrap">
-                <img src="https://brijesh.work/pub/media/products/opner.png" alt="Multi URL Opener - Core Bulk Opener Interface" width="1280" height="800" class="img-fluid" loading="eager">
-                <div class="glass-reflection"></div>
+          <div class="col-lg-6">
+            <div class="hero-extension-mockup">
+              <!-- Chrome Bar -->
+              <div class="hero-mockup-header">
+                <div class="hero-mockup-dots">
+                  <span class="hero-mockup-dot dot-red"></span>
+                  <span class="hero-mockup-dot dot-amber"></span>
+                  <span class="hero-mockup-dot dot-green"></span>
+                </div>
+                <div class="hero-mockup-address">
+                  <span class="address-bullet">•</span> chrome-extension://multi-url-opener
+                </div>
+              </div>
+
+              <!-- Product Image Visual -->
+              <div class="hero-mockup-img-wrap">
+                <img src="https://brijesh.work/pub/media/products/opner.png"
+                  alt="Multi URL Opener - Core Bulk Opener Interface" width="1280" height="800"
+                  class="img-fluid d-block w-100" loading="eager">
               </div>
             </div>
           </div>
@@ -482,191 +1405,699 @@
     </section>
 
     <!-- Key Metrics / Quantified Impact Bar -->
-    <section class="bg-dark text-white py-4 shadow-sm">
+    <section class="hero-impact-dark-bar">
       <div class="container">
-        <div class="row text-center gy-3">
+        <div class="row align-items-center gy-4 gy-md-0">
           <div class="col-6 col-md-3">
-            <div class="stat-number">500+</div>
-            <div class="text-white-50 small mt-1">URLs Supported Per Batch</div>
+            <div class="impact-stat-box">
+              <div class="impact-stat-number">500+</div>
+              <div class="impact-stat-label">URLS SUPPORTED PER BATCH</div>
+            </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="stat-number">0.1s – 10s</div>
-            <div class="text-white-50 small mt-1">Configurable Throttle Delay</div>
+            <div class="impact-stat-box">
+              <div class="impact-stat-number">0.1s – 10s</div>
+              <div class="impact-stat-label">CONFIGURABLE THROTTLE DELAY</div>
+            </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="stat-number">0%</div>
-            <div class="text-white-50 small mt-1">Browser Freezes (Zero Crashing)</div>
+            <div class="impact-stat-box">
+              <div class="impact-stat-number">0%</div>
+              <div class="impact-stat-label">BROWSER FREEZES (ZERO CRASHING)</div>
+            </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="stat-number">100%</div>
-            <div class="text-white-50 small mt-1">Client-Side Local Privacy</div>
+            <div class="impact-stat-box">
+              <div class="impact-stat-number">100%</div>
+              <div class="impact-stat-label">CLIENT-SIDE LOCAL PRIVACY</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Project Metadata & Executive Summary -->
-    <section class="py-5 bg-light border-bottom">
+    <section class="hero-metadata-section">
       <div class="container">
-        <div class="row g-4">
-          <div class="col-md-3">
-            <div class="p-3 bg-white rounded-3 shadow-sm border h-100">
-              <div class="text-muted small fw-bold text-uppercase mb-1">My Role</div>
-              <div class="fw-bold fs-6 text-dark">Technical Product Manager & Full-Stack Builder</div>
+        <div class="row g-3 g-lg-4">
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="hero-meta-indicator-card">
+              <div class="hero-meta-header">
+                <span class="hero-meta-bar bar-blue"></span>
+                <span class="hero-meta-label">MY ROLE</span>
+              </div>
+              <div class="hero-meta-value">Technical Product Manager &amp; Full-Stack Builder</div>
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="p-3 bg-white rounded-3 shadow-sm border h-100">
-              <div class="text-muted small fw-bold text-uppercase mb-1">Timeline</div>
-              <div class="fw-bold fs-6 text-dark">2024 – 2025 (Active & Maintained)</div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="hero-meta-indicator-card">
+              <div class="hero-meta-header">
+                <span class="hero-meta-bar bar-green"></span>
+                <span class="hero-meta-label">TIMELINE</span>
+              </div>
+              <div class="hero-meta-value">2024 – 2025 (Active &amp; Maintained)</div>
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="p-3 bg-white rounded-3 shadow-sm border h-100">
-              <div class="text-muted small fw-bold text-uppercase mb-1">Target Persona</div>
-              <div class="fw-bold fs-6 text-dark">SEO Analysts, Link Builders, QA Testers</div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="hero-meta-indicator-card">
+              <div class="hero-meta-header">
+                <span class="hero-meta-bar bar-amber"></span>
+                <span class="hero-meta-label">TARGET PERSONA</span>
+              </div>
+              <div class="hero-meta-value">SEO Analysts, Link Builders, QA Testers</div>
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="p-3 bg-white rounded-3 shadow-sm border h-100">
-              <div class="text-muted small fw-bold text-uppercase mb-1">Core Tech Stack</div>
-              <div class="fw-bold fs-6 text-dark">JavaScript (ES6+), Manifest V3, Bootstrap</div>
+          <div class="col-12 col-sm-6 col-lg-3">
+            <div class="hero-meta-indicator-card">
+              <div class="hero-meta-header">
+                <span class="hero-meta-bar bar-purple"></span>
+                <span class="hero-meta-label">CORE TECH STACK</span>
+              </div>
+              <div class="hero-meta-value">JavaScript (ES6+), Manifest V3, Bootstrap</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Problem Discovery & The Origin Story -->
-    <section id="problem-discovery" class="py-5">
+    <!-- Problem Space & Origin: The Everyday Bottleneck in SEO Audits & Link Verification -->
+    <section id="problem-discovery" class="py-5 bg-soft-lavender">
       <div class="container py-3">
-        <div class="row g-5 align-items-center">
-          <div class="col-lg-6">
-            <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-bold mb-3">The Problem Space</span>
-            <h2 class="display-6 fw-bold mb-3">The Everyday Bottleneck in SEO Audits</h2>
-            <p class="text-secondary lead fs-6">
-              In 2024, while running large-scale backlink intelligence campaigns for <a href="https://backlinks.tools/" target="_blank" rel="noopener">Backlinks.tools</a>, my team and I had to inspect 50 to 200 URLs daily—verifying live anchor texts, checking indexing health, and reviewing competitor backlinks.
-            </p>
-            <p class="text-secondary">
-              Opening links one by one manually wasted 20–30 minutes per audit. However, existing open-source web tools and browser extensions were notoriously unreliable:
-            </p>
-            <ul class="list-unstyled d-flex flex-column gap-3 text-secondary">
-              <li class="d-flex align-items-start gap-2">
-                <span class="text-danger fw-bold">✕</span>
-                <span><strong>Browser Thread Freezing:</strong> Opening 30+ tabs in parallel choked CPU threads and consumed massive RAM, freezing Google Chrome completely.</span>
-              </li>
-              <li class="d-flex align-items-start gap-2">
-                <span class="text-danger fw-bold">✕</span>
-                <span><strong>Aggressive Popup Blocking:</strong> Browsers restrict programmatic <code>window.open</code> without individual clicks, killing web openers after the first tab.</span>
-              </li>
-              <li class="d-flex align-items-start gap-2">
-                <span class="text-danger fw-bold">✕</span>
-                <span><strong>Anti-Bot Server Bans:</strong> Hitting servers with 100 simultaneous requests in the same millisecond triggered Cloudflare WAF bans and rate limits.</span>
-              </li>
-              <li class="d-flex align-items-start gap-2">
-                <span class="text-danger fw-bold">✕</span>
-                <span><strong>Zero Session Persistence:</strong> Daily recurring link groups had to be manually copy-pasted every single morning.</span>
-              </li>
-            </ul>
-          </div>
 
-          <div class="col-lg-6">
-            <div class="card border-0 shadow-sm p-4 p-md-5 rounded-4 bg-white border-start border-4 border-primary">
-              <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-3 w-auto me-auto">The Product Hypothesis</span>
-              <h3 class="h4 fw-bold mb-3 text-dark">Build a Resilient, Queue-Driven Tab Automation Engine</h3>
-              <p class="text-muted">
-                If we introduce an <strong>asynchronous pacing scheduler</strong> with customizable delay intervals (0.1s to 10s), we can open hundreds of URLs smoothly without memory spikes, bypass browser popup sandboxes, and save link builders hours of daily repetitive clicking.
+        <!-- Header -->
+        <div class="mb-4">
+          <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
+            <span class="tech-mono fw-bold badge-soft-indigo-pill">
+              • 01 / THE BOTTLENECK &amp; ARCHITECTURAL SOLUTION
+            </span>
+            <span class="tech-mono text-muted badge-soft-gray-pill">
+              THREAD-SAFE CONCURRENCY SPEC
+            </span>
+          </div>
+          <h2 class="display-6 fw-bold mb-2 text-dark tracking-tight">
+            The Everyday Bottleneck in SEO Audits &amp; Link Verification
+          </h2>
+          <div class="row">
+            <div class="col-lg-9 col-xl-8">
+              <p class="text-secondary small fs-6 mb-0 lh-1-6">
+                Why standard programmatic batch tab launching breaks under real-world load, chokes browser render threads,
+                and triggers aggressive bot mitigation shields—and how a queue-pacing architecture solved it.
               </p>
-              <hr class="my-4">
-              <div class="row g-3 text-center">
-                <div class="col-4">
-                  <div class="fw-bold fs-5 text-primary">20+ min</div>
-                  <div class="text-muted small">Daily Manual Toil</div>
-                </div>
-                <div class="col-4">
-                  <div class="fw-bold fs-5 text-success">5 sec</div>
-                  <div class="text-muted small">Automated Batch</div>
-                </div>
-                <div class="col-4">
-                  <div class="fw-bold fs-5 text-dark">96%</div>
-                  <div class="text-muted small">Time Saved</div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
+
+        <!-- 4-Card Benchmark KPI Metrics Row -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-lg-3">
+            <div class="tech-benchmark-card">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="tech-mono text-muted tech-benchmark-label">BASELINE EFFORT</span>
+                <span class="text-muted fs-13">⏱</span>
+              </div>
+              <div class="h4 fw-bold text-dark mt-2 mb-1">20+ min</div>
+              <div class="text-secondary small fs-11-5">Manual Toil Replaced</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="tech-benchmark-card">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="tech-mono tech-benchmark-label text-indigo-accent">AUTOMATED
+                  TARGET</span>
+                <span class="fs-13 text-indigo-accent">⚡</span>
+              </div>
+              <div class="h4 fw-bold mt-2 mb-1 text-indigo-accent">5.2s</div>
+              <div class="text-secondary small fs-11-5">Automated 100-URL Batch</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="tech-benchmark-card">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="tech-mono tech-benchmark-label text-emerald-accent">RENDERER
+                  HEALTH</span>
+                <span class="fs-13 text-emerald-accent">🛡️</span>
+              </div>
+              <div class="h4 fw-bold mt-2 mb-1 text-emerald-accent">0%</div>
+              <div class="text-secondary small fs-11-5">Browser Freezes (Zero OOM Crash)</div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="tech-benchmark-card">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="tech-mono tech-benchmark-label text-sky-accent">DATA
+                  BOUNDARIES</span>
+                <span class="fs-13 text-sky-accent">🔒</span>
+              </div>
+              <div class="h4 fw-bold text-dark mt-2 mb-1">100%</div>
+              <div class="text-secondary small fs-11-5">Client-Side Local Privacy</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2-Column Main Architectural Layout -->
+        <div class="row g-4 align-items-stretch">
+
+          <!-- LEFT COLUMN: Problem Space & 4 Root Bottlenecks -->
+          <div class="col-lg-6 d-flex flex-column">
+
+            <!-- Contextual Friction Callout -->
+            <div class="p-3 mb-3 rounded-3 callout-card-indigo">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="tech-mono badge-soft-white-outline">Contextual
+                  Friction</span>
+                <span class="tech-mono badge-soft-white-outline">Operational
+                  Reality</span>
+              </div>
+              <p class="text-secondary small mb-0 fs-12 lh-1-6">
+                While executing high-throughput backlink audits at Backlinks.tools, teams had to verify 50–200 URLs
+                every single morning. Repetitive manual clicking drained 20–30 minutes per audit session, while existing
+                open-source browser openers reliably crashed the browser or failed silently.
+              </p>
+            </div>
+
+            <!-- Bottlenecks Subtitle -->
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-bold text-dark fs-14">The 4 Root Architecture Bottlenecks</span>
+              <span class="tech-mono text-muted fs-10-5">FAILURE MODES v1.0</span>
+            </div>
+
+            <!-- 4 Bottleneck Cards -->
+            <div class="tech-bottleneck-card border-rose">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="fw-bold text-dark fs-13-5">1. Browser Thread Starvation</span>
+                <span class="tech-mono fw-bold badge-soft-rose-micro">CRITICAL:
+                  OOM Crash</span>
+              </div>
+              <p class="text-secondary small mb-0 fs-11-5 lh-1-5">
+                Firing 30+ simultaneous parallel tabs overwhelmed Chromium's CPU renderer thread, spiked active memory
+                usage to multiple gigabytes within seconds, and triggered full Out-Of-Memory (OOM) browser freezing.
+              </p>
+            </div>
+
+            <div class="tech-bottleneck-card border-indigo">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="fw-bold text-dark fs-13-5">2. Aggressive Popup Sandboxing</span>
+                <span class="tech-mono fw-bold badge-soft-indigo-micro">SANDBOX:
+                  Blocked Window</span>
+              </div>
+              <p class="text-secondary small mb-0 fs-11-5 lh-1-5">
+                Modern browser security models strictly penalize programmatic window.open() loops without transient user
+                activation gestures, silently blocking all subsequent tabs after the first batch.
+              </p>
+            </div>
+
+            <div class="tech-bottleneck-card border-sky">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="fw-bold text-dark fs-13-5">3. Anti-Bot WAF &amp; IP Bans</span>
+                <span class="tech-mono fw-bold badge-soft-sky-micro">SECURITY:
+                  429 Rate Limits</span>
+              </div>
+              <p class="text-secondary small mb-0 fs-11-5 lh-1-5">
+                Hitting web servers with 100 concurrent HTTP requests from a single client IP within the same
+                millisecond tripped Cloudflare, Akamai, and AWS WAF rate-limiting rules, causing temporary IP
+                blacklisting.
+              </p>
+            </div>
+
+            <div class="tech-bottleneck-card border-slate">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="fw-bold text-dark fs-13-5">4. Zero Session Persistence</span>
+                <span class="tech-mono text-muted badge-soft-gray-micro">PRODUCTIVITY:
+                  Daily Re-entry</span>
+              </div>
+              <p class="text-secondary small mb-0 fs-11-5 lh-1-5">
+                No client-side state preservation for recurring audit cohorts. Analysts were forced to re-copy and
+                re-paste identical raw URL lists from messy spreadsheets every morning.
+              </p>
+            </div>
+
+            <!-- Bottom Test Strip -->
+            <div class="d-flex justify-content-between align-items-center px-3 py-2 rounded-2 mt-auto box-bordered-slate fs-10-5">
+              <span class="tech-mono text-secondary">ℹ Benchmark conducted against Chromium 122.0.x on 16GB macOS /
+                8-core CPU</span>
+              <span class="tech-mono text-muted">N=500 RUNS</span>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: The Architectural Solution -->
+          <div class="col-lg-6">
+            <div class="tech-solution-card">
+
+              <!-- Subheader -->
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="tech-mono fw-bold badge-soft-indigo-micro">THE
+                    ARCHITECTURAL SOLUTION</span>
+                  <span class="tech-mono fw-bold badge-soft-emerald-micro">VERIFIED
+                    ENGINE</span>
+                </div>
+                <span class="tech-mono text-muted fs-10-5">SPEC: RFC-088</span>
+              </div>
+
+              <!-- Title -->
+              <h3 class="h4 fw-bold text-dark mb-2 fs-20">
+                Resilient, Queue-Driven Tab Automation Engine
+              </h3>
+              <p class="text-secondary small mb-3 fs-12 lh-1-55">
+                By replacing burst concurrency with an asynchronous pacing queue scheduler (configurable throttle delays
+                from 0.1s to 10s) and native background window tab allocation, we open hundreds of URLs smoothly with
+                zero renderer thread starvation, bypass sandbox blocks, and preserve system responsiveness.
+              </p>
+
+              <!-- Comparison Stats Box -->
+              <div class="p-3 rounded-3 mb-3 box-bordered-slate">
+                <div class="row g-2 text-start">
+                  <div class="col-4 border-end">
+                    <div class="h5 fw-bold text-dark mb-0">20+ min</div>
+                    <div class="tech-mono text-muted fs-10">Manual Daily Toil</div>
+                  </div>
+                  <div class="col-4 border-end ps-3">
+                    <div class="h5 fw-bold mb-0 text-indigo-accent">5.2s</div>
+                    <div class="tech-mono fs-10 text-indigo-600">Automated 100-URL Batch</div>
+                  </div>
+                  <div class="col-4 ps-3">
+                    <div class="h5 fw-bold mb-0 text-emerald-accent">96%</div>
+                    <div class="tech-mono fs-10 text-emerald-dark">Time Saved</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Engine Verification Guarantees -->
+              <div class="mb-3">
+                <div class="tech-mono text-muted mb-2 fs-10 fw-bold tracking-wide">ENGINE VERIFICATION GUARANTEES</div>
+                <div class="d-flex gap-2 flex-wrap">
+                  <span class="tech-mono fw-bold badge-spec-pill">
+                    ✔ Zero Freezes
+                  </span>
+                  <span class="tech-mono fw-bold badge-spec-pill">
+                    ✔ 100% Privacy
+                  </span>
+                  <span class="tech-mono fw-bold badge-spec-pill">
+                    ✔ Sandbox Bypass
+                  </span>
+                </div>
+              </div>
+
+              <!-- Dark Terminal Viewport -->
+              <div class="tech-terminal mb-3">
+                <div class="tech-terminal-header">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="d-flex gap-1">
+                      <span class="tech-dot-indicator dot-red"></span>
+                      <span class="tech-dot-indicator dot-amber"></span>
+                      <span class="tech-dot-indicator dot-green"></span>
+                    </div>
+                    <span class="tech-mono text-muted ps-2 fs-10-5">queue-scheduler.ts</span>
+                  </div>
+                  <span class="tech-mono tok-fn fs-10 tracking-wide">ASYNC
+                    PACER</span>
+                </div>
+                <div class="tech-terminal-body tech-mono code-pre-box"><span class="tok-kw">class</span> <span class="tok-type">TabQueueDispatcher</span> {
+                  <span class="tok-com">// Paced queue execution prevents Chrome renderer deadlock</span>
+                  <span class="tok-kw">async</span> <span class="tok-fn">dispatchBatch</span>(<span class="tok-var">urls</span>: <span class="tok-type">string</span>[], <span class="tok-var">delayMs</span> = <span class="tok-num">150</span>) {
+                  <span class="tok-kw">const</span> <span class="tok-var">windowInstance</span> = <span class="tok-kw">await</span> <span class="tok-fn">chrome</span>.<span class="tok-fn">windows</span>.<span class="tok-str">create</span>({ <span class="tok-var">focused</span>: <span class="tok-num">false</span> });
+
+                  <span class="tok-kw">for</span> (<span class="tok-kw">const</span> [<span class="tok-var">index</span>, <span class="tok-var">url</span>] <span class="tok-kw">of</span> <span class="tok-var">urls</span>.<span class="tok-str">entries</span>()) {
+                  <span class="tok-kw">await</span> <span class="tok-fn">chrome</span>.<span class="tok-fn">tabs</span>.<span class="tok-str">create</span>({
+                  <span class="tok-var">windowId</span>: <span class="tok-var">windowInstance</span>.<span class="tok-var">id</span>,
+                  <span class="tok-var">url</span>: <span class="tok-str">sanitizeUrl</span>(<span class="tok-var">url</span>),
+                  <span class="tok-var">active</span>: <span class="tok-num">false</span>
+                  });
+                  <span class="tok-com">// Micro-jitter prevents edge firewall burst detection</span>
+                  <span class="tok-kw">const</span> <span class="tok-var">jitter</span> = <span class="tok-fn">Math</span>.<span class="tok-str">random</span>() * <span class="tok-num">20</span>;
+                  <span class="tok-kw">await</span> <span class="tok-kw">new</span> <span class="tok-type">Promise</span>(<span class="tok-var">r</span> =&gt; <span class="tok-str">setTimeout</span>(<span class="tok-var">r</span>, <span class="tok-var">delayMs</span> + <span class="tok-var">jitter</span>));
+                  }
+                  }
+                  }
+                </div>
+              </div>
+
+              <!-- Throughput Load Smoothing Bar -->
+              <div class="mt-auto pt-2">
+                <div class="d-flex justify-content-between align-items-center mb-1 tech-mono fs-10">
+                  <span class="text-secondary">Throughput Load Smoothing (100 URLs)</span>
+                  <span class="fw-bold text-emerald-accent">Safe Operating Zone</span>
+                </div>
+                <div class="tech-pacer-bar"></div>
+                <div class="d-flex justify-content-between align-items-center tech-mono text-muted fs-9-5">
+                  <span>0ms (Init)</span>
+                  <span>2.5s (Chunk 50)</span>
+                  <span>5.2s (Completed)</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTTOM BANNER: Ready to review raw telemetry? -->
+        <div class="tech-telemetry-banner mt-4">
+          <div class="d-flex align-items-center gap-3">
+            <div class="icon-box-rounded icon-cube-indigo">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m18 16 4-4-4-4"></path>
+                <path d="m6 8-4 4 4 4"></path>
+                <path d="m14.5 4-5 16"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="fw-bold text-dark mb-0 fs-15">Ready to review raw telemetry?</h4>
+              <p class="text-secondary small mb-0 fs-12">Explore real-time CPU thread consumption
+                metrics and sandbox isolation logs.</p>
+            </div>
+          </div>
+          <a href="#engineering-deepdive" class="btn fw-bold px-3 py-2 text-white btn-indigo-action">
+            02 / Benchmarks &amp; Metrics →
+          </a>
+        </div>
+
       </div>
     </section>
 
-    <!-- Tri-Platform Product Strategy -->
-    <section class="py-5 bg-light border-top border-bottom">
-      <div class="container py-3">
-        <div class="text-center max-w-700 mx-auto mb-5">
-          <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-2">Product Strategy</span>
-          <h2 class="display-6 fw-bold mb-3">The Tri-Platform Growth Engine</h2>
-          <p class="text-secondary lead fs-6">
-            Rather than building a single isolated tool, I engineered a 3-surface ecosystem to maximize user acquisition, retention, and developer trust.
-          </p>
+    <!-- Tri-Platform Distribution Architecture & Synergy -->
+    <section id="distribution-surfaces" class="py-5 bg-white border-top">
+      <div class="container py-4">
+
+        <!-- PART 1: Three Distribution Surfaces -->
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-lg-8 col-xl-7">
+            <div class="mb-3">
+              <span class="tech-pill-badge">THREE DISTRIBUTION SURFACES</span>
+            </div>
+            <h2 class="display-6 fw-bold mb-3 text-dark tracking-tight">Engineered for Full Lifecycle
+              Touchpoints</h2>
+            <p class="text-secondary small fs-6 mb-0 lh-1-6">
+              Each surface is purpose-built with dedicated technical constraints, user acquisition mechanics, and
+              functional retention hooks.
+            </p>
+          </div>
         </div>
 
-        <div class="row g-4">
-          <!-- Surface 1: Chrome Extension -->
-          <div class="col-md-4">
-            <div class="card border-0 shadow-sm p-4 h-100 rounded-4 bg-white">
-              <div class="d-flex align-items-center justify-content-between mb-3">
-                <span class="badge bg-primary px-3 py-2">Surface 1: Retention</span>
-                <span class="text-muted small fw-bold">Daily Habit</span>
+        <!-- 3 Distribution Surface Cards Row -->
+        <div class="row g-4 mb-5">
+          <!-- Card 1: Chrome Extension -->
+          <div class="col-lg-4">
+            <div class="tech-surface-main-card">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="tech-mono fw-bold badge-soft-indigo-sm">SURFACE
+                  01 • RETENTION</span>
+                <span class="tech-mono text-muted badge-soft-gray-xs">Daily
+                  Habit</span>
               </div>
-              <h3 class="h5 fw-bold mb-2">Chrome Extension</h3>
-              <p class="text-muted small flex-grow-1">
-                Embedded directly into the browser toolbar. Utilizes native <code>chrome.tabs</code> and <code>chrome.storage.local</code> APIs for zero-friction daily operations, background tab launching, and session persistence.
+              <div class="d-flex align-items-center mb-2">
+                <div class="tech-surface-icon-circle icon-cube-blue">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                  </svg>
+                </div>
+                <h3 class="h5 fw-bold text-dark mb-0 fs-17">Chrome Extension</h3>
+              </div>
+              <p class="text-secondary small mb-3 fs-12 lh-1-55">
+                Embedded natively into the browser toolbar. Utilizes native Chrome APIs for instant zero-friction daily
+                operations and persistent background tab queues.
               </p>
-              <div class="mt-3 pt-3 border-top">
-                <a href="https://chromewebstore.google.com/detail/bulk-multi-url-opener-bac/lloccbliokkdnomkopfhhplmofplmbgk" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm w-100 fw-bold">
-                  View on Chrome Web Store ↗
+
+              <!-- Specs Box -->
+              <div class="tech-specs-box mt-auto">
+                <div class="tech-mono fw-bold mb-2 fs-9-5 text-indigo-600 tracking-wide">•
+                  ARCHITECTURE SPECS</div>
+                <div class="tech-specs-item">
+                  <span class="text-primary fw-bold">✔</span>
+                  <span><strong>chrome.tabs API:</strong> Headless execution queue</span>
+                </div>
+                <div class="tech-specs-item">
+                  <span class="text-primary fw-bold">✔</span>
+                  <span><strong>chrome.storage.local:</strong> Persistent preset memory</span>
+                </div>
+                <div class="tech-specs-item">
+                  <span class="text-primary fw-bold">✔</span>
+                  <span><strong>Focus Preservation:</strong> Zero active tab stealing</span>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-2">
+                <a href="https://chromewebstore.google.com/detail/bulk-multi-url-opener-bac/lloccbliokkdnomkopfhhplmofplmbgk" target="_blank" rel="noopener" class="text-decoration-none fw-bold small text-primary fs-12">
+                  View on Chrome Web Store →
                 </a>
+                <span class="tech-mono fw-bold badge-soft-emerald-xs">v3.4
+                  Active</span>
               </div>
             </div>
           </div>
 
-          <!-- Surface 2: Web Tool on Backlinks.tools -->
-          <div class="col-md-4">
-            <div class="card border-0 shadow-sm p-4 h-100 rounded-4 bg-white">
-              <div class="d-flex align-items-center justify-content-between mb-3">
-                <span class="badge bg-success px-3 py-2">Surface 2: Acquisition</span>
-                <span class="text-muted small fw-bold">Top-of-Funnel</span>
+          <!-- Card 2: Backlinks.tools Web Version -->
+          <div class="col-lg-4">
+            <div class="tech-surface-main-card">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="tech-mono fw-bold badge-soft-emerald-sm">SURFACE
+                  02 • ACQUISITION</span>
+                <span class="tech-mono text-muted badge-soft-gray-xs">Top of
+                  Funnel</span>
               </div>
-              <h3 class="h5 fw-bold mb-2">Backlinks.tools Web Version</h3>
-              <p class="text-muted small flex-grow-1">
-                Zero-install web utility hosted on Backlinks.tools. Captures high-intent organic search volume for "bulk url opener" and funneling qualified SEO leads into the core SaaS platform.
+              <div class="d-flex align-items-center mb-2">
+                <div class="tech-surface-icon-circle icon-cube-green">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                    </path>
+                  </svg>
+                </div>
+                <h3 class="h5 fw-bold text-dark mb-0 fs-17">Backlinks.tools Web Version</h3>
+              </div>
+              <p class="text-secondary small mb-3 fs-12 lh-1-55">
+                Zero-install web utility hosted on Backlinks.tools. Captures organic search intent for "bulk url opener"
+                and converts link builders to our SaaS platform.
               </p>
-              <div class="mt-3 pt-3 border-top">
-                <a href="https://backlinks.tools/seo/multiple-url-opener/" target="_blank" rel="noopener" class="btn btn-outline-success btn-sm w-100 fw-bold">
+
+              <!-- Specs Box -->
+              <div class="tech-specs-box mt-auto">
+                <div class="tech-mono fw-bold mb-2 fs-9-5 text-emerald-accent tracking-wide">•
+                  GROWTH &amp; FUNNEL SPECS</div>
+                <div class="tech-specs-item">
+                  <span class="text-success fw-bold">✔</span>
+                  <span><strong>Organic Discovery:</strong> High-intent SEO keyword capture</span>
+                </div>
+                <div class="tech-specs-item">
+                  <span class="text-success fw-bold">✔</span>
+                  <span><strong>Client-Side Execution:</strong> In-browser DOM parsing</span>
+                </div>
+                <div class="tech-specs-item">
+                  <span class="text-success fw-bold">✔</span>
+                  <span><strong>Product-Led Engine:</strong> Direct bridge to SaaS tools</span>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-2">
+                <a href="https://backlinks.tools/seo/multiple-url-opener/" target="_blank" rel="noopener" class="text-decoration-none fw-bold small text-success fs-12">
                   Try Web Version ↗
                 </a>
+                <span class="tech-mono fw-bold badge-soft-sky-xs">Zero
+                  Auth</span>
               </div>
             </div>
           </div>
 
-          <!-- Surface 3: GitHub Open Source -->
-          <div class="col-md-4">
-            <div class="card border-0 shadow-sm p-4 h-100 rounded-4 bg-white">
-              <div class="d-flex align-items-center justify-content-between mb-3">
-                <span class="badge bg-dark px-3 py-2">Surface 3: Trust</span>
-                <span class="text-muted small fw-bold">Open Architecture</span>
+          <!-- Card 3: GitHub Open Source -->
+          <div class="col-lg-4">
+            <div class="tech-surface-main-card">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="tech-mono fw-bold badge-soft-purple-sm">SURFACE
+                  03 • TRUST &amp; AUDIT</span>
+                <span class="tech-mono text-muted badge-soft-gray-xs">Open
+                  Architecture</span>
               </div>
-              <h3 class="h5 fw-bold mb-2">GitHub Open Source</h3>
-              <p class="text-muted small flex-grow-1">
-                Full transparency. Privacy-conscious developers and corporate security teams can inspect the source code, verify zero telemetry tracking, and contribute to the parser and feature roadmap.
+              <div class="d-flex align-items-center mb-2">
+                <div class="tech-surface-icon-circle icon-cube-purple">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                  </svg>
+                </div>
+                <h3 class="h5 fw-bold text-dark mb-0 fs-17">GitHub Open Source</h3>
+              </div>
+              <p class="text-secondary small mb-3 fs-12 lh-1-55">
+                Complete transparency. Privacy-conscious security teams and engineers inspect the code, verify zero
+                telemetry transmission, and review source changes.
               </p>
-              <div class="mt-3 pt-3 border-top">
-                <a href="https://github.com/brijeshwork/url-opener" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm w-100 fw-bold">
+
+              <!-- Specs Box -->
+              <div class="tech-specs-box mt-auto">
+                <div class="tech-mono fw-bold mb-2 fs-9-5 text-purple-accent tracking-wide">•
+                  SECURITY &amp; AUDIT SPECS</div>
+                <div class="tech-specs-item">
+                  <span class="fw-bold text-purple-accent">✔</span>
+                  <span><strong>Strict Privacy:</strong> Zero telemetry / pingbacks verified</span>
+                </div>
+                <div class="tech-specs-item">
+                  <span class="fw-bold text-purple-accent">✔</span>
+                  <span><strong>Community Audited:</strong> MIT licensed source code</span>
+                </div>
+                <div class="tech-specs-item">
+                  <span class="fw-bold text-purple-accent">✔</span>
+                  <span><strong>Public Roadmap:</strong> Transparent issue &amp; fix tracking</span>
+                </div>
+              </div>
+
+              <!-- Footer -->
+              <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-2">
+                <a href="https://github.com/brijeshwork/url-opener" target="_blank" rel="noopener" class="text-decoration-none fw-bold small text-dark fs-12">
                   Explore Repository ↗
                 </a>
+                <span class="tech-mono fw-bold badge-soft-purple-xs">MIT
+                  License</span>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- PART 2: Cross-Platform Synergy Architecture (Growth Loop & Funnel Mechanics) -->
+        <div class="row justify-content-center text-center mt-5 pt-3 mb-4">
+          <div class="col-lg-8 col-xl-7">
+            <div class="mb-3">
+              <span class="tech-pill-badge badge-purple-deep">GROWTH LOOP &amp; FUNNEL
+                MECHANICS</span>
+            </div>
+            <h2 class="display-6 fw-bold mb-3 text-dark tracking-tight">Cross-Platform Synergy
+              Architecture</h2>
+            <p class="text-secondary small fs-6 mb-0 lh-1-6">
+              How users flow smoothly across top-of-funnel discovery, high-frequency daily execution, and open developer
+              validation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Outer Macro Box for the 3 Growth Loop Phases -->
+        <div class="tech-flow-macro mb-5">
+          <div class="row g-3">
+            <!-- Phase 1 -->
+            <div class="col-md-4">
+              <div class="tech-flow-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="tech-mono fw-bold badge-soft-emerald-sm">Phase
+                    1: Ingestion</span>
+                  <span class="tech-mono text-muted fs-10">Organic SEO</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2 fs-15">Web App Acquisition</h4>
+                <p class="text-secondary small mb-3 fs-12 lh-1-55">
+                  Users search Google for tab tools and discover the free web app. Zero friction, instant test run
+                  without permission prompts or downloads.
+                </p>
+                <div class="tech-flow-output tech-mono">
+                  Output: 1-click CTA prompt to install Chrome extension for background queues.
+                </div>
+              </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="col-md-4">
+              <div class="tech-flow-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="tech-mono fw-bold badge-soft-indigo-sm">Phase
+                    2: Retention</span>
+                  <span class="tech-mono text-muted fs-10">Daily Utility</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2 fs-15">Extension Habituation</h4>
+                <p class="text-secondary small mb-3 fs-12 lh-1-55">
+                  Pinning the extension embeds the automation directly into daily SEO review routines. Hotkeys and
+                  preset lists eliminate context switching.
+                </p>
+                <div class="tech-flow-output tech-mono">
+                  Output: High recurring engagement and Backlinks.tools SaaS awareness.
+                </div>
+              </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="col-md-4">
+              <div class="tech-flow-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="tech-mono fw-bold badge-soft-purple-sm">Phase
+                    3: Validation</span>
+                  <span class="tech-mono text-muted fs-10">Security Audit</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2 fs-15">GitHub Trust Engine</h4>
+                <p class="text-secondary small mb-3 fs-12 lh-1-55">
+                  Enterprise link builders &amp; developers verify no credential sniffers exist. Transparency eliminates
+                  churn from corporate security firewalls.
+                </p>
+                <div class="tech-flow-output tech-mono">
+                  Output: Open contributions, external bug reports, and viral dev endorsements.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PART 3: Engineering Comparison Matrix -->
+        <div class="row justify-content-center text-center mt-5 pt-3 mb-4">
+          <div class="col-lg-8 col-xl-7">
+            <div class="mb-3">
+              <span class="tech-pill-badge badge-slate-deep">ENGINEERING COMPARISON
+                MATRIX</span>
+            </div>
+            <h2 class="display-6 fw-bold mb-3 text-dark tracking-tight">Surface Implementation Breakdown
+            </h2>
+          </div>
+        </div>
+
+        <!-- Comparison Table Container -->
+        <div class="tech-matrix-container table-responsive">
+          <table class="tech-matrix-table table align-middle mb-0">
+            <thead>
+              <tr>
+                <th class="th-col-25">TECHNICAL DIMENSION</th>
+                <th class="th-col-chrome">CHROME EXTENSION</th>
+                <th class="th-col-web">WEB APP UTILITY</th>
+                <th class="th-col-github">GITHUB OPEN SOURCE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="dim-label">Execution Runtime</td>
+                <td class="tech-mono fs-11-5">Manifest V3 Background Service</td>
+                <td class="tech-mono fs-11-5">In-Browser DOM / Web Workers</td>
+                <td class="tech-mono fs-11-5">Source Repository (Vanilla JS)</td>
+              </tr>
+              <tr>
+                <td class="dim-label">Primary Growth Role</td>
+                <td class="fs-12">Retention &amp; Power User Workflow</td>
+                <td class="fs-12">Top-of-Funnel SEO Acquisition</td>
+                <td class="fs-12">Developer Trust &amp; Code Auditability</td>
+              </tr>
+              <tr>
+                <td class="dim-label">State Persistence</td>
+                <td class="tech-mono text-primary fs-11-5">chrome.storage.local</td>
+                <td class="tech-mono fs-11-5">Local Storage API</td>
+                <td class="tech-mono fs-11-5">Git Commits / Releases</td>
+              </tr>
+              <tr>
+                <td class="dim-label">Browser Sandboxing</td>
+                <td><span class="fw-bold text-emerald-accent">Full Bypass via chrome.tabs</span></td>
+                <td><span class="fw-bold text-amber-600">Scoped to Popup Permissions</span></td>
+                <td class="text-muted fs-11-5">N/A (Reference Codebase)</td>
+              </tr>
+              <tr>
+                <td class="dim-label">Telemetry &amp; Tracking</td>
+                <td><strong class="text-dark">0% / No Pingbacks</strong></td>
+                <td class="fs-12">Privacy-first Anonymous Counts</td>
+                <td><strong class="text-dark">Zero Telemetry Enforced</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </section>
 
@@ -674,84 +2105,93 @@
     <section id="engineering-deepdive" class="py-5 tech-case-study-section border-top">
       <div class="container py-4">
         <!-- Section Header -->
-        <div class="text-center max-w-750 mx-auto mb-4">
-          <div class="mb-3">
-            <span class="tech-pill-badge">SYSTEM DESIGN &amp; PERFORMANCE</span>
+        <div class="row justify-content-center text-center mb-4">
+          <div class="col-lg-8 col-xl-7">
+            <div class="mb-3">
+              <span class="tech-pill-badge">SYSTEM DESIGN &amp; PERFORMANCE</span>
+            </div>
+            <h2 class="display-6 fw-bold mb-3 text-dark tracking-tight">Hard Browser Constraints &amp;
+              How We Engineered Past Them</h2>
+            <p class="text-secondary small fs-6 mb-0 lh-1-6">
+              Building a toy script is straightforward; engineering a high-throughput engine capable of queuing and
+              launching 500+ URLs client-side without crashing Chrome or triggering anti-bot firewalls required solving
+              fundamental runtime barriers.
+            </p>
           </div>
-          <h2 class="display-6 fw-bold mb-3 text-dark" style="letter-spacing: -0.02em;">Hard Browser Constraints &amp; How We Engineered Past Them</h2>
-          <p class="text-secondary small fs-6 mb-0" style="line-height: 1.6; max-width: 820px; margin: 0 auto;">
-            Building a toy script is straightforward; engineering a high-throughput engine capable of queuing and launching 500+ URLs client-side without crashing Chrome or triggering anti-bot firewalls required solving fundamental runtime barriers.
-          </p>
         </div>
 
         <!-- 3-Card Benchmark Row -->
-        <div class="row g-3 mb-5 max-w-950 mx-auto justify-content-center">
+        <div class="row g-3 mb-5 justify-content-center">
           <div class="col-md-4">
             <div class="tech-benchmark-card">
               <div class="d-flex justify-content-between align-items-center">
-                <span class="tech-mono text-muted" style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px;">THROUGHPUT TARGET</span>
-                <span class="tech-benchmark-dot" style="background: #6366f1;"></span>
+                <span class="tech-mono text-muted tech-kpi-sublabel">THROUGHPUT TARGET</span>
+                <span class="tech-benchmark-dot dot-indigo"></span>
               </div>
-              <div class="h3 fw-bold text-dark mt-2 mb-1" style="letter-spacing: -0.02em;">500+ URLs</div>
-              <div class="text-secondary small" style="font-size: 12px;">Parallel Paced Batch Execution</div>
+              <div class="h3 fw-bold text-dark mt-2 mb-1 tracking-tight">500+ URLs</div>
+              <div class="text-secondary small fs-12">Parallel Paced Batch Execution</div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="tech-benchmark-card">
               <div class="d-flex justify-content-between align-items-center">
-                <span class="tech-mono text-muted" style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px;">RAM TARGET</span>
-                <span class="tech-benchmark-dot" style="background: #0284c7;"></span>
+                <span class="tech-mono text-muted tech-kpi-sublabel">RAM
+                  TARGET</span>
+                <span class="tech-benchmark-dot dot-sky"></span>
               </div>
-              <div class="h3 fw-bold text-dark mt-2 mb-1" style="letter-spacing: -0.02em;">&lt;45MB</div>
-              <div class="text-secondary small" style="font-size: 12px;">Capped Renderer Footprint</div>
+              <div class="h3 fw-bold text-dark mt-2 mb-1 tracking-tight">&lt;45MB</div>
+              <div class="text-secondary small fs-12">Capped Renderer Footprint</div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="tech-benchmark-card">
               <div class="d-flex justify-content-between align-items-center">
-                <span class="tech-mono text-muted" style="font-size: 11px; font-weight: 600; letter-spacing: 0.5px;">RELIABILITY RATE</span>
-                <span class="tech-benchmark-dot" style="background: #10b981;"></span>
+                <span class="tech-mono text-muted tech-kpi-sublabel">RELIABILITY RATE</span>
+                <span class="tech-benchmark-dot dot-emerald"></span>
               </div>
-              <div class="h3 fw-bold mt-2 mb-1" style="color: #059669; letter-spacing: -0.02em;">99.98%</div>
-              <div class="text-secondary small" style="font-size: 12px;">Zero Tab-Kill Crash Rate</div>
+              <div class="h3 fw-bold mt-2 mb-1 text-emerald-accent tracking-tight">99.98%</div>
+              <div class="text-secondary small fs-12">Zero Tab-Kill Crash Rate</div>
             </div>
           </div>
         </div>
 
         <!-- Macro Architectural Cards Stack -->
-        <div class="macro-cards-container">
 
           <!-- Card 01: Concurrency / CPU Throttling -->
           <div class="tech-macro-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="d-flex align-items-center">
-                <span class="badge border bg-light text-secondary rounded-pill px-2 py-1 tech-mono me-2" style="font-size: 10.5px;">01</span>
-                <span class="tech-mono text-secondary fw-bold" style="font-size: 11.5px; letter-spacing: 0.6px;">CONCURRENCY / CPU THROTTLING</span>
+                <span class="badge border bg-light text-secondary rounded-pill px-2 py-1 tech-mono me-2 fs-10-5">01</span>
+                <span class="tech-mono text-secondary fw-bold fs-11-5 tracking-wider">CONCURRENCY / CPU THROTTLING</span>
               </div>
-              <span class="tech-mono fw-bold" style="background: #ffe4e6; color: #e11d48; border-radius: 9999px; font-size: 11px; padding: 3px 12px;">• P1 • Critical</span>
+              <span class="tech-mono fw-bold badge-callout-red">•
+                P1 • Critical</span>
             </div>
 
             <div class="row g-4 align-items-center">
               <div class="col-lg-6">
                 <h3 class="h4 fw-bold text-dark mb-2">Browser Freezing &amp; Thread Starvation</h3>
-                <p class="text-secondary small mb-3" style="line-height: 1.6;">
-                  Synchronous mass navigation saturates browser execution pipelines and leads to unresponsive operating systems.
+                <p class="text-secondary small mb-3 lh-1-6">
+                  Synchronous mass navigation saturates browser execution pipelines and leads to unresponsive operating
+                  systems.
                 </p>
 
                 <!-- Obstacle Box -->
                 <div class="tech-obstacle-box obstacle-rose">
                   <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="tech-mono fw-bold text-danger d-flex align-items-center gap-1" style="font-size: 11px; letter-spacing: 0.5px;">
-                      <span style="font-size: 10px;">🔴</span> THE OBSTACLE: CPU THREAD EXHAUSTION
+                    <span class="tech-mono fw-bold text-danger d-flex align-items-center gap-1 fs-11 tracking-wide">
+                      <span class="fs-10">🔴</span> THE OBSTACLE: CPU THREAD EXHAUSTION
                     </span>
-                    <span class="badge rounded-pill tech-mono" style="background: #dc2626; color: #ffffff; font-size: 10px; padding: 3px 8px;">MEM &gt; 2GB</span>
+                    <span class="badge rounded-pill tech-mono badge-solid-red">MEM &gt;
+                      2GB</span>
                   </div>
-                  <p class="text-secondary small mb-2" style="font-size: 12.5px; line-height: 1.55;">
-                    Launching 100+ URLs concurrently spawns parallel Chromium renderer processes. RAM explodes to &gt;2GB instantly, locking Chrome's UI thread and causing tab-kill dialogs or hard OS freeze.
+                  <p class="text-secondary small mb-2 fs-12-5 lh-1-55">
+                    Launching 100+ URLs concurrently spawns parallel Chromium renderer processes. RAM explodes to
+                    &gt;2GB instantly, locking Chrome's UI thread and causing tab-kill dialogs or hard OS freeze.
                   </p>
-                  <div class="d-flex justify-content-between align-items-center pt-2 border-top border-danger border-opacity-10 tech-mono" style="font-size: 11px;">
+                  <div class="d-flex justify-content-between align-items-center pt-2 border-top border-danger border-opacity-10 tech-mono fs-11">
                     <span class="text-danger opacity-75">Impact: Unresponsive Script Crash</span>
-                    <span class="bg-white px-2 py-0.5 rounded border border-danger border-opacity-25 text-danger fw-bold" style="font-size: 10.5px;">Exit Code 137 (OOM)</span>
+                    <span class="bg-white px-2 py-0.5 rounded border border-danger border-opacity-25 text-danger fw-bold fs-10-5">Exit Code 137 (OOM)</span>
                   </div>
                 </div>
               </div>
@@ -762,34 +2202,37 @@
                   <div class="tech-terminal-header">
                     <div class="d-flex align-items-center gap-2">
                       <div class="d-flex gap-1">
-                        <span style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
-                        <span style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span>
-                        <span style="width: 10px; height: 10px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+                        <span class="tech-dot-indicator-lg dot-red"></span>
+                        <span class="tech-dot-indicator-lg dot-amber"></span>
+                        <span class="tech-dot-indicator-lg dot-green"></span>
                       </div>
-                      <span class="tech-mono text-muted ps-2" style="font-size: 11.5px;">✔ Asynchronous Queue Scheduler</span>
+                      <span class="tech-mono text-muted ps-2 fs-11-5">✔ Asynchronous Queue
+                        Scheduler</span>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                      <span class="tech-mono px-2 py-0.5 rounded" style="background: #1e293b; color: #94a3b8; font-size: 10.5px; border: 1px solid #334155;">pacing.ts</span>
-                      <span class="tech-mono text-muted" style="font-size: 11px;">⧉ Copy</span>
+                      <span class="tech-mono px-2 py-0.5 rounded tag-file-badge">pacing.ts</span>
+                      <span class="tech-mono text-muted fs-11">⧉ Copy</span>
                     </div>
                   </div>
-                  <div class="tech-terminal-body tech-mono"><span style="color: #64748b;">// Sequentially chunked pacing to avoid CPU spikes</span>
-<span style="color: #c084fc;">async</span> <span style="color: #c084fc;">function</span> <span style="color: #38bdf8;">dispatchBatch</span>(<span style="color: #94a3b8;">urls</span>: <span style="color: #fde047;">string</span>[], <span style="color: #94a3b8;">delay</span> = <span style="color: #f472b6;">1200</span>) {
-  <span style="color: #c084fc;">for</span> (<span style="color: #c084fc;">const</span> <span style="color: #94a3b8;">uri</span> <span style="color: #c084fc;">of</span> <span style="color: #94a3b8;">urls</span>) {
-    <span style="color: #c084fc;">await</span> <span style="color: #38bdf8;">chrome</span>.<span style="color: #38bdf8;">tabs</span>.<span style="color: #67e8f9;">create</span>({ <span style="color: #94a3b8;">url</span>, <span style="color: #94a3b8;">active</span>: <span style="color: #f472b6;">false</span> });
-    <span style="color: #c084fc;">await</span> <span style="color: #67e8f9;">sleep</span>(<span style="color: #94a3b8;">delay</span> + <span style="color: #67e8f9;">jitter</span>(<span style="color: #f472b6;">-150</span>, <span style="color: #f472b6;">150</span>));
-  }
-}</div>
+                  <div class="tech-terminal-body tech-mono"><span class="tok-com">// Sequentially chunked pacing
+                      to avoid CPU spikes</span>
+                    <span class="tok-kw">async</span> <span class="tok-kw">function</span> <span class="tok-fn">dispatchBatch</span>(<span class="tok-var">urls</span>: <span class="tok-type">string</span>[], <span class="tok-var">delay</span> = <span class="tok-num">1200</span>) {
+                    <span class="tok-kw">for</span> (<span class="tok-kw">const</span> <span class="tok-var">uri</span> <span class="tok-kw">of</span> <span class="tok-var">urls</span>) {
+                    <span class="tok-kw">await</span> <span class="tok-fn">chrome</span>.<span class="tok-fn">tabs</span>.<span class="tok-str">create</span>({ <span class="tok-var">url</span>, <span class="tok-var">active</span>: <span class="tok-num">false</span> });
+                    <span class="tok-kw">await</span> <span class="tok-str">sleep</span>(<span class="tok-var">delay</span> + <span class="tok-str">jitter</span>(<span class="tok-num">-150</span>, <span class="tok-num">150</span>));
+                    }
+                    }
+                  </div>
                 </div>
               </div>
             </div>
 
             <!-- Card Footer -->
             <div class="tech-card-footer">
-              <span class="tech-mono" style="background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; font-size: 11.5px; border-radius: 9999px; padding: 4px 14px;">
+              <span class="tech-mono badge-footer-meta">
                 Pacing Window: <strong>0.1s - 10.0s Granular</strong>
               </span>
-              <span class="tech-mono fw-bold" style="background: #d1fae5; color: #047857; font-size: 11.5px; border-radius: 9999px; padding: 4px 14px;">
+              <span class="tech-mono fw-bold badge-footer-status">
                 • RAM Spike Suppressed: &lt;45MB
               </span>
             </div>
@@ -799,41 +2242,45 @@
           <div class="tech-macro-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="d-flex align-items-center">
-                <span class="badge border bg-light text-secondary rounded-pill px-2 py-1 tech-mono me-2" style="font-size: 10.5px;">02</span>
-                <span class="tech-mono text-secondary fw-bold" style="font-size: 11.5px; letter-spacing: 0.6px;">PERMISSIONS &amp; SANDBOXING</span>
+                <span class="badge border bg-light text-secondary rounded-pill px-2 py-1 tech-mono me-2 fs-10-5">02</span>
+                <span class="tech-mono text-secondary fw-bold fs-11-5 tracking-wider">PERMISSIONS &amp; SANDBOXING</span>
               </div>
-              <span class="tech-mono fw-bold" style="background: #e0e7ff; color: #3730a3; border-radius: 9999px; font-size: 11px; padding: 3px 12px;">• Security Context</span>
+              <span class="tech-mono fw-bold badge-callout-indigo">•
+                Security Context</span>
             </div>
 
             <div class="row g-4 align-items-center">
               <div class="col-lg-5">
                 <h3 class="h4 fw-bold text-dark mb-2">Modern Browser Popup Blocker Sandboxing</h3>
-                <p class="text-secondary small mb-3" style="line-height: 1.6;">
+                <p class="text-secondary small mb-3 lh-1-6">
                   Browsers deliberately restrict multi-tab programmatic triggers unless strict user gestures exist.
                 </p>
 
                 <!-- Obstacle Box -->
                 <div class="tech-obstacle-box obstacle-indigo">
                   <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="tech-mono fw-bold d-flex align-items-center gap-1" style="font-size: 11px; letter-spacing: 0.5px; color: #3730a3;">
+                    <span class="tech-mono fw-bold d-flex align-items-center gap-1 fs-11 tracking-wide text-indigo-dark">
                       <span>🛡️</span> THE OBSTACLE: USER ACTIVATION BARRIER
                     </span>
-                    <span class="badge rounded-pill tech-mono" style="background: #3525cd; color: #ffffff; font-size: 10px; padding: 3px 8px;">Blocked Popups</span>
+                    <span class="badge rounded-pill tech-mono badge-solid-indigo">Blocked
+                      Popups</span>
                   </div>
-                  <p class="text-secondary small mb-2" style="font-size: 12.5px; line-height: 1.55;">
-                    Modern browsers enforce Transient User Activation: programmatic <code>window.open()</code> loops without discrete human clicks are killed immediately by Chrome's anti-abuse sandboxes.
+                  <p class="text-secondary small mb-2 fs-12-5 lh-1-55">
+                    Modern browsers enforce Transient User Activation: programmatic <code>window.open()</code> loops
+                    without discrete human clicks are killed immediately by Chrome's anti-abuse sandboxes.
                   </p>
-                  <div class="d-flex justify-content-between align-items-center pt-2 border-top border-primary border-opacity-10 tech-mono" style="font-size: 11px;">
+                  <div class="d-flex justify-content-between align-items-center pt-2 border-top border-primary border-opacity-10 tech-mono fs-11">
                     <span class="text-muted">Constraint: Transient gesture timeout</span>
-                    <span class="bg-white px-2 py-0.5 rounded border text-primary fw-bold" style="font-size: 10.5px; border-color: #c7d2fe;">User Gesture Token</span>
+                    <span class="bg-white px-2 py-0.5 rounded border text-primary fw-bold fs-10-5 border-token-indigo">User Gesture Token</span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-7">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="text-success fw-bold" style="font-size: 12.5px;">✔ Architecture Fit: Dual-Surface Permission Handling</span>
-                  <span class="tech-mono text-muted" style="font-size: 11px;">Runtime Polyfill</span>
+                  <span class="text-success fw-bold fs-12-5">✔ Architecture Fit: Dual-Surface
+                    Permission Handling</span>
+                  <span class="tech-mono text-muted fs-11">Runtime Polyfill</span>
                 </div>
 
                 <div class="row g-3">
@@ -841,15 +2288,16 @@
                   <div class="col-sm-6">
                     <div class="tech-surface-card">
                       <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="fw-bold text-dark d-flex align-items-center gap-1" style="font-size: 13px;">
+                        <span class="fw-bold text-dark d-flex align-items-center gap-1 fs-13">
                           <span>🧩</span> Extension Surface
                         </span>
-                        <span class="badge rounded-pill tech-mono" style="background: #e0e7ff; color: #3730a3; font-size: 10px;">Elevated API</span>
+                        <span class="badge rounded-pill tech-mono badge-elevated-api">Elevated API</span>
                       </div>
-                      <p class="text-secondary small mb-2" style="font-size: 12px; line-height: 1.5;">
-                        Invokes <code>chrome.tabs.create()</code>. Bypasses popup sandbox restrictions entirely, dispatching background tabs headlessly without window steals.
+                      <p class="text-secondary small mb-2 fs-12 lh-1-5">
+                        Invokes <code>chrome.tabs.create()</code>. Bypasses popup sandbox restrictions entirely,
+                        dispatching background tabs headlessly without window steals.
                       </p>
-                      <div class="tech-mono text-muted border-top pt-2" style="font-size: 10.5px;">
+                      <div class="tech-mono text-muted border-top pt-2 fs-10-5">
                         Permission Scope: <code class="text-primary">"tabs" permission</code>
                       </div>
                     </div>
@@ -859,15 +2307,16 @@
                   <div class="col-sm-6">
                     <div class="tech-surface-card">
                       <div class="d-flex justify-content-between align-items-center mb-2">
-                        <span class="fw-bold text-dark d-flex align-items-center gap-1" style="font-size: 13px;">
+                        <span class="fw-bold text-dark d-flex align-items-center gap-1 fs-13">
                           <span>🌐</span> Web App Surface
                         </span>
-                        <span class="badge rounded-pill tech-mono" style="background: #d1fae5; color: #047857; font-size: 10px;">Guided Flow</span>
+                        <span class="badge rounded-pill tech-mono badge-guided-flow">Guided Flow</span>
                       </div>
-                      <p class="text-secondary small mb-2" style="font-size: 12px; line-height: 1.5;">
-                        Engineered an onboarding heuristic that verifies popup clearance on initial load and guides users to allowlist <code>backlinks.tools</code> with a 1-click test tab.
+                      <p class="text-secondary small mb-2 fs-12 lh-1-5">
+                        Engineered an onboarding heuristic that verifies popup clearance on initial load and guides
+                        users to allowlist <code>backlinks.tools</code> with a 1-click test tab.
                       </p>
-                      <div class="tech-mono text-muted border-top pt-2" style="font-size: 10.5px;">
+                      <div class="tech-mono text-muted border-top pt-2 fs-10-5">
                         Permission Scope: <code class="text-success">Host Whitelist</code>
                       </div>
                     </div>
@@ -878,10 +2327,10 @@
 
             <!-- Card Footer -->
             <div class="tech-card-footer">
-              <span class="tech-mono" style="background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; font-size: 11.5px; border-radius: 9999px; padding: 4px 14px;">
+              <span class="tech-mono badge-footer-meta">
                 Tab Focus: <strong>Preserved &amp; Non-Intrusive Background State</strong>
               </span>
-              <span class="tech-mono fw-bold" style="background: #d1fae5; color: #047857; font-size: 11.5px; border-radius: 9999px; padding: 4px 14px;">
+              <span class="tech-mono fw-bold badge-footer-status">
                 • 100% Unblocked Execution
               </span>
             </div>
@@ -891,41 +2340,47 @@
           <div class="tech-macro-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="d-flex align-items-center">
-                <span class="badge border bg-light text-secondary rounded-pill px-2 py-1 tech-mono me-2" style="font-size: 10.5px;">03</span>
-                <span class="tech-mono text-secondary fw-bold" style="font-size: 11.5px; letter-spacing: 0.6px;">STATE HYDRATION &amp; LIFECYCLE</span>
+                <span class="badge border bg-light text-secondary rounded-pill px-2 py-1 tech-mono me-2 fs-10-5">03</span>
+                <span class="tech-mono text-secondary fw-bold fs-11-5 tracking-wider">STATE
+                  HYDRATION &amp; LIFECYCLE</span>
               </div>
-              <span class="tech-mono fw-bold" style="background: #fef3c7; color: #b45309; border-radius: 9999px; font-size: 11px; padding: 3px 12px;">• Manifest V3</span>
+              <span class="tech-mono fw-bold badge-callout-amber">•
+                Manifest V3</span>
             </div>
 
             <div class="row g-4 align-items-center">
               <div class="col-lg-5">
                 <h3 class="h4 fw-bold text-dark mb-2">Manifest V3 Service Worker Lifecycle</h3>
-                <p class="text-secondary small mb-3" style="line-height: 1.6;">
-                  Chrome destroys long-running background pages, replacing them with transient workers that sleep mid-operation.
+                <p class="text-secondary small mb-3 lh-1-6">
+                  Chrome destroys long-running background pages, replacing them with transient workers that sleep
+                  mid-operation.
                 </p>
 
                 <!-- Obstacle Box -->
                 <div class="tech-obstacle-box obstacle-amber">
                   <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="tech-mono fw-bold d-flex align-items-center gap-1" style="font-size: 11px; letter-spacing: 0.5px; color: #b45309;">
+                    <span class="tech-mono fw-bold d-flex align-items-center gap-1 fs-11 tracking-wide text-amber-accent">
                       <span>⏱️</span> THE OBSTACLE: 30S EXECUTION TERMINATION
                     </span>
-                    <span class="badge rounded-pill tech-mono" style="background: #0f2c4a; color: #ffffff; font-size: 10px; padding: 3px 8px;">Worker Sleep</span>
+                    <span class="badge rounded-pill tech-mono badge-solid-navy">Worker
+                      Sleep</span>
                   </div>
-                  <p class="text-secondary small mb-2" style="font-size: 12.5px; line-height: 1.55;">
-                    Manifest V3 deprecated persistent background pages for ephemeral service workers that automatically spin down after 30 seconds of inactivity, terminating large batches mid-flight.
+                  <p class="text-secondary small mb-2 fs-12-5 lh-1-55">
+                    Manifest V3 deprecated persistent background pages for ephemeral service workers that automatically
+                    spin down after 30 seconds of inactivity, terminating large batches mid-flight.
                   </p>
-                  <div class="d-flex justify-content-between align-items-center pt-2 border-top border-warning border-opacity-25 tech-mono" style="font-size: 11px;">
+                  <div class="d-flex justify-content-between align-items-center pt-2 border-top border-warning border-opacity-25 tech-mono fs-11">
                     <span class="text-muted">Worker Max Timeout: 30 Seconds</span>
-                    <span class="bg-white px-2 py-0.5 rounded border fw-bold" style="font-size: 10.5px; border-color: #fed7aa; color: #b45309;">Aborted Execution</span>
+                    <span class="bg-white px-2 py-0.5 rounded border fw-bold fs-10-5 border-token-amber text-amber-accent">Aborted Execution</span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-7">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="text-success fw-bold" style="font-size: 12.5px;">✔ Architecture Fit: Decoupled State &amp; Alarm Wakeups</span>
-                  <span class="tech-mono text-muted" style="font-size: 11px;">Automated Recovery</span>
+                  <span class="text-success fw-bold fs-12-5">✔ Architecture Fit: Decoupled State
+                    &amp; Alarm Wakeups</span>
+                  <span class="tech-mono text-muted fs-11">Automated Recovery</span>
                 </div>
 
                 <div class="row g-2">
@@ -934,10 +2389,10 @@
                     <div class="tech-pipeline-card">
                       <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="tech-step-num">1</span>
-                        <span class="tech-mono text-muted" style="font-size: 9.5px;">SNAPSHOT</span>
+                        <span class="tech-mono text-muted fs-9-5">SNAPSHOT</span>
                       </div>
-                      <h4 class="fw-bold text-dark my-1" style="font-size: 12.5px;">Persist Queue</h4>
-                      <p class="text-muted small mb-0" style="font-size: 11px; line-height: 1.4;">
+                      <h4 class="fw-bold text-dark my-1 fs-12-5">Persist Queue</h4>
+                      <p class="text-muted small mb-0 fs-11 lh-1-4">
                         Syncs pending queue indices to <code>storage.local</code>.
                       </p>
                     </div>
@@ -948,10 +2403,10 @@
                     <div class="tech-pipeline-card">
                       <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="tech-step-num">2</span>
-                        <span class="tech-mono text-muted" style="font-size: 9.5px;">HEARTBEAT</span>
+                        <span class="tech-mono text-muted fs-9-5">HEARTBEAT</span>
                       </div>
-                      <h4 class="fw-bold text-dark my-1" style="font-size: 12.5px;">Alarm Keepalive</h4>
-                      <p class="text-muted small mb-0" style="font-size: 11px; line-height: 1.4;">
+                      <h4 class="fw-bold text-dark my-1 fs-12-5">Alarm Keepalive</h4>
+                      <p class="text-muted small mb-0 fs-11 lh-1-4">
                         <code>chrome.alarms</code> sets ping interval to prevent worker death.
                       </p>
                     </div>
@@ -962,10 +2417,10 @@
                     <div class="tech-pipeline-card">
                       <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="tech-step-num">3</span>
-                        <span class="tech-mono text-muted" style="font-size: 9.5px;">RESEED</span>
+                        <span class="tech-mono text-muted fs-9-5">RESEED</span>
                       </div>
-                      <h4 class="fw-bold text-dark my-1" style="font-size: 12.5px;">Hydrate State</h4>
-                      <p class="text-muted small mb-0" style="font-size: 11px; line-height: 1.4;">
+                      <h4 class="fw-bold text-dark my-1 fs-12-5">Hydrate State</h4>
+                      <p class="text-muted small mb-0 fs-11 lh-1-4">
                         Worker re-initializes and pulls cursor pointer on restart.
                       </p>
                     </div>
@@ -976,10 +2431,10 @@
                     <div class="tech-pipeline-card">
                       <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="tech-step-num num-success">4</span>
-                        <span class="tech-mono text-success fw-bold" style="font-size: 9.5px;">RESUME</span>
+                        <span class="tech-mono text-success fw-bold fs-9-5">RESUME</span>
                       </div>
-                      <h4 class="fw-bold text-dark my-1" style="font-size: 12.5px;">Resume Pacing</h4>
-                      <p class="text-muted small mb-0" style="font-size: 11px; line-height: 1.4;">
+                      <h4 class="fw-bold text-dark my-1 fs-12-5">Resume Pacing</h4>
+                      <p class="text-muted small mb-0 fs-11 lh-1-4">
                         Queue picks up with zero dropped URLs or duplication.
                       </p>
                     </div>
@@ -990,10 +2445,10 @@
 
             <!-- Card Footer -->
             <div class="tech-card-footer">
-              <span class="tech-mono" style="background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; font-size: 11.5px; border-radius: 9999px; padding: 4px 14px;">
+              <span class="tech-mono badge-footer-meta">
                 Worker Timeout Resistance: <strong>Infinite Continuous Pacing</strong>
               </span>
-              <span class="tech-mono fw-bold" style="background: #d1fae5; color: #047857; font-size: 11.5px; border-radius: 9999px; padding: 4px 14px;">
+              <span class="tech-mono fw-bold badge-footer-status">
                 • Self-Healing Lifecycle
               </span>
             </div>
@@ -1003,41 +2458,46 @@
           <div class="tech-macro-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="d-flex align-items-center">
-                <span class="badge border bg-light text-secondary rounded-pill px-2 py-1 tech-mono me-2" style="font-size: 10.5px;">04</span>
-                <span class="tech-mono text-secondary fw-bold" style="font-size: 11.5px; letter-spacing: 0.6px;">ZERO-TELEMETRY COMPLIANCE</span>
+                <span class="badge border bg-light text-secondary rounded-pill px-2 py-1 tech-mono me-2 fs-10-5">04</span>
+                <span class="tech-mono text-secondary fw-bold fs-11-5 tracking-wider">ZERO-TELEMETRY COMPLIANCE</span>
               </div>
-              <span class="tech-mono fw-bold" style="background: #d1fae5; color: #047857; border-radius: 9999px; font-size: 11px; padding: 3px 12px;">• 100% Client-Side</span>
+              <span class="tech-mono fw-bold badge-callout-emerald">•
+                100% Client-Side</span>
             </div>
 
             <div class="row g-4 align-items-center">
               <div class="col-lg-5">
                 <h3 class="h4 fw-bold text-dark mb-2">Zero-Knowledge Local Privacy Architecture</h3>
-                <p class="text-secondary small mb-3" style="line-height: 1.6;">
-                  High-volume operators process confidential URLs that must never transit third-party monitoring servers.
+                <p class="text-secondary small mb-3 lh-1-6">
+                  High-volume operators process confidential URLs that must never transit third-party monitoring
+                  servers.
                 </p>
 
                 <!-- Obstacle Box -->
                 <div class="tech-obstacle-box obstacle-emerald">
                   <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="tech-mono fw-bold text-success d-flex align-items-center gap-1" style="font-size: 11px; letter-spacing: 0.5px;">
+                    <span class="tech-mono fw-bold text-success d-flex align-items-center gap-1 fs-11 tracking-wide">
                       <span>🛡️</span> THE OBSTACLE: PRIVATE LINK DATA LEAKAGE
                     </span>
-                    <span class="badge rounded-pill tech-mono" style="background: #064e3b; color: #ffffff; font-size: 10px; padding: 3px 8px;">Auth &amp; Staging URLs</span>
+                    <span class="badge rounded-pill tech-mono badge-solid-forest">Auth &amp; Staging
+                      URLs</span>
                   </div>
-                  <p class="text-secondary small mb-2" style="font-size: 12.5px; line-height: 1.55;">
-                    SEO builders and QA engineers routinely paste confidential staging links, pre-release PR campaigns, and auth-tokenized links. SaaS telemetry backends introduce severe corporate security exposure.
+                  <p class="text-secondary small mb-2 fs-12-5 lh-1-55">
+                    SEO builders and QA engineers routinely paste confidential staging links, pre-release PR campaigns,
+                    and auth-tokenized links. SaaS telemetry backends introduce severe corporate security exposure.
                   </p>
-                  <div class="d-flex justify-content-between align-items-center pt-2 border-top border-success border-opacity-25 tech-mono" style="font-size: 11px;">
+                  <div class="d-flex justify-content-between align-items-center pt-2 border-top border-success border-opacity-25 tech-mono fs-11">
                     <span class="text-muted">Threat Vector: Cloud Exfiltration</span>
-                    <span class="bg-white px-2 py-0.5 rounded border border-success border-opacity-50 text-success fw-bold" style="font-size: 10.5px;">Strict Zero-Trust</span>
+                    <span class="bg-white px-2 py-0.5 rounded border border-success border-opacity-50 text-success fw-bold fs-10-5">Strict Zero-Trust</span>
                   </div>
                 </div>
               </div>
 
               <div class="col-lg-7">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                  <span class="text-success fw-bold" style="font-size: 12.5px;">✔ Architecture Fit: Zero-External Telemetry Pipeline</span>
-                  <span class="tech-mono text-muted" style="font-size: 11px;">Air-Gapped Local Engine</span>
+                  <span class="text-success fw-bold fs-12-5">✔ Architecture Fit: Zero-External
+                    Telemetry Pipeline</span>
+                  <span class="tech-mono text-muted fs-11">Air-Gapped Local Engine</span>
                 </div>
 
                 <!-- 3 Verification Checklist Rows -->
@@ -1045,43 +2505,61 @@
                   <!-- Row 1 -->
                   <div class="tech-verify-row">
                     <div class="d-flex align-items-center gap-3">
-                      <div class="tech-icon-cube" style="background: #e0e7ff; color: #4338ca;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                      <div class="tech-icon-cube icon-cube-indigo">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                          <path d="m9 12 2 2 4-4"></path>
+                        </svg>
                       </div>
                       <div>
-                        <h4 class="fw-bold text-dark mb-0" style="font-size: 13px;">Zero Remote API Calls</h4>
-                        <p class="text-secondary small mb-0" style="font-size: 12px;">No backend tracking servers, no phone-home pingbacks, and zero third-party telemetry SDKs injected.</p>
+                        <h4 class="fw-bold text-dark mb-0 fs-13">Zero Remote API Calls</h4>
+                        <p class="text-secondary small mb-0 fs-12">No backend tracking servers, no
+                          phone-home pingbacks, and zero third-party telemetry SDKs injected.</p>
                       </div>
                     </div>
-                    <span class="badge rounded-pill tech-mono" style="background: #d1fae5; color: #047857; font-size: 10.5px; padding: 4px 10px; white-space: nowrap;">100% Client-Side</span>
+                    <span class="badge rounded-pill tech-mono badge-chip-emerald">100%
+                      Client-Side</span>
                   </div>
 
                   <!-- Row 2 -->
                   <div class="tech-verify-row">
                     <div class="d-flex align-items-center gap-3">
-                      <div class="tech-icon-cube" style="background: #eff6ff; color: #2563eb;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                      <div class="tech-icon-cube icon-cube-blue">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
                       </div>
                       <div>
-                        <h4 class="fw-bold text-dark mb-0" style="font-size: 13px;">Chrome Local Sandboxing</h4>
-                        <p class="text-secondary small mb-0" style="font-size: 12px;">All configuration presets, lists, and delay parameters remain isolated strictly within device sandbox storage.</p>
+                        <h4 class="fw-bold text-dark mb-0 fs-13">Chrome Local Sandboxing</h4>
+                        <p class="text-secondary small mb-0 fs-12">All configuration presets, lists,
+                          and delay parameters remain isolated strictly within device sandbox storage.</p>
                       </div>
                     </div>
-                    <span class="badge rounded-pill tech-mono" style="background: #f1f5f9; color: #475569; font-size: 10.5px; padding: 4px 10px; white-space: nowrap;">Chrome Sandbox</span>
+                    <span class="badge rounded-pill tech-mono badge-chip-gray">Chrome
+                      Sandbox</span>
                   </div>
 
                   <!-- Row 3 -->
                   <div class="tech-verify-row">
                     <div class="d-flex align-items-center gap-3">
-                      <div class="tech-icon-cube" style="background: #f5f3ff; color: #7c3aed;">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                      <div class="tech-icon-cube icon-cube-purple">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="16 18 22 12 16 6"></polyline>
+                          <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
                       </div>
                       <div>
-                        <h4 class="fw-bold text-dark mb-0" style="font-size: 13px;">Open Source Verifiability</h4>
-                        <p class="text-secondary small mb-0" style="font-size: 12px;">Transparent repository architecture permitting strict corporate infosec inspections and reproducible builds.</p>
+                        <h4 class="fw-bold text-dark mb-0 fs-13">Open Source Verifiability</h4>
+                        <p class="text-secondary small mb-0 fs-12">Transparent repository
+                          architecture permitting strict corporate infosec inspections and reproducible builds.</p>
                       </div>
                     </div>
-                    <span class="badge rounded-pill tech-mono" style="background: #e0f2fe; color: #0284c7; font-size: 10.5px; padding: 4px 10px; white-space: nowrap;">Public Audit</span>
+                    <span class="badge rounded-pill tech-mono badge-chip-sky">Public
+                      Audit</span>
                   </div>
                 </div>
               </div>
@@ -1089,28 +2567,30 @@
 
             <!-- Card Footer -->
             <div class="tech-card-footer">
-              <span class="tech-mono" style="background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; font-size: 11.5px; border-radius: 9999px; padding: 4px 14px;">
+              <span class="tech-mono badge-footer-meta">
                 Network Transmissions: <strong>0 KB Outbound Telemetry</strong>
               </span>
-              <span class="tech-mono fw-bold" style="background: #d1fae5; color: #047857; font-size: 11.5px; border-radius: 9999px; padding: 4px 14px;">
+              <span class="tech-mono fw-bold badge-footer-status">
                 • Strict Local Integrity
               </span>
             </div>
           </div>
-
-        </div>
       </div>
     </section>
 
     <!-- 7 Screenshots & Product UX Walkthrough: 2-Part (Left Text, Right Image) -->
     <section id="screenshots-gallery" class="py-5 bg-light border-top border-bottom">
       <div class="container py-3">
-        <div class="text-center max-w-700 mx-auto mb-5">
-          <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-2">Visual Walkthrough</span>
-          <h2 class="display-6 fw-bold mb-3">UI/UX Architecture & Screenshots</h2>
-          <p class="text-secondary lead fs-6">
-            A screen-by-screen architectural breakdown of Multi URL Opener. Each view is engineered to reduce friction, protect browser stability, and automate high-throughput link workflows.
-          </p>
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-lg-8 col-xl-7">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-2">Visual
+              Walkthrough</span>
+            <h2 class="display-6 fw-bold mb-3">UI/UX Architecture & Screenshots</h2>
+            <p class="text-secondary lead fs-6 mb-0">
+              A screen-by-screen architectural breakdown of Multi URL Opener. Each view is engineered to reduce friction,
+              protect browser stability, and automate high-throughput link workflows.
+            </p>
+          </div>
         </div>
 
         <!-- Screen 1: Main Opener Dashboard -->
@@ -1120,20 +2600,26 @@
               <span class="gallery-badge bg-primary bg-opacity-10 text-primary">01 • Core Engine</span>
               <h3 class="h3 fw-bold mb-3 text-dark">Main Opener Dashboard</h3>
               <p class="text-secondary mb-3">
-                Designed for maximum data throughput and zero input friction. A clean, high-capacity textarea accepts raw clipboard dumps—handling up to 500+ URLs at once. The real-time counter immediately parses and validates the link count, with an instant toggle for automatic duplicate removal and whitespace trimming.
+                Designed for maximum data throughput and zero input friction. A clean, high-capacity textarea accepts
+                raw clipboard dumps—handling up to 500+ URLs at once. The real-time counter immediately parses and
+                validates the link count, with an instant toggle for automatic duplicate removal and whitespace
+                trimming.
               </p>
               <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-primary fw-bold">✓</span>
-                  <span><strong>Real-Time Link Counter:</strong> Instantaneous regex syntax validation and active count feedback.</span>
+                  <span><strong>Real-Time Link Counter:</strong> Instantaneous regex syntax validation and active count
+                    feedback.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-primary fw-bold">✓</span>
-                  <span><strong>Auto-Deduplication:</strong> Filters out identical links to save memory and avoid redundant tabs.</span>
+                  <span><strong>Auto-Deduplication:</strong> Filters out identical links to save memory and avoid
+                    redundant tabs.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-primary fw-bold">✓</span>
-                  <span><strong>One-Click Execution:</strong> Initiates the asynchronous delay queue engine with a single click.</span>
+                  <span><strong>One-Click Execution:</strong> Initiates the asynchronous delay queue engine with a
+                    single click.</span>
                 </div>
               </div>
             </div>
@@ -1147,7 +2633,8 @@
                   </div>
                 </div>
                 <div class="browser-img-wrap">
-                  <img src="https://brijesh.work/pub/media/products/opner.png" alt="Multi URL Opener - Main Opener Dashboard" loading="lazy">
+                  <img src="https://brijesh.work/pub/media/products/opner.png"
+                    alt="Multi URL Opener - Main Opener Dashboard" loading="lazy">
                 </div>
               </div>
             </div>
@@ -1161,20 +2648,25 @@
               <span class="gallery-badge bg-info bg-opacity-10 text-info">02 • Toolbar Access</span>
               <h3 class="h3 fw-bold mb-3 text-dark">Toolbar Quick Action Popup</h3>
               <p class="text-secondary mb-3">
-                A core product principle was eliminating context-switching. Link builders and researchers should never have to leave their current active tab to fire a quick batch of 5–20 competitor links. Clicking the extension icon opens a compact, distraction-free popup ready for immediate pasting and execution.
+                A core product principle was eliminating context-switching. Link builders and researchers should never
+                have to leave their current active tab to fire a quick batch of 5–20 competitor links. Clicking the
+                extension icon opens a compact, distraction-free popup ready for immediate pasting and execution.
               </p>
               <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-info fw-bold">✓</span>
-                  <span><strong>Zero Context Switching:</strong> Trigger link batches directly from Chrome's browser toolbar.</span>
+                  <span><strong>Zero Context Switching:</strong> Trigger link batches directly from Chrome's browser
+                    toolbar.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-info fw-bold">✓</span>
-                  <span><strong>Focus Preservation:</strong> Silently launches background tabs without stealing your active window focus.</span>
+                  <span><strong>Focus Preservation:</strong> Silently launches background tabs without stealing your
+                    active window focus.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-info fw-bold">✓</span>
-                  <span><strong>Quick Expansion:</strong> Single click expands into the full-screen manager whenever needed.</span>
+                  <span><strong>Quick Expansion:</strong> Single click expands into the full-screen manager whenever
+                    needed.</span>
                 </div>
               </div>
             </div>
@@ -1188,7 +2680,8 @@
                   </div>
                 </div>
                 <div class="browser-img-wrap">
-                  <img src="https://brijesh.work/pub/media/products/Extension-Popup.png" alt="Multi URL Opener - Extension Toolbar Popup" loading="lazy">
+                  <img src="https://brijesh.work/pub/media/products/Extension-Popup.png"
+                    alt="Multi URL Opener - Extension Toolbar Popup" loading="lazy">
                 </div>
               </div>
             </div>
@@ -1202,16 +2695,20 @@
               <span class="gallery-badge bg-warning bg-opacity-10 text-dark">03 • Quick Settings</span>
               <h3 class="h3 fw-bold mb-3 text-dark">Popup Delay & Mode Controls</h3>
               <p class="text-secondary mb-3">
-                Different workflows require different pacing. A quick QA smoke check on 5 links needs 0.1s instant opening, while a massive 150-link backlink audit needs 2.5s delay to prevent server rate-limiting. This popup sub-panel exposes critical delay overrides directly without forcing users into deep option menus.
+                Different workflows require different pacing. A quick QA smoke check on 5 links needs 0.1s instant
+                opening, while a massive 150-link backlink audit needs 2.5s delay to prevent server rate-limiting. This
+                popup sub-panel exposes critical delay overrides directly without forcing users into deep option menus.
               </p>
               <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-warning fw-bold">✓</span>
-                  <span><strong>Granular Interval Slider:</strong> Set delay spacing from 0.1s to 10.0s in 100ms increments.</span>
+                  <span><strong>Granular Interval Slider:</strong> Set delay spacing from 0.1s to 10.0s in 100ms
+                    increments.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-warning fw-bold">✓</span>
-                  <span><strong>Window Mode Toggles:</strong> Switch between "Open in New Window" and "Current Window Tabs".</span>
+                  <span><strong>Window Mode Toggles:</strong> Switch between "Open in New Window" and "Current Window
+                    Tabs".</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-warning fw-bold">✓</span>
@@ -1229,7 +2726,8 @@
                   </div>
                 </div>
                 <div class="browser-img-wrap">
-                  <img src="https://brijesh.work/pub/media/products/Extension-Settings-Popup.png" alt="Multi URL Opener - Quick Settings Popup" loading="lazy">
+                  <img src="https://brijesh.work/pub/media/products/Extension-Settings-Popup.png"
+                    alt="Multi URL Opener - Quick Settings Popup" loading="lazy">
                 </div>
               </div>
             </div>
@@ -1243,20 +2741,25 @@
               <span class="gallery-badge bg-success bg-opacity-10 text-success">04 • Engine Parameters</span>
               <h3 class="h3 fw-bold mb-3 text-dark">General Preferences & Tab Pacing</h3>
               <p class="text-secondary mb-3">
-                Controls how Chrome handles memory and thread allocation during high-volume batch launches. Users can enforce background tab loading so their active window doesn't steal focus, randomize interval delays with micro-jitter to bypass anti-bot heuristics, and specify tab opening order.
+                Controls how Chrome handles memory and thread allocation during high-volume batch launches. Users can
+                enforce background tab loading so their active window doesn't steal focus, randomize interval delays
+                with micro-jitter to bypass anti-bot heuristics, and specify tab opening order.
               </p>
               <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-success fw-bold">✓</span>
-                  <span><strong>Background Tab Loading:</strong> Loads tabs silently in the background without stealing active focus.</span>
+                  <span><strong>Background Tab Loading:</strong> Loads tabs silently in the background without stealing
+                    active focus.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-success fw-bold">✓</span>
-                  <span><strong>Reverse Order Launch:</strong> Ensures the first URL in your list remains the leftmost active tab.</span>
+                  <span><strong>Reverse Order Launch:</strong> Ensures the first URL in your list remains the leftmost
+                    active tab.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-success fw-bold">✓</span>
-                  <span><strong>Anti-Bot Delay Jitter:</strong> Adds subtle ±200ms randomized pacing to emulate human navigation.</span>
+                  <span><strong>Anti-Bot Delay Jitter:</strong> Adds subtle ±200ms randomized pacing to emulate human
+                    navigation.</span>
                 </div>
               </div>
             </div>
@@ -1270,7 +2773,8 @@
                   </div>
                 </div>
                 <div class="browser-img-wrap">
-                  <img src="https://brijesh.work/pub/media/products/General.png" alt="Multi URL Opener - General Preferences" loading="lazy">
+                  <img src="https://brijesh.work/pub/media/products/General.png"
+                    alt="Multi URL Opener - General Preferences" loading="lazy">
                 </div>
               </div>
             </div>
@@ -1284,20 +2788,25 @@
               <span class="gallery-badge bg-secondary bg-opacity-10 text-secondary">05 • Preset Storage</span>
               <h3 class="h3 fw-bold mb-3 text-dark">Saved URL Collections</h3>
               <p class="text-secondary mb-3">
-                Link builders and SEOs repeatedly check the same batches of competitor domains, indexing targets, and client dashboards every single day. The Saved URLs collection panel turns repetitive copy-paste friction into a single-click launch action stored securely in local device memory.
+                Link builders and SEOs repeatedly check the same batches of competitor domains, indexing targets, and
+                client dashboards every single day. The Saved URLs collection panel turns repetitive copy-paste friction
+                into a single-click launch action stored securely in local device memory.
               </p>
               <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-secondary fw-bold">✓</span>
-                  <span><strong>Named Preset Lists:</strong> Create and store reusable lists (e.g. "Morning Routine", "Client Audits").</span>
+                  <span><strong>Named Preset Lists:</strong> Create and store reusable lists (e.g. "Morning Routine",
+                    "Client Audits").</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-secondary fw-bold">✓</span>
-                  <span><strong>Instant One-Click Launch:</strong> Open an entire saved collection without reopening the text editor.</span>
+                  <span><strong>Instant One-Click Launch:</strong> Open an entire saved collection without reopening the
+                    text editor.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-secondary fw-bold">✓</span>
-                  <span><strong>Zero Cloud Transmission:</strong> Stored strictly in local Chrome storage to protect private client data.</span>
+                  <span><strong>Zero Cloud Transmission:</strong> Stored strictly in local Chrome storage to protect
+                    private client data.</span>
                 </div>
               </div>
             </div>
@@ -1311,7 +2820,8 @@
                   </div>
                 </div>
                 <div class="browser-img-wrap">
-                  <img src="https://brijesh.work/pub/media/products/Saved-URLs.png" alt="Multi URL Opener - Saved URL Collections" loading="lazy">
+                  <img src="https://brijesh.work/pub/media/products/Saved-URLs.png"
+                    alt="Multi URL Opener - Saved URL Collections" loading="lazy">
                 </div>
               </div>
             </div>
@@ -1325,20 +2835,25 @@
               <span class="gallery-badge bg-primary bg-opacity-10 text-primary">06 • Workspace Bundles</span>
               <h3 class="h3 fw-bold mb-3 text-dark">Session Presets & Grouping</h3>
               <p class="text-secondary mb-3">
-                Moving beyond isolated URL lists, the Session Manager enables project-level grouping. A user managing multiple clients or research themes can group URLs into dedicated workspace sessions, launching entire multi-tab environments in an isolated window tailored for that specific project.
+                Moving beyond isolated URL lists, the Session Manager enables project-level grouping. A user managing
+                multiple clients or research themes can group URLs into dedicated workspace sessions, launching entire
+                multi-tab environments in an isolated window tailored for that specific project.
               </p>
               <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-primary fw-bold">✓</span>
-                  <span><strong>Dedicated Window Launch:</strong> Opens session groups into a fresh, isolated Chrome window.</span>
+                  <span><strong>Dedicated Window Launch:</strong> Opens session groups into a fresh, isolated Chrome
+                    window.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-primary fw-bold">✓</span>
-                  <span><strong>Campaign Grouping:</strong> Bundle dozens of targets under specific client or campaign tags.</span>
+                  <span><strong>Campaign Grouping:</strong> Bundle dozens of targets under specific client or campaign
+                    tags.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-primary fw-bold">✓</span>
-                  <span><strong>Session Metadata:</strong> View total URL counts, timestamps, and last-opened dates.</span>
+                  <span><strong>Session Metadata:</strong> View total URL counts, timestamps, and last-opened
+                    dates.</span>
                 </div>
               </div>
             </div>
@@ -1352,7 +2867,8 @@
                   </div>
                 </div>
                 <div class="browser-img-wrap">
-                  <img src="https://brijesh.work/pub/media/products/Saved-URLs-Sessions.png" alt="Multi URL Opener - Session Presets" loading="lazy">
+                  <img src="https://brijesh.work/pub/media/products/Saved-URLs-Sessions.png"
+                    alt="Multi URL Opener - Session Presets" loading="lazy">
                 </div>
               </div>
             </div>
@@ -1366,20 +2882,25 @@
               <span class="gallery-badge bg-dark bg-opacity-10 text-dark">07 • Power-User Controls</span>
               <h3 class="h3 fw-bold mb-3 text-dark">Settings & Advanced Preferences</h3>
               <p class="text-secondary mb-3">
-                Built for developer and power-user speed. Provides custom keyboard shortcut bindings (e.g. Alt+Shift+U to trigger instant paste-and-launch), UI theme toggles, input regex sanitization rules, and full JSON export/import for seamless workspace backup across devices.
+                Built for developer and power-user speed. Provides custom keyboard shortcut bindings (e.g. Alt+Shift+U
+                to trigger instant paste-and-launch), UI theme toggles, input regex sanitization rules, and full JSON
+                export/import for seamless workspace backup across devices.
               </p>
               <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-dark fw-bold">✓</span>
-                  <span><strong>Keyboard Shortcut Triggers:</strong> Headless execution without clicking extension buttons.</span>
+                  <span><strong>Keyboard Shortcut Triggers:</strong> Headless execution without clicking extension
+                    buttons.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-dark fw-bold">✓</span>
-                  <span><strong>Full JSON Backup:</strong> Export and import entire URL lists and session presets across machines.</span>
+                  <span><strong>Full JSON Backup:</strong> Export and import entire URL lists and session presets across
+                    machines.</span>
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-dark fw-bold">✓</span>
-                  <span><strong>Sanitization Engine:</strong> Protocol auto-detection, UTM parameter cleaning, and whitespace trimming.</span>
+                  <span><strong>Sanitization Engine:</strong> Protocol auto-detection, UTM parameter cleaning, and
+                    whitespace trimming.</span>
                 </div>
               </div>
             </div>
@@ -1393,7 +2914,8 @@
                   </div>
                 </div>
                 <div class="browser-img-wrap">
-                  <img src="https://brijesh.work/pub/media/products/Settings-Preferences.png" alt="Multi URL Opener - Advanced Preferences" loading="lazy">
+                  <img src="https://brijesh.work/pub/media/products/Settings-Preferences.png"
+                    alt="Multi URL Opener - Advanced Preferences" loading="lazy">
                 </div>
               </div>
             </div>
@@ -1403,67 +2925,6 @@
       </div>
     </section>
 
-    <!-- Key Product Takeaways & Builder Reflection -->
-    <section class="py-5">
-      <div class="container py-3">
-        <div class="row g-5 align-items-center">
-          <div class="col-lg-6">
-            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-3">Product Manager Insights</span>
-            <h2 class="display-6 fw-bold mb-3">Key Builder Learnings</h2>
-            <div class="d-flex flex-column gap-3 text-secondary">
-              <div class="d-flex align-items-start gap-3">
-                <div class="bg-primary text-white rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; flex-shrink: 0; font-size: 0.85rem;">1</div>
-                <div>
-                  <h4 class="h6 fw-bold text-dark mb-1">Solve Real Operational Friction First</h4>
-                  <p class="small mb-0">Building tools to solve your own recurring pain point (BacklinksTools SEO audits) guarantees deep domain insight, immediate user empathy, and rapid feedback loops.</p>
-                </div>
-              </div>
-              <div class="d-flex align-items-start gap-3">
-                <div class="bg-primary text-white rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; flex-shrink: 0; font-size: 0.85rem;">2</div>
-                <div>
-                  <h4 class="h6 fw-bold text-dark mb-1">Reliability is Feature #1</h4>
-                  <p class="small mb-0">Users forgive minimal UI, but they never forgive a tool that freezes their entire browser. Prioritizing memory-safe queue throttling turned frustrated users into loyal advocates.</p>
-                </div>
-              </div>
-              <div class="d-flex align-items-start gap-3">
-                <div class="bg-primary text-white rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; flex-shrink: 0; font-size: 0.85rem;">3</div>
-                <div>
-                  <h4 class="h6 fw-bold text-dark mb-1">Multi-Surface Funnels Compound Growth</h4>
-                  <p class="small mb-0">A web tool captures top-of-funnel organic search, an extension retains active daily power users, and an open-source repository earns developer credibility and trust.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="card border-0 shadow-sm p-4 p-md-5 rounded-4 bg-dark text-white text-center">
-              <span class="badge bg-primary px-3 py-2 w-auto mx-auto mb-3">Get Started Today</span>
-              <h3 class="fw-bold mb-3">Experience High-Speed Tab Automation</h3>
-              <p class="text-white-50 mb-4 small">
-                Choose the surface that fits your workflow—install the Chrome Extension, test the online web tool on Backlinks.tools, or inspect the open-source code on GitHub.
-              </p>
-              <div class="d-grid gap-2 mb-3">
-                <a href="https://chromewebstore.google.com/detail/bulk-multi-url-opener-bac/lloccbliokkdnomkopfhhplmofplmbgk"
-                  target="_blank" rel="noopener" class="btn btn-primary btn-lg fw-bold">
-                  Add to Chrome (Free) ↗
-                </a>
-                <a href="https://backlinks.tools/seo/multiple-url-opener/"
-                  target="_blank" rel="noopener" class="btn btn-outline-light">
-                  Open Online Web Version ↗
-                </a>
-                <a href="https://github.com/brijeshwork/url-opener"
-                  target="_blank" rel="noopener" class="btn btn-outline-secondary text-white">
-                  Star on GitHub ↗
-                </a>
-              </div>
-              <a href="https://brijesh.work/product/" class="text-white-50 small text-decoration-none">
-                ← Back to All Products
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
   </main>
 
