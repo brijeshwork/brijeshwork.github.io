@@ -161,22 +161,6 @@
     .browser-dot.dot-red { background: #ef4444; }
     .browser-dot.dot-yellow { background: #f59e0b; }
     .browser-dot.dot-green { background: #10b981; }
-    .browser-address-bar {
-      flex-grow: 1;
-      background: #ffffff;
-      border-radius: 6px;
-      padding: 4px 12px;
-      font-size: 0.78rem;
-      font-family: monospace;
-      color: #64748b;
-      border: 1px solid #e2e8f0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
     .browser-img-wrap {
       position: relative;
       background: #f8fafc;
@@ -187,25 +171,6 @@
       width: 100%;
       height: auto;
       display: block;
-    }
-
-    /* Quick jump pill nav */
-    .quick-jump-pill {
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 50px;
-      text-decoration: none;
-      background: #ffffff;
-      color: #475569;
-      border: 1px solid #e2e8f0;
-      transition: all 0.2s ease;
-    }
-    .quick-jump-pill:hover {
-      background: #2563eb;
-      color: #ffffff;
-      border-color: #2563eb;
-      transform: translateY(-2px);
     }
 
     .gallery-badge {
@@ -585,23 +550,12 @@
     <!-- 7 Screenshots & Product UX Walkthrough: 2-Part (Left Text, Right Image) -->
     <section id="screenshots-gallery" class="py-5 bg-light border-top border-bottom">
       <div class="container py-3">
-        <div class="text-center max-w-700 mx-auto mb-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
           <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-2">Visual Walkthrough</span>
           <h2 class="display-6 fw-bold mb-3">UI/UX Architecture & Screenshots</h2>
           <p class="text-secondary lead fs-6">
             A screen-by-screen architectural breakdown of Multi URL Opener. Each view is engineered to reduce friction, protect browser stability, and automate high-throughput link workflows.
           </p>
-        </div>
-
-        <!-- Quick Jump Navigation Pills -->
-        <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
-          <a href="#screen-1" class="quick-jump-pill">1. Main Dashboard</a>
-          <a href="#screen-2" class="quick-jump-pill">2. Toolbar Popup</a>
-          <a href="#screen-3" class="quick-jump-pill">3. Quick Settings</a>
-          <a href="#screen-4" class="quick-jump-pill">4. General Preferences</a>
-          <a href="#screen-5" class="quick-jump-pill">5. Saved URL Lists</a>
-          <a href="#screen-6" class="quick-jump-pill">6. Session Bundles</a>
-          <a href="#screen-7" class="quick-jump-pill">7. Advanced Settings</a>
         </div>
 
         <!-- Screen 1: Main Opener Dashboard -->
@@ -635,9 +589,6 @@
                     <span class="browser-dot dot-red"></span>
                     <span class="browser-dot dot-yellow"></span>
                     <span class="browser-dot dot-green"></span>
-                  </div>
-                  <div class="browser-address-bar">
-                    <span>🔒</span> chrome-extension://multi-url-opener/dashboard.html
                   </div>
                 </div>
                 <div class="browser-img-wrap">
@@ -680,9 +631,6 @@
                     <span class="browser-dot dot-yellow"></span>
                     <span class="browser-dot dot-green"></span>
                   </div>
-                  <div class="browser-address-bar">
-                    <span>🧩</span> Chrome Toolbar Action: Extension Popup
-                  </div>
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/Extension-Popup.png" alt="Multi URL Opener - Extension Toolbar Popup" loading="lazy">
@@ -712,7 +660,7 @@
                 </div>
                 <div class="d-flex align-items-start gap-2 small text-secondary">
                   <span class="text-warning fw-bold">✓</span>
-                  <span><strong>Instant Persistence:</strong> Changes write immediately to <code>chrome.storage.local</code>.</span>
+                  <span><strong>Instant Persistence:</strong> Changes write immediately to local Chrome storage.</span>
                 </div>
               </div>
             </div>
@@ -723,9 +671,6 @@
                     <span class="browser-dot dot-red"></span>
                     <span class="browser-dot dot-yellow"></span>
                     <span class="browser-dot dot-green"></span>
-                  </div>
-                  <div class="browser-address-bar">
-                    <span>⚙️</span> chrome-extension://multi-url-opener/popup-settings.html
                   </div>
                 </div>
                 <div class="browser-img-wrap">
@@ -768,9 +713,6 @@
                     <span class="browser-dot dot-yellow"></span>
                     <span class="browser-dot dot-green"></span>
                   </div>
-                  <div class="browser-address-bar">
-                    <span>🔒</span> chrome-extension://multi-url-opener/options.html#general
-                  </div>
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/General.png" alt="Multi URL Opener - General Preferences" loading="lazy">
@@ -811,9 +753,6 @@
                     <span class="browser-dot dot-red"></span>
                     <span class="browser-dot dot-yellow"></span>
                     <span class="browser-dot dot-green"></span>
-                  </div>
-                  <div class="browser-address-bar">
-                    <span>📁</span> chrome-extension://multi-url-opener/saved-lists.html
                   </div>
                 </div>
                 <div class="browser-img-wrap">
@@ -856,9 +795,6 @@
                     <span class="browser-dot dot-yellow"></span>
                     <span class="browser-dot dot-green"></span>
                   </div>
-                  <div class="browser-address-bar">
-                    <span>🗂️</span> chrome-extension://multi-url-opener/sessions.html
-                  </div>
                 </div>
                 <div class="browser-img-wrap">
                   <img src="https://brijesh.work/pub/media/products/Saved-URLs-Sessions.png" alt="Multi URL Opener - Session Presets" loading="lazy">
@@ -875,7 +811,7 @@
               <span class="gallery-badge bg-dark bg-opacity-10 text-dark">07 • Power-User Controls</span>
               <h3 class="h3 fw-bold mb-3 text-dark">Settings & Advanced Preferences</h3>
               <p class="text-secondary mb-3">
-                Built for developer and power-user speed. Provides custom keyboard shortcut bindings (e.g. <kbd class="bg-light text-dark border">Alt+Shift+U</kbd> to trigger instant paste-and-launch), UI theme toggles, input regex sanitization rules, and full JSON export/import for seamless workspace backup across devices.
+                Built for developer and power-user speed. Provides custom keyboard shortcut bindings (e.g. Alt+Shift+U to trigger instant paste-and-launch), UI theme toggles, input regex sanitization rules, and full JSON export/import for seamless workspace backup across devices.
               </p>
               <div class="d-flex flex-column gap-2 mb-0">
                 <div class="d-flex align-items-start gap-2 small text-secondary">
@@ -899,9 +835,6 @@
                     <span class="browser-dot dot-red"></span>
                     <span class="browser-dot dot-yellow"></span>
                     <span class="browser-dot dot-green"></span>
-                  </div>
-                  <div class="browser-address-bar">
-                    <span>⚙️</span> chrome-extension://multi-url-opener/options.html#advanced
                   </div>
                 </div>
                 <div class="browser-img-wrap">
