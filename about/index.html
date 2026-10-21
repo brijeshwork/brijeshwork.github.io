@@ -124,38 +124,92 @@
     .cert-filter-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.65rem;
     }
 
     .cert-filter-btn {
       background-color: #ffffff;
-      color: #475569;
-      border: 1px solid #e2e8f0;
+      color: #1e293b;
+      border: 1.5px solid #cbd5e1;
       border-radius: 50rem;
-      padding: 0.35rem 0.85rem;
-      font-size: 0.825rem;
-      font-weight: 500;
+      padding: 0.45rem 1.05rem 0.45rem 0.55rem;
+      font-size: 0.95rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.65rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     }
 
     .cert-filter-btn:hover {
-      background-color: #e2e8f0;
-      color: #1e293b;
+      background-color: #f8fafc;
+      color: #0f172a;
+      border-color: #94a3b8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
     }
 
     .cert-filter-btn.active {
-      background-color: #0d6efd;
+      background-color: #2563eb;
       color: #ffffff;
-      border-color: #0d6efd;
+      border-color: #2563eb;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
     }
 
-    .cert-filter-btn.active .badge {
-      background-color: rgba(255, 255, 255, 0.25) !important;
-      color: #ffffff !important;
+    .cert-count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 24px;
+      padding: 0 0.55rem;
+      border-radius: 50rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      line-height: 1;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      transition: all 0.2s ease;
+    }
+
+    .cert-filter-btn:hover .cert-count-badge {
+      background-color: #e2e8f0;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+
+    .cert-filter-btn.active .cert-count-badge {
+      background-color: #ffffff !important;
+      color: #2563eb !important;
+      border-color: #ffffff !important;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      font-weight: 800;
+    }
+
+    .cert-tab-logo-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1.5px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+      transition: all 0.2s ease;
+    }
+
+    .cert-filter-btn.active .cert-tab-logo-wrap {
+      border-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .cert-tab-logo-wrap svg {
+      display: block;
     }
 
     .cert-card {
@@ -274,6 +328,159 @@
       display: inline-flex;
       align-items: center;
     }
+
+    /* Certificate Cards & Preview Images */
+    .cert-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.85rem;
+      padding: 1.15rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .cert-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-color: #cbd5e1;
+    }
+
+    .cert-img-wrap {
+      margin: -1.15rem -1.15rem 1rem -1.15rem;
+      border-radius: 0.8rem 0.8rem 0 0;
+      overflow: hidden;
+      border-bottom: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+
+    .cert-img-wrap a {
+      display: block;
+      line-height: 0;
+    }
+
+    .cert-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .cert-card:hover .cert-img {
+      transform: scale(1.02);
+    }
+
+    .cert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .provider-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.32rem 0.75rem;
+      border-radius: 0.5rem;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    .provider-tag svg {
+      display: inline-block;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    .provider-tag.tag-google svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .provider-tag.tag-ibm svg {
+      width: 30px;
+      height: 19px;
+    }
+
+    .provider-tag.tag-meta svg {
+      width: 26px;
+      height: 18px;
+    }
+
+    .provider-tag.tag-aws svg {
+      width: 34px;
+      height: 22px;
+    }
+
+    .provider-tag.tag-microsoft svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .tag-google {
+      background-color: #e8f0fe;
+      color: #1a73e8;
+    }
+
+    .tag-ibm {
+      background-color: #edf5ff;
+      color: #0062ff;
+    }
+
+    .tag-aws {
+      background-color: #fff4e5;
+      color: #d97706;
+    }
+
+    .tag-meta {
+      background-color: #e7f5ff;
+      color: #0084ff;
+    }
+
+    .tag-microsoft {
+      background-color: #e6f7ff;
+      color: #00a4ef;
+    }
+
+    .cert-type {
+      font-size: 0.72rem;
+      color: #64748b;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .cert-title {
+      font-size: 0.975rem;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-top: 0.25rem;
+      margin-bottom: 0;
+    }
+
+    .cert-title a {
+      color: #0f172a;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .cert-title a:hover {
+      color: #2563eb;
+    }
+
+    .cert-link-icon {
+      font-size: 0.75rem;
+      margin-left: 0.25rem;
+      color: #94a3b8;
+      vertical-align: middle;
+    }
   </style>
 </head>
 
@@ -295,7 +502,8 @@
               <span class="badge bg-primary px-3 py-2 mb-2">Technical Product Manager & SaaS Founder</span>
               <h1 class="fw-bold display-4 mb-2">Brijesh Patel</h1>
               <p class="lead text-secondary mb-3">
-                With 11+ years of experience building, launching, and scaling digital products, SEO automation platforms, and growth systems across 65+ projects. Currently building
+                With 11+ years of experience building, launching, and scaling digital products, SEO automation
+                platforms, and growth systems across 65+ projects. Currently building
                 <a href="https://backlinks.tools/" target="_blank" rel="noopener"
                   class="text-dark fw-bold text-decoration-underline">Backlinks.Tools</a>, <a
                   href="https://onlines.tools/" target="_blank" rel="noopener"
@@ -402,7 +610,8 @@
               <div class="card border-0 shadow-sm p-4 mb-4">
                 <h2 class="h3 fw-bold text-primary mb-3">About My Product & Engineering Journey</h2>
                 <p>
-                  Over the past 11+ years, I have operated as a product lead, SaaS creator, and full-stack engineer. By day, I lead product strategy, discovery, and execution. By night, I build and operate
+                  Over the past 11+ years, I have operated as a product lead, SaaS creator, and full-stack engineer. By
+                  day, I lead product strategy, discovery, and execution. By night, I build and operate
                   SaaS platforms like <strong>Backlinks.Tools</strong>, <strong>Online.Tools</strong>, and
                   <strong>GrownWith.us</strong>.
                 </p>
@@ -470,807 +679,1091 @@
         <div class="container">
           <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
             <div>
-              <h2 class="h3 fw-bold text-primary mb-1"><i
-                  class="bi bi-patch-check-fill text-primary me-2"></i>Licenses &amp; Certifications</h2>
+              <h2 class="h3 fw-bold text-primary mb-1"><i class="bi bi-patch-check-fill text-primary me-2"></i>Licenses
+                &amp; Certifications</h2>
               <p class="text-secondary small mb-0">Verified professional credentials &amp; specializations (<span
                   id="cert-count">32</span>)</p>
-                  </div>
+            </div>
+          </div>
+
+          <!-- Provider Filters -->
+          <div class="cert-filter-bar mb-4">
+            <button type="button" class="cert-filter-btn active" data-filter="all">
+              <span class="cert-tab-logo-wrap"><i class="bi bi-patch-check-fill text-primary" style="font-size: 1.05rem;"></i></span>
+              <span>Certifications</span>
+              <span class="cert-count-badge">32</span>
+            </button>
+            <button type="button" class="cert-filter-btn" data-filter="google">
+              <span class="cert-tab-logo-wrap">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                  <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                </svg>
+              </span>
+              <span>Google</span>
+              <span class="cert-count-badge">13</span>
+            </button>
+            <button type="button" class="cert-filter-btn" data-filter="ibm">
+              <span class="cert-tab-logo-wrap">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="#0062ff">
+                  <path d="M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z"/>
+                </svg>
+              </span>
+              <span>IBM</span>
+              <span class="cert-count-badge">7</span>
+            </button>
+            <button type="button" class="cert-filter-btn" data-filter="meta">
+              <span class="cert-tab-logo-wrap">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="#0081fb">
+                  <path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/>
+                </svg>
+              </span>
+              <span>Meta</span>
+              <span class="cert-count-badge">6</span>
+            </button>
+            <button type="button" class="cert-filter-btn" data-filter="aws">
+              <span class="cert-tab-logo-wrap">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path fill="#232f3e" d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.151-.416-.287-.807-.415l-1.157-.36c-.583-.183-1.014-.454-1.277-.813a1.902 1.902 0 0 1-.4-1.158c0-.335.073-.63.216-.886.144-.255.335-.479.575-.654.24-.184.51-.32.83-.415.32-.096.655-.136 1.006-.136.175 0 .359.008.535.032.183.024.35.056.518.088.16.04.312.08.455.127.144.048.256.096.336.144a.69.69 0 0 1 .24.2.43.43 0 0 1 .071.263v.375c0 .168-.064.256-.184.256a.83.83 0 0 1-.303-.096 3.652 3.652 0 0 0-1.532-.311c-.455 0-.815.071-1.062.223-.248.152-.375.383-.375.71 0 .224.08.416.24.567.159.152.454.304.877.44l1.134.358c.574.184.99.44 1.237.767.247.327.367.702.367 1.117 0 .343-.072.655-.207.926-.144.272-.336.511-.583.703-.248.2-.543.343-.886.447-.36.111-.734.167-1.142.167z"/>
+                  <path fill="#FF9900" d="M21.698 16.207c-2.626 1.94-6.442 2.969-9.722 2.969-4.598 0-8.74-1.7-11.87-4.526-.247-.223-.024-.527.272-.351 3.384 1.963 7.559 3.153 11.877 3.153 2.914 0 6.114-.607 9.06-1.852.439-.2.814.287.383.607zM22.792 14.961c-.336-.43-2.22-.207-3.074-.103-.255.032-.295-.192-.063-.36 1.5-1.053 3.967-.75 4.254-.399.287.36-.08 2.826-1.485 4.007-.215.184-.423.088-.327-.151.32-.79 1.03-2.57.695-2.994z"/>
+                </svg>
+              </span>
+              <span>AWS</span>
+              <span class="cert-count-badge">5</span>
+            </button>
+            <button type="button" class="cert-filter-btn" data-filter="microsoft">
+              <span class="cert-tab-logo-wrap">
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true">
+                  <path fill="#F25022" d="M1 1h10v10H1z"/>
+                  <path fill="#7FBA00" d="M13 1h10v10H13z"/>
+                  <path fill="#00A4EF" d="M1 13h10v10H1z"/>
+                  <path fill="#FFB900" d="M13 13h10v10H13z"/>
+                </svg>
+              </span>
+              <span>Microsoft</span>
+              <span class="cert-count-badge">1</span>
+            </button>
+          </div>
+
+          <!-- Certifications Grid -->
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3" id="certGrid">
+
+            <!-- Google IT Support Professional Certificate -->
+            <div class="col cert-item" data-provider="google" data-title="google it support professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/EOF8YW1HWCHC" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-it-support-professional-certificate.webp"
+                      alt="Google IT Support Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
                 </div>
-
-                <!-- Provider Filters -->
-                <div class="cert-filter-bar mb-4">
-                  <button type="button" class="cert-filter-btn active" data-filter="all">All <span
-                      class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">32</span></button>
-                  <button type="button" class="cert-filter-btn" data-filter="google">Google <span
-                      class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">13</span></button>
-                  <button type="button" class="cert-filter-btn" data-filter="ibm">IBM <span
-                      class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">7</span></button>
-                  <button type="button" class="cert-filter-btn" data-filter="meta">Meta <span
-                      class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">6</span></button>
-                  <button type="button" class="cert-filter-btn" data-filter="aws">AWS <span
-                      class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">5</span></button>
-                  <button type="button" class="cert-filter-btn" data-filter="microsoft">Microsoft <span
-                      class="badge bg-secondary bg-opacity-25 text-dark rounded-pill">1</span></button>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
                 </div>
-
-                <!-- Certifications Grid -->
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3" id="certGrid">
-
-                  <!-- Google IT Support -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google it support professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/EOF8YW1HWCHC"
-                            target="_blank" rel="noopener noreferrer">
-                            Google IT Support Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- IBM Product Owner -->
-                  <div class="col cert-item" data-provider="ibm"
-                    data-title="ibm product owner professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/CA6JCEXMW26U"
-                            target="_blank" rel="noopener noreferrer">
-                            IBM Product Owner Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google AI -->
-                  <div class="col cert-item" data-provider="google" data-title="google ai professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/949GYC29Y4DB"
-                            target="_blank" rel="noopener noreferrer">
-                            Google AI Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google AI Essentials -->
-                  <div class="col cert-item" data-provider="google" data-title="google ai essentials specialization">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Specialization</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/IFV2XS5PUKQY"
-                            target="_blank" rel="noopener noreferrer">
-                            Google AI Essentials Specialization
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google Prompting Essentials -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google prompting essentials specialization">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Specialization</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/DPMJKGH0IM7Q"
-                            target="_blank" rel="noopener noreferrer">
-                            Google Prompting Essentials Specialization
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google UX Design -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google ux design professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/7GHVSUDRZ2DY"
-                            target="_blank" rel="noopener noreferrer">
-                            Google UX Design Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- IBM Product Manager -->
-                  <div class="col cert-item" data-provider="ibm"
-                    data-title="ibm product manager professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/XJYJ6REJUU6A"
-                            target="_blank" rel="noopener noreferrer">
-                            IBM Product Manager Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Microsoft AI Product Manager -->
-                  <div class="col cert-item" data-provider="microsoft"
-                    data-title="microsoft ai product manager professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-microsoft"><i class="bi bi-microsoft me-1"></i> Microsoft</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/7IVTCEEAO7WR"
-                            target="_blank" rel="noopener noreferrer">
-                            Microsoft AI Product Manager Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- IBM AI Product Manager -->
-                  <div class="col cert-item" data-provider="ibm"
-                    data-title="ibm ai product manager professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/BWJTZSSNFV7X"
-                            target="_blank" rel="noopener noreferrer">
-                            IBM AI Product Manager Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- IBM IT Project Manager -->
-                  <div class="col cert-item" data-provider="ibm"
-                    data-title="ibm it project manager professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/SOPS5KACM24Q"
-                            target="_blank" rel="noopener noreferrer">
-                            IBM IT Project Manager Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- IBM DevOps Foundations -->
-                  <div class="col cert-item" data-provider="ibm"
-                    data-title="ibm devops, cloud, and agile foundations specialization">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
-                          <span class="cert-type">Specialization</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/8ZV6DY7Z3QJF"
-                            target="_blank" rel="noopener noreferrer">
-                            IBM DevOps, Cloud, and Agile Foundations Specialization
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- AWS Cloud Solutions Architect -->
-                  <div class="col cert-item" data-provider="aws"
-                    data-title="aws cloud solutions architect professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/G9FXY6HSHRNH"
-                            target="_blank" rel="noopener noreferrer">
-                            AWS Cloud Solutions Architect Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- AWS Fundamentals -->
-                  <div class="col cert-item" data-provider="aws" data-title="aws fundamentals specialization">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
-                          <span class="cert-type">Specialization</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/BWF84XTVN49F"
-                            target="_blank" rel="noopener noreferrer">
-                            AWS Fundamentals Specialization
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Starting Your Career with AWS Cloud -->
-                  <div class="col cert-item" data-provider="aws"
-                    data-title="starting your career with aws cloud specialization">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
-                          <span class="cert-type">Specialization</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/3LRNNC8Y4GS4"
-                            target="_blank" rel="noopener noreferrer">
-                            Starting Your Career with AWS Cloud Specialization
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- DevOps on AWS -->
-                  <div class="col cert-item" data-provider="aws" data-title="devops on aws specialization">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
-                          <span class="cert-type">Specialization</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/G3XKLMFNNG84"
-                            target="_blank" rel="noopener noreferrer">
-                            DevOps on AWS Specialization
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Developing Applications on AWS -->
-                  <div class="col cert-item" data-provider="aws"
-                    data-title="developing applications on aws specialization">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-aws"><i class="bi bi-cloud-check me-1"></i> AWS</span>
-                          <span class="cert-type">Specialization</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/EZNQ4XRB2PMR"
-                            target="_blank" rel="noopener noreferrer">
-                            Developing Applications on AWS Specialization
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google IT Automation -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google it automation with python professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/M357632H69FM"
-                            target="_blank" rel="noopener noreferrer">
-                            Google IT Automation with Python Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google Workspace -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="getting started with google workspace specialization">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Specialization</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/LAXMUF6PJLMC"
-                            target="_blank" rel="noopener noreferrer">
-                            Getting started with Google Workspace Specialization
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Meta Social Media Marketing -->
-                  <div class="col cert-item" data-provider="meta"
-                    data-title="meta social media marketing professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/66HR5TP3J92E"
-                            target="_blank" rel="noopener noreferrer">
-                            Meta Social Media Marketing Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Meta Marketing Analytics -->
-                  <div class="col cert-item" data-provider="meta"
-                    data-title="meta marketing analytics professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/5YU2LBVDQCCM"
-                            target="_blank" rel="noopener noreferrer">
-                            Meta Marketing Analytics Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google Business Intelligence -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google business intelligence professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/69WE3K7AE35L"
-                            target="_blank" rel="noopener noreferrer">
-                            Google Business Intelligence Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- IBM DevOps and Software Engineering -->
-                  <div class="col cert-item" data-provider="ibm"
-                    data-title="ibm devops and software engineering professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/AJ3UP1Y1456Q"
-                            target="_blank" rel="noopener noreferrer">
-                            IBM DevOps and Software Engineering Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- IBM Back-End Development -->
-                  <div class="col cert-item" data-provider="ibm"
-                    data-title="ibm back-end development professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-ibm"><i class="bi bi-cpu me-1"></i> IBM</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/SELHGPSC5GWX"
-                            target="_blank" rel="noopener noreferrer">
-                            IBM Back-End Development Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google Cybersecurity -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google cybersecurity professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/G3KXTKYBLMZL"
-                            target="_blank" rel="noopener noreferrer">
-                            Google Cybersecurity Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Meta Database Engineer -->
-                  <div class="col cert-item" data-provider="meta"
-                    data-title="meta database engineer professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/3JZVDVLU485X"
-                            target="_blank" rel="noopener noreferrer">
-                            Meta Database Engineer Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Meta Android Developer -->
-                  <div class="col cert-item" data-provider="meta"
-                    data-title="meta android developer professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/GZMV72VPLPPG"
-                            target="_blank" rel="noopener noreferrer">
-                            Meta Android Developer Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google Advanced Data Analytics -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google advanced data analytics professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/PCV7KDHMX5PW"
-                            target="_blank" rel="noopener noreferrer">
-                            Google Advanced Data Analytics Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Meta Back-End Developer -->
-                  <div class="col cert-item" data-provider="meta"
-                    data-title="meta back-end developer professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/3VZRUNZA9VPQ"
-                            target="_blank" rel="noopener noreferrer">
-                            Meta Back-End Developer Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google Data Analytics -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google data analytics professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/LAY6DX7MYUB8"
-                            target="_blank" rel="noopener noreferrer">
-                            Google Data Analytics Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Meta Front-End Developer -->
-                  <div class="col cert-item" data-provider="meta"
-                    data-title="meta front-end developer professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-meta"><i class="bi bi-meta me-1"></i> Meta</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/YUVD3SZ6AM7G"
-                            target="_blank" rel="noopener noreferrer">
-                            Meta Front-End Developer Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google Digital Marketing -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google digital marketing & e-commerce professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/QP2YLK5M8E7Y"
-                            target="_blank" rel="noopener noreferrer">
-                            Google Digital Marketing &amp; E-commerce Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Google Project Management -->
-                  <div class="col cert-item" data-provider="google"
-                    data-title="google project management professional certificate">
-                    <div class="cert-card">
-                      <div>
-                        <div class="cert-header">
-                          <span class="provider-tag tag-google"><i class="bi bi-google me-1"></i> Google</span>
-                          <span class="cert-type">Professional Certificate</span>
-                        </div>
-                        <h3 class="cert-title">
-                          <a href="https://www.coursera.org/account/accomplishments/specialization/B667U2R7NJS8"
-                            target="_blank" rel="noopener noreferrer">
-                            Google Project Management Professional Certificate
-                            <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
-                          </a>
-                        </h3>
-                      </div>
-                      <div class="cert-footer">
-                        <span class="verify-badge"><i class="bi bi-shield-check me-1"></i> Verified Credential</span>
-                        <span>Coursera</span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                <!-- No Results Found Fallback -->
-                <div id="noCertsFound" class="text-center py-5 d-none">
-                  <i class="bi bi-search display-5 text-muted mb-3 d-block"></i>
-                  <p class="text-secondary fw-medium">No certificates found matching your query.</p>
-                  <button class="btn btn-sm btn-outline-primary rounded-pill px-3" id="resetCertFilter">Reset Search
-                    &amp; Filters</button>
-                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/EOF8YW1HWCHC" target="_blank"
+                    rel="noopener noreferrer">
+                    Google IT Support Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
               </div>
-            </section>
+            </div>
+
+            <!-- IBM Product Owner Professional Certificate -->
+            <div class="col cert-item" data-provider="ibm" data-title="ibm product owner professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/CA6JCEXMW26U" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/ibm-product-owner-professional-certificate.webp"
+                      alt="IBM Product Owner Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><svg viewBox="0 4 24 17.5" width="30" height="19"
+                      aria-hidden="true" fill="#0062ff">
+                      <path
+                        d="M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z" />
+                    </svg>IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/CA6JCEXMW26U" target="_blank"
+                    rel="noopener noreferrer">
+                    IBM Product Owner Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google AI Professional Certificate -->
+            <div class="col cert-item" data-provider="google" data-title="google ai professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/949GYC29Y4DB" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-ai-professional-certificate.webp"
+                      alt="Google AI Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/949GYC29Y4DB" target="_blank"
+                    rel="noopener noreferrer">
+                    Google AI Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google AI Essentials Specialization -->
+            <div class="col cert-item" data-provider="google" data-title="google ai essentials specialization">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/IFV2XS5PUKQY" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-ai-essentials-specialization.webp"
+                      alt="Google AI Essentials Specialization" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/IFV2XS5PUKQY" target="_blank"
+                    rel="noopener noreferrer">
+                    Google AI Essentials Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google Prompting Essentials Specialization -->
+            <div class="col cert-item" data-provider="google" data-title="google prompting essentials specialization">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/DPMJKGH0IM7Q" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-prompting-essentials-specialization.webp"
+                      alt="Google Prompting Essentials Specialization" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/DPMJKGH0IM7Q" target="_blank"
+                    rel="noopener noreferrer">
+                    Google Prompting Essentials Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google UX Design Professional Certificate -->
+            <div class="col cert-item" data-provider="google" data-title="google ux design professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/7GHVSUDRZ2DY" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-ux-design-professional-certificate.webp"
+                      alt="Google UX Design Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/7GHVSUDRZ2DY" target="_blank"
+                    rel="noopener noreferrer">
+                    Google UX Design Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- IBM Product Manager Professional Certificate -->
+            <div class="col cert-item" data-provider="ibm" data-title="ibm product manager professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/XJYJ6REJUU6A" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/ibm-product-manager-professional-certificate.webp"
+                      alt="IBM Product Manager Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><svg viewBox="0 4 24 17.5" width="30" height="19"
+                      aria-hidden="true" fill="#0062ff">
+                      <path
+                        d="M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z" />
+                    </svg>IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/XJYJ6REJUU6A" target="_blank"
+                    rel="noopener noreferrer">
+                    IBM Product Manager Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Microsoft AI Product Manager Professional Certificate -->
+            <div class="col cert-item" data-provider="microsoft"
+              data-title="microsoft ai product manager professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/7IVTCEEAO7WR" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/microsoft-ai-product-manager-professional-certificate.webp"
+                      alt="Microsoft AI Product Manager Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-microsoft"><svg viewBox="0 0 24 24" width="20" height="20"
+                      aria-hidden="true">
+                      <path fill="#F25022" d="M1 1h10v10H1z" />
+                      <path fill="#7FBA00" d="M13 1h10v10H13z" />
+                      <path fill="#00A4EF" d="M1 13h10v10H1z" />
+                      <path fill="#FFB900" d="M13 13h10v10H13z" />
+                    </svg>Microsoft</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/7IVTCEEAO7WR" target="_blank"
+                    rel="noopener noreferrer">
+                    Microsoft AI Product Manager Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- IBM AI Product Manager Professional Certificate -->
+            <div class="col cert-item" data-provider="ibm" data-title="ibm ai product manager professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/BWJTZSSNFV7X" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/ibm-ai-product-manager-professional-certificate.webp"
+                      alt="IBM AI Product Manager Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><svg viewBox="0 4 24 17.5" width="30" height="19"
+                      aria-hidden="true" fill="#0062ff">
+                      <path
+                        d="M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z" />
+                    </svg>IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/BWJTZSSNFV7X" target="_blank"
+                    rel="noopener noreferrer">
+                    IBM AI Product Manager Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- IBM IT Project Manager Professional Certificate -->
+            <div class="col cert-item" data-provider="ibm" data-title="ibm it project manager professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/SOPS5KACM24Q" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/ibm-it-project-manager-professional-certificate.webp"
+                      alt="IBM IT Project Manager Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><svg viewBox="0 4 24 17.5" width="30" height="19"
+                      aria-hidden="true" fill="#0062ff">
+                      <path
+                        d="M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z" />
+                    </svg>IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/SOPS5KACM24Q" target="_blank"
+                    rel="noopener noreferrer">
+                    IBM IT Project Manager Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- IBM DevOps, Cloud, and Agile Foundations Specialization -->
+            <div class="col cert-item" data-provider="ibm"
+              data-title="ibm devops, cloud, and agile foundations specialization">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/8ZV6DY7Z3QJF" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/ibm-devops-cloud-and-agile-foundations-specialization.webp"
+                      alt="IBM DevOps, Cloud, and Agile Foundations Specialization" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><svg viewBox="0 4 24 17.5" width="30" height="19"
+                      aria-hidden="true" fill="#0062ff">
+                      <path
+                        d="M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z" />
+                    </svg>IBM</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/8ZV6DY7Z3QJF" target="_blank"
+                    rel="noopener noreferrer">
+                    IBM DevOps, Cloud, and Agile Foundations Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- AWS Cloud Solutions Architect Professional Certificate -->
+            <div class="col cert-item" data-provider="aws"
+              data-title="aws cloud solutions architect professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G9FXY6HSHRNH" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/aws-cloud-solutions-architect-professional-certificate.webp"
+                      alt="AWS Cloud Solutions Architect Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><svg viewBox="0 4 24 16" width="34" height="22" aria-hidden="true">
+                      <path fill="#232f3e"
+                        d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.1-.36-.184-.647-.247l-.902-.184c-.678-.136-1.18-.35-1.508-.646-.327-.296-.495-.718-.495-1.261 0-.463.136-.878.407-1.246.271-.367.646-.646 1.125-.838.48-.191 1.021-.287 1.62-.287.352 0 .719.032 1.1.096.384.064.695.152.935.263.12.056.2.128.24.216.039.088.063.184.063.287v.391c0 .16-.063.24-.183.24a.43.43 0 0 1-.168-.032 3.1 3.1 0 0 0-.327-.128 3.51 3.51 0 0 0-.679-.175 4.3 4.3 0 0 0-.917-.088c-.487 0-.862.08-1.126.24a.735.735 0 0 0-.399.646.685.685 0 0 0 .192.511c.127.104.335.192.622.256l.87.183c.726.16 1.253.407 1.58.742.328.336.487.775.487 1.317 0 .487-.144.918-.431 1.293-.287.375-.686.663-1.197.862-.511.2-1.093.295-1.748.295z" />
+                      <path fill="#ff9900"
+                        d="M0 17.556c.214.152 2.378 1.628 5.488 2.658 3.57 1.18 7.502 1.122 10.978.146 3.682-1.034 6.724-3.15 6.993-3.342.348-.247.74-.038.532.327-.27 4.78-7.394 6.655-12.72 6.655C6.01 24 1.055 21.05.348 18.064c-.2-.84.444-.653.652-.508z" />
+                    </svg>AWS</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G9FXY6HSHRNH" target="_blank"
+                    rel="noopener noreferrer">
+                    AWS Cloud Solutions Architect Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- AWS Fundamentals Specialization -->
+            <div class="col cert-item" data-provider="aws" data-title="aws fundamentals specialization">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/BWF84XTVN49F" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/aws-fundamentals-specialization.webp"
+                      alt="AWS Fundamentals Specialization" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><svg viewBox="0 4 24 16" width="34" height="22" aria-hidden="true">
+                      <path fill="#232f3e"
+                        d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.1-.36-.184-.647-.247l-.902-.184c-.678-.136-1.18-.35-1.508-.646-.327-.296-.495-.718-.495-1.261 0-.463.136-.878.407-1.246.271-.367.646-.646 1.125-.838.48-.191 1.021-.287 1.62-.287.352 0 .719.032 1.1.096.384.064.695.152.935.263.12.056.2.128.24.216.039.088.063.184.063.287v.391c0 .16-.063.24-.183.24a.43.43 0 0 1-.168-.032 3.1 3.1 0 0 0-.327-.128 3.51 3.51 0 0 0-.679-.175 4.3 4.3 0 0 0-.917-.088c-.487 0-.862.08-1.126.24a.735.735 0 0 0-.399.646.685.685 0 0 0 .192.511c.127.104.335.192.622.256l.87.183c.726.16 1.253.407 1.58.742.328.336.487.775.487 1.317 0 .487-.144.918-.431 1.293-.287.375-.686.663-1.197.862-.511.2-1.093.295-1.748.295z" />
+                      <path fill="#ff9900"
+                        d="M0 17.556c.214.152 2.378 1.628 5.488 2.658 3.57 1.18 7.502 1.122 10.978.146 3.682-1.034 6.724-3.15 6.993-3.342.348-.247.74-.038.532.327-.27 4.78-7.394 6.655-12.72 6.655C6.01 24 1.055 21.05.348 18.064c-.2-.84.444-.653.652-.508z" />
+                    </svg>AWS</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/BWF84XTVN49F" target="_blank"
+                    rel="noopener noreferrer">
+                    AWS Fundamentals Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Starting Your Career with AWS Cloud Specialization -->
+            <div class="col cert-item" data-provider="aws"
+              data-title="starting your career with aws cloud specialization">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3LRNNC8Y4GS4" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/starting-your-career-with-aws-cloud-specialization.webp"
+                      alt="Starting Your Career with AWS Cloud Specialization" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><svg viewBox="0 4 24 16" width="34" height="22" aria-hidden="true">
+                      <path fill="#232f3e"
+                        d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.1-.36-.184-.647-.247l-.902-.184c-.678-.136-1.18-.35-1.508-.646-.327-.296-.495-.718-.495-1.261 0-.463.136-.878.407-1.246.271-.367.646-.646 1.125-.838.48-.191 1.021-.287 1.62-.287.352 0 .719.032 1.1.096.384.064.695.152.935.263.12.056.2.128.24.216.039.088.063.184.063.287v.391c0 .16-.063.24-.183.24a.43.43 0 0 1-.168-.032 3.1 3.1 0 0 0-.327-.128 3.51 3.51 0 0 0-.679-.175 4.3 4.3 0 0 0-.917-.088c-.487 0-.862.08-1.126.24a.735.735 0 0 0-.399.646.685.685 0 0 0 .192.511c.127.104.335.192.622.256l.87.183c.726.16 1.253.407 1.58.742.328.336.487.775.487 1.317 0 .487-.144.918-.431 1.293-.287.375-.686.663-1.197.862-.511.2-1.093.295-1.748.295z" />
+                      <path fill="#ff9900"
+                        d="M0 17.556c.214.152 2.378 1.628 5.488 2.658 3.57 1.18 7.502 1.122 10.978.146 3.682-1.034 6.724-3.15 6.993-3.342.348-.247.74-.038.532.327-.27 4.78-7.394 6.655-12.72 6.655C6.01 24 1.055 21.05.348 18.064c-.2-.84.444-.653.652-.508z" />
+                    </svg>AWS</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3LRNNC8Y4GS4" target="_blank"
+                    rel="noopener noreferrer">
+                    Starting Your Career with AWS Cloud Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- DevOps on AWS Specialization -->
+            <div class="col cert-item" data-provider="aws" data-title="devops on aws specialization">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G3XKLMFNNG84" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/devops-on-aws-specialization.webp"
+                      alt="DevOps on AWS Specialization" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><svg viewBox="0 4 24 16" width="34" height="22" aria-hidden="true">
+                      <path fill="#232f3e"
+                        d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.1-.36-.184-.647-.247l-.902-.184c-.678-.136-1.18-.35-1.508-.646-.327-.296-.495-.718-.495-1.261 0-.463.136-.878.407-1.246.271-.367.646-.646 1.125-.838.48-.191 1.021-.287 1.62-.287.352 0 .719.032 1.1.096.384.064.695.152.935.263.12.056.2.128.24.216.039.088.063.184.063.287v.391c0 .16-.063.24-.183.24a.43.43 0 0 1-.168-.032 3.1 3.1 0 0 0-.327-.128 3.51 3.51 0 0 0-.679-.175 4.3 4.3 0 0 0-.917-.088c-.487 0-.862.08-1.126.24a.735.735 0 0 0-.399.646.685.685 0 0 0 .192.511c.127.104.335.192.622.256l.87.183c.726.16 1.253.407 1.58.742.328.336.487.775.487 1.317 0 .487-.144.918-.431 1.293-.287.375-.686.663-1.197.862-.511.2-1.093.295-1.748.295z" />
+                      <path fill="#ff9900"
+                        d="M0 17.556c.214.152 2.378 1.628 5.488 2.658 3.57 1.18 7.502 1.122 10.978.146 3.682-1.034 6.724-3.15 6.993-3.342.348-.247.74-.038.532.327-.27 4.78-7.394 6.655-12.72 6.655C6.01 24 1.055 21.05.348 18.064c-.2-.84.444-.653.652-.508z" />
+                    </svg>AWS</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G3XKLMFNNG84" target="_blank"
+                    rel="noopener noreferrer">
+                    DevOps on AWS Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Developing Applications on AWS Specialization -->
+            <div class="col cert-item" data-provider="aws" data-title="developing applications on aws specialization">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/EZNQ4XRB2PMR" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/developing-applications-on-aws-specialization.webp"
+                      alt="Developing Applications on AWS Specialization" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-aws"><svg viewBox="0 4 24 16" width="34" height="22" aria-hidden="true">
+                      <path fill="#232f3e"
+                        d="M6.763 10.036c0 .296.032.535.088.71.064.176.144.368.256.576.04.063.056.127.056.183 0 .08-.048.16-.152.24l-.503.335a.383.383 0 0 1-.208.072c-.08 0-.16-.04-.239-.112a2.47 2.47 0 0 1-.287-.375 6.18 6.18 0 0 1-.248-.471c-.622.734-1.405 1.101-2.347 1.101-.67 0-1.205-.191-1.596-.574-.391-.384-.59-.894-.59-1.533 0-.678.239-1.23.726-1.644.487-.415 1.133-.623 1.955-.623.272 0 .551.024.846.064.296.04.6.104.918.176v-.583c0-.607-.127-1.03-.375-1.277-.255-.248-.686-.367-1.3-.367-.28 0-.568.031-.863.103-.295.072-.583.16-.862.272a2.287 2.287 0 0 1-.28.104.488.488 0 0 1-.127.023c-.112 0-.168-.08-.168-.247v-.391c0-.128.016-.224.056-.28a.597.597 0 0 1 .224-.167c.279-.144.614-.264 1.005-.36a4.84 4.84 0 0 1 1.246-.151c.95 0 1.644.216 2.091.647.439.43.662 1.085.662 1.963v2.586zm-3.24 1.214c.263 0 .534-.048.822-.144.287-.096.543-.271.758-.51.128-.152.224-.32.272-.512.047-.191.08-.423.08-.694v-.335a6.66 6.66 0 0 0-.735-.136 6.02 6.02 0 0 0-.75-.048c-.535 0-.926.104-1.19.32-.263.215-.39.518-.39.917 0 .375.095.655.295.846.191.2.47.296.838.296zm6.41.862c-.144 0-.24-.024-.304-.08-.064-.048-.12-.16-.168-.311L7.586 5.55a1.398 1.398 0 0 1-.072-.32c0-.128.064-.2.191-.2h.783c.151 0 .255.025.31.08.065.048.113.16.16.312l1.342 5.284 1.245-5.284c.04-.16.088-.264.151-.312a.549.549 0 0 1 .32-.08h.638c.152 0 .256.025.32.08.063.048.12.16.151.312l1.261 5.348 1.381-5.348c.048-.16.104-.264.16-.312a.52.52 0 0 1 .311-.08h.743c.127 0 .2.065.2.2 0 .04-.009.08-.017.128a1.137 1.137 0 0 1-.056.2l-1.923 6.17c-.048.16-.104.263-.168.311a.51.51 0 0 1-.303.08h-.687c-.151 0-.255-.024-.32-.08-.063-.056-.119-.16-.15-.32l-1.238-5.148-1.23 5.14c-.04.16-.087.264-.15.32-.065.056-.177.08-.32.08zm10.256.215c-.415 0-.83-.048-1.229-.143-.399-.096-.71-.2-.918-.32-.128-.071-.215-.151-.247-.223a.563.563 0 0 1-.048-.224v-.407c0-.167.064-.247.183-.247.048 0 .096.008.144.024.048.016.12.048.2.08.271.12.566.215.878.279.319.064.63.096.95.096.502 0 .894-.088 1.165-.264a.86.86 0 0 0 .415-.758.777.777 0 0 0-.215-.559c-.144-.1-.36-.184-.647-.247l-.902-.184c-.678-.136-1.18-.35-1.508-.646-.327-.296-.495-.718-.495-1.261 0-.463.136-.878.407-1.246.271-.367.646-.646 1.125-.838.48-.191 1.021-.287 1.62-.287.352 0 .719.032 1.1.096.384.064.695.152.935.263.12.056.2.128.24.216.039.088.063.184.063.287v.391c0 .16-.063.24-.183.24a.43.43 0 0 1-.168-.032 3.1 3.1 0 0 0-.327-.128 3.51 3.51 0 0 0-.679-.175 4.3 4.3 0 0 0-.917-.088c-.487 0-.862.08-1.126.24a.735.735 0 0 0-.399.646.685.685 0 0 0 .192.511c.127.104.335.192.622.256l.87.183c.726.16 1.253.407 1.58.742.328.336.487.775.487 1.317 0 .487-.144.918-.431 1.293-.287.375-.686.663-1.197.862-.511.2-1.093.295-1.748.295z" />
+                      <path fill="#ff9900"
+                        d="M0 17.556c.214.152 2.378 1.628 5.488 2.658 3.57 1.18 7.502 1.122 10.978.146 3.682-1.034 6.724-3.15 6.993-3.342.348-.247.74-.038.532.327-.27 4.78-7.394 6.655-12.72 6.655C6.01 24 1.055 21.05.348 18.064c-.2-.84.444-.653.652-.508z" />
+                    </svg>AWS</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/EZNQ4XRB2PMR" target="_blank"
+                    rel="noopener noreferrer">
+                    Developing Applications on AWS Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google IT Automation with Python Professional Certificate -->
+            <div class="col cert-item" data-provider="google"
+              data-title="google it automation with python professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/M357632H69FM" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-it-automation-with-python-professional-certificate.webp"
+                      alt="Google IT Automation with Python Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/M357632H69FM" target="_blank"
+                    rel="noopener noreferrer">
+                    Google IT Automation with Python Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Getting started with Google Workspace Specialization -->
+            <div class="col cert-item" data-provider="google"
+              data-title="getting started with google workspace specialization">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/LAXMUF6PJLMC" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/getting-started-with-google-workspace-specialization.webp"
+                      alt="Getting started with Google Workspace Specialization" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Specialization</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/LAXMUF6PJLMC" target="_blank"
+                    rel="noopener noreferrer">
+                    Getting started with Google Workspace Specialization
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Meta Social Media Marketing Professional Certificate -->
+            <div class="col cert-item" data-provider="meta"
+              data-title="meta social media marketing professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/66HR5TP3J92E" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/meta-social-media-marketing-professional-certificate.webp"
+                      alt="Meta Social Media Marketing Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><svg viewBox="0 3 24 18" width="26" height="18" aria-hidden="true"
+                      fill="#0081fb">
+                      <path
+                        d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z" />
+                    </svg>Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/66HR5TP3J92E" target="_blank"
+                    rel="noopener noreferrer">
+                    Meta Social Media Marketing Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Meta Marketing Analytics Professional Certificate -->
+            <div class="col cert-item" data-provider="meta"
+              data-title="meta marketing analytics professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/5YU2LBVDQCCM" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/meta-marketing-analytics-professional-certificate.webp"
+                      alt="Meta Marketing Analytics Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><svg viewBox="0 3 24 18" width="26" height="18" aria-hidden="true"
+                      fill="#0081fb">
+                      <path
+                        d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z" />
+                    </svg>Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/5YU2LBVDQCCM" target="_blank"
+                    rel="noopener noreferrer">
+                    Meta Marketing Analytics Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google Business Intelligence Professional Certificate -->
+            <div class="col cert-item" data-provider="google"
+              data-title="google business intelligence professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/69WE3K7AE35L" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-business-intelligence-professional-certificate.webp"
+                      alt="Google Business Intelligence Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/69WE3K7AE35L" target="_blank"
+                    rel="noopener noreferrer">
+                    Google Business Intelligence Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- IBM DevOps and Software Engineering Professional Certificate -->
+            <div class="col cert-item" data-provider="ibm"
+              data-title="ibm devops and software engineering professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/AJ3UP1Y1456Q" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/ibm-devops-and-software-engineering-professional-certificate.webp"
+                      alt="IBM DevOps and Software Engineering Professional Certificate" class="cert-img"
+                      loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><svg viewBox="0 4 24 17.5" width="30" height="19"
+                      aria-hidden="true" fill="#0062ff">
+                      <path
+                        d="M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z" />
+                    </svg>IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/AJ3UP1Y1456Q" target="_blank"
+                    rel="noopener noreferrer">
+                    IBM DevOps and Software Engineering Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- IBM Back-End Development Professional Certificate -->
+            <div class="col cert-item" data-provider="ibm"
+              data-title="ibm back-end development professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/SELHGPSC5GWX" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/ibm-back-end-development-professional-certificate.webp"
+                      alt="IBM Back-End Development Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-ibm"><svg viewBox="0 4 24 17.5" width="30" height="19"
+                      aria-hidden="true" fill="#0062ff">
+                      <path
+                        d="M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z" />
+                    </svg>IBM</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/SELHGPSC5GWX" target="_blank"
+                    rel="noopener noreferrer">
+                    IBM Back-End Development Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google Cybersecurity Professional Certificate -->
+            <div class="col cert-item" data-provider="google"
+              data-title="google cybersecurity professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G3KXTKYBLMZL" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-cybersecurity-professional-certificate.webp"
+                      alt="Google Cybersecurity Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/G3KXTKYBLMZL" target="_blank"
+                    rel="noopener noreferrer">
+                    Google Cybersecurity Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Meta Database Engineer Professional Certificate -->
+            <div class="col cert-item" data-provider="meta"
+              data-title="meta database engineer professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3JZVDVLU485X" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/meta-database-engineer-professional-certificate.webp"
+                      alt="Meta Database Engineer Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><svg viewBox="0 3 24 18" width="26" height="18" aria-hidden="true"
+                      fill="#0081fb">
+                      <path
+                        d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z" />
+                    </svg>Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3JZVDVLU485X" target="_blank"
+                    rel="noopener noreferrer">
+                    Meta Database Engineer Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Meta Android Developer Professional Certificate -->
+            <div class="col cert-item" data-provider="meta"
+              data-title="meta android developer professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/GZMV72VPLPPG" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/meta-android-developer-professional-certificate.webp"
+                      alt="Meta Android Developer Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><svg viewBox="0 3 24 18" width="26" height="18" aria-hidden="true"
+                      fill="#0081fb">
+                      <path
+                        d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z" />
+                    </svg>Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/GZMV72VPLPPG" target="_blank"
+                    rel="noopener noreferrer">
+                    Meta Android Developer Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google Advanced Data Analytics Professional Certificate -->
+            <div class="col cert-item" data-provider="google"
+              data-title="google advanced data analytics professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/PCV7KDHMX5PW" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-advanced-data-analytics-professional-certificate.webp"
+                      alt="Google Advanced Data Analytics Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/PCV7KDHMX5PW" target="_blank"
+                    rel="noopener noreferrer">
+                    Google Advanced Data Analytics Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Meta Back-End Developer Professional Certificate -->
+            <div class="col cert-item" data-provider="meta"
+              data-title="meta back-end developer professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3VZRUNZA9VPQ" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/meta-back-end-developer-professional-certificate.webp"
+                      alt="Meta Back-End Developer Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><svg viewBox="0 3 24 18" width="26" height="18" aria-hidden="true"
+                      fill="#0081fb">
+                      <path
+                        d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z" />
+                    </svg>Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/3VZRUNZA9VPQ" target="_blank"
+                    rel="noopener noreferrer">
+                    Meta Back-End Developer Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google Data Analytics Professional Certificate -->
+            <div class="col cert-item" data-provider="google"
+              data-title="google data analytics professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/LAY6DX7MYUB8" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-data-analytics-professional-certificate.webp"
+                      alt="Google Data Analytics Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/LAY6DX7MYUB8" target="_blank"
+                    rel="noopener noreferrer">
+                    Google Data Analytics Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Meta Front-End Developer Professional Certificate -->
+            <div class="col cert-item" data-provider="meta"
+              data-title="meta front-end developer professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/YUVD3SZ6AM7G" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/meta-front-end-developer-professional-certificate.webp"
+                      alt="Meta Front-End Developer Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-meta"><svg viewBox="0 3 24 18" width="26" height="18" aria-hidden="true"
+                      fill="#0081fb">
+                      <path
+                        d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z" />
+                    </svg>Meta</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/YUVD3SZ6AM7G" target="_blank"
+                    rel="noopener noreferrer">
+                    Meta Front-End Developer Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google Digital Marketing &amp; E-commerce Professional Certificate -->
+            <div class="col cert-item" data-provider="google"
+              data-title="google digital marketing and e-commerce professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/QP2YLK5M8E7Y" target="_blank"
+                    rel="noopener noreferrer">
+                    <img
+                      src="../pub/media/certificate/google-digital-marketing-amp-e-commerce-professional-certificate.webp"
+                      alt="Google Digital Marketing &amp; E-commerce Professional Certificate" class="cert-img"
+                      loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/QP2YLK5M8E7Y" target="_blank"
+                    rel="noopener noreferrer">
+                    Google Digital Marketing &amp; E-commerce Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Google Project Management Professional Certificate -->
+            <div class="col cert-item" data-provider="google"
+              data-title="google project management professional certificate">
+              <div class="cert-card">
+                <div class="cert-img-wrap">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/B667U2R7NJS8" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../pub/media/certificate/google-project-management-professional-certificate.webp"
+                      alt="Google Project Management Professional Certificate" class="cert-img" loading="lazy">
+                  </a>
+                </div>
+                <div class="cert-header">
+                  <span class="provider-tag tag-google"><svg viewBox="0 0 24 24" width="22" height="22"
+                      aria-hidden="true">
+                      <path fill="#4285F4"
+                        d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />
+                      <path fill="#34A853"
+                        d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" />
+                      <path fill="#FBBC05"
+                        d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z" />
+                      <path fill="#EA4335"
+                        d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
+                    </svg>Google</span>
+                  <span class="cert-type">Professional Certificate</span>
+                </div>
+                <h3 class="cert-title">
+                  <a href="https://www.coursera.org/account/accomplishments/specialization/B667U2R7NJS8" target="_blank"
+                    rel="noopener noreferrer">
+                    Google Project Management Professional Certificate
+                    <i class="bi bi-box-arrow-up-right cert-link-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          <!-- No Results Found Fallback -->
+          <div id="noCertsFound" class="text-center py-5 d-none">
+            <i class="bi bi-search display-5 text-muted mb-3 d-block"></i>
+            <p class="text-secondary fw-medium">No certificates found matching your query.</p>
+            <button class="btn btn-sm btn-outline-primary rounded-pill px-3" id="resetCertFilter">Reset Search
+              &amp; Filters</button>
+          </div>
+        </div>
+      </section>
     </main>
 
   </main>
