@@ -89,6 +89,694 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
   <style>
+    /* ========================================================
+       1. Top Profile, Methodology & Competencies (Modern Layout)
+       ======================================================== */
+/* Redesigned About Page Top Sections */
+.about-redesign-wrapper {
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+color: #0f172a;
+background-color: #ffffff;
+padding-top: 1rem;
+padding-bottom: 2rem;
+}
+
+.about-content-container {
+max-width: 980px;
+margin: 0 auto;
+}
+
+/* Hero Section */
+.about-hero-section {
+padding: 3rem 0 3.5rem;
+}
+
+.about-hero-grid {
+display: grid;
+grid-template-columns: 200px 1fr;
+gap: 3.5rem;
+align-items: start;
+}
+
+.about-avatar-col {
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+
+.about-avatar-frame {
+width: 176px;
+height: 176px;
+border-radius: 50%;
+padding: 5px;
+background: #ffffff;
+border: 1px solid #e2e8f0;
+box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.08);
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+position: relative;
+}
+
+.about-avatar-img {
+width: 176px !important;
+height: 176px !important;
+max-width: 176px !important;
+max-height: 176px !important;
+border-radius: 50% !important;
+object-fit: cover !important;
+display: block !important;
+}
+
+.about-avatar-caption {
+margin-top: 0.9rem;
+font-size: 0.68rem;
+font-weight: 700;
+letter-spacing: 0.12em;
+color: #94a3b8;
+text-transform: uppercase;
+font-family: 'Inter', sans-serif;
+}
+
+.about-hero-col {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+}
+
+.about-role-badge {
+display: inline-block;
+background-color: #2563eb;
+color: #ffffff;
+font-size: 0.72rem;
+font-weight: 700;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+padding: 0.35rem 0.95rem;
+border-radius: 9999px;
+margin-bottom: 0.85rem;
+line-height: 1.2;
+}
+
+.about-hero-name {
+font-size: 2.85rem;
+font-weight: 800;
+color: #0f172a;
+letter-spacing: -0.035em;
+line-height: 1.15;
+margin-bottom: 0.85rem;
+}
+
+.about-hero-bio {
+font-size: 0.98rem;
+color: #475569;
+line-height: 1.65;
+margin-bottom: 1.25rem;
+font-weight: 400;
+}
+
+.about-hero-bio a {
+color: #0f172a;
+font-weight: 700;
+text-decoration: underline;
+text-underline-offset: 3px;
+transition: color 0.2s ease;
+}
+
+.about-hero-bio a:hover {
+color: #2563eb;
+}
+
+.about-hero-badges {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+margin-bottom: 1.5rem;
+}
+
+.about-badge-pill {
+font-size: 0.75rem;
+padding: 0.28rem 0.75rem;
+border-radius: 9999px;
+display: inline-flex;
+align-items: center;
+white-space: nowrap;
+}
+
+.about-badge-pill.pill-neutral {
+background-color: #ffffff;
+border: 1px solid #e2e8f0;
+color: #475569;
+font-weight: 500;
+}
+
+.about-badge-pill.pill-green {
+background-color: #ecfdf5 !important;
+border: 1px solid #a7f3d0 !important;
+color: #059669 !important;
+font-weight: 600;
+}
+
+.about-badge-pill.pill-blue {
+background-color: #2563eb;
+border: 1px solid #2563eb;
+color: #ffffff;
+font-weight: 600;
+}
+
+.about-hero-cta {
+display: flex;
+flex-wrap: wrap;
+gap: 0.75rem;
+}
+
+.btn-about-dark {
+background-color: #000000;
+color: #ffffff;
+font-size: 0.875rem;
+font-weight: 600;
+padding: 0.55rem 1.35rem;
+border-radius: 6px;
+text-decoration: none;
+border: 1px solid #000000;
+transition: all 0.2s ease;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+}
+
+.btn-about-dark:hover {
+background-color: #1e293b;
+border-color: #1e293b;
+color: #ffffff;
+transform: translateY(-1px);
+box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.btn-about-light {
+background-color: #ffffff;
+color: #0f172a;
+font-size: 0.875rem;
+font-weight: 600;
+padding: 0.55rem 1.35rem;
+border-radius: 6px;
+text-decoration: none;
+border: 1px solid #cbd5e1;
+transition: all 0.2s ease;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+}
+
+.btn-about-light:hover {
+background-color: #f8fafc;
+border-color: #94a3b8;
+color: #000000;
+transform: translateY(-1px);
+}
+
+/* Section Eyebrow Headers */
+.about-section-header {
+display: flex;
+align-items: center;
+gap: 0.65rem;
+margin-bottom: 2.25rem;
+}
+
+.about-header-bar {
+width: 24px;
+height: 2px;
+background-color: #38bdf8;
+border-radius: 2px;
+display: inline-block;
+}
+
+.about-header-title {
+font-size: 0.75rem;
+font-weight: 700;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: #475569;
+font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* HOW I THINK */
+.how-i-think-section {
+margin-bottom: 4.5rem;
+}
+
+.how-i-think-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 2.75rem;
+}
+
+.think-col {
+display: flex;
+flex-direction: column;
+}
+
+.think-accent-bar {
+width: 32px;
+height: 2px;
+background-color: #38bdf8;
+border-radius: 1px;
+margin-bottom: 1.15rem;
+}
+
+.think-number {
+font-size: 2.25rem;
+font-weight: 700;
+color: #94a3b8;
+line-height: 1;
+margin-bottom: 0.85rem;
+}
+
+.think-heading {
+font-size: 1.125rem;
+font-weight: 700;
+color: #0f172a;
+line-height: 1.35;
+margin-bottom: 0.75rem;
+text-transform: lowercase;
+}
+
+.think-desc {
+font-size: 0.885rem;
+color: #475569;
+line-height: 1.65;
+margin: 0;
+}
+
+/* WHAT I WORK WITH */
+.what-i-work-with-section {
+margin-bottom: 4.5rem;
+}
+
+.work-with-list {
+display: flex;
+flex-direction: column;
+gap: 1.65rem;
+}
+
+.work-with-row {
+display: flex;
+align-items: flex-start;
+gap: 1.75rem;
+}
+
+.work-row-label {
+min-width: 145px;
+display: flex;
+align-items: center;
+gap: 0.55rem;
+font-size: 0.75rem;
+font-weight: 700;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: #0f172a;
+padding-top: 0.35rem;
+flex-shrink: 0;
+}
+
+.work-label-dot {
+width: 6px;
+height: 6px;
+border-radius: 50%;
+background-color: #2563eb;
+display: inline-block;
+flex-shrink: 0;
+}
+
+.work-row-chips {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem 0.6rem;
+align-items: center;
+}
+
+.work-chip {
+background-color: #ffffff;
+border: 1px solid #e2e8f0;
+border-radius: 9999px;
+padding: 0.325rem 0.85rem;
+font-size: 0.825rem;
+color: #334155;
+font-weight: 500;
+transition: all 0.2s ease;
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+cursor: default;
+}
+
+.work-chip:hover {
+border-color: #94a3b8;
+background-color: #f8fafc;
+color: #0f172a;
+transform: translateY(-1px);
+}
+
+/* About Journey & Competencies */
+.about-journey-section {
+margin-bottom: 3.5rem;
+}
+
+.about-journey-heading {
+font-size: 1.55rem;
+font-weight: 700;
+color: #0f172a;
+letter-spacing: -0.02em;
+margin-bottom: 1.15rem;
+}
+
+.about-journey-text {
+font-size: 0.95rem;
+color: #334155;
+line-height: 1.7;
+margin-bottom: 1rem;
+}
+
+.about-journey-text strong {
+color: #0f172a;
+font-weight: 700;
+}
+
+.about-journey-text a {
+color: #0f172a;
+text-decoration: none;
+font-weight: 700;
+}
+
+.about-journey-text a:hover {
+color: #2563eb;
+text-decoration: underline;
+}
+
+.about-competencies-title {
+font-size: 1.15rem;
+font-weight: 700;
+color: #0f172a;
+margin-top: 2.25rem;
+margin-bottom: 1.25rem;
+}
+
+.about-competencies-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 1.25rem;
+}
+
+.about-competency-card {
+background-color: #ffffff;
+border: 1px solid #e2e8f0;
+border-radius: 12px;
+padding: 1.35rem 1.5rem;
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+transition: all 0.2s ease;
+}
+
+.about-competency-card:hover {
+border-color: #cbd5e1;
+box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.06);
+transform: translateY(-2px);
+}
+
+.about-competency-header {
+font-size: 0.95rem;
+font-weight: 700;
+color: #0f172a;
+margin-bottom: 0.85rem;
+}
+
+.about-competency-list {
+list-style: none;
+padding: 0;
+margin: 0;
+display: flex;
+flex-direction: column;
+gap: 0.45rem;
+}
+
+.about-competency-item {
+display: flex;
+align-items: baseline;
+gap: 0.5rem;
+font-size: 0.85rem;
+color: #475569;
+line-height: 1.55;
+}
+
+.about-competency-bullet {
+color: #2563eb;
+font-weight: 700;
+font-size: 1rem;
+line-height: 1;
+flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+.how-i-think-grid {
+grid-template-columns: repeat(2, 1fr);
+gap: 2rem;
+}
+}
+
+@media (max-width: 767.98px) {
+.about-hero-grid {
+grid-template-columns: 1fr;
+gap: 2rem;
+}
+
+.about-avatar-col {
+align-items: flex-start;
+text-align: left;
+}
+
+.about-avatar-caption {
+justify-content: flex-start;
+}
+
+.how-i-think-grid {
+grid-template-columns: 1fr;
+gap: 2rem;
+}
+
+.work-with-row {
+flex-direction: column;
+gap: 0.65rem;
+}
+
+.about-competencies-grid {
+grid-template-columns: 1fr;
+}
+
+.about-hero-name {
+font-size: 2.25rem;
+}
+}
+
+
+    /* ========================================================
+       2. Work Experience Section Styles
+       ======================================================== */
+.about-competency-bullet {
+      color: #2563eb;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    /* Section Headers */
+    .resume-section-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-icon-badge {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 0.75rem;
+      background: rgba(37, 99, 235, 0.08);
+      color: #2563eb;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+      border: 1px solid rgba(37, 99, 235, 0.15);
+    }
+
+    .section-heading {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.015em;
+    }
+
+    .section-subheading {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    /* Experience Redesign (1-Column Modern Executive Layout) */
+    .about-experience-section {
+      margin-bottom: 3.5rem;
+    }
+
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .experience-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 1.85rem 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .experience-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.06);
+      transform: translateY(-2px);
+    }
+
+    .experience-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
+    }
+
+    .experience-company-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .company-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    .employment-badge {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.2rem 0.65rem;
+      border-radius: 50rem;
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
+
+    .location-badge {
+      font-size: 0.825rem;
+      color: #64748b;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .experience-date-badge {
+      font-size: 0.825rem;
+      font-weight: 500;
+      color: #475569;
+      background: #f8fafc;
+      padding: 0.4rem 0.9rem;
+      border-radius: 50rem;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .experience-desc {
+      color: #334155;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .experience-desc .lead-summary {
+      color: #1e293b;
+      font-weight: 500;
+      font-size: 0.975rem;
+    }
+
+    .experience-bullets {
+      padding-left: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    .experience-bullets li {
+      margin-bottom: 0.55rem;
+      color: #475569;
+    }
+
+    .experience-bullets li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 991.98px) {
+      .how-i-think-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .about-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .about-avatar-col {
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .about-avatar-caption {
+        justify-content: flex-start;
+      }
+
+      .how-i-think-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .work-with-row {
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+
+      .about-competencies-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-hero-name {
+        font-size: 2.25rem;
+      }
+
+      .experience-card {
+        padding: 1.35rem 1.25rem;
+      }
+    }
+
+    /* ========================================================
+       3. Licenses & Certifications Section Styles
+       ======================================================== */
     /* Certifications UI/UX Styles */
     .cert-search-wrapper {
       position: relative;
@@ -132,14 +820,14 @@
       color: #1e293b;
       border: 1.5px solid #cbd5e1;
       border-radius: 50rem;
-      padding: 0.45rem 1.05rem 0.45rem 0.55rem;
-      font-size: 0.95rem;
+      padding: 0.38rem 0.85rem 0.38rem 0.45rem;
+      font-size: 0.875rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 0.65rem;
+      gap: 0.5rem;
       box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
     }
 
@@ -355,23 +1043,27 @@
       overflow: hidden;
       border-bottom: 1px solid #e2e8f0;
       background: #f8fafc;
+      height: 180px;
+      position: relative;
     }
 
     .cert-img-wrap a {
       display: block;
+      height: 100%;
       line-height: 0;
     }
 
     .cert-img {
       width: 100%;
-      height: auto;
+      height: 100%;
       display: block;
       object-fit: cover;
+      object-position: top center;
       transition: transform 0.3s ease;
     }
 
     .cert-card:hover .cert-img {
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
 
     .cert-header {
@@ -488,201 +1180,429 @@
   <header loadhtml="https://brijesh.work/pub/inc/header.html" class="header border-bottom"></header>
   <main id="main-content" role="main">
 
-    <main>
-      <!-- Hero Section -->
-      <section class="bg-light py-5 border-bottom">
-        <div class="container">
-          <div class="row align-items-center gy-4">
-            <div class="col-lg-4 text-center text-lg-start">
-              <img src="https://brijesh.work/pub/media/img/brijesh-patel-profile-picture.png"
-                alt="Brijesh Patel — Technical Product Manager & SaaS Founder"
-                class="img-fluid rounded-circle shadow border" width="220" height="220" loading="eager">
+    <!-- Redesigned Profile, Methodology & Experience Section -->
+    <div class="about-redesign-wrapper">
+      <div class="container about-content-container">
+
+        <!-- 1. Hero Section -->
+        <section class="about-hero-section">
+<div class="about-hero-grid">
+<!-- Avatar Column -->
+<div class="about-avatar-col">
+<div class="about-avatar-frame">
+<img src="../pub/media/img/brijesh-patel-profile-picture.png"
+alt="Brijesh Patel — Technical Product Manager & SaaS Founder"
+class="about-avatar-img" width="176" height="176" loading="eager">
+</div>
+<div class="about-avatar-caption">CONNECT &amp; VERIFIED</div>
+</div>
+
+<!-- Content Column -->
+<div class="about-hero-col">
+<span class="about-role-badge">Technical Product Manager &amp; SaaS Founder</span>
+<h1 class="about-hero-name">Brijesh Patel</h1>
+<p class="about-hero-bio">
+With 11+ years of experience building, launching, and scaling digital products, SEO automation platforms, and growth systems across 65+ projects. Currently building
+<a href="https://backlinks.tools/" target="_blank" rel="noopener">Backlinks.Tools</a>,
+<a href="https://onlines.tools/" target="_blank" rel="noopener">Online.Tools</a>, and
+<a href="https://grownwith.us/" target="_blank" rel="noopener">GrownWith.us</a>.
+</p>
+<div class="about-hero-badges">
+<span class="about-badge-pill pill-neutral">New Delhi, India</span>
+<span class="about-badge-pill pill-neutral">11+ Years Exp</span>
+<span class="about-badge-pill pill-green">65+ Projects Delivered</span>
+<span class="about-badge-pill pill-blue">SaaS Founder</span>
+</div>
+<div class="about-hero-cta">
+<a href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91" target="_blank" rel="noopener nofollow"
+class="btn-about-dark">Book a Project Call</a>
+<a href="mailto:bp@brijesh.work"
+onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';"
+class="btn-about-light">Email Brijesh</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- HOW I THINK Section -->
+<section class="how-i-think-section">
+<div class="about-section-header">
+<span class="about-header-bar"></span>
+<span class="about-header-title">HOW I THINK</span>
+</div>
+<div class="how-i-think-grid">
+<!-- Pillar 01 -->
+<div class="think-col">
+<div class="think-accent-bar"></div>
+<div class="think-number">01</div>
+<h3 class="think-heading">strategic product discovery</h3>
+<p class="think-desc">
+I go beyond interface design to validate product hypotheses. Using behavioural psychology, user insights and competitive benchmarking, I identify market gaps and shape what should be built, and why.
+</p>
+</div>
+
+<!-- Pillar 02 -->
+<div class="think-col">
+<div class="think-accent-bar"></div>
+<div class="think-number">02</div>
+<h3 class="think-heading">systems thinking &amp; experience design</h3>
+<p class="think-desc">
+I turn complex systems into intuitive experiences. By balancing user behaviour, business objectives and technical constraints, I design products that feel simple without oversimplifying the problem.
+</p>
+</div>
+
+<!-- Pillar 03 -->
+<div class="think-col">
+<div class="think-accent-bar"></div>
+<div class="think-number">03</div>
+<h3 class="think-heading">stakeholder &amp; product thinking</h3>
+<p class="think-desc">
+I bring stakeholders together around a shared vision — translating complex requirements, competing priorities and user insights into product experiences that are both valuable and achievable.
+</p>
+</div>
+</div>
+</section>
+
+<!-- WHAT I WORK WITH Section -->
+<section class="what-i-work-with-section">
+<div class="about-section-header">
+<span class="about-header-bar"></span>
+<span class="about-header-title">WHAT I WORK WITH</span>
+</div>
+<div class="work-with-list">
+<!-- Disciplines -->
+<div class="work-with-row">
+<div class="work-row-label">
+<span class="work-label-dot"></span>
+<span>DISCIPLINES</span>
+</div>
+<div class="work-row-chips">
+<span class="work-chip">Design strategy</span>
+<span class="work-chip">Design thinking</span>
+<span class="work-chip">UX &amp; product design</span>
+<span class="work-chip">Stakeholder Management</span>
+<span class="work-chip">User Journey Mapping</span>
+<span class="work-chip">Wireframing</span>
+<span class="work-chip">Interaction Design</span>
+<span class="work-chip">Micro Interactions</span>
+<span class="work-chip">Prototyping</span>
+<span class="work-chip">Usability Testing</span>
+<span class="work-chip">Web &amp; mobile design</span>
+<span class="work-chip">Visual design</span>
+<span class="work-chip">Design systems</span>
+<span class="work-chip">Design Ops</span>
+</div>
+</div>
+
+<!-- Industries -->
+<div class="work-with-row">
+<div class="work-row-label">
+<span class="work-label-dot"></span>
+<span>INDUSTRIES</span>
+</div>
+<div class="work-row-chips">
+<span class="work-chip">Fintech</span>
+<span class="work-chip">Telecom</span>
+<span class="work-chip">Edtech</span>
+<span class="work-chip">Web3/Crypto</span>
+<span class="work-chip">Tourism</span>
+<span class="work-chip">SaaS</span>
+<span class="work-chip">B2B E-Commerce</span>
+<span class="work-chip">Marketplace</span>
+<span class="work-chip">Low-Code</span>
+</div>
+</div>
+
+<!-- Tools -->
+<div class="work-with-row">
+<div class="work-row-label">
+<span class="work-label-dot"></span>
+<span>TOOLS</span>
+</div>
+<div class="work-row-chips">
+<span class="work-chip">Figma</span>
+<span class="work-chip">Sketch App</span>
+<span class="work-chip">Miro</span>
+<span class="work-chip">FigJam</span>
+<span class="work-chip">Maze</span>
+<span class="work-chip">Adobe Creative Suite</span>
+<span class="work-chip">Marvel</span>
+<span class="work-chip">Lottiefiles</span>
+<span class="work-chip">Framer</span>
+<span class="work-chip">Principle</span>
+<span class="work-chip">Jitter</span>
+<span class="work-chip">Jira</span>
+<span class="work-chip">Notion</span>
+</div>
+</div>
+
+<!-- AI Stack -->
+<div class="work-with-row">
+<div class="work-row-label">
+<span class="work-label-dot"></span>
+<span>AI STACK</span>
+</div>
+<div class="work-row-chips">
+<span class="work-chip">MCP Integrations</span>
+<span class="work-chip">Prompt Design</span>
+<span class="work-chip">Claude Design &amp; Code</span>
+<span class="work-chip">Codex</span>
+<span class="work-chip">Vercel</span>
+<span class="work-chip">AI + Prototyping</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- About My Product & Engineering Journey Section -->
+<section class="about-journey-section">
+<h2 class="about-journey-heading">About My Product &amp; Engineering Journey</h2>
+<p class="about-journey-text">
+Over the past 11+ years, I have operated as a product lead, SaaS creator, and full-stack engineer. By day, I lead product strategy, discovery, and execution. By night, I build and operate SaaS platforms like
+<a href="https://backlinks.tools/" target="_blank" rel="noopener"><strong>Backlinks.Tools</strong></a>,
+<a href="https://onlines.tools/" target="_blank" rel="noopener"><strong>Online.Tools</strong></a>, and
+<a href="https://grownwith.us/" target="_blank" rel="noopener"><strong>GrownWith.us</strong></a>.
+</p>
+<p class="about-journey-text">
+I bridge product discovery, user research, PRD writing, scalable SaaS architecture (Laravel, Python, REST APIs, AWS), and growth automation systems across more than 65 successful projects.
+</p>
+
+<h3 class="about-competencies-title">Core Technical &amp; Product Competencies</h3>
+<div class="about-competencies-grid">
+<!-- Competency 1 -->
+<div class="about-competency-card">
+<h4 class="about-competency-header">Product Strategy &amp; Discovery</h4>
+<ul class="about-competency-list">
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>PRDs &amp; Detailed Specifications</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>User Discovery &amp; Problem Scoping</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>Feature Prioritization &amp; Roadmaps</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>User Research &amp; Data Analytics</span>
+</li>
+</ul>
+</div>
+
+<!-- Competency 2 -->
+<div class="about-competency-card">
+<h4 class="about-competency-header">Technical Product Management</h4>
+<ul class="about-competency-list">
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>SaaS MVP Scoping &amp; Architecture</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>Technical Trade-off &amp; Debt Analysis</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>PHP (Laravel) &amp; Python REST APIs</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>MySQL, Redis &amp; Cloud Architecture</span>
+</li>
+</ul>
+</div>
+
+<!-- Competency 3 -->
+<div class="about-competency-card">
+<h4 class="about-competency-header">Growth Systems &amp; Automation</h4>
+<ul class="about-competency-list">
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>Backlinks.Tools &amp; SEO Automation</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>Data Pipelines &amp; Headless Crawlers</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>Lead Intake &amp; CRM Funnel Workflows</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>Web Utilities &amp; Chrome Extensions</span>
+</li>
+</ul>
+</div>
+
+<!-- Competency 4 -->
+<div class="about-competency-card">
+<h4 class="about-competency-header">Cloud Infrastructure &amp; DevOps</h4>
+<ul class="about-competency-list">
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>AWS EC2, S3, CloudFront Deployment</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>Cloudflare CDN &amp; WAF Tuning</span>
+</li>
+<li class="about-competency-item">
+<span class="about-competency-bullet">•</span>
+<span>Git &amp; GitHub Actions CI/CD Workflows</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+
+        <!-- 2. Work Experience Section -->
+        <!-- Experience Section -->
+          <section class="about-experience-section" id="experience">
+            <div class="about-section-header">
+              <span class="about-header-bar"></span>
+              <span class="about-header-title">WORK EXPERIENCE</span>
             </div>
-            <div class="col-lg-8">
-              <span class="badge bg-primary px-3 py-2 mb-2">Technical Product Manager & SaaS Founder</span>
-              <h1 class="fw-bold display-4 mb-2">Brijesh Patel</h1>
-              <p class="lead text-secondary mb-3">
-                With 11+ years of experience building, launching, and scaling digital products, SEO automation
-                platforms, and growth systems across 65+ projects. Currently building
-                <a href="https://backlinks.tools/" target="_blank" rel="noopener"
-                  class="text-dark fw-bold text-decoration-underline">Backlinks.Tools</a>, <a
-                  href="https://onlines.tools/" target="_blank" rel="noopener"
-                  class="text-dark fw-bold text-decoration-underline">Online.Tools</a>, and <a
-                  href="https://grownwith.us/" target="_blank" rel="noopener"
-                  class="text-dark fw-bold text-decoration-underline">GrownWith.us</a>.
-              </p>
-              <div class="d-flex flex-wrap gap-2 mb-3">
-                <span class="badge bg-dark">New Delhi, India</span>
-                <span class="badge bg-secondary">11+ Years Exp</span>
-                <span class="badge bg-success">65+ Projects Delivered</span>
-                <span class="badge bg-info text-dark">SaaS Founder</span>
+
+            <div class="resume-section-header d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
+              <div class="d-flex align-items-center gap-3">
+                <span class="section-icon-badge"><i class="bi bi-briefcase-fill"></i></span>
+                <div>
+                  <h2 class="section-heading mb-0">Experience</h2>
+                  <p class="section-subheading mb-0">11+ years leading product development, SaaS roadmaps &amp; technical execution</p>
+                </div>
               </div>
-              <div class="d-flex gap-2">
-                <a href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91" target="_blank" rel="noopener nofollow"
-                  class="btn btn-primary fw-bold">Book a Project Call</a>
-                <a href="&#109;&#97;&#105;&#108;&#116;&#108;&#58;&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;"
-                  onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';"
-                  class="btn btn-outline-dark fw-bold">Email Brijesh</a>
+              <a href="../resume/" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 d-inline-flex align-items-center gap-1" style="font-size: 0.825rem; font-weight: 600;">
+                <span>View Full Resume</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+
+            <div class="experience-list">
+              <!-- Backlinks Tools -->
+              <div class="experience-card">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-2">
+                  <div>
+                    <h3 class="experience-title mb-1">Product Builder</h3>
+                    <div class="experience-company-wrap">
+                      <span class="company-name"><i class="bi bi-building me-1"></i>Backlinks Tools</span>
+                      <span class="employment-badge">Full-time</span>
+                    </div>
+                  </div>
+                  <div class="experience-date-badge">
+                    <i class="bi bi-calendar3"></i> Jun 2026 - Sep 2026
+                  </div>
+                </div>
+                <div class="experience-desc mt-3">
+                  <p class="lead-summary mb-3">Building an SEO automation SaaS platform for founders, marketers, agencies, and SEO teams.</p>
+                  <ul class="experience-bullets">
+                    <li>Own the product end to end, from user problems and product scope to roadmaps, requirements, development coordination, testing, feedback, and iteration.</li>
+                    <li>Designed workflows for backlink monitoring, rank tracking, website audits, keyword insights, and SEO utilities.</li>
+                    <li>Manage product strategy, UX flows, technical planning, analytics, and go-to-market execution.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Upwork -->
+              <div class="experience-card">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-2">
+                  <div>
+                    <h3 class="experience-title mb-1">Technical Product Builder / Full-Stack Consultant</h3>
+                    <div class="experience-company-wrap">
+                      <span class="company-name"><i class="bi bi-building me-1"></i>Upwork</span>
+                      <span class="employment-badge">Freelance</span>
+                      <span class="location-badge"><i class="bi bi-geo-alt"></i> Remote</span>
+                    </div>
+                  </div>
+                  <div class="experience-date-badge">
+                    <i class="bi bi-calendar3"></i> Sep 2017 - Jun 2026
+                  </div>
+                </div>
+                <div class="experience-desc mt-3">
+                  <ul class="experience-bullets">
+                    <li>Built and delivered 65+ web, e-commerce, SaaS, and automation projects for 45+ clients.</li>
+                    <li>Owned requirements discovery, product scoping, technical planning, development, launch, and iteration.</li>
+                    <li>Led a team of 12+ across development, cloud infrastructure, and marketing.</li>
+                    <li>Delivered solutions using Magento, WordPress, Shopify, Laravel, PHP, AWS, APIs, analytics, and SEO automation.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- V Technologies & Education -->
+              <div class="experience-card">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-2">
+                  <div>
+                    <h3 class="experience-title mb-1">Web Designer</h3>
+                    <div class="experience-company-wrap">
+                      <span class="company-name"><i class="bi bi-building me-1"></i>V Technologies &amp; Education</span>
+                      <span class="employment-badge">Full-time</span>
+                      <span class="location-badge"><i class="bi bi-geo-alt"></i> Varanasi, Uttar Pradesh, India &middot; On-site</span>
+                    </div>
+                  </div>
+                  <div class="experience-date-badge">
+                    <i class="bi bi-calendar3"></i> Apr 2015 - Aug 2017
+                  </div>
+                </div>
+                <div class="experience-desc mt-3">
+                  <ul class="experience-bullets">
+                    <li>Worked on graphic design and web development projects.</li>
+                    <li>Designed and developed websites using Photoshop, HTML, CSS, JavaScript, and WordPress.</li>
+                    <li>Created custom landing pages, microsites, and WordPress themes.</li>
+                    <li>Built PHP and HTML solutions both within and outside WordPress.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Shreeji Softs -->
+              <div class="experience-card">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 mb-2">
+                  <div>
+                    <h3 class="experience-title mb-1">Web Designer</h3>
+                    <div class="experience-company-wrap">
+                      <span class="company-name"><i class="bi bi-building me-1"></i>Shreeji Softs</span>
+                      <span class="employment-badge">Full-time</span>
+                      <span class="location-badge"><i class="bi bi-geo-alt"></i> Varanasi, Uttar Pradesh, India</span>
+                    </div>
+                  </div>
+                  <div class="experience-date-badge">
+                    <i class="bi bi-calendar3"></i> Nov 2014 - Mar 2015
+                  </div>
+                </div>
+                <div class="experience-desc mt-3">
+                  <ul class="experience-bullets">
+                    <li>Created graphic and web designs for client projects.</li>
+                    <li>Used Photoshop and Dreamweaver to create concepts and prepare digital assets.</li>
+                    <li>Converted visual designs into functional HTML and CSS prototypes.</li>
+                  </ul>
+                </div>
               </div>
             </div>
+          </section>
+
+        <!-- Licenses & Certifications Section -->
+        <section class="about-certs-section pt-2 pb-2" id="certifications">
+          <div class="about-section-header">
+            <span class="about-header-bar"></span>
+            <span class="about-header-title">LICENSES &amp; CERTIFICATIONS</span>
           </div>
-        </div>
-      </section>
 
-      <!-- Verified Entity Profile & Proof Bar -->
-      <section class="py-4 bg-white border-bottom">
-        <div class="container">
-          <p class="text-center text-muted small fw-bold mb-3 text-uppercase">Verified Profiles & SaaS Platforms</p>
-          <div class="d-flex flex-wrap justify-content-center gap-3">
-            <a href="https://backlinks.tools/" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
-              <b>Backlinks.Tools:</b> Backlink Crawler
-            </a>
-            <a href="https://onlines.tools/" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
-              <b>Online.Tools:</b> Free Web Tools
-            </a>
-            <a href="https://grownwith.us/" target="_blank" rel="noopener" class="btn btn-outline-dark btn-sm">
-              <b>GrownWith.us:</b> Learning & Growth
-            </a>
-            <a href="https://github.com/brijeshwork" target="_blank" rel="noopener"
-              class="btn btn-outline-secondary btn-sm">
-              <b>GitHub:</b> github.com/brijeshwork
-            </a>
-            <a href="https://www.linkedin.com/in/brijeshwork/" target="_blank" rel="noopener"
-              class="btn btn-outline-secondary btn-sm">
-              <b>LinkedIn:</b> linkedin.com/in/brijeshwork
-            </a>
-            <a href="https://x.com/brijeshwork" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm">
-              <b>X / Twitter:</b> @brijeshwork
-            </a>
-            <a href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91" target="_blank" rel="noopener nofollow"
-              class="btn btn-outline-secondary btn-sm">
-              <b>Upwork:</b> Top Rated Engineer
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Detailed Biography & Competencies -->
-      <section class="py-5">
-        <div class="container">
-          <div class="row gy-4">
-            <!-- Sidebar: Quick Facts & Work With Brijesh (Left) -->
-            <div class="col-12 col-lg-4">
-              <div class="card border-0 shadow-sm p-4 mb-4">
-                <h3 class="h5 fw-bold mb-3">Quick Facts</h3>
-                <div class="mb-3">
-                  <strong class="d-block text-muted small uppercase">Role</strong>
-                  <span>Technical Product Manager & SaaS Founder</span>
-                </div>
-                <div class="mb-3">
-                  <strong class="d-block text-muted small uppercase">Location</strong>
-                  <span>New Delhi, India</span>
-                </div>
-                <div class="mb-3">
-                  <strong class="d-block text-muted small uppercase">Experience</strong>
-                  <span>11+ Years (Since 2014)</span>
-                </div>
-                <div class="mb-3">
-                  <strong class="d-block text-muted small uppercase">Projects Completed</strong>
-                  <span>65+ Products & Applications</span>
-                </div>
-                <div class="mb-3">
-                  <strong class="d-block text-muted small uppercase">Active SaaS Products</strong>
-                  <span>Backlinks.Tools, Online.Tools, GrownWith.us</span>
-                </div>
-              </div>
-
-              <div class="card bg-primary text-white border-0 shadow-sm p-4 text-start">
-                <h3 class="h4 fw-bold mb-2">Work With Brijesh</h3>
-                <p class="small mb-3">Looking for a product leader to scope, build, or scale your web product?</p>
-                <div class="d-grid gap-2">
-                  <a href="https://www.upwork.com/freelancers/~0150cb6185a3a2cf91" target="_blank"
-                    rel="noopener nofollow" class="btn btn-light fw-bold w-100">Book a Project Call</a>
-                  <a href="&#109;&#97;&#105;&#108;&#116;&#108;&#58;&#98;&#112;&#64;&#98;&#114;&#105;&#106;&#101;&#115;&#104;&#46;&#119;&#111;&#114;&#107;"
-                    onclick="this.href='mai'+'lto:'+'bp'+'@'+'brijesh'+'.work';"
-                    class="btn btn-outline-light fw-bold w-100">Email Brijesh</a>
-                </div>
+          <div class="resume-section-header d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3">
+            <div class="d-flex align-items-center gap-3">
+              <span class="section-icon-badge"><i class="bi bi-patch-check-fill"></i></span>
+              <div>
+                <h2 class="section-heading mb-0">Licenses &amp; Certifications</h2>
+                <p class="section-subheading mb-0">Verified professional credentials &amp; specializations (<span
+                    id="cert-count">32</span>)</p>
               </div>
             </div>
 
-            <!-- Main Content: Biography & Competencies (Right) -->
-            <div class="col-12 col-lg-8">
-              <div class="card border-0 shadow-sm p-4 mb-4">
-                <h2 class="h3 fw-bold text-primary mb-3">About My Product & Engineering Journey</h2>
-                <p>
-                  Over the past 11+ years, I have operated as a product lead, SaaS creator, and full-stack engineer. By
-                  day, I lead product strategy, discovery, and execution. By night, I build and operate
-                  SaaS platforms like <strong>Backlinks.Tools</strong>, <strong>Online.Tools</strong>, and
-                  <strong>GrownWith.us</strong>.
-                </p>
-                <p>
-                  I bridge product discovery, user research, PRD writing, scalable SaaS architecture (Laravel, Python,
-                  REST APIs, AWS), and growth automation systems across more than 65 successful projects.
-                </p>
-              </div>
-
-              <div class="card border-0 shadow-sm p-4 mb-4">
-                <h2 class="h3 fw-bold text-primary mb-3">Core Technical & Product Competencies</h2>
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <div class="p-3 border rounded bg-light h-100">
-                      <h3 class="h5 fw-bold text-dark mb-2">Product Strategy & Discovery</h3>
-                      <ul class="list-unstyled small mb-0">
-                        <li>• PRDs & Detailed Specifications</li>
-                        <li>• User Discovery & Problem Scoping</li>
-                        <li>• Feature Prioritization & Roadmaps</li>
-                        <li>• User Research & Data Analytics</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="p-3 border rounded bg-light h-100">
-                      <h3 class="h5 fw-bold text-dark mb-2">Technical Product Management</h3>
-                      <ul class="list-unstyled small mb-0">
-                        <li>• SaaS MVP Scoping & Architecture</li>
-                        <li>• Technical Trade-off & Debt Analysis</li>
-                        <li>• PHP (Laravel) & Python REST APIs</li>
-                        <li>• MySQL, Redis & Cloud Architecture</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="p-3 border rounded bg-light h-100">
-                      <h3 class="h5 fw-bold text-dark mb-2">Growth Systems & Automation</h3>
-                      <ul class="list-unstyled small mb-0">
-                        <li>• Backlinks.Tools & SEO Automation</li>
-                        <li>• Data Pipelines & Headless Crawlers</li>
-                        <li>• Lead Intake & CRM Funnel Workflows</li>
-                        <li>• Web Utilities & Chrome Extensions</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="p-3 border rounded bg-light h-100">
-                      <h3 class="h5 fw-bold text-dark mb-2">Cloud Infrastructure & DevOps</h3>
-                      <ul class="list-unstyled small mb-0">
-                        <li>• AWS EC2, S3, CloudFront Deployment</li>
-                        <li>• Cloudflare CDN & WAF Tuning</li>
-                        <li>• Git & GitHub Actions CI/CD Workflows</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Licenses & Certifications Section -->
-      <section class="py-5 bg-light border-top">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
-            <div>
-              <h2 class="h3 fw-bold text-primary mb-1"><i class="bi bi-patch-check-fill text-primary me-2"></i>Licenses
-                &amp; Certifications</h2>
-              <p class="text-secondary small mb-0">Verified professional credentials &amp; specializations (<span
-                  id="cert-count">32</span>)</p>
+            <!-- Search Bar -->
+            <div class="cert-search-wrapper">
+              <i class="bi bi-search search-icon"></i>
+              <input type="text" id="certSearchInput" class="form-control cert-search-input" placeholder="Search 32 credentials...">
             </div>
           </div>
 
@@ -1762,9 +2682,10 @@
             <button class="btn btn-sm btn-outline-primary rounded-pill px-3" id="resetCertFilter">Reset Search
               &amp; Filters</button>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+
+      </div>
+    </div>
 
   </main>
   <footer loadhtml="https://brijesh.work/pub/inc/footer.html" class="footer" role="contentinfo"></footer>
