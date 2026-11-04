@@ -6067,7 +6067,8 @@ select {
   padding: 1.25rem 1.5rem;
 }
 
-.case-study-card .case-study-metrics {
+.case-study-card .case-study-metrics,
+.interactive-card .case-study-metrics {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
@@ -6075,9 +6076,133 @@ select {
   transition: all 0.3s ease;
 }
 
-.case-study-card:hover .case-study-metrics {
+.case-study-card:hover .case-study-metrics,
+.interactive-card:hover .case-study-metrics {
   background: #f1f5f9;
   border-color: #cbd5e1;
+}
+
+/* Product Showcase Extension Window Mockup */
+.hero-extension-mockup {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.hero-extension-mockup:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 56px -12px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.hero-mockup-header {
+  background: #ffffff;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.hero-mockup-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.hero-mockup-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.hero-mockup-dot.dot-red {
+  background: #ff5f56;
+}
+
+.hero-mockup-dot.dot-amber {
+  background: #ffbd2e;
+}
+
+.hero-mockup-dot.dot-green {
+  background: #27c93f;
+}
+
+.hero-mockup-address {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 3px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.hero-mockup-address .address-bullet {
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+.hero-mockup-img-wrap {
+  position: relative;
+  background: #f8fafc;
+  overflow: hidden;
+  display: block;
+}
+
+.hero-mockup-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.hero-extension-mockup:hover .hero-mockup-img-wrap img {
+  transform: scale(1.02);
+}
+
+/* Product Showcase Row Spacing */
+.product-showcase-row {
+  position: relative;
+  padding: 64px 0;
+  border-bottom: 1px solid #e4e6ef;
+}
+
+.product-showcase-row:nth-child(even) {
+  background-color: #f9faff;
+}
+
+.product-category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #eaedff;
+  color: #3525cd;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.product-category-pill .pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #4f46e5;
+  display: inline-block;
 }
 
 .case-study-card .btn-case-study {
